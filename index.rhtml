@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Pickle Spears - homepage</title>
+
+</head>
+<body>
+<div style="text-align: right;">
+<%= user.logged_in?() ? user.name() + %q{ | <a href="logout.rb">sign out</a> } : %q{ <a href="login.rb">sign in</a> } %>
+<br>
+</div>
+<hr>
+<div style="text-align: center;">
+<form method="get" action="search.rb" name="tn_search_form"><input name="team_name" type="input"><input name="tn_search" value="Team Name Search" type="submit">
+<br>
+<br>
+Browse by: <a href="women.rb">Women</a> | <a href="men.rb">Men</a> | <a href="coed.rb">Coed</a></form>
+</div>
+</body></html>
