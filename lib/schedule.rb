@@ -135,46 +135,46 @@ class Schedule
     end
   end
 
-  def choose_team()
-    @cgi.out{
-      @cgi.html{
-        @cgi.head { @cgi.title("Choose a team") } +
-        @cgi.body { _divisions_str() }
-      }
-    }
-  end
+#   def choose_team()
+#     @cgi.out{
+#       @cgi.html{
+#         @cgi.head { @cgi.title("Choose a team") } +
+#         @cgi.body { _divisions_str() }
+#       }
+#     }
+#   end
 
-  def _divisions_str()
-    divisions = _divisions()
-    men = divisions.keys.grep(/^m/).sort
-    women = divisions.keys.grep(/^w/).sort
-    coed = divisions.keys.grep(/^c/).sort
-    # coed is usually the largest
-    all = coed.zip(women, men)
+#   def _divisions_str()
+#     divisions = _divisions()
+#     men = divisions.keys.grep(/^m/).sort
+#     women = divisions.keys.grep(/^w/).sort
+#     coed = divisions.keys.grep(/^c/).sort
+#     # coed is usually the largest
+#     all = coed.zip(women, men)
 
-    @cgi.table {
-      @cgi.tr { ["Coed", "Women", "Men"].map { |i| @cgi.th { @cgi.h1{ i } } }.join("\n") +
-        all.map { |division_slice|
-          @cgi.tr {
-            division_slice.map { |division_filename|
-              if division_filename
-                @cgi.td {
-                  @cgi.h2 { division_filename } + 
-                  @cgi.form("get") {
-                    @cgi.hidden("division", division_filename) +
-                    @cgi.popup_menu("team", *(divisions[division_filename].sort)) +
-                    @cgi.submit()
-                  }
-                }
-              else
-                @cgi.td { "&nbsp;" }
-              end
-            }.join("\n")
-          }
-        }.join("\n")
-      }
-    }
-  end
+#     @cgi.table {
+#       @cgi.tr { ["Coed", "Women", "Men"].map { |i| @cgi.th { @cgi.h1{ i } } }.join("\n") +
+#         all.map { |division_slice|
+#           @cgi.tr {
+#             division_slice.map { |division_filename|
+#               if division_filename
+#                 @cgi.td {
+#                   @cgi.h2 { division_filename } + 
+#                   @cgi.form("get") {
+#                     @cgi.hidden("division", division_filename) +
+#                     @cgi.popup_menu("team", *(divisions[division_filename].sort)) +
+#                     @cgi.submit()
+#                   }
+#                 }
+#               else
+#                 @cgi.td { "&nbsp;" }
+#               end
+#             }.join("\n")
+#           }
+#         }.join("\n")
+#       }
+#     }
+#   end
 
   def _table_header(list)
     return list.map { |i| @cgi.th { i } }.join("\n")
