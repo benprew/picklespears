@@ -7,7 +7,7 @@
 <div class="division">
 <%= cgi.form("get") {
       name + " - " +
-      cgi.popup_menu("team", *(teams.map { |t| t.name }.sort)) + " " +
+      cgi.popup_menu("team", *(teams.map { |name, team| name }.sort)) + " " +
       cgi.submit("Go")
 } %>
 </div>
