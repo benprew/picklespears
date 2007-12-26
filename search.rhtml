@@ -3,5 +3,8 @@
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Pickle Spears - search for team</title>
 <link rel="stylesheet" href="pickle_spears.css" type="text/css"></head>
 <body>
-
+<% teams.sort.each do |name, teams %>
+    <a href="browse.rb?team=<%= name %>"><%= name %></a>
+    <br />
+<% end %>
 </body></html>

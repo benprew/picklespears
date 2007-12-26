@@ -1,12 +1,12 @@
-require 'db_table'
 
-class Team < DbTable
+class Team
+  require 'db_table'
+
+  TableFilename = 'teams.o'
+
   attr_accessor :name, :division
 
-  def initialize()
-    @@table_filename = 'teams.o'
-    super()
-  end
+  @@teams = DbTable.load(DbTable.db_dir() + '/' + TableFilename)
 
   def eql?(other)
     @name == other.name
@@ -16,4 +16,15 @@ class Team < DbTable
     @name.hash
   end
 
+  def Team.teams=(teams)
+    @@teams = teams
+  end
+
+  def Team.teams
+    return @@teams
+  end
+
+  def Team.save
+    DbTable.save(@@teams, DbTable.db_dir() + '/' + TableFilename)
+  end
 end

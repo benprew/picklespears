@@ -1,18 +1,20 @@
-class DbTable
+require 'set'
 
-  def initialize()
-    @@db_dir ||= '/var/ps_db'
-    @@table_values = Marshal.load(File.new(@@db_dir + '/' + @@table_filename))
+module DbTable
+
+  def DbTable.load(table_filename)
+    return Marshal.load(File.new(table_filename)) if File.exists?(table_filename)
   end
 
-  def select()
-    return @@table_values.select { |x| yield(x) }
+  def DbTable.db_dir()
+    return '/var/ps_db'
   end
 
-  def save()
-    teams_file = File.new(table_filename(), "w")
-    if teams_file.flock(File::LOCK_EX | File::LOCK_NB)
-      Marshal.dump(teams, teams_file)
+  def DbTable.save(obj, table_filename)
+    out_file = File.new(table_filename, File::WRONLY|File::TRUNC|File::CREAT)
+    if out_file.flock(File::LOCK_EX | File::LOCK_NB)
+      Marshal.dump(obj, out_file)
     end
+    out_file.close()
   end
 end
