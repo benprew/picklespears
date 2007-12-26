@@ -5,12 +5,13 @@
 </head>
 <body>
 <div style="text-align: right;">
-<%= user.logged_in?() ? user.name() + %q{ | <a href="logout.rb">sign out</a> } : %q{ <a href="login.rb">sign in</a> } %>
+<%= user.logged_in?() ? user.name() + %q{ | <a href="logout.rb">sign out</a> } : %q{ sign in } %>
 <br>
 </div>
 <hr>
 <div style="text-align: center;">
-<form method="get" action="search.rb" name="tn_search_form"><input name="team_name" type="input"><input name="tn_search" value="Team Name Search" type="submit">
+<img src="pickle_spears_logo.jpg" width="275" height="168">
+<form method="get" action="search.rb" name="tn_search_form"><input name="team" type="input"><input name="tn_search" value="Team Name Search" type="submit">
 <br>
 <br>
 Browse by: <a href="browse.rb?group=Women">Women</a> | <a href="browse.rb?group=Men">Men</a> | <a href="browse.rb?group=Coed">Coed</a></form>

@@ -15,6 +15,10 @@ class Team
   def hash
     @name.hash
   end
+  
+  def <=>(other)
+    @name <=> other.name
+  end
 
   def Team.teams=(teams)
     @@teams = teams
@@ -27,4 +31,14 @@ class Team
   def Team.save
     DbTable.save(@@teams, DbTable.db_dir() + '/' + TableFilename)
   end
+
+  def Team.select
+    return @@teams.select { |x| yield(x) }
+  end
+
+  def select
+    teams = @@teams.select { |x| yield(x) }
+    p teams
+  end
+
 end

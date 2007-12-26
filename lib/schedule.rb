@@ -74,6 +74,7 @@ class Schedule
       @cgi.html{
         @cgi.head{ @cgi.title{ team + " Schedule" } } +
         @cgi.body { 
+          @cgi.h1 { team } +
           @cgi.b { upcoming_games.shift } + "<br />" +
           upcoming_games.join("<br />\n")
         }
@@ -85,7 +86,7 @@ class Schedule
     today = Time.parse(Time.now().strftime("%m/%d/%Y"))
     games = _all_games_for_team(team)
 
-    while ( games[0][0] < today )
+    while ( games && games[0][0] < today )
       games.shift;
     end
 
@@ -96,20 +97,24 @@ class Schedule
     raise "no team named " + team unless @teams[team]
     games = []
     open(@@season_url + "/" + @teams[team].division) do |f|
-      f.each do |line|
-        games.push( [ _parse_date_from_schedule_line(line), line ] ) if (line =~ /#{team}/)
+      f.grep(/#{team}/).each do |line|
+        date = _parse_date_from_schedule_line(line)
+        next unless date
+        # add a year
+        date = date + (60 * 60 * 24 * 365) if games.length > 1 && date < games[-1][0]
+        games.push( [ date, line ] ) if (line =~ /#{team}/)
       end
     end
     games
   end
 
   def _parse_date_from_schedule_line(line)
-    m = /\w+\s+(\w+)\s+(\d+)/.match(line)
-    if m[1] && m[2]
+    m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+/.match(line)
+    if m && m[1] && m[2]
       return Time.parse(m[1] + " " + m[2])
     else
       @log.warn("Unable to find time for line: " + line)
-      return ""
+      return false
     end
   end
 end
