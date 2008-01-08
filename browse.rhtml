@@ -3,11 +3,11 @@
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Pickle Spears - browse teams</title>
 <link rel="stylesheet" href="pickle_spears.css" type="text/css"></head>
 <body>
-<% divisions.sort.each do |name, teams| %>
+<% divisions.each do |division| %>
 <div class="division">
 <%= cgi.form("get") {
-      name + " - " +
-      cgi.popup_menu("team", *(teams.map { |name, team| name }.sort)) + " " +
+      division.name + " - " +
+      cgi.popup_menu("team_id", *(division.teams.map { |team| [ team.id.to_s, team.name ] }.sort { |a, b| a[1] <=> b[1] } )) + " " +
       cgi.submit("Go")
 } %>
 </div>

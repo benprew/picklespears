@@ -1,3 +1,9 @@
-class Division
-  attr_accessor :name, :file, :group
+require 'db'
+require 'rubygems'
+gem 'activerecord'
+require 'activerecord'
+
+class Division < ActiveRecord::Base
+  has_many :teams
+  attr_accessor :file
 end

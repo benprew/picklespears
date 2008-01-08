@@ -1,5 +1,3 @@
-require 'set'
-
 module DbTable
 
   def DbTable.load(table_filename)

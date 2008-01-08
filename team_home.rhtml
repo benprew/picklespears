@@ -1,0 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Pickle Spears - team home page</title>
+<link rel="stylesheet" href="pickle_spears.css" type="text/css"></head>
+<body>
+<h1><%= team.name %></h1>
+<ul>
+<% team.games.each do |game| %>
+   <li><%= game.description %></li>
+<% end %>
+</ul>
+</body></html>
