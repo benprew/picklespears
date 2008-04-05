@@ -4,9 +4,39 @@
 <link rel="stylesheet" href="pickle_spears.css" type="text/css"></head>
 <body>
 <h1><%= team.name %></h1>
-<ul>
-<% team.games.each do |game| %>
-   <li><%= game.description %></li>
-<% end %>
-</ul>
+<table border=1>
+  <tr>
+    <th>upcoming games</th>
+    <th>players</th>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+	<% team.games.each do |game| %>
+	<li><%= game.description %></li>
+	<% end %>
+      </ul>
+    </td>
+    <td>
+      <div align="right">
+      <a href="add_player.rb?team_id=<%= team.id %>">add player</a>
+      </div>
+      <ul>
+	<% team.players.each do |player| %>
+	<li>
+	  <%= sprintf('%s (<a href="mailto:%s">%s</a>) <a href="delete.rb?player_id=%s;team_id=%s">del</a>',
+	      player.name,
+	      player.email_address,
+	      player.email_address,
+	      player.id,
+	      team.id) %>
+	</li>
+	<% end %>
+      </ul>
+      <div align="right">
+      <a href="add_player.rb">add player</a>
+      </div>
+    </td>
+  </tr>
+</table>
 </body></html>

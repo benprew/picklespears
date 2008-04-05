@@ -1,6 +1,8 @@
 drop table if exists divisions;
 drop table if exists teams;
 drop table if exists games;
+drop table if exists players;
+drop table if exists players_teams;
 
 create table divisions (
   id     int           not null auto_increment,
@@ -24,4 +26,22 @@ create table games (
   team_id int not null,
   constraint fk_games_teams foreign key (team_id) references teams(id),
   primary key (id)
+) engine=InnoDB;
+
+create table players (
+  id int not null auto_increment,
+  name varchar(128) not null,
+  email_address varchar(256),
+  phone_number varchar(16),
+  is_sub boolean not null default false,
+  primary key (id)
+) engine=InnoDB;
+
+create table players_teams (
+  player_id int not null,
+  team_id int null null,
+  constraint fk_players_players_teams foreign key (player_id)
+  	     references players(id),
+  constraint fk_teams_players_teams foreign key (team_id)
+  	     references teams(id)
 ) engine=InnoDB;
