@@ -61,10 +61,10 @@ end
 ActionMailer::Base.raise_delivery_errors = true
 
 ActionMailer::Base.smtp_settings = {
-  :address => "smtp.gmail.com",
-  :port => 587,
-  :domain => "gmail.com",
-  :authentication => :plain,
-  :user_name => "ben.prew",
-  :password => "something.else"
+  :address => "throwingbones.com",
+  :port => 25,
+  :domain => "throwingbones.com",
+  :authentication => :login,
+  :user_name => "throwingbones",
+  :password => "0aefe114"
 }

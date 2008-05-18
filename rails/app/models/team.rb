@@ -6,6 +6,6 @@ class Team < ActiveRecord::Base
   has_and_belongs_to_many :players
 
   def next_unreminded_game
-    games.grep { |g| g.date >= Date.today() }.grep { |g| !g.reminder.sent }[0]
+    games.select { |g| g.date >= Date.today() }.select { |g| !g.reminder_sent }[0]
   end
 end
