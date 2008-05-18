@@ -1,0 +1,2339 @@
+
+
+Processing InfoController#properties (for 76.105.156.160 at 2007-12-28 18:27:12) [GET]
+  Session ID: 2433ebff8e4e976ad6be25173afd05a1
+  Parameters: {"action"=>"properties", "controller"=>"rails/info"}
+Completed in 0.00101 (985 reqs/sec) | Rendering: 0.00007 (6%) | 500 Internal Server Error [http://throwingbones.com/rails/rails/info/properties]
+
+
+Processing InfoController#properties (for 76.105.156.160 at 2007-12-28 18:27:15) [GET]
+  Session ID: 6a6068f6bcd38f30892106c4987cf869
+  Parameters: {"action"=>"properties", "controller"=>"rails/info"}
+Completed in 0.00102 (984 reqs/sec) | Rendering: 0.00007 (7%) | 500 Internal Server Error [http://throwingbones.com/rails/rails/info/properties]
+  [4;36;1mSQL (0.000220)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.038231)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000239)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.011139)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000208)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.003037)[0m   [0mSHOW FIELDS FROM games[0m
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-03 02:19:05) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000315)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001057)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000318)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000305)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.04121 (24 reqs/sec) | Rendering: 0.00790 (19%) | DB: 0.00199 (4%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#new (for 76.105.156.160 at 2008-01-03 02:19:35) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"division"}
+  [4;36;1mSQL (0.000248)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001009)[0m   [0mSHOW FIELDS FROM divisions[0m
+Rendering  within layouts/division
+Rendering division/new
+Rendered division/_form (0.00188)
+Completed in 0.04602 (21 reqs/sec) | Rendering: 0.01096 (23%) | DB: 0.00126 (2%) | 200 OK [http://throwingbones.com/rails/division/new]
+
+
+Processing DivisionController#create (for 76.105.156.160 at 2008-01-03 02:19:48) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "action"=>"create", "division"=>{"name"=>"Coed 4b"}, "controller"=>"division"}
+  [4;36;1mSQL (0.000340)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.002377)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000182)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000446)[0m   [0mINSERT INTO divisions (`name`) VALUES('Coed 4b')[0m
+  [4;36;1mSQL (0.000177)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/division/list
+Completed in 0.03057 (32 reqs/sec) | DB: 0.00352 (11%) | 302 Found [http://throwingbones.com/rails/division/create]
+
+
+Processing DivisionController#list (for 76.105.156.160 at 2008-01-03 02:19:51) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"division"}
+  [4;36;1mSQL (0.000247)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001011)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000254)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000301)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering  within layouts/division
+Rendering division/list
+Completed in 0.04105 (24 reqs/sec) | Rendering: 0.00889 (21%) | DB: 0.00181 (4%) | 200 OK [http://throwingbones.com/rails/division/list]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-03 02:20:02) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000398)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001900)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000309)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000401)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+Completed in 0.06888 (14 reqs/sec) | Rendering: 0.00968 (14%) | DB: 0.00301 (4%) | 200 OK [http://throwingbones.com/rails/team]
+
+
+Processing TeamController#new (for 76.105.156.160 at 2008-01-03 02:20:15) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"team"}
+  [4;36;1mSQL (0.000309)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.771688)[0m   [0mSHOW FIELDS FROM teams[0m
+Rendering  within layouts/team
+Rendering team/new
+Rendered team/_form (0.00187)
+Completed in 1.05193 (0 reqs/sec) | Rendering: 0.00972 (0%) | DB: 0.77200 (73%) | 200 OK [http://throwingbones.com/rails/team/new]
+
+
+Processing TeamController#create (for 76.105.156.160 at 2008-01-03 02:20:29) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "action"=>"create", "controller"=>"team", "team"=>{"name"=>"FC Harpoon"}}
+  [4;36;1mSQL (0.000353)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001486)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000174)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000000)[0m   [0mMysql::Error: Column 'division_id' cannot be null: INSERT INTO teams (`name`, `division_id`) VALUES('FC Harpoon', NULL)[0m
+  [4;36;1mSQL (0.000172)[0m   [0;1mROLLBACK[0m
+
+
+ActiveRecord::StatementInvalid (Mysql::Error: Column 'division_id' cannot be null: INSERT INTO teams (`name`, `division_id`) VALUES('FC Harpoon', NULL)):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/connection_adapters/abstract_adapter.rb:128:in `log'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/connection_adapters/mysql_adapter.rb:243:in `execute'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/connection_adapters/mysql_adapter.rb:253:in `insert'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1811:in `create_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:254:in `create_without_timestamps'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/timestamp.rb:39:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1789:in `create_or_update_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:242:in `create_or_update'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1545:in `save_without_validation'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/validations.rb:752:in `save_without_transactions'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:129:in `save'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/connection_adapters/abstract/database_statements.rb:59:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:95:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:121:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:129:in `save'
+    /app/controllers/team_controller.rb:25:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing ApplicationController#index (for 70.103.65.4 at 2008-01-03 11:55:32) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/divisions" with {:method=>:get}):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing ApplicationController#index (for 70.103.65.4 at 2008-01-03 11:55:38) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/divisions/" with {:method=>:get}):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing DivisionController#index (for 70.103.65.4 at 2008-01-03 11:55:49) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000222)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.110448)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000150)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000159)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.56525 (1 reqs/sec) | Rendering: 0.04027 (7%) | DB: 0.11098 (19%) | 200 OK [http://throwingbones.com/rails/division/]
+
+
+Processing DivisionController#index (for 70.103.65.4 at 2008-01-03 12:32:25) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000213)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001749)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000154)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000144)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03061 (32 reqs/sec) | Rendering: 0.00616 (20%) | DB: 0.00226 (7%) | 200 OK [http://throwingbones.com/rails/division/]
+
+
+Processing DivisionController#index (for 70.103.65.4 at 2008-01-03 12:32:44) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000233)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001002)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000146)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000141)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03001 (33 reqs/sec) | Rendering: 0.00610 (20%) | DB: 0.00152 (5%) | 200 OK [http://throwingbones.com/rails/division/]
+
+
+Processing DivisionController#new (for 70.103.65.4 at 2008-01-03 12:32:51) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"new", "controller"=>"division"}
+  [4;36;1mSQL (0.000214)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001013)[0m   [0mSHOW FIELDS FROM divisions[0m
+Rendering  within layouts/division
+Rendering division/new
+Rendered division/_form (0.00195)
+Completed in 0.04271 (23 reqs/sec) | Rendering: 0.01946 (45%) | DB: 0.00123 (2%) | 200 OK [http://throwingbones.com/rails/division/new]
+
+
+Processing DivisionController#create (for 70.103.65.4 at 2008-01-03 12:33:00) [POST]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"commit"=>"Create", "action"=>"create", "division"=>{"name"=>"Coed 4a"}, "controller"=>"division"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001026)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000137)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.014810)[0m   [0mINSERT INTO divisions (`name`) VALUES('Coed 4a')[0m
+  [4;36;1mSQL (0.000101)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/division/list
+Completed in 0.04117 (24 reqs/sec) | DB: 0.01629 (39%) | 302 Found [http://throwingbones.com/rails/division/create]
+
+
+Processing DivisionController#list (for 70.103.65.4 at 2008-01-03 12:33:03) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"division"}
+  [4;36;1mSQL (0.000231)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.000983)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000249)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000323)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering  within layouts/division
+Rendering division/list
+Completed in 0.07284 (13 reqs/sec) | Rendering: 0.00673 (9%) | DB: 0.00179 (2%) | 200 OK [http://throwingbones.com/rails/division/list]
+
+
+Processing TeamController#index (for 70.103.65.4 at 2008-01-03 17:34:12) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000209)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001736)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000163)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000134)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+Completed in 0.29546 (3 reqs/sec) | Rendering: 0.01790 (6%) | DB: 0.00224 (0%) | 200 OK [http://throwingbones.com/rails/team/]
+
+
+Processing TeamController#new (for 70.103.65.4 at 2008-01-03 17:34:16) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"new", "controller"=>"team"}
+  [4;36;1mSQL (0.000230)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001072)[0m   [0mSHOW FIELDS FROM teams[0m
+Rendering  within layouts/team
+Rendering team/new
+ERROR: compiling _run_rhtml_47app47views47team47_form46rhtml RAISED compile error
+/var/www/rails/public/../config/../app/views/team/_form.rhtml:10: syntax error, unexpected tLBRACE, expecting ')'
+{|c| [c.name, c.id] }) ).to_s); _erbout.concat "</p>\n"
+ ^
+/var/www/rails/public/../config/../app/views/team/_form.rhtml:10: syntax error, unexpected '}', expecting ')'
+{|c| [c.name, c.id] }) ).to_s); _erbout.concat "</p>\n"
+                     ^
+Function body: def _run_rhtml_47app47views47team47_form46rhtml(local_assigns)
+form = local_assigns[:form]
+form_counter = local_assigns[:form_counter]
+_erbout = ''; _erbout.concat(( error_messages_for 'team' ).to_s); _erbout.concat "\n"
+_erbout.concat "\n"
+_erbout.concat "<!--[form:team]-->\n"
+_erbout.concat "<p><label for=\"team_name\">Name</label><br/>\n"
+_erbout.concat(( text_field 'team', 'name'  ).to_s); _erbout.concat "</p>\n"
+_erbout.concat "\n"
+_erbout.concat "<p><label\n"
+_erbout.concat "for=\"division_id\">Division</label><br/>\n"
+_erbout.concat(( select("team", "division_id", Division.find(:all).collect
+{|c| [c.name, c.id] }) ).to_s); _erbout.concat "</p>\n"
+_erbout.concat "<!--[eoform:team]-->\n"
+_erbout.concat "\n"
+_erbout
+end
+Backtrace: /var/www/rails/public/../config/../app/views/team/_form.rhtml:14:in `compile_template'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:319:in `compile_and_render_template'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:301:in `render_template'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:260:in `render_file'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:275:in `render'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/partials.rb:59:in `render_partial'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:26:in `benchmark'
+/usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:307:in `realtime'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:26:in `benchmark'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/partials.rb:58:in `render_partial'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:287:in `render'
+/var/www/rails/public/../config/../app/views/team/new.rhtml:4:in `_run_rhtml_47app47views47team47new46rhtml'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:108:in `call'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:108:in `capture_erb_with_buffer'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:67:in `capture'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/form_tag_helper.rb:51:in `form_tag'
+/var/www/rails/public/../config/../app/views/team/new.rhtml:3:in `_run_rhtml_47app47views47team47new46rhtml'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:326:in `send'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:326:in `compile_and_render_template'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:301:in `render_template'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:260:in `render_file'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:806:in `render_file'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:711:in `render_with_no_layout'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/layout.rb:247:in `render_without_benchmark'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+/usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1096:in `perform_action_without_filters'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+/usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+/usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+/var/www/rails/public/dispatch.cgi:10
+
+
+ActionView::TemplateError (compile error
+/var/www/rails/public/../config/../app/views/team/_form.rhtml:10: syntax error, unexpected tLBRACE, expecting ')'
+{|c| [c.name, c.id] }) ).to_s); _erbout.concat "</p>\n"
+ ^
+/var/www/rails/public/../config/../app/views/team/_form.rhtml:10: syntax error, unexpected '}', expecting ')'
+{|c| [c.name, c.id] }) ).to_s); _erbout.concat "</p>\n"
+                     ^) on line #10 of app/views/team/_form.rhtml:
+7: <p><label
+8: for="division_id">Division</label><br/>
+9: <%= select("team", "division_id", Division.find(:all).collect
+10: {|c| [c.name, c.id] }) %></p>
+11: <!--[eoform:team]-->
+12: 
+
+    #{RAILS_ROOT}/app/views/team/_form.rhtml:14:in `compile_template'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:319:in `compile_and_render_template'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:301:in `render_template'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:260:in `render_file'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:275:in `render'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/partials.rb:59:in `render_partial'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:26:in `benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:307:in `realtime'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:26:in `benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/partials.rb:58:in `render_partial'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:287:in `render'
+    #{RAILS_ROOT}/app/views/team/new.rhtml:4:in `_run_rhtml_47app47views47team47new46rhtml'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:108:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:108:in `capture_erb_with_buffer'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/capture_helper.rb:67:in `capture'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/helpers/form_tag_helper.rb:51:in `form_tag'
+    #{RAILS_ROOT}/app/views/team/new.rhtml:3:in `_run_rhtml_47app47views47team47new46rhtml'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:326:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:326:in `compile_and_render_template'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:301:in `render_template'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:260:in `render_file'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:806:in `render_file'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:711:in `render_with_no_layout'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/layout.rb:247:in `render_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1096:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing TeamController#new (for 70.103.65.4 at 2008-01-03 17:34:34) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"new", "controller"=>"team"}
+  [4;36;1mSQL (0.000236)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001038)[0m   [0mSHOW FIELDS FROM teams[0m
+Rendering  within layouts/team
+Rendering team/new
+  [4;36;1mDivision Load (0.016782)[0m   [0;1mSELECT * FROM divisions [0m
+  [4;35;1mDivision Columns (0.000982)[0m   [0mSHOW FIELDS FROM divisions[0m
+Rendered team/_form (0.02620)
+Completed in 0.05635 (17 reqs/sec) | Rendering: 0.01322 (23%) | DB: 0.01904 (33%) | 200 OK [http://throwingbones.com/rails/team/new]
+
+
+Processing TeamController#create (for 70.103.65.4 at 2008-01-03 17:34:42) [POST]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"commit"=>"Create", "action"=>"create", "controller"=>"team", "team"=>{"name"=>"FC Harpoon", "division_id"=>"1"}}
+  [4;36;1mSQL (0.000215)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001009)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000128)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.017800)[0m   [0mINSERT INTO teams (`name`, `division_id`) VALUES('FC Harpoon', 1)[0m
+  [4;36;1mSQL (0.000095)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/team/list
+Completed in 0.04509 (22 reqs/sec) | DB: 0.01925 (42%) | 302 Found [http://throwingbones.com/rails/team/create]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:34:45) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000220)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001039)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000282)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000303)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+Completed in 0.03138 (31 reqs/sec) | Rendering: 0.00625 (19%) | DB: 0.00184 (5%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing DivisionController#index (for 70.103.65.4 at 2008-01-03 17:34:58) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.000955)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000153)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000150)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.04699 (21 reqs/sec) | Rendering: 0.02166 (46%) | DB: 0.00148 (3%) | 200 OK [http://throwingbones.com/rails/division/]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:48:15) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.099973)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.002625)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000190)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000236)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000854)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000375)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Completed in 0.34116 (2 reqs/sec) | Rendering: 0.01346 (3%) | DB: 0.10425 (30%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:48:57) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000204)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001036)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000150)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000136)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000854)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000125)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Completed in 0.03749 (26 reqs/sec) | Rendering: 0.01125 (29%) | DB: 0.00250 (6%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:49:03) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "division_id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.000226)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001144)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000154)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000133)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000862)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000135)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Completed in 0.04304 (23 reqs/sec) | Rendering: 0.01138 (26%) | DB: 0.00265 (6%) | 200 OK [http://throwingbones.com/rails/team/list?division_id=1]
+
+
+Processing TeamController#new (for 70.103.65.4 at 2008-01-03 17:50:12) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"new", "controller"=>"team"}
+  [4;36;1mSQL (0.000707)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.008549)[0m   [0mSHOW FIELDS FROM teams[0m
+Rendering  within layouts/team
+Rendering team/new
+  [4;36;1mDivision Load (0.000180)[0m   [0;1mSELECT * FROM divisions [0m
+  [4;35;1mDivision Columns (0.001472)[0m   [0mSHOW FIELDS FROM divisions[0m
+Rendered team/_form (0.01664)
+Completed in 0.08409 (11 reqs/sec) | Rendering: 0.04325 (51%) | DB: 0.01091 (12%) | 200 OK [http://throwingbones.com/rails/team/new]
+
+
+Processing TeamController#create (for 70.103.65.4 at 2008-01-03 17:50:24) [POST]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"commit"=>"Create", "action"=>"create", "controller"=>"team", "team"=>{"name"=>"Burnin' Bush", "division_id"=>"1"}}
+  [4;36;1mSQL (0.000211)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001040)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000145)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000265)[0m   [0mINSERT INTO teams (`name`, `division_id`) VALUES('Burnin\' Bush', 1)[0m
+  [4;36;1mSQL (0.000095)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/team/list
+Completed in 0.16069 (6 reqs/sec) | DB: 0.00176 (1%) | 302 Found [http://throwingbones.com/rails/team/create]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:50:27) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000208)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001147)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000242)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000321)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000931)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000122)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000133)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Completed in 0.04191 (23 reqs/sec) | Rendering: 0.01248 (29%) | DB: 0.00310 (7%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing TeamController#new (for 70.103.65.4 at 2008-01-03 17:50:31) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"new", "controller"=>"team"}
+  [4;36;1mSQL (0.000225)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001037)[0m   [0mSHOW FIELDS FROM teams[0m
+Rendering  within layouts/team
+Rendering team/new
+  [4;36;1mDivision Load (0.000148)[0m   [0;1mSELECT * FROM divisions [0m
+  [4;35;1mDivision Columns (0.000910)[0m   [0mSHOW FIELDS FROM divisions[0m
+Rendered team/_form (0.02415)
+Completed in 0.05442 (18 reqs/sec) | Rendering: 0.02891 (53%) | DB: 0.00232 (4%) | 200 OK [http://throwingbones.com/rails/team/new]
+
+
+Processing TeamController#create (for 70.103.65.4 at 2008-01-03 17:50:41) [POST]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"commit"=>"Create", "action"=>"create", "controller"=>"team", "team"=>{"name"=>"Las Tortugas", "division_id"=>"2"}}
+  [4;36;1mSQL (0.000217)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001068)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000140)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000287)[0m   [0mINSERT INTO teams (`name`, `division_id`) VALUES('Las Tortugas', 2)[0m
+  [4;36;1mSQL (0.000130)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/team/list
+Completed in 0.02756 (36 reqs/sec) | DB: 0.00184 (6%) | 302 Found [http://throwingbones.com/rails/team/create]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:50:44) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000208)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001019)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000249)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000291)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000842)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000148)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000149)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;35;1mDivision Load (0.000343)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Completed in 0.03986 (25 reqs/sec) | Rendering: 0.01361 (34%) | DB: 0.00325 (8%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:50:48) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "division_id"=>"2", "controller"=>"team"}
+  [4;36;1mSQL (0.000244)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001061)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000144)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000140)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000851)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000140)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000162)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;35;1mDivision Load (0.000142)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Completed in 0.04004 (24 reqs/sec) | Rendering: 0.01388 (34%) | DB: 0.00288 (7%) | 200 OK [http://throwingbones.com/rails/team/list?division_id=2]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:50:56) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "division_id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.000224)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001106)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000166)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000147)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000846)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000142)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000187)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;35;1mDivision Load (0.000146)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Completed in 0.03991 (25 reqs/sec) | Rendering: 0.01400 (35%) | DB: 0.00296 (7%) | 200 OK [http://throwingbones.com/rails/team/list?division_id=1]
+
+
+Processing TeamController#list (for 70.103.65.4 at 2008-01-03 17:52:25) [GET]
+  Session ID: eb89fbf72b9cdc76790afa790fdd7eb8
+  Parameters: {"action"=>"list", "division_id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001084)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000153)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000140)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000845)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000138)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000156)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;35;1mDivision Load (0.000169)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Completed in 0.03980 (25 reqs/sec) | Rendering: 0.01314 (33%) | DB: 0.00290 (7%) | 200 OK [http://throwingbones.com/rails/team/list?division_id=1]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-03 22:32:49) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000213)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.002294)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000128)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000137)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000821)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000127)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;36;1mDivision Load (0.000142)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+  [4;35;1mDivision Load (0.000153)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Completed in 0.47513 (2 reqs/sec) | Rendering: 0.04787 (10%) | DB: 0.00401 (0%) | 200 OK [http://throwingbones.com/rails/team]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-04 00:35:26) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000240)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001713)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000236)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000429)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000914)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000302)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000300)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 9) [0m
+  [4;35;1mDivision Load (0.000122)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000293)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000287)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000124)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000305)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000286)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000120)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000288)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.10498 (9 reqs/sec) | Rendering: 0.04845 (46%) | DB: 0.00596 (5%) | 200 OK [http://throwingbones.com/rails/team/]
+
+
+Processing ApplicationController#index (for 76.105.156.160 at 2008-01-04 00:35:45) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/games" with {:method=>:get}):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-04 00:35:48) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.000200)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001820)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000226)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000234)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.04818 (20 reqs/sec) | Rendering: 0.02233 (46%) | DB: 0.00248 (5%) | 200 OK [http://throwingbones.com/rails/game]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-04 00:40:18) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.000487)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.002149)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000448)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000798)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.09194 (10 reqs/sec) | Rendering: 0.04182 (45%) | DB: 0.00388 (4%) | 200 OK [http://throwingbones.com/rails/game]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-04 00:45:13) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.000290)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001598)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000296)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000603)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.06304 (15 reqs/sec) | Rendering: 0.02764 (43%) | DB: 0.00279 (4%) | 200 OK [http://throwingbones.com/rails/game]
+
+
+Processing GameController#show (for 76.105.156.160 at 2008-01-04 00:45:18) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"game"}
+  [4;36;1mSQL (0.000201)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001072)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mGame Load (0.000324)[0m   [0;1mSELECT * FROM games WHERE (games.`id` = 1) [0m
+Rendering  within layouts/game
+Rendering game/show
+Completed in 0.04548 (21 reqs/sec) | Rendering: 0.02073 (45%) | DB: 0.00160 (3%) | 200 OK [http://throwingbones.com/rails/game/show/1]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-04 00:45:30) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.000211)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001034)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000338)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 1) [0m
+Rendering  within layouts/team
+Rendering team/show
+Completed in 0.03453 (28 reqs/sec) | Rendering: 0.01036 (29%) | DB: 0.00158 (4%) | 200 OK [http://throwingbones.com/rails/team/show/1]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-04 01:10:40) [GET]
+  Session ID: e2043ffecf04f0dfa5835f20965472e0
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000469)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001075)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000263)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000365)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000851)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000354)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000324)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 9) [0m
+  [4;35;1mDivision Load (0.000154)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000360)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000364)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000176)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000411)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000376)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000145)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000318)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.06966 (14 reqs/sec) | Rendering: 0.03189 (45%) | DB: 0.00601 (8%) | 200 OK [http://throwingbones.com/rails/team/]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-08 01:16:38) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.000219)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001073)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000246)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000448)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.06177 (16 reqs/sec) | Rendering: 0.02977 (48%) | DB: 0.00199 (3%) | 200 OK [http://throwingbones.com/rails/game]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-08 01:16:58) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"index", "controller"=>"game", "page"=>"2"}
+  [4;36;1mSQL (0.000340)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001611)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000211)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000631)[0m   [0mSELECT * FROM games LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.06627 (15 reqs/sec) | Rendering: 0.02857 (43%) | DB: 0.00279 (4%) | 200 OK [http://throwingbones.com/rails/game?page=2]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-08 01:17:03) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"index", "controller"=>"game", "page"=>"1"}
+  [4;36;1mSQL (0.000222)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001093)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000182)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000170)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.03999 (25 reqs/sec) | Rendering: 0.01570 (39%) | DB: 0.00167 (4%) | 200 OK [http://throwingbones.com/rails/game?page=1]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-08 22:15:41) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000242)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001041)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000226)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000488)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000879)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.009985)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000333)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 28) [0m
+  [4;35;1mDivision Load (0.000134)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000313)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000305)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000141)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000332)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 21) [0m
+  [4;36;1mDivision Load (0.000310)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000446)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000323)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.09817 (10 reqs/sec) | Rendering: 0.05033 (51%) | DB: 0.01550 (15%) | 200 OK [http://throwingbones.com/rails/team]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:15:46) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.004559)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001038)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000345)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 1) [0m
+Rendering  within layouts/team
+Rendering team/show
+Completed in 0.05141 (19 reqs/sec) | Rendering: 0.02148 (41%) | DB: 0.00594 (11%) | 200 OK [http://throwingbones.com/rails/team/show/1]
+
+
+Processing TeamController#edit (for 76.105.156.160 at 2008-01-08 22:15:53) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"edit", "id"=>"1", "controller"=>"team"}
+  [4;36;1mSQL (0.000227)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001042)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000145)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 1) [0m
+Rendering  within layouts/team
+Rendering team/edit
+  [4;35;1mDivision Load (0.000448)[0m   [0mSELECT * FROM divisions [0m
+  [4;36;1mDivision Columns (0.001587)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Rendered team/_form (0.08712)
+Completed in 0.88445 (1 reqs/sec) | Rendering: 0.85804 (97%) | DB: 0.00345 (0%) | 200 OK [http://throwingbones.com/rails/team/edit/1]
+
+
+Processing TeamController#index (for 76.105.156.160 at 2008-01-08 22:16:24) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000207)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001010)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000137)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000166)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000856)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000128)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000137)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 28) [0m
+  [4;35;1mDivision Load (0.000132)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000131)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000166)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000135)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000136)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 21) [0m
+  [4;36;1mDivision Load (0.000133)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000132)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000137)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.04795 (20 reqs/sec) | Rendering: 0.02117 (44%) | DB: 0.00374 (7%) | 200 OK [http://throwingbones.com/rails/team]
+
+
+Processing GameController#index (for 76.105.156.160 at 2008-01-08 22:16:37) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"game"}
+  [4;36;1mSQL (0.000227)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001079)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mSQL (0.000284)[0m   [0;1mSELECT count(*) AS count_all FROM games [0m
+  [4;35;1mGame Load (0.000799)[0m   [0mSELECT * FROM games LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/game
+Rendering game/list
+Completed in 0.06316 (15 reqs/sec) | Rendering: 0.03509 (55%) | DB: 0.00239 (3%) | 200 OK [http://throwingbones.com/rails/game]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:18:16) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000221)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001814)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000240)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000319)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.05131 (19 reqs/sec) | Rendering: 0.02484 (48%) | DB: 0.00259 (5%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:18:23) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"2", "controller"=>"division"}
+  [4;36;1mSQL (0.000200)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001163)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000182)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Rendering  within layouts/division
+Rendering division/show
+Completed in 0.05933 (16 reqs/sec) | Rendering: 0.02778 (46%) | DB: 0.00154 (2%) | 200 OK [http://throwingbones.com/rails/division/show/2]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:19:22) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"2", "controller"=>"division"}
+  [4;36;1mSQL (0.000226)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001052)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000153)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+Rendering  within layouts/division
+Rendering division/show
+Completed in 0.02963 (33 reqs/sec) | Rendering: 0.00481 (16%) | DB: 0.00143 (4%) | 200 OK [http://throwingbones.com/rails/division/show/2]
+
+
+Processing GameController#show (for 76.105.156.160 at 2008-01-08 22:19:29) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"game"}
+  [4;36;1mSQL (0.000203)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001066)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mGame Load (0.000394)[0m   [0;1mSELECT * FROM games WHERE (games.`id` = 1) [0m
+Rendering  within layouts/game
+Rendering game/show
+Completed in 0.04504 (22 reqs/sec) | Rendering: 0.02136 (47%) | DB: 0.00166 (3%) | 200 OK [http://throwingbones.com/rails/game/show/1]
+  [4;36;1mSQL (0.000242)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001146)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+Processing PlayerController#index (for 76.105.156.160 at 2008-01-08 22:22:31) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"player"}
+  [4;36;1mSQL (0.000258)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001176)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000242)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000254)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/player
+Rendering player/list
+Completed in 0.02934 (34 reqs/sec) | Rendering: 0.00516 (17%) | DB: 0.00193 (6%) | 200 OK [http://throwingbones.com/rails/player]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:29:52) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000232)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001747)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000157)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000143)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.04801 (20 reqs/sec) | Rendering: 0.01113 (23%) | DB: 0.00228 (4%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:30:21) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"division"}
+  [4;36;1mSQL (0.000220)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001178)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000341)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 8) [0m
+Rendering  within layouts/division
+Rendering division/show
+Completed in 0.03006 (33 reqs/sec) | Rendering: 0.00473 (15%) | DB: 0.00174 (5%) | 200 OK [http://throwingbones.com/rails/division/show/8]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:34:29) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"division"}
+  [4;36;1mSQL (0.000239)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001041)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000139)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 8) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000452)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 8) [0m
+  [4;36;1mTeam Columns (0.000917)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.03913 (25 reqs/sec) | Rendering: 0.01295 (33%) | DB: 0.00279 (7%) | 200 OK [http://throwingbones.com/rails/division/show/8]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:36:59) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"division"}
+  [4;36;1mSQL (0.000224)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001915)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000143)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 8) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000125)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 8) [0m
+  [4;36;1mTeam Columns (0.000929)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.03945 (25 reqs/sec) | Rendering: 0.01299 (32%) | DB: 0.00334 (8%) | 200 OK [http://throwingbones.com/rails/division/show/8]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:37:06) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"54", "controller"=>"team"}
+  [4;36;1mSQL (0.000202)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001120)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000382)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 54) [0m
+Rendering  within layouts/team
+Rendering team/show
+Completed in 0.03209 (31 reqs/sec) | Rendering: 0.00481 (14%) | DB: 0.00170 (5%) | 200 OK [http://throwingbones.com/rails/team/show/54]
+
+
+Processing TeamController#list (for 76.105.156.160 at 2008-01-08 22:37:20) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000205)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001098)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000141)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000137)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000916)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000137)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000141)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 28) [0m
+  [4;35;1mDivision Load (0.000131)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000131)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000140)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000133)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000175)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 21) [0m
+  [4;36;1mDivision Load (0.000140)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000138)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000138)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.04990 (20 reqs/sec) | Rendering: 0.02073 (41%) | DB: 0.00390 (7%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:37:32) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.099971)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001236)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000150)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000159)[0m   [0mSELECT * FROM divisions LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.23526 (4 reqs/sec) | Rendering: 0.01101 (4%) | DB: 0.10152 (43%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:37:57) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"division"}
+  [4;36;1mSQL (0.000281)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001033)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000379)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000494)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 1) [0m
+  [4;36;1mTeam Columns (0.000948)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.06513 (15 reqs/sec) | Rendering: 0.02219 (34%) | DB: 0.00314 (4%) | 200 OK [http://throwingbones.com/rails/division/show/1]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:38:21) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000202)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001031)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000132)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000317)[0m   [0mSELECT * FROM divisions LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03656 (27 reqs/sec) | Rendering: 0.01115 (30%) | DB: 0.00168 (4%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:38:28) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"3"}
+  [4;36;1mSQL (0.000206)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001058)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000128)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000325)[0m   [0mSELECT * FROM divisions LIMIT 20, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03718 (26 reqs/sec) | Rendering: 0.01119 (30%) | DB: 0.00172 (4%) | 200 OK [http://throwingbones.com/rails/division?page=3]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:38:38) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000220)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001071)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000140)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000160)[0m   [0mSELECT * FROM divisions LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03703 (27 reqs/sec) | Rendering: 0.01126 (30%) | DB: 0.00159 (4%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:40:11) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000320)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001561)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000146)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000280)[0m   [0mSELECT * FROM divisions LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.08379 (11 reqs/sec) | Rendering: 0.02390 (28%) | DB: 0.00231 (2%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:40:28) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000239)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001068)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000149)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000148)[0m   [0mSELECT * FROM divisions LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03833 (26 reqs/sec) | Rendering: 0.01200 (31%) | DB: 0.00160 (4%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:40:40) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000246)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001057)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mSQL (0.000161)[0m   [0;1mSELECT count(*) AS count_all FROM divisions [0m
+  [4;35;1mDivision Load (0.000178)[0m   [0mSELECT * FROM divisions LIMIT 10, 10[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+Completed in 0.03555 (28 reqs/sec) | Rendering: 0.01066 (29%) | DB: 0.00164 (4%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:41:04) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000256)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.000282)[0m   [0mSELECT * FROM divisions [0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.001033)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.05457 (18 reqs/sec) | Rendering: 0.02718 (49%) | DB: 0.00157 (2%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:41:33) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000223)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.000526)[0m   [0mSELECT * FROM divisions ORDER BY league[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.000936)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.04720 (21 reqs/sec) | Rendering: 0.02246 (47%) | DB: 0.00169 (3%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-08 22:42:10) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"index", "controller"=>"division", "page"=>"2"}
+  [4;36;1mSQL (0.000235)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.000258)[0m   [0mSELECT * FROM divisions ORDER BY league[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.001697)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.04775 (20 reqs/sec) | Rendering: 0.02228 (46%) | DB: 0.00219 (4%) | 200 OK [http://throwingbones.com/rails/division?page=2]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-08 22:42:19) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"6", "controller"=>"division"}
+  [4;36;1mSQL (0.000236)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001080)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000155)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000488)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 6) [0m
+  [4;36;1mTeam Columns (0.000892)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.03986 (25 reqs/sec) | Rendering: 0.01347 (33%) | DB: 0.00285 (7%) | 200 OK [http://throwingbones.com/rails/division/show/6]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:42:28) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000221)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001022)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000323)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+Completed in 0.03104 (32 reqs/sec) | Rendering: 0.00470 (15%) | DB: 0.00157 (5%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:45:51) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000330)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001623)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000209)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000799)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.001498)[0m   [0;1mSHOW FIELDS FROM games[0m
+Completed in 0.06689 (14 reqs/sec) | Rendering: 0.02121 (31%) | DB: 0.00446 (6%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:47:37) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000251)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001740)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000157)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000129)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.001071)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000858)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000332)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+Completed in 0.06030 (16 reqs/sec) | Rendering: 0.02399 (39%) | DB: 0.00454 (7%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:47:41) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player"}
+  [4;36;1mSQL (0.000210)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001119)[0m   [0mSHOW FIELDS FROM players[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00188)
+Completed in 0.03097 (32 reqs/sec) | Rendering: 0.00663 (21%) | DB: 0.00133 (4%) | 200 OK [http://throwingbones.com/rails/player/new]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 22:47:59) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "phone_number"=>"503-332-9719", "email_address"=>"ben.prew@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000226)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001154)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000157)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000336)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'Ben', '503-332-9719', 'ben.prew@gmail.com')[0m
+  [4;36;1mSQL (0.000163)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.02849 (35 reqs/sec) | DB: 0.00204 (7%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 22:48:01) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000211)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001081)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000232)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000297)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03104 (32 reqs/sec) | Rendering: 0.00640 (20%) | DB: 0.00182 (5%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:48:16) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000227)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001097)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000158)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000152)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000940)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000901)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000380)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+Completed in 0.04733 (21 reqs/sec) | Rendering: 0.01831 (38%) | DB: 0.00386 (8%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:49:56) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000203)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001016)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000143)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000132)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000900)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000905)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000176)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+Completed in 0.04585 (21 reqs/sec) | Rendering: 0.01778 (38%) | DB: 0.00348 (7%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:50:01) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000199)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001139)[0m   [0mSHOW FIELDS FROM players[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00186)
+Completed in 0.03492 (28 reqs/sec) | Rendering: 0.00671 (19%) | DB: 0.00134 (3%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 22:50:21) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Chris", "is_sub"=>"false", "phone_number"=>"", "email_address"=>"chris@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001105)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000120)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000383)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'Chris', '', 'chris@gmail.com')[0m
+  [4;36;1mSQL (0.000106)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.02823 (35 reqs/sec) | DB: 0.00193 (6%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 22:50:25) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000217)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001148)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000259)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000321)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03188 (31 reqs/sec) | Rendering: 0.00683 (21%) | DB: 0.00195 (6%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 22:50:32) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000261)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.000997)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000145)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000149)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.001108)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000957)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000345)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+Completed in 0.05488 (18 reqs/sec) | Rendering: 0.01840 (33%) | DB: 0.00396 (7%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:51:38) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000219)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001147)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+NoMethodError (undefined method `team=' for #<Player:0xb7c48404>):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1857:in `method_missing'
+    /app/controllers/player_controller.rb:21:in `new'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:54:05) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000227)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001937)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+NoMethodError (undefined method `team' for #<Player:0xb7d2d284>):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1860:in `method_missing'
+    /app/controllers/player_controller.rb:21:in `new'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:54:19) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000201)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001110)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+NoMethodError (undefined method `team' for #<Player:0xb7c7b340>):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1860:in `method_missing'
+    /app/controllers/player_controller.rb:21:in `new'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:55:12) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000343)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001177)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000148)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000132)[0m   [0mROLLBACK[0m
+
+
+ActiveRecord::AssociationTypeMismatch (Team expected, got String):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_proxy.rb:148:in `raise_on_type_mismatch'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:24:in `<<'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:23:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:23:in `<<'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/connection_adapters/abstract/database_statements.rb:59:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:95:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/transactions.rb:121:in `transaction'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:22:in `<<'
+    /app/controllers/player_controller.rb:21:in `new'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:634:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 22:55:27) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000223)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001187)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000854)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000139)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000146)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000116)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00188)
+Completed in 0.03905 (25 reqs/sec) | Rendering: 0.00668 (17%) | DB: 0.00267 (6%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 22:55:42) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "phone_number"=>"503-332-9719", "email_address"=>"ben.prew@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001150)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000140)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000293)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'Ben', '503-332-9719', 'ben.prew@gmail.com')[0m
+  [4;36;1mSQL (0.000136)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.02824 (35 reqs/sec) | DB: 0.00194 (6%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 22:55:45) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000225)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001166)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000250)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000342)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03326 (30 reqs/sec) | Rendering: 0.00754 (22%) | DB: 0.00198 (5%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:04:02) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "phone_number"=>"503-332-9719", "email_address"=>"ben.prew@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000213)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001877)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000174)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000306)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'Ben', '503-332-9719', 'ben.prew@gmail.com')[0m
+  [4;36;1mSQL (0.000142)[0m   [0;1mCOMMIT[0m
+
+
+ActiveRecord::RecordNotFound (Couldn't find Team without an ID):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1012:in `find_from_ids'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:419:in `find'
+    /app/controllers/player_controller.rb:26:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:04:58) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000200)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001097)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000110)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000252)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, '', NULL, NULL)[0m
+  [4;36;1mSQL (0.000108)[0m   [0;1mCOMMIT[0m
+  [4;35;1mTeam Columns (0.000868)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000126)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;35;1mJoin Table Columns (0.000842)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mTeam Load (0.000337)[0m   [0;1mSELECT * FROM teams INNER JOIN players_teams ON teams.id = players_teams.team_id WHERE (players_teams.player_id = 5 ) [0m
+  [4;35;1mSQL (0.000091)[0m   [0mBEGIN[0m
+  [4;36;1mplayers_teams Columns (0.000826)[0m   [0;1mSHOW FIELDS FROM players_teams[0m
+  [4;35;1mSQL (0.000279)[0m   [0mINSERT INTO players_teams (`team_id`, `player_id`) VALUES (10, 5)[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00178)
+Completed in 0.04597 (21 reqs/sec) | Rendering: 0.00660 (14%) | DB: 0.00523 (11%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:05:11) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"frank", "is_sub"=>"false", "phone_number"=>"", "email_address"=>"frank@frank.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000324)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001187)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000157)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000304)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'frank', '', 'frank@frank.com')[0m
+  [4;36;1mSQL (0.000138)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.04624 (21 reqs/sec) | DB: 0.00211 (4%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 23:05:15) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000308)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001158)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000258)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000376)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.14479 (6 reqs/sec) | Rendering: 0.01674 (11%) | DB: 0.00210 (1%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 23:06:13) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000214)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001033)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000139)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000139)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000949)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000868)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000381)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.001002)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.04890 (20 reqs/sec) | Rendering: 0.01924 (39%) | DB: 0.00472 (9%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:06:18) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000234)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001159)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000134)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000305)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, '', NULL, NULL)[0m
+  [4;36;1mSQL (0.000133)[0m   [0;1mCOMMIT[0m
+  [4;35;1mTeam Columns (0.000892)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000132)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;35;1mJoin Table Columns (0.000867)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mTeam Load (0.000388)[0m   [0;1mSELECT * FROM teams INNER JOIN players_teams ON teams.id = players_teams.team_id WHERE (players_teams.player_id = 7 ) [0m
+  [4;35;1mSQL (0.000113)[0m   [0mBEGIN[0m
+  [4;36;1mplayers_teams Columns (0.000851)[0m   [0;1mSHOW FIELDS FROM players_teams[0m
+  [4;35;1mSQL (0.000265)[0m   [0mINSERT INTO players_teams (`team_id`, `player_id`) VALUES (10, 7)[0m
+  [4;36;1mSQL (0.000111)[0m   [0;1mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00174)
+Completed in 0.04505 (22 reqs/sec) | Rendering: 0.00658 (14%) | DB: 0.00558 (12%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:06:24) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"bob", "is_sub"=>"false", "phone_number"=>"", "email_address"=>"bob"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000215)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001116)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000169)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000275)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'bob', '', 'bob')[0m
+  [4;36;1mSQL (0.000124)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.02812 (35 reqs/sec) | DB: 0.00190 (6%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 23:06:26) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000208)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001138)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000253)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000372)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03563 (28 reqs/sec) | Rendering: 0.01012 (28%) | DB: 0.00197 (5%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 23:07:49) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000236)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001069)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000151)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000143)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000960)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000895)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000465)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.000980)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.04938 (20 reqs/sec) | Rendering: 0.01927 (39%) | DB: 0.00490 (9%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:08:24) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000205)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001111)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000911)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000124)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000102)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000092)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00185)
+Completed in 0.03926 (25 reqs/sec) | Rendering: 0.00662 (16%) | DB: 0.00255 (6%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:08:30) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"ben", "is_sub"=>"false", "phone_number"=>"", "email_address"=>""}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000206)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001091)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000115)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000362)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'ben', '', '')[0m
+  [4;36;1mSQL (0.000110)[0m   [0;1mCOMMIT[0m
+  [4;35;1mJoin Table Columns (0.000880)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mTeam Load (0.000294)[0m   [0;1mSELECT * FROM teams INNER JOIN players_teams ON teams.id = players_teams.team_id WHERE (players_teams.player_id = 9 ) [0m
+  [4;35;1mSQL (0.000101)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000098)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.03556 (28 reqs/sec) | DB: 0.00326 (9%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 23:08:32) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000247)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001144)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000249)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000295)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03211 (31 reqs/sec) | Rendering: 0.00636 (19%) | DB: 0.00193 (6%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:09:34) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000255)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001887)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000900)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000223)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000112)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000114)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00181)
+Completed in 0.04022 (24 reqs/sec) | Rendering: 0.00651 (16%) | DB: 0.00349 (8%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:09:41) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"bob", "is_sub"=>"false", "phone_number"=>"", "email_address"=>""}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000207)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001126)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000118)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000299)[0m   [0mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'bob', '', '')[0m
+  [4;36;1mSQL (0.000148)[0m   [0;1mCOMMIT[0m
+  [4;35;1mJoin Table Columns (0.000998)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mTeam Load (0.000318)[0m   [0;1mSELECT * FROM teams INNER JOIN players_teams ON teams.id = players_teams.team_id WHERE (players_teams.player_id = 10 ) [0m
+  [4;35;1mSQL (0.000128)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000109)[0m   [0;1mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.04045 (24 reqs/sec) | DB: 0.00345 (8%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 23:09:43) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000258)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001148)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000245)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000319)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03205 (31 reqs/sec) | Rendering: 0.00691 (21%) | DB: 0.00197 (6%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:12:50) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000235)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001174)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000866)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000149)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000126)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000112)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+Rendered player/_form (0.00221)
+Completed in 0.03991 (25 reqs/sec) | Rendering: 0.00692 (17%) | DB: 0.00266 (6%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:19:27) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000275)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001898)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000876)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000140)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000126)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000113)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+  [4;36;1mTeam Load (0.000785)[0m   [0;1mSELECT * FROM teams [0m
+Rendered player/_form (0.06882)
+Completed in 0.11169 (8 reqs/sec) | Rendering: 0.07301 (65%) | DB: 0.00421 (3%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:20:02) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "teams"=>["teams"], "phone_number"=>"503-332-9719", "email_address"=>"ben.prew@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000314)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001902)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+ActiveRecord::AssociationTypeMismatch (Team expected, got String):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_proxy.rb:148:in `raise_on_type_mismatch'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations.rb:950:in `teams='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1505:in `initialize_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:225:in `initialize'
+    /app/controllers/player_controller.rb:25:in `new'
+    /app/controllers/player_controller.rb:25:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:20:56) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "teams"=>["teams"], "phone_number"=>"503-332-9719", "email_address"=>"ben.prew@gmail.com"}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000227)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001124)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+ActiveRecord::AssociationTypeMismatch (Team expected, got String):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_proxy.rb:148:in `raise_on_type_mismatch'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations.rb:950:in `teams='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1505:in `initialize_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:225:in `initialize'
+    /app/controllers/player_controller.rb:25:in `new'
+    /app/controllers/player_controller.rb:25:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-08 23:21:35) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000224)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001051)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000133)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000141)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000938)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000989)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000324)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+Completed in 0.04689 (21 reqs/sec) | Rendering: 0.01775 (37%) | DB: 0.00380 (8%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:21:38) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000218)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001165)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000891)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000137)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000118)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000116)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+  [4;36;1mTeam Load (0.000403)[0m   [0;1mSELECT * FROM teams [0m
+Rendered player/_form (0.07202)
+Completed in 0.11246 (8 reqs/sec) | Rendering: 0.07656 (68%) | DB: 0.00305 (2%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:21:48) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "teams"=>["teams"], "phone_number"=>"", "email_address"=>""}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000221)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001144)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+ActiveRecord::AssociationTypeMismatch (Team expected, got String):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_proxy.rb:148:in `raise_on_type_mismatch'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations.rb:950:in `teams='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1505:in `initialize_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:225:in `initialize'
+    /app/controllers/player_controller.rb:25:in `new'
+    /app/controllers/player_controller.rb:25:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:22:49) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"Ben", "is_sub"=>"false", "teams"=>["teams"], "phone_number"=>"", "email_address"=>""}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000240)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001141)[0m   [0mSHOW FIELDS FROM players[0m
+
+
+ActiveRecord::AssociationTypeMismatch (Team expected, got String):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_proxy.rb:148:in `raise_on_type_mismatch'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations/association_collection.rb:137:in `replace'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/associations.rb:950:in `teams='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1672:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `each'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1671:in `attributes='
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/base.rb:1505:in `initialize_without_callbacks'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/activerecord-1.15.3/lib/active_record/callbacks.rb:225:in `initialize'
+    /app/controllers/player_controller.rb:25:in `new'
+    /app/controllers/player_controller.rb:25:in `create'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:638:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:438:in `call'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:637:in `call_filter'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `send'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing PlayerController#new (for 76.105.156.160 at 2008-01-08 23:22:54) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"10"}
+  [4;36;1mSQL (0.000236)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001132)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000873)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000137)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000119)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000120)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+  [4;36;1mTeam Load (0.000414)[0m   [0;1mSELECT * FROM teams [0m
+Rendered player/_form (0.07078)
+Completed in 0.10821 (9 reqs/sec) | Rendering: 0.07539 (69%) | DB: 0.00303 (2%) | 200 OK [http://throwingbones.com/rails/player/new?team=10]
+
+
+Processing PlayerController#create (for 76.105.156.160 at 2008-01-08 23:23:02) [POST]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"commit"=>"Create", "player"=>{"name"=>"ben", "is_sub"=>"false", "team_ids"=>["10"], "phone_number"=>"", "email_address"=>""}, "action"=>"create", "controller"=>"player"}
+  [4;36;1mSQL (0.000206)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001136)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000902)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000154)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;36;1mSQL (0.000128)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000111)[0m   [0mCOMMIT[0m
+  [4;36;1mTeam Load (0.000151)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+  [4;35;1mSQL (0.000105)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000108)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.000098)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000292)[0m   [0;1mINSERT INTO players (`is_sub`, `name`, `phone_number`, `email_address`) VALUES(0, 'ben', '', '')[0m
+  [4;35;1mplayers_teams Columns (0.000827)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mSQL (0.000281)[0m   [0;1mINSERT INTO players_teams (`team_id`, `player_id`) VALUES (10, 11)[0m
+  [4;35;1mSQL (0.000099)[0m   [0mCOMMIT[0m
+Redirected to http://throwingbones.com/rails/player/list
+Completed in 0.04000 (24 reqs/sec) | DB: 0.00460 (11%) | 302 Found [http://throwingbones.com/rails/player/create]
+
+
+Processing PlayerController#list (for 76.105.156.160 at 2008-01-08 23:23:04) [GET]
+  Session ID: aa92e862bdbc507b65ce79b518e48009
+  Parameters: {"action"=>"list", "controller"=>"player"}
+  [4;36;1mSQL (0.000266)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001245)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mSQL (0.000248)[0m   [0;1mSELECT count(*) AS count_all FROM players [0m
+  [4;35;1mPlayer Load (0.000334)[0m   [0mSELECT * FROM players LIMIT 0, 10[0m
+Rendering  within layouts/player
+Rendering player/list
+Completed in 0.03611 (27 reqs/sec) | Rendering: 0.00783 (21%) | DB: 0.00209 (5%) | 200 OK [http://throwingbones.com/rails/player/list]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-09 18:23:34) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000245)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.000288)[0m   [0mSELECT * FROM divisions ORDER BY league[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.002306)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.15291 (6 reqs/sec) | Rendering: 0.05107 (33%) | DB: 0.00284 (1%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-09 18:23:51) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"6", "controller"=>"division"}
+  [4;36;1mSQL (0.000261)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001089)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000150)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000153)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 6) [0m
+  [4;36;1mTeam Columns (0.000905)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.06416 (15 reqs/sec) | Rendering: 0.03787 (59%) | DB: 0.00256 (3%) | 200 OK [http://throwingbones.com/rails/division/show/6]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-09 18:23:59) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000216)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001054)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000157)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000152)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000963)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000862)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.016341)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.000974)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.09917 (10 reqs/sec) | Rendering: 0.05348 (53%) | DB: 0.02072 (20%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing GameController#show (for 76.105.156.160 at 2008-01-09 18:48:00) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"80", "controller"=>"game"}
+  [4;36;1mSQL (0.000243)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mGame Columns (0.001888)[0m   [0mSHOW FIELDS FROM games[0m
+  [4;36;1mGame Load (0.020150)[0m   [0;1mSELECT * FROM games WHERE (games.`id` = 80) [0m
+Rendering  within layouts/game
+Rendering game/show
+Completed in 0.06393 (15 reqs/sec) | Rendering: 0.01726 (26%) | DB: 0.02228 (34%) | 200 OK [http://throwingbones.com/rails/game/show/80]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-10 13:19:13) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000217)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.002814)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000133)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000172)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000931)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000869)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000165)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.001031)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.41183 (2 reqs/sec) | Rendering: 0.07419 (18%) | DB: 0.00633 (1%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing TeamController#index (for 70.103.65.4 at 2008-01-11 11:48:19) [GET]
+  Session ID: 5b40df269c278317ae813318f9474c4e
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000228)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.002751)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000156)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.000137)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.001328)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.004595)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000147)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 28) [0m
+  [4;35;1mDivision Load (0.000138)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000152)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000148)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000140)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000143)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 21) [0m
+  [4;36;1mDivision Load (0.000185)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000996)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000145)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.53536 (1 reqs/sec) | Rendering: 0.10650 (19%) | DB: 0.01139 (2%) | 200 OK [http://throwingbones.com/rails/team/]
+
+
+Processing TeamController#show (for 70.103.65.4 at 2008-01-11 11:48:26) [GET]
+  Session ID: 5b40df269c278317ae813318f9474c4e
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000231)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001054)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000169)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000154)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000930)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000867)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000155)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.000973)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.08551 (11 reqs/sec) | Rendering: 0.05348 (62%) | DB: 0.00453 (5%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing TeamController#list (for 76.105.156.160 at 2008-01-11 20:27:43) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"list", "controller"=>"team"}
+  [4;36;1mSQL (0.000291)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.015817)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.020310)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.019277)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering  within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.000865)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.000139)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000182)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 28) [0m
+  [4;35;1mDivision Load (0.000143)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000154)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000153)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000179)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000154)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 21) [0m
+  [4;36;1mDivision Load (0.000149)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000168)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000180)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 0.37879 (2 reqs/sec) | Rendering: 0.05202 (13%) | DB: 0.05816 (15%) | 200 OK [http://throwingbones.com/rails/team/list]
+
+
+Processing DivisionController#index (for 76.105.156.160 at 2008-01-11 20:27:50) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000214)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.000288)[0m   [0mSELECT * FROM divisions ORDER BY league[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.000891)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.08574 (11 reqs/sec) | Rendering: 0.04824 (56%) | DB: 0.00139 (1%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-11 20:27:58) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"4", "controller"=>"division"}
+  [4;36;1mSQL (0.000210)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001028)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.023616)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 4) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.002000)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 4) [0m
+  [4;36;1mTeam Columns (0.000965)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.06612 (15 reqs/sec) | Rendering: 0.01470 (22%) | DB: 0.02782 (42%) | 200 OK [http://throwingbones.com/rails/division/show/4]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-11 20:28:06) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"83", "controller"=>"team"}
+  [4;36;1mSQL (0.000301)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001133)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000343)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 83) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.015917)[0m   [0mSELECT * FROM games WHERE (games.team_id = 83) [0m
+  [4;36;1mGame Columns (0.000936)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000872)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.017190)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 83 ) [0m
+Completed in 0.10576 (9 reqs/sec) | Rendering: 0.04325 (40%) | DB: 0.03669 (34%) | 200 OK [http://throwingbones.com/rails/team/show/83]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-11 20:30:56) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"6", "controller"=>"division"}
+  [4;36;1mSQL (0.000276)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001089)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000185)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000159)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 6) [0m
+  [4;36;1mTeam Columns (0.000905)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.05889 (16 reqs/sec) | Rendering: 0.02391 (40%) | DB: 0.00261 (4%) | 200 OK [http://throwingbones.com/rails/division/show/6]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-11 20:31:02) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"13", "controller"=>"division"}
+  [4;36;1mSQL (0.000418)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.014525)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000170)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000474)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 13) [0m
+  [4;36;1mTeam Columns (0.000925)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.10105 (9 reqs/sec) | Rendering: 0.03355 (33%) | DB: 0.01651 (16%) | 200 OK [http://throwingbones.com/rails/division/show/13]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-11 20:31:06) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"126", "controller"=>"team"}
+  [4;36;1mSQL (0.000254)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001083)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000362)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 126) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.160172)[0m   [0mSELECT * FROM games WHERE (games.team_id = 126) [0m
+  [4;36;1mGame Columns (0.099502)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.100091)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000407)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 126 ) [0m
+Completed in 0.51618 (1 reqs/sec) | Rendering: 0.12012 (23%) | DB: 0.36187 (70%) | 200 OK [http://throwingbones.com/rails/team/show/126]
+
+
+Processing DivisionController#show (for 76.105.156.160 at 2008-01-11 20:33:04) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"6", "controller"=>"division"}
+  [4;36;1mSQL (0.000518)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.001790)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000151)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000132)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 6) [0m
+  [4;36;1mTeam Columns (0.000898)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.15812 (6 reqs/sec) | Rendering: 0.01430 (9%) | DB: 0.00349 (2%) | 200 OK [http://throwingbones.com/rails/division/show/6]
+
+
+Processing TeamController#show (for 76.105.156.160 at 2008-01-11 20:33:10) [GET]
+  Session ID: af9b8b19d48207ae2f7ca3463b393408
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"team"}
+  [4;36;1mSQL (0.000238)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001066)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.000165)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 10) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.000152)[0m   [0mSELECT * FROM games WHERE (games.team_id = 10) [0m
+  [4;36;1mGame Columns (0.000967)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000874)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.000212)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 10 ) [0m
+  [4;35;1mPlayer Columns (0.000991)[0m   [0mSHOW FIELDS FROM players[0m
+Completed in 0.06567 (15 reqs/sec) | Rendering: 0.02997 (45%) | DB: 0.00466 (7%) | 200 OK [http://throwingbones.com/rails/team/show/10]
+
+
+Processing ApplicationController#index (for 76.27.245.21 at 2008-04-02 01:31:26) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/schedule/" with {:method=>:get}):
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /var/www/rails/public/dispatch.cgi:10
+
+
+Rendering /usr/local/ruby-1.8.6/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing TeamController#index (for 76.27.245.21 at 2008-04-02 01:31:41) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {"action"=>"index", "controller"=>"team"}
+  [4;36;1mSQL (0.000325)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.040222)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mSQL (0.000229)[0m   [0;1mSELECT count(*) AS count_all FROM teams [0m
+  [4;35;1mTeam Load (0.040684)[0m   [0mSELECT * FROM teams LIMIT 0, 10[0m
+Rendering actionlistlayoutfalse within layouts/team
+Rendering team/list
+  [4;36;1mDivision Columns (0.001247)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+  [4;35;1mDivision Load (0.038310)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000939)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 10) [0m
+  [4;35;1mDivision Load (0.000165)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 13) [0m
+  [4;36;1mDivision Load (0.000334)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 19) [0m
+  [4;35;1mDivision Load (0.000322)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;36;1mDivision Load (0.000280)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 5) [0m
+  [4;35;1mDivision Load (0.000342)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 22) [0m
+  [4;36;1mDivision Load (0.000485)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 12) [0m
+  [4;35;1mDivision Load (0.000376)[0m   [0mSELECT * FROM divisions WHERE (divisions.`id` = 2) [0m
+  [4;36;1mDivision Load (0.000368)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 6) [0m
+Completed in 1.37724 (0 reqs/sec) | Rendering: 0.10364 (7%) | DB: 0.12463 (9%) | 200 OK [http://throwingbones.com/rails/team/]
+
+
+Processing DivisionController#index (for 76.27.245.21 at 2008-04-02 01:32:01) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {"action"=>"index", "controller"=>"division"}
+  [4;36;1mSQL (0.000349)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Load (0.007617)[0m   [0mSELECT * FROM divisions ORDER BY league[0m
+Rendering actionlistlayoutfalse within layouts/division
+Rendering division/list
+  [4;36;1mDivision Columns (0.064596)[0m   [0;1mSHOW FIELDS FROM divisions[0m
+Completed in 0.32145 (3 reqs/sec) | Rendering: 0.21103 (65%) | DB: 0.07256 (22%) | 200 OK [http://throwingbones.com/rails/division]
+
+
+Processing DivisionController#show (for 76.27.245.21 at 2008-04-02 01:32:40) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {"action"=>"show", "id"=>"1", "controller"=>"division"}
+  [4;36;1mSQL (0.000295)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mDivision Columns (0.002521)[0m   [0mSHOW FIELDS FROM divisions[0m
+  [4;36;1mDivision Load (0.000422)[0m   [0;1mSELECT * FROM divisions WHERE (divisions.`id` = 1) [0m
+Rendering  within layouts/division
+Rendering division/show
+  [4;35;1mTeam Load (0.000497)[0m   [0mSELECT * FROM teams WHERE (teams.division_id = 1) [0m
+  [4;36;1mTeam Columns (0.000923)[0m   [0;1mSHOW FIELDS FROM teams[0m
+Completed in 0.06715 (14 reqs/sec) | Rendering: 0.03285 (48%) | DB: 0.00466 (6%) | 200 OK [http://throwingbones.com/rails/division/show/1]
+
+
+Processing TeamController#show (for 76.27.245.21 at 2008-04-02 01:32:44) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {"action"=>"show", "id"=>"17", "controller"=>"team"}
+  [4;36;1mSQL (0.000755)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mTeam Columns (0.001531)[0m   [0mSHOW FIELDS FROM teams[0m
+  [4;36;1mTeam Load (0.001033)[0m   [0;1mSELECT * FROM teams WHERE (teams.`id` = 17) [0m
+Rendering  within layouts/team
+Rendering team/show
+  [4;35;1mGame Load (0.087919)[0m   [0mSELECT * FROM games WHERE (games.team_id = 17) [0m
+  [4;36;1mGame Columns (0.000963)[0m   [0;1mSHOW FIELDS FROM games[0m
+  [4;35;1mJoin Table Columns (0.000933)[0m   [0mSHOW FIELDS FROM players_teams[0m
+  [4;36;1mPlayer Load (0.109239)[0m   [0;1mSELECT * FROM players INNER JOIN players_teams ON players.id = players_teams.player_id WHERE (players_teams.team_id = 17 ) [0m
+Completed in 0.41719 (2 reqs/sec) | Rendering: 0.17270 (41%) | DB: 0.20237 (48%) | 200 OK [http://throwingbones.com/rails/team/show/17]
+
+
+Processing PlayerController#new (for 76.27.245.21 at 2008-04-02 01:32:51) [GET]
+  Session ID: 1e7ebff2de524f134d2830570e9cb1ca
+  Parameters: {"action"=>"new", "controller"=>"player", "team"=>"17"}
+  [4;36;1mSQL (0.000219)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mPlayer Columns (0.001116)[0m   [0mSHOW FIELDS FROM players[0m
+  [4;36;1mTeam Columns (0.000936)[0m   [0;1mSHOW FIELDS FROM teams[0m
+  [4;35;1mTeam Load (0.000135)[0m   [0mSELECT * FROM teams WHERE (teams.`id` = 17) [0m
+  [4;36;1mSQL (0.000098)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000099)[0m   [0mCOMMIT[0m
+Rendering  within layouts/player
+Rendering player/new
+  [4;36;1mTeam Load (0.000941)[0m   [0;1mSELECT * FROM teams [0m
+Rendered player/_form (0.10841)
+Completed in 0.16950 (5 reqs/sec) | Rendering: 0.13299 (78%) | DB: 0.00354 (2%) | 200 OK [http://throwingbones.com/rails/player/new?team=17]

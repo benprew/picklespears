@@ -1,0 +1,30 @@
+<% for column in Team.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @team.send(column.name) %>
+</p>
+<% end %>
+<table>
+  <tr>
+    <th> Games </th>
+    <th> Players </th>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+      <% for game in @team.games %>
+      <li><%= link_to %{#{game.description}}, :controller => 'game', :action => 'show', :id => game %></li>
+      <% end %>
+      </ul>
+    </td>
+    <td>
+      <%= link_to 'New Player', :controller => 'player', :action => 'new', :team => @team %>
+      <ul>
+      <% for player in @team.players%>
+      <li><%= link_to %{#{player.name}}, :controller => 'player', :action => 'show', :id => player %></li>
+      <% end %>
+      </ul>
+    </td>
+  </tr>
+
+<%= link_to 'Edit', :action => 'edit', :id => @team %> |
+<%= link_to 'Back', :action => 'list' %>

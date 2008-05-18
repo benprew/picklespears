@@ -1,0 +1,29 @@
+<%= error_messages_for 'player' %>
+
+<!--[form:player]-->
+<p><label for="player_name">Name</label><br/>
+<%= text_field 'player', 'name'  %></p>
+
+<p><label for="player_email_address">Email address</label><br/>
+<%= text_field 'player', 'email_address'  %></p>
+
+<p><label for="player_phone_number">Phone number</label><br/>
+<%= text_field 'player', 'phone_number'  %></p>
+
+<table>
+<% for team in Team.find(:all) %>
+<tr>
+  <td>
+    <%= team.name %>
+  </td>
+  <td>
+    <%= check_box_tag 'player[team_ids][]', team.id, @player.teams.include?(team) %>
+  </td>
+</tr>
+<% end %>
+</table>
+
+<p><label for="player_is_sub">Is sub</label><br/>
+<select id="player_is_sub" name="player[is_sub]"><option value="false" selected>False</option><option value="true">True</option></select></p>
+<!--[eoform:player]-->
+

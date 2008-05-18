@@ -23,6 +23,7 @@ create table games (
   id int not null auto_increment,
   date date not null,
   description varchar(256) not null,
+  reminder_sent boolean not null default false,
   team_id int not null,
   constraint fk_games_teams foreign key (team_id) references teams(id),
   primary key (id)
