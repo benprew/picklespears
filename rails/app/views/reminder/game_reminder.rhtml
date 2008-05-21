@@ -1,9 +1,9 @@
-Dear <%= user.name %>,
+Dear <%= @user.name %>,
 
-This is your game reminder. The game is <%= game.date().to_s() %>
+This is your game reminder. The game is <%= @game.date %>
 
-If you will be going, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= user.id %>;game=<%= game.id %>;attending=yes">click here</a>.
+If you will be going, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=yes">click here</a>.
 
-If you can't make it, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= user.id %>;game=<%= game.id %>;attending=no">click here</a>.
+If you can't make it, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=no">click here</a>.
 
-If you're not sure, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= user.id %>;game=<%= game.id %>;attending=maybe">click here</a>.
+If you're not sure, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=maybe">click here</a>.
