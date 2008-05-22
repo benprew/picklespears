@@ -1,9 +1,14 @@
 Dear <%= @user.name %>,
 
-This is your game reminder. The game is <%= @game.date %>
+This is your game reminder. The next game is:
 
-If you will be going, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=yes">click here</a>.
+<%= @game.description %>
+<%= @game.date.to_s("%A %B, %d at %I:%M%p") %>
 
-If you can't make it, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=no">click here</a>.
+Click here if you will be going: http://throwingbones.com/pickle-spears/game/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=yes
 
-If you're not sure, <a href="http://throwingbones.com/pickle-spears/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=maybe">click here</a>.
+Click here if you can't make it: http://throwingbones.com/pickle-spears/game/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=no
+
+Click here if you're not sure: http://throwingbones.com/pickle-spears/game/set_status?user=<%= @user.id %>;game=<%= @game.id %>;attending=maybe
+
+Thank you for using pickle-spears!

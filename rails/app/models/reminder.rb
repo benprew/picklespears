@@ -11,7 +11,7 @@ class Reminder < ActionMailer::Base
     end
     recipients player.email_address
     from "ben.prew@throwingbones.com"
-    subject "game reminder from pickle spears"
+    subject "Game reminder from pickle-spears"
     body :user => player, :game => game
   end 
 
