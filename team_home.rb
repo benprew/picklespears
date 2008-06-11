@@ -4,6 +4,7 @@ require 'cgi'
 require 'erb'
 require 'division'
 require 'team'
+require 'date'
 
 cgi = CGI.new("html4")
 

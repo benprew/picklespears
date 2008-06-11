@@ -11,11 +11,21 @@
   </tr>
   <tr>
     <td>
+      <h3>Upcoming games</h3>
       <ul>
-	<% team.games.each do |game| %>
-	<li><%= game.description %></li>
+	<% team.games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }.each do |game| %>
+	<li><%= game.date %> --- <%= game.description %></li>
 	<% end %>
       </ul>
+      <a href="#" onclick="document.getElementById('all-games').style.display = 'block'">all games</a>
+      <div id="all-games" style="display:none">
+      <h3>All games</h3>
+      <ul>
+	<% team.games.sort { |a, b| a.date <=> b.date }.each do |game| %>
+	<li><%= game.date %> --- <%= game.description %></li>
+	<% end %>
+      </ul>
+      </div>
     </td>
     <td>
       <div align="right">
