@@ -1,0 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Pickle Spears - search for team</title>
+<link rel="stylesheet" href="pickle_spears.css" type="text/css"></head>
+<body>
+<% teams.each do |team| %>
+    <a href="browse.rb?team_id=<%= team.id %>"><%= team.name %></a> (division <%= team.division.league + " " + team.division.name %>)
+    <br />
+<% end %>
+</body></html>
