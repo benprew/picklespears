@@ -27,11 +27,11 @@ end
 get '/browse' do
   divisions = Division.find(:all,
                             :conditions => [ 'league = ?', params[:league]]).sort { |a, b| a.name <=> b.name }
-  erb :browse
+  erb :browse, :locals => { :divisions => divisions }
 end
 
 get '/team' do
   team = Team.find(params[:team_id])
 
-  erb :team_home
+  erb :team_home, :locals => { :team => team }
 end
