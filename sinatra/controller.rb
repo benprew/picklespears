@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'user'
+require 'division'
 
 get '/' do
   erb :index
@@ -24,12 +25,12 @@ end
 
 get '/browse' do
   divisions = Division.find(:all,
-                            :conditions => [ 'league = ?', params[:league].sort { |a, b| a.name <=> b.name }
-  haml :browse
+                            :conditions => [ 'league = ?', params[:league]]).sort { |a, b| a.name <=> b.name }
+  erb :browse
 end
 
 get '/team' do
   team = Team.find(params[:team_id])
 
-  haml :team_home
+  erb :team_home
 end
