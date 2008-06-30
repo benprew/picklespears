@@ -4,6 +4,7 @@ require 'rubygems'
 require 'sinatra'
 require 'user'
 require 'division'
+require 'team'
 
 get '/' do
   erb :index
