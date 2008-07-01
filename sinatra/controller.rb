@@ -6,6 +6,8 @@ require 'user'
 require 'division'
 require 'team'
 
+class PickleSpearsController
+
 get '/' do
   erb :index
 end
@@ -25,13 +27,15 @@ post '/search' do
 end
 
 get '/browse' do
-  divisions = Division.find(:all,
+  @divisions = Division.find(:all,
                             :conditions => [ 'league = ?', params[:league]]).sort { |a, b| a.name <=> b.name }
-  erb :browse, :locals => { :divisions => divisions }
+  haml :browse
 end
 
 get '/team' do
   team = Team.find(params[:team_id])
 
   erb :team_home, :locals => { :team => team }
+end
+
 end
