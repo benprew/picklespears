@@ -1,15 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-%html
-  %head
-    %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
-    %title= "Pickle Spears - browse teams"
-    %link{ :rel => "stylesheet", :href => "pickle_spears.css", :type => "text/css" }
-  %body
-    - @divisions.each do |division|
-      .division
-        %form
-          %submit= "Go"
+- @divisions.each do |division|
+  .division
+    %form
+      %select
+        - division.teams(:order => 'name').each do |team|
+          %option{ :name => "team_id", :value => team.id.to_s }= team.name
+      %submit= "Go"
 
-/ %select
-/ = division.teams.sort { |a, b| a[1] <=> b[1] }.each do |team|
-/ %option{ :name => "team_id", :value => team.id.to_s }= team.name

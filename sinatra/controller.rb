@@ -8,34 +8,30 @@ require 'team'
 
 class PickleSpearsController
 
-get '/' do
-  erb :index
-end
-
-post '/search' do
-  teams = Team.find(:all,
-                    :conditions => [ "name like ?", '%' + params[:team].upcase + '%' ],
-                    :order => "name")
-
-  if teams.length == 0
-    print "<h1> No teams found </h1>"
-  elsif teams.length == 1
-    redirect('/team?team_id='+teams[0].id.to_s)
-  else
-    erb :search
+  get '/' do
+    haml :index
   end
-end
+  
+  get '/browse' do
+    @divisions = Division.find_all_by_league(params[:league], :order => 'name')
+    haml :browse
+  end
+  
+  get '/team' do
+    team = Team.find(params[:team_id])
+  
+    erb :team_home, :locals => { :team => team }
+  end
 
-get '/browse' do
-  @divisions = Division.find(:all,
-                            :conditions => [ 'league = ?', params[:league]]).sort { |a, b| a.name <=> b.name }
-  haml :browse
-end
+  get '/search' do
+    @teams = Team.find(:all, :conditions => [ "name like ?", '%' + params[:team].upcase + '%' ], :order => 'name')
 
-get '/team' do
-  team = Team.find(params[:team_id])
-
-  erb :team_home, :locals => { :team => team }
-end
-
+    if @teams.length == 0
+      haml "%h1 No @teams found"
+    elsif @teams.length == 1
+      redirect '/browse?team_id=#{@teams[0].id.to_s}'
+    else
+      haml :search
+    end
+  end
 end

@@ -1,0 +1,20 @@
+%div{ :style => "text-align: left; float:left" }
+  %a{ :href =>"/phpBB2/" } forums
+%div{ :style => "text-align: right;" }
+  sign in 
+  %br
+%hr
+%div{ :style => "text-align: center;" }
+%img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168" }
+%form{ :method => "get", :action => "search", :name => "tn_search_form"}
+  %input{ :name => "team", :type => "input" }
+  %input{ :name => "tn_search", :value => "Team Name Search", :type => "submit" }
+%br
+%br
+Browse by:
+%a{ :href => "browse?league=Women" } Women
+|
+%a{ :href => "browse?league=Men" } Men
+|
+%a{ :href => "browse?league=Coed" } Coed
+
