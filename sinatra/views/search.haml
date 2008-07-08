@@ -1,4 +1,4 @@
 - @teams.each do |team|
-  %a{ :href => "browse.rb?team_id=#{team.id}"}= team.name
+  %a{ :href => "browse?team_id=#{team.id}"}= team.name
   = "(division #{team.division.league} #{team.division.name})"
   %br

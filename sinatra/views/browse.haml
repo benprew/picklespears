@@ -4,5 +4,5 @@
       %select
         - division.teams(:order => 'name').each do |team|
           %option{ :name => "team_id", :value => team.id.to_s }= team.name
-      %submit= "Go"
+      %input{ :type => "submit", :value => "Go" }
 

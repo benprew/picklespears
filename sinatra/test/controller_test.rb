@@ -17,16 +17,23 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
     assert_match /<select>/, @response.body, 'do we have at least one team'
   end
 
+  def test_team_home
+    get_it '/team?team_id=1'
+    assert_match /Upcoming games/, @response.body, 'upcoming games'
+  end
+
+
   def test_search
     teams = Team.find(:all, :conditions => [ "name like ?", '%HA%' ], :order => "name")
     get_it '/search?team=Ha'
     teams.each do |team|
-      assert_match /team_id=#{team.id}'/, @response.body, "team #{team.id} is found"
+      assert_match /team_id=#{team.id}/, @response.body, "team #{team.id} is found"
     end
 
     get_it '/search?team=Harpoon'
     assert_equal @response.head
   end
+
 
 end
 

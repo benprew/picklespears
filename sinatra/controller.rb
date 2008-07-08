@@ -16,11 +16,15 @@ class PickleSpearsController
     @divisions = Division.find_all_by_league(params[:league], :order => 'name')
     haml :browse
   end
+
+  get '/sign_in' do
+    haml :sign_in
+  end
   
   get '/team' do
-    team = Team.find(params[:team_id])
+    @team = Team.find(params[:team_id])
   
-    erb :team_home, :locals => { :team => team }
+    haml :team_home
   end
 
   get '/search' do
@@ -29,9 +33,14 @@ class PickleSpearsController
     if @teams.length == 0
       haml "%h1 No @teams found"
     elsif @teams.length == 1
-      redirect '/browse?team_id=#{@teams[0].id.to_s}'
+      redirect "team?team_id=#{@teams[0].id.to_s}"
     else
       haml :search
     end
+  end
+
+  get '/stylesheet.css' do
+    content_type 'text/css', :charset =&gt; 'utf-8'
+    sass :stylesheet
   end
 end

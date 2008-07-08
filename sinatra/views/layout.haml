@@ -3,6 +3,13 @@
   %head
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - now with more vinegar!"
-    %link{ :rel => "stylesheet", :href => "pickle_spears.css", :type => "text/css" }
+    %link{ :rel => "stylesheet", :href => "stylesheet.css", :type => "text/css" }
   %body
+    %div{ :style => "text-align: left; float:left" }
+      %a{ :href =>"/phpBB2/" } forums
+      | 
+      %a{ :href => "/" } home
+    %div{ :style => "text-align: right;" }
+      %a{ :href => "sign_in" } sign in 
+    %hr
     = yield
