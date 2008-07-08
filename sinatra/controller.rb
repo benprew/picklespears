@@ -40,7 +40,7 @@ class PickleSpearsController
   end
 
   get '/stylesheet.css' do
-    content_type 'text/css', :charset =&gt; 'utf-8'
+    headers 'Content-Type' => 'text/css'
     sass :stylesheet
   end
 end

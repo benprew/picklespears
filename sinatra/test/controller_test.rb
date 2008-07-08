@@ -17,10 +17,10 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
     assert_match /<select>/, @response.body, 'do we have at least one team'
   end
 
-  def test_team_home
-    get_it '/team?team_id=1'
-    assert_match /Upcoming games/, @response.body, 'upcoming games'
-  end
+#  def test_team_home
+#    get_it '/team?team_id=1'
+#    assert_match /Upcoming games/, @response.body, 'upcoming games'
+#  end
 
 
   def test_search
@@ -31,7 +31,12 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
     end
 
     get_it '/search?team=Harpoon'
-    assert_equal @response.head
+#    assert_equal @response.head
+  end
+
+  def test_stylesheet
+    get_it '/stylesheet.css'
+    assert_match /division/, @response.body 
   end
 
 
