@@ -6,7 +6,7 @@ require 'user'
 require 'division'
 require 'team'
 
-class PickleSpearsController
+class Controller
 
   get '/' do
     haml :index

@@ -8,13 +8,14 @@
       %h3 Upcoming games
       %ul
         - @team.games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }.each do |game|
-          %li= game.date + " --- " + game.description
+          %li= game.date.to_s + " --- " + game.description
+
       %a{ :href => "#", :onclick => "document.getElementById('all-games').style.display = 'block'" } all games
       %div{ :id => "all-games", :style => "display:none" }
         %h3 All games
         %ul
-          - @team.games.sort { |a, b| a.date cmp b.date }.each do |game|
-            %li= game.date + " --- " + game.description
+          - @team.games.sort { |a, b| a.date <=> b.date }.each do |game|
+            %li= game.date.to_s + " --- " + game.description
     %td
       %div{ :align => "right" }
       %a{ :href => "add_player.rb?team_id=#{@team.id}" } add player

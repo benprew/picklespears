@@ -14,14 +14,13 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
   def test_browse
     get_it '/browse?league=Women'
     assert_match /<title>Pickle Spears - now with more vinegar!<\/title>/, @response.body
-    assert_match /<select>/, @response.body, 'do we have at least one team'
+    assert_match /<select/, @response.body, 'do we have at least one team'
   end
 
-#  def test_team_home
-#    get_it '/team?team_id=1'
-#    assert_match /Upcoming games/, @response.body, 'upcoming games'
-#  end
-
+  def test_team_home
+    get_it '/team?team_id=1'
+    assert_match /Upcoming games/, @response.body, 'upcoming games'
+  end
 
   def test_search
     teams = Team.find(:all, :conditions => [ "name like ?", '%HA%' ], :order => "name")
@@ -31,14 +30,11 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
     end
 
     get_it '/search?team=Harpoon'
-#    assert_equal @response.head
+    assert_equal 'team?team_id=10', (@response.headers)['Location']
   end
 
   def test_stylesheet
     get_it '/stylesheet.css'
     assert_match /division/, @response.body 
   end
-
-
 end
-

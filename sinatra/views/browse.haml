@@ -1,8 +1,9 @@
 - @divisions.each do |division|
   .division
-    %form
-      %select
-        - division.teams(:order => 'name').each do |team|
-          %option{ :name => "team_id", :value => team.id.to_s }= team.name
+    %form{ :action => 'team', :method => 'get' }
+      = division.name + ' -'
+      %select{ :name => 'team_id' }
+        - division.teams.each do |team|
+          %option{ :value => team.id.to_s }= team.name
       %input{ :type => "submit", :value => "Go" }
 
