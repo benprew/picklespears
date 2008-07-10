@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/ruby/bin/ruby
 
 require 'rubygems'
 require 'sinatra'
@@ -18,7 +18,7 @@ class PickleSpears
     haml :browse
   end
 
-  get '/sign_in' do
+  get '/user/sign_in' do
     haml :sign_in
   end
   

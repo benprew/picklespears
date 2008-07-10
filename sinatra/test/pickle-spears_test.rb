@@ -22,6 +22,11 @@ class PickleSpearsTest < Test::Unit::TestCase
     assert_match /Upcoming games/, @response.body, 'upcoming games'
   end
 
+  def test_sign_in
+    get_it '/user/sign_in'
+    assert_match /<title>Pickle Spears - sign in/, @response.body
+  end
+
   def test_search
     teams = Team.find(:all, :conditions => [ "name like ?", '%HA%' ], :order => "name")
     get_it '/search?team=Ha'
