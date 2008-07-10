@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'controller'
+require 'pickle-spears'
 require 'sinatra/test/unit'
 
-class PickleSpearsControllerTest < Test::Unit::TestCase
+class PickleSpearsTest < Test::Unit::TestCase
   def test_homepage
     get_it '/'
     assert_match /<title>Pickle Spears - now with more vinegar!<\/title>/, @response.body
@@ -13,7 +13,7 @@ class PickleSpearsControllerTest < Test::Unit::TestCase
 
   def test_browse
     get_it '/browse?league=Women'
-    assert_match /<title>Pickle Spears - now with more vinegar!<\/title>/, @response.body
+    assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, @response.body
     assert_match /<select/, @response.body, 'do we have at least one team'
   end
 

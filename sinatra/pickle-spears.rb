@@ -6,7 +6,7 @@ require 'user'
 require 'division'
 require 'team'
 
-class Controller
+class PickleSpears
 
   get '/' do
     haml :index
@@ -14,6 +14,7 @@ class Controller
   
   get '/browse' do
     @divisions = Division.find_all_by_league(params[:league], :order => 'name')
+    @league = params[:league]
     haml :browse
   end
 
@@ -44,3 +45,11 @@ class Controller
     sass :stylesheet
   end
 end
+
+helpers do
+  def title(title=nil)
+      @title = title unless title.nil?
+      @title
+  end
+end
+
