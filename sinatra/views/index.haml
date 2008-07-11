@@ -1,15 +1,14 @@
 - title "now with more vinegar!"
-%div{ :style => "text-align: center;" }
-%img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168" }
-%form{ :method => "get", :action => "search", :name => "tn_search_form"}
-  %input{ :name => "team", :type => "input" }
-  %input{ :name => "tn_search", :value => "Team Name Search", :type => "submit" }
-%br
-%br
-Browse by:
-%a{ :href => "browse?league=Women" } Women
-|
-%a{ :href => "browse?league=Men" } Men
-|
-%a{ :href => "browse?league=Coed" } Coed
+%div.main
+  %img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168" }
+  %form{ :method => "get", :action => "search", :name => "tn_search_form"}
+    %input{ :name => "team", :type => "input" }
+    %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+  %br
+  Browse by:
+  %a{ :href => "browse?league=Women" } Women
+  |
+  %a{ :href => "browse?league=Men" } Men
+  |
+  %a{ :href => "browse?league=Coed" } Coed
 

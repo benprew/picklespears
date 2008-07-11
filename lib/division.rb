@@ -4,6 +4,6 @@ gem 'activerecord'
 require 'activerecord'
 
 class Division < ActiveRecord::Base
-  has_many :teams
+  has_many :teams, :order => 'name'
   attr_accessor :file
 end
