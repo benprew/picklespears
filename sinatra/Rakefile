@@ -18,8 +18,12 @@ end
 
 namespace :daemon do
   task :install do
+    File.open('pickle-spears.d', 'w') do |f|
+      f << File.read('pickle-spears.d.in') % [ Dir.pwd ]
+    end
     sh 'cp -f pickle-spears.d /etc/init.d/pickle-spears'
     sh 'chmod +x /etc/init.d/pickle-spears'
+    sh 'rm pickle-spears.d'
   end
 
   task :at_boot => :install do
