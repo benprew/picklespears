@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'pickle-spears'
+$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
+
+require 'sinatra'
 require 'sinatra/test/unit'
+require 'pickle-spears'
 
 class PickleSpearsTest < Test::Unit::TestCase
+
   def test_homepage
     get_it '/'
-    assert_match /<title>Pickle Spears - now with more vinegar!<\/title>/, @response.body
-    assert_match /<hr \/>/, @response.body
+    assert_match( /<title>Pickle Spears - now with more vinegar!<\/title>/, @response.body )
+    assert_match( /<hr \/>/, @response.body )
   end
 
   def test_browse
@@ -23,7 +26,7 @@ class PickleSpearsTest < Test::Unit::TestCase
   end
 
   def test_sign_in
-    get_it '/user/sign_in'
+    get_it '/sign_in'
     assert_match /<title>Pickle Spears - sign in/, @response.body
   end
 

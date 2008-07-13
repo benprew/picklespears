@@ -7,9 +7,12 @@
   %body
     %div{ :style => "text-align: left; float:left" }
       %a{ :href =>"/phpBB2/" } forums
-      | 
+      |
       %a{ :href => "/pickle-spears/" } home
     %div{ :style => "text-align: right;" }
-      %a{ :href => "sign_in" } sign in 
+      - if @user
+        = "Welcome #{@user}"
+      - else
+        %a{ :href => 'sign_in' } sign in
     %hr
     = yield

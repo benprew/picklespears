@@ -1,14 +1,19 @@
 #!/usr/local/ruby/bin/ruby
 
-require 'rubygems'
+$:.unshift File.dirname(__FILE__) + '/sinatra/lib'
+
 require 'sinatra'
 require 'user'
 require 'division'
 require 'team'
 
-class PickleSpears
+set :root, Dir.pwd
+set :views, Dir.pwd + '/views'
+set :public, Dir.pwd + '/public'
 
+class PickleSpears
   get '/' do
+    @user = request.cookies["user"]
     haml :index
   end
   
@@ -18,8 +23,21 @@ class PickleSpears
     haml :browse
   end
 
-  get '/user/sign_in' do
+  get '/sign_in' do
     haml :sign_in
+  end
+
+  post '/sign_in' do
+    cookie = request.cookies["user"]
+    cookie = {
+      :domain => 'throwingbones.com',
+      :name => 'user',
+      :value => params[:username],
+    }
+      
+    set_cookie("user", cookie)
+    @user = cookie[:value]
+    redirect '/'
   end
   
   get '/team' do
