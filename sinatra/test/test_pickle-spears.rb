@@ -45,4 +45,9 @@ class PickleSpearsTest < Test::Unit::TestCase
     get_it '/stylesheet.css'
     assert_match /division/, @response.body 
   end
+
+  def test_sign_in_sets_session
+    post_it '/sign_in', 'username=bobby'
+    assert include?('Set-Cookie')    
+  end
 end

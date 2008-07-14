@@ -6,14 +6,20 @@ require 'sinatra'
 require 'user'
 require 'division'
 require 'team'
+require 'time'
 
 set :root, Dir.pwd
 set :views, Dir.pwd + '/views'
 set :public, Dir.pwd + '/public'
+set :sessions, true
 
 class PickleSpears
+
+  before do
+    @username = session[:username]
+  end
+
   get '/' do
-    @user = request.cookies["user"]
     haml :index
   end
   
@@ -28,18 +34,15 @@ class PickleSpears
   end
 
   post '/sign_in' do
-    cookie = request.cookies["user"]
-    cookie = {
-      :domain => 'throwingbones.com',
-      :name => 'user',
-      :value => params[:username],
-    }
-      
-    set_cookie("user", cookie)
-    @user = cookie[:value]
+    session[:username] = params[:username]
     redirect '/'
   end
   
+  get '/sign_out' do
+    session[:username] = nil
+    redirect '/'
+  end
+
   get '/team' do
     @team = Team.find(params[:team_id])
   

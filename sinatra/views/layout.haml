@@ -10,8 +10,9 @@
       |
       %a{ :href => "/pickle-spears/" } home
     %div{ :style => "text-align: right;" }
-      - if @user
-        = "Welcome #{@user}"
+      - if @username
+        = "Welcome #{@username} | "
+        %a{ :href => 'sign_out' } sign out
       - else
         %a{ :href => 'sign_in' } sign in
     %hr
