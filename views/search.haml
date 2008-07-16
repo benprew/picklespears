@@ -1,5 +1,5 @@
 - title "search results"
 - @teams.each do |team|
-  %a{ :href => "team?team_id=#{team.id}"}= team.name
+  %a{ :href => "/team?team_id=#{team.id}"}= team.name
   = "(division #{team.division.league} #{team.division.name})"
   %br

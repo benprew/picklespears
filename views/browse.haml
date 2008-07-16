@@ -1,7 +1,7 @@
 - title "browsing league: #{@league}"
 - @divisions.each do |division|
   .division
-    %form{ :action => 'team', :method => 'get' }
+    %form{ :action => '/team', :method => 'get' }
       = division.name + ' -'
       %select{ :name => 'team_id' }
         - division.teams.each do |team|

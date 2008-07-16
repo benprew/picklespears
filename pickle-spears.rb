@@ -55,7 +55,7 @@ class PickleSpears
     if @teams.length == 0
       haml "%h1 No @teams found"
     elsif @teams.length == 1
-      redirect "team?team_id=#{@teams[0].id.to_s}"
+      redirect "/team?team_id=#{@teams[0].id.to_s}"
     else
       haml :search
     end

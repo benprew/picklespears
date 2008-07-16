@@ -38,7 +38,7 @@ class PickleSpearsTest < Test::Unit::TestCase
     end
 
     get_it '/search?team=Harpoon'
-    assert_equal 'team?team_id=10', (@response.headers)['Location']
+    assert_equal '/team?team_id=10', (@response.headers)['Location']
   end
 
   def test_stylesheet

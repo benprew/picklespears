@@ -12,8 +12,8 @@
     %div{ :style => "text-align: right;" }
       - if @username
         = "Welcome #{@username} | "
-        %a{ :href => 'sign_out' } sign out
+        %a{ :href => '/sign_out' } sign out
       - else
-        %a{ :href => 'sign_in' } sign in
+        %a{ :href => '/sign_in' } sign in
     %hr
     = yield

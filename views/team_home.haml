@@ -19,10 +19,10 @@
             %li= game.date.to_s + " --- " + game.description
     %td
       %div{ :align => "right" }
-      %a{ :href => "add_player.rb?team_id=#{@team.id}" } add player
+      %a{ :href => "/add_player.rb?team_id=#{@team.id}" } add player
       %ul
         - @team.players.each do |player|
           %li
-            = sprintf('%s (<a href="mailto:%s">%s</a>) <a href="delete.rb?player_id=%s;team_id=%s">del</a>', player.name, player.email_address, player.email_address, player.id, @team.id)
+            = sprintf('%s (<a href="mailto:%s">%s</a>) <a href="/delete.rb?player_id=%s;team_id=%s">del</a>', player.name, player.email_address, player.email_address, player.id, @team.id)
       %div{ :align => "right" }
-      %a{ :href => "add_player.rb" } add player
+      %a{ :href => "/add_player.rb?team_id=#{@team.id}" } add player
