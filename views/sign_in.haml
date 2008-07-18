@@ -1,7 +1,8 @@
 - title 'sign in'
+%div.error = @errors
 %form{ :method => "post" }
   Username:
-  %input{ :type => "text", :name => "username" }
+  %input{ :type => "text", :name => "email_address" }
   %br Password:
   %input{ :type => "password", :name => 'password' }
   %br

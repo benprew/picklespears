@@ -25,11 +25,6 @@ class PickleSpearsTest < Test::Unit::TestCase
     assert_match /Upcoming games/, @response.body, 'upcoming games'
   end
 
-  def test_sign_in
-    get_it '/sign_in'
-    assert_match /<title>Pickle Spears - sign in/, @response.body
-  end
-
   def test_search
     teams = Team.find(:all, :conditions => [ "name like ?", '%HA%' ], :order => "name")
     get_it '/search?team=Ha'
@@ -46,8 +41,9 @@ class PickleSpearsTest < Test::Unit::TestCase
     assert_match /division/, @response.body 
   end
 
-  def test_sign_in_sets_session
-    post_it '/sign_in', 'username=bobby'
-    assert include?('Set-Cookie')    
+  def test_not_signed_in_by_default
+    get_it '/sign_in'
+    assert_match /<title>Pickle Spears - sign in/, @response.body
   end
+
 end

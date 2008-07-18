@@ -10,8 +10,8 @@
       |
       %a{ :href => "/" } home
     %div{ :style => "text-align: right;" }
-      - if @username
-        = "Welcome #{@username} | "
+      - if @name
+        = "Welcome #{@name} | "
         %a{ :href => '/sign_out' } sign out
       - else
         %a{ :href => '/sign_in' } sign in

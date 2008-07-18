@@ -3,10 +3,10 @@
 $:.unshift File.dirname(__FILE__) + '/sinatra/lib'
 
 require 'sinatra'
-require 'user'
 require 'division'
 require 'team'
 require 'time'
+require 'player'
 
 set :root, Dir.pwd
 set :views, Dir.pwd + '/views'
@@ -16,7 +16,10 @@ set :sessions, true
 class PickleSpears
 
   before do
-    @username = session[:username]
+    if session[:player_id]
+      @player = Player.find(session[:player_id])
+      @name = @player.name
+    end
   end
 
   get '/' do
@@ -34,12 +37,18 @@ class PickleSpears
   end
 
   post '/sign_in' do
-    session[:username] = params[:username]
-    redirect '/'
+    begin
+      player = Player.login(params[:email_address], params[:password])
+    rescue
+      @errors = "Incorrect login or password"
+      haml :sign_in
+    end
+    session[:player_id] = @player.object_id
+    redirect "/player?id=#{@player.object_id.to_s}"
   end
   
   get '/sign_out' do
-    session[:username] = nil
+    session[:player_id] = nil
     redirect '/'
   end
 
