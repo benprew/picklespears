@@ -17,8 +17,7 @@ class PickleSpears
 
   before do
     if session[:player_id]
-      @player = Player.find(session[:player_id])
-      @name = @player.name
+      @name = Player.find(session[:player_id]).name
     end
   end
 
@@ -32,19 +31,31 @@ class PickleSpears
     haml :browse
   end
 
+  get '/player' do
+    @player = Player.find(params[:id] || session[:player_id])
+    haml :player
+  end
+
   get '/sign_in' do
+    @errors = params[:errors]
     haml :sign_in
   end
 
   post '/sign_in' do
+    player = nil
     begin
       player = Player.login(params[:email_address], params[:password])
     rescue
-      @errors = "Incorrect login or password"
-      haml :sign_in
+      @errors = "Incorrect login or password user: '#{params[:email_address]}' password: '#{params[:password]}'"
     end
-    session[:player_id] = @player.object_id
-    redirect "/player?id=#{@player.object_id.to_s}"
+
+    if !player
+      @errors = "Incorrect login or password user: '#{params[:email_address]}' password: '#{params[:password]}'"
+      haml :sign_in
+    else
+      session[:player_id] = player.id
+      redirect "/player?id=#{player.id}"
+    end
   end
   
   get '/sign_out' do
