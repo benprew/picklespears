@@ -3,7 +3,7 @@
   %head
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - " + title
-    %link{ :rel => "stylesheet", :href => "stylesheet.css", :type => "text/css" }
+    %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
   %body
     %div{ :style => "text-align: left; float:left" }
       %a{ :href =>"/phpBB2/" } forums
@@ -14,6 +14,6 @@
         = "Welcome #{@name} | "
         %a{ :href => '/sign_out' } sign out
       - else
-        %a{ :href => '/sign_in' } sign in
+        %a{ :href => '/player/sign_in' } sign in
     %hr
     = yield

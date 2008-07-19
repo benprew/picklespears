@@ -1,10 +1,51 @@
 - title 'sign in'
 %div.error= @errors
-%form{ :method => "post" }
-  Username:
-  %input{ :type => "text", :name => "email_address" }
-  %br Password:
-  %input{ :type => "password", :name => 'password' }
-  %br
-  %input{ :type => 'submit', :value => 'Sign In' }
-
+%div{ :style => "float:left;padding: 8px" }
+  %h3 Sign In
+  %form{ :method => "post" }
+    %table
+      %tr
+        %td Username:
+        %td
+          %input{ :type => "text", :name => "email_address" }
+      %tr
+        %td Password:
+        %td
+          %input{ :type => "password", :name => 'password' }
+      %tr
+        %td
+          %input{ :type => 'submit', :value => 'Sign In' }
+%div{ :style => "float:left; padding: 8px" }
+  %h3 New to picke Spears?  Create your account
+  %form{ :method => 'post' }
+    %table
+      %tr
+        %td Name*:
+        %td
+          %input{ :type => 'text', :name => 'name' }
+      %tr
+        %td Email*:
+        %td
+          %input{ :type => 'text', :name => 'email_address' }
+      %tr
+        %td Choose a Password*:
+        %td
+          %input{ :type => "password", :name => 'password' }
+      %tr
+        %td Re-enter Password*:
+        %td
+          %input{ :type => "password", :name => 'password_verify' }
+      %tr
+        %td Zip Code:
+        %td
+          %input{ :type => "text", :name => 'address' }
+      %tr
+        %td Birthdate (DD/MM/YYYY):
+        %td
+          %input{ :type => "text", :name => 'birthday' }
+      %tr
+        %td
+          %input{ :type => 'submit', :name => 'create_account', :value => 'Create Account' }
+      %tr
+        %td
+          %span.smaller * = Required field

@@ -8,7 +8,7 @@
     %td
       %h3 Upcoming games
       %ul
-        - @team.games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }.each do |game|
+        - @team.upcoming_games.each do |game|
           %li= game.date.to_s + " --- " + game.description
 
       %a{ :href => "#", :onclick => "document.getElementById('all-games').style.display = 'block'" } all games

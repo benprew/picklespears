@@ -14,4 +14,8 @@ class Team < ActiveRecord::Base
   def next_unreminded_game
     games.select { |g| g.date >= Date.today() }.select { |g| !g.reminder_sent }[0]
   end
+
+  def upcoming_games
+    games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }
+  end
 end

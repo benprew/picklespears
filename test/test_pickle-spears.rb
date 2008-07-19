@@ -42,8 +42,7 @@ class PickleSpearsTest < Test::Unit::TestCase
   end
 
   def test_not_signed_in_by_default
-    get_it '/sign_in'
+    get_it '/player/sign_in'
     assert_match /<title>Pickle Spears - sign in/, @response.body
   end
-
 end

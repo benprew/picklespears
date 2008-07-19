@@ -36,12 +36,15 @@ class PickleSpears
     haml :player
   end
 
-  get '/sign_in' do
+  get '/player/sign_in' do
     @errors = params[:errors]
     haml :sign_in
   end
 
-  post '/sign_in' do
+  post '/player/create' do
+  end
+
+  post '/player/sign_in' do
     player = nil
     begin
       player = Player.login(params[:email_address], params[:password])
@@ -95,7 +98,7 @@ helpers do
 
   def href(url, args)
     # assumes you're using haml to do escaping
-    return "#{url}?".join(";", args.map { |key, val| "key=#{escape_once(val)}"})
+    return "#{url}?" + (args.map { |key, val| "#{key}=#{escape_once(val)}"}).join(";")
   end
 end
 

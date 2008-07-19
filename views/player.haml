@@ -1,21 +1,28 @@
 - title "#{@player.name}'s homepage"
-%div
+%div{ :style => 'float: left; padding: 8px' }
   Image of player
   %ul
-    %li= "Name: #{@player.name} [edit]"
-    %li= "Email: #{@player.email_address} [edit]"
-    %li= "Phone: #{@player.phone} [edit]"
+    %li
+      = "Name: #{@player.name} "
+      %a{ :href => '' }= '[edit]'
+    %li
+      = "Email: #{@player.email_address} "
+      %a{ :href => '' }= '[edit]'
+    %li
+      = "Phone: #{@player.phone_number} "
+      %a{ :href => '' }= '[edit]'
 
   %p Teams
   %ul
     - @player.teams.each do |team|
       %li
-        %a{ :href="/team_home?team.id" }= team.name
-  %a{ :href="/" }Join a Team
-%div
+        %a{ :href => href("/team", { 'team_id' => team.id }) }= team.name
+        %img{ :src => '/bullet_delete.png' }
+  %a{ :href => "/" }Join a Team
+%div{ :style => 'float: left' }
   %h2 Upcoming Games
   %ul
-    - Array.collect(@player.teams.map { |t| t.upcoming_games }).sort.each do |game|
+    - (@player.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
         = game.description
         Attending?
