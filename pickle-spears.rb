@@ -92,5 +92,10 @@ helpers do
       @title = title unless title.nil?
       @title
   end
+
+  def href(url, args)
+    # assumes you're using haml to do escaping
+    return "#{url}?".join(";", args.map { |key, val| "key=#{escape_once(val)}"})
+  end
 end
 

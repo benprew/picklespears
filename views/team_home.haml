@@ -19,7 +19,8 @@
             %li= game.date.to_s + " --- " + game.description
     %td
       %div{ :align => "right" }
-      %a{ :href => "/add_player.rb?team_id=#{@team.id}" } add player
+      %a{ :href => href( "/team/join", [ 'team_id' => @team.id ] ) } Join This Team!
+      %a{ :href => href( "/add_player.rb", [ 'team_id' => @team.id ]) } add player
       %ul
         - @team.players.each do |player|
           %li

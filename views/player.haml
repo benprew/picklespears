@@ -1,9 +1,28 @@
-- title 'your homepage'
-%div= "Name: #{@player.name}"
-
+- title "#{@player.name}'s homepage"
 %div
-  Teams:
-  = @player.teams
+  Image of player
+  %ul
+    %li= "Name: #{@player.name} [edit]"
+    %li= "Email: #{@player.email_address} [edit]"
+    %li= "Phone: #{@player.phone} [edit]"
 
+  %p Teams
+  %ul
+    - @player.teams.each do |team|
+      %li
+        %a{ :href="/team_home?team.id" }= team.name
+  %a{ :href="/" }Join a Team
 %div
-  Upcoming Games:
+  %h2 Upcoming Games
+  %ul
+    - Array.collect(@player.teams.map { |t| t.upcoming_games }).sort.each do |game|
+      %li
+	= game.description
+	Attending?
+	%a{ :href => href("/game/attending_status", [ 'status' => 'yes', 'game_id' => @game.id ])} Yes
+	%a{ :href => href("/game/attending_status", [ 'status' => 'no', 'game_id' => @game.id ])} No
+	%a{ :href => href("/game/attending_status", [ 'status' => 'maybe', 'game_id' => @game.id ])} Maybe
+	
+  
+    
+    
