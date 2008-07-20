@@ -46,3 +46,10 @@ create table players_teams (
   constraint fk_teams_players_teams foreign key (team_id)
   	     references teams(id)
 ) engine=InnoDB;
+
+create table players_games (
+       game_id int not null,
+       player_id int not null,
+       status varchar(16) not null,
+       primary key (game_id, player_id)
+) engine=InnoDB;

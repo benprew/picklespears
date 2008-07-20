@@ -1,15 +1,31 @@
 - title @team.name
-%h1= @team.name
-%table{ :border => 1 }
-  %tr
-    %th upcoming games
-    %th players
-  %tr
-    %td
-      %h3 Upcoming games
-      %ul
-        - @team.upcoming_games.each do |game|
-          %li= game.date.to_s + " --- " + game.description
+%h1{ :style => 'display: inline' }= @team.name
+%a{ :href => href('/team/join', [ 'team_id' => @team.id ]) }Join this team!
+%div{ :style => 'float: left' }
+%h2 Players
+%ul
+  - @team.players.each do |player|
+    %li
+      = sprintf('%s (<a href="mailto:%s">%s</a>)', player.name, player.email_address)
+%h2 Upcoming Games
+%ul
+  - @team.upcoming_games.each do |game|
+    %li= game.description
+%div{ :style => 'float: left' }
+  %h2{ :style => 'display: inline' }= "Next Game: #{@team.next_game.description}"
+  %strong Attending?
+  %a{ :href => href("/game/attending_status", [ 'status' => 'yes', 'game_id' => @game.id ])} Yes
+  %a{ :href => href("/game/attending_status", [ 'status' => 'no', 'game_id' => @game.id ])} No
+  %a{ :href => href("/game/attending_status", [ 'status' => 'maybe', 'game_id' => @game.id ])} Maybe
+  %br
+  %ul
+    %li= "#{@team.next_game.num_guys_confirmed} guys"
+    %li= "#{@team.next_game.num_gals_confirmed} gals"
+  
+
+
+
+
 
       %a{ :href => "#", :onclick => "document.getElementById('all-games').style.display = 'block'" } all games
       %div{ :id => "all-games", :style => "display:none" }
@@ -22,8 +38,5 @@
       %a{ :href => href( "/team/join", [ 'team_id' => @team.id ] ) } Join This Team!
       %a{ :href => href( "/add_player.rb", [ 'team_id' => @team.id ]) } add player
       %ul
-        - @team.players.each do |player|
-          %li
-            = sprintf('%s (<a href="mailto:%s">%s</a>) <a href="/delete.rb?player_id=%s;team_id=%s">del</a>', player.name, player.email_address, player.email_address, player.id, @team.id)
       %div{ :align => "right" }
       %a{ :href => "/add_player.rb?team_id=#{@team.id}" } add player

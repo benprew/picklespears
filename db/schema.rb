@@ -40,4 +40,10 @@ ActiveRecord::Schema.define(:version => 1) do
   end
 
   add_index "teams", ["division_id"], :name => "fk_teams_divisions"
+
+  create_table "players_games", :force => true do |t|
+    t.column "player_id", :integer, :null => false
+    t.column "game_id", :integer, :null => false
+    t.column "status", :string, :limit => 8, :null => false
+  end
 end

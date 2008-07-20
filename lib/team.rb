@@ -18,4 +18,8 @@ class Team < ActiveRecord::Base
   def upcoming_games
     games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }
   end
+
+  def next_game
+    retun upcoming_games[0]
+  end
 end
