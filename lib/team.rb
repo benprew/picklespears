@@ -20,6 +20,6 @@ class Team < ActiveRecord::Base
   end
 
   def next_game
-    retun upcoming_games[0]
+    return upcoming_games[0]
   end
 end

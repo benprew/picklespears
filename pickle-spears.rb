@@ -17,7 +17,8 @@ class PickleSpears
 
   before do
     if session[:player_id]
-      @name = Player.find(session[:player_id]).name
+      @player = Player.find(session[:player_id])
+      @name = @player.name
     end
   end
 
@@ -87,6 +88,13 @@ class PickleSpears
   get '/stylesheet.css' do
     headers 'Content-Type' => 'text/css'
     sass :stylesheet
+  end
+
+  get '/game/attending_status' do
+    pg = @player.players_games.find_or_create_by_game_id(params[:game_id])
+    pg.update_attributes(:status => params[:status])
+
+    "Status #{params[:status]} recorded"
   end
 end
 
