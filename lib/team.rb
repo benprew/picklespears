@@ -1,25 +1,40 @@
-require 'date'
 require 'db'
-require 'rubygems'
-require 'activerecord'
-require 'game'
+require 'date'
 require 'division'
 require 'player'
+require 'game'
 
-class Team < ActiveRecord::Base
+class PlayersTeam
+  include DataMapper::Resource
+  belongs_to :player
+  belongs_to :team
+
+  property :player_id, Integer, :key => true
+  property :team_id, Integer, :key => true
+end
+
+class Team
+  include DataMapper::Resource
+
   belongs_to :division
-  has_many :games
-  has_and_belongs_to_many :players
+  has n, :games
+  has n, :players_teams
+  has n, :players, :through => :players_teams
+
+  property :id, Integer, :serial => true
+  property :name, String
+  property :division_id, Integer, :nullable => false
 
   def next_unreminded_game
-    games.select { |g| g.date >= Date.today() }.select { |g| !g.reminder_sent }[0]
+    games.first( :date.gte => Date.today(), :reminder_sent => false, :order => [ :date.asc ] )
   end
 
   def upcoming_games
-    games.select { |x| x.date >= Date.today() }.sort { |a, b| a.date <=> b.date }
+    games.all( :date.gte => Date.today(), :order => [ :date.asc ] )
   end
 
   def next_game
-    return upcoming_games[0]
+    games.first( :date.gte => Date.today(), :order => [ :date.asc ] )
   end
 end
+

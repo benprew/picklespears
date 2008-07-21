@@ -26,9 +26,9 @@
       %li
         = game.description
         Attending?
-        %a{ :href => href("/game/attending_status", [ 'status' => 'yes', 'game_id' => @game.id ])} Yes
-        %a{ :href => href("/game/attending_status", [ 'status' => 'no', 'game_id' => @game.id ])} No
-        %a{ :href => href("/game/attending_status", [ 'status' => 'maybe', 'game_id' => @game.id ])} Maybe
+        %a{ :href => href("/game/attending_status", { 'status' => 'yes', 'game_id' => game.id })} Yes
+        %a{ :href => href("/game/attending_status", { 'status' => 'no', 'game_id' => game.id })} No
+        %a{ :href => href("/game/attending_status", { 'status' => 'maybe', 'game_id' => game.id })} Maybe
         
   
     

@@ -5,6 +5,6 @@
       = division.name + ' -'
       %select{ :name => 'team_id' }
         - division.teams.each do |team|
-          %option{ :value => team.id.to_s }= team.name
+          %option{ :value => team.id }= team.name
       %input{ :type => "submit", :value => "Go" }
 

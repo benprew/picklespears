@@ -17,7 +17,7 @@ class PickleSpears
 
   before do
     if session[:player_id]
-      @player = Player.find(session[:player_id])
+      @player = Player.get(session[:player_id])
       @name = @player.name
     end
   end
@@ -27,13 +27,13 @@ class PickleSpears
   end
   
   get '/browse' do
-    @divisions = Division.find_all_by_league(params[:league], :order => 'name')
+    @divisions = Division.all(:league => params[:league], :order => [:name.asc])
     @league = params[:league]
     haml :browse
   end
 
   get '/player' do
-    @player = Player.find(params[:id] || session[:player_id])
+    @player = Player.get(params[:id] || session[:player_id])
     haml :player
   end
 
@@ -46,12 +46,7 @@ class PickleSpears
   end
 
   post '/player/sign_in' do
-    player = nil
-    begin
-      player = Player.login(params[:email_address], params[:password])
-    rescue
-      @errors = "Incorrect login or password user: '#{params[:email_address]}' password: '#{params[:password]}'"
-    end
+    player = Player.login(params[:email_address], params[:password])
 
     if !player
       @errors = "Incorrect login or password user: '#{params[:email_address]}' password: '#{params[:password]}'"
@@ -68,13 +63,13 @@ class PickleSpears
   end
 
   get '/team' do
-    @team = Team.find(params[:team_id])
+    @team = Team.get(params[:team_id])
   
     haml :team_home
   end
 
   get '/search' do
-    @teams = Team.find(:all, :conditions => [ "name like ?", '%' + params[:team].upcase + '%' ], :order => 'name')
+    @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc])
 
     if @teams.length == 0
       haml "%h1 No @teams found"
@@ -91,8 +86,13 @@ class PickleSpears
   end
 
   get '/game/attending_status' do
-    pg = @player.players_games.find_or_create_by_game_id(params[:game_id])
+    pg = @player.players_games.get(params[:game_id])
+    if !pg
+      pg = PlayersGame.new(:player_id => @player.id, :game_id => params[:game_id])
+    end
+    p pg
     pg.update_attributes(:status => params[:status])
+    pg.save
 
     "Status #{params[:status]} recorded"
   end

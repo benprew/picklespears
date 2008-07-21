@@ -14,9 +14,9 @@
 %div{ :style => 'float: left; width: 500px' }
   %h2{ :style => 'display: inline' }= "Next Game: #{@team.next_game.description}"
   %strong Attending?
-  %a{ :href => '#', :onclick => "new Ajax.Request('" + href("/game/attending_status", { 'status' => 'yes', 'game_id' => @game.id }) + "', {method:'get'});"} Yes
-  %a{ :href => href("/game/attending_status", { 'status' => 'no', 'game_id' => @game.id })} No
-  %a{ :href => href("/game/attending_status", { 'status' => 'maybe', 'game_id' => @game.id })} Maybe
+  %a{ :href => '#', :onclick => "new Ajax.Request('" + href("/game/attending_status", { 'status' => 'yes', 'game_id' => @team.next_game.id }) + "', {method:'get'});"} Yes
+  %a{ :href => href("/game/attending_status", { 'status' => 'no', 'game_id' => @team.next_game.id })} No
+  %a{ :href => href("/game/attending_status", { 'status' => 'maybe', 'game_id' => @team.next_game.id })} Maybe
   %br
   %ul{ :style => 'list-style-type: none; display: inline' }
     %li{ :style => 'display: inline' }= "#{@team.next_game.num_guys_confirmed} guys"

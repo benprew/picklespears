@@ -1,12 +1,5 @@
 require 'rubygems'
-gem 'activerecord'
-require 'activerecord'
-require 'mysql'
+gem 'dm-core'
+require 'dm-core'
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => "mysql",
-  :host     => "localhost",
-  :username => "rails_user",
-  :password => "foo",                                        
-  :database => "rails_development"
-)
+DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
