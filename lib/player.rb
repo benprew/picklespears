@@ -11,7 +11,7 @@ class Player
   has n, :games, :through => :players_games
 
   property :id, Integer, :serial => true
-  property :name, String, :nullable => false
+  property :name, String, :nullable => false, :index => :unique
   property :email_address, String, :nullable => false
   property :phone_number, String
   property :is_sub, Boolean

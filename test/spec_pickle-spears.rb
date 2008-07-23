@@ -40,4 +40,13 @@ context 'PickleSpears' do
     get_it '/'
     assert ok?
   end
+
+  specify 'can create player' do
+    post_it '/player/create', 'name=bennie;email_address=test@test.com;phone_number=503.332.9719;birthdate=20080611;zipcode=97213'
+
+    assert include?('Set-Cookie')
+    assert_match /player\?errors=$/, @response.headers['Location'], 'redirect to player homepage, no errors'
+
+    assert_equal 'test@test.com', Player.first.email_address
+  end
 end

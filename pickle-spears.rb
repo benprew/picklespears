@@ -43,13 +43,40 @@ class PickleSpears
   end
 
   post '/player/create' do
+    player = Player.new
+
+    if params[:password] != params[:password2]
+      @errors = "Password do not match"
+      redirect "/player/sign_in?errors=#{@errors}"
+    end
+
+    attributes = params
+    attributes.delete(:password2)
+    player.attributes = attributes
+
+    begin
+      player.save
+    rescue StandardError => err
+      if /Duplicate entry/.match(err)
+        @errors = "Player name '#{params[:name]}' already exists, please choose another"
+      else
+        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'"
+      end
+    end
+
+    if @errors
+      redirect "/player/sign_in?errors=#{@errors}"
+    end
+
+    session[:player_id] = player.id
+    redirect '/player'
   end
 
   post '/player/sign_in' do
     player = Player.login(params[:email_address], params[:password])
 
     if !player
-      @errors = "Incorrect login or password user: '#{params[:email_address]}' password: '#{params[:password]}'"
+      @errors = "Incorrect login or password (login: '#{params[:email_address]}' password: '#{params[:password]}')"
       haml :sign_in
     else
       session[:player_id] = player.id
