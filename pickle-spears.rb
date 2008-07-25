@@ -137,14 +137,13 @@ helpers do
   end
 
   def status_for_game(player, game)
-    return '' unless player && game
+    return '' unless player && game && player.is_on_team(game.team)
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
 
     if pg
       return "Your status: #{pg.status}"
     else
-      return 
-      <<-HTML
+      return <<-HTML
        <div id="status_#{game.id}">
          <strong>Attending?</strong>
          <a href='#' onclick="set_attending_status('#{game.id}', 'yes', 'status_#{game.id}'); return false;">Yes</a>
