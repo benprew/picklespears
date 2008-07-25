@@ -24,9 +24,5 @@
     - (@player.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
         = game.description
-        %div{ :id => "status_#{game.id}" }
-          %strong Attending?
-          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'yes', 'status_#{game.id}')" } Yes
-          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'no', 'status_#{game.id}')" } No
-          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}')" } Maybe 
+        = status_for_game(@player, game)
 

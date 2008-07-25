@@ -135,5 +135,24 @@ helpers do
     # assumes you're using haml to do escaping
     return "#{url}?" + (args.map { |key, val| "#{key}=#{escape_once(val)}"}).join(";")
   end
+
+  def status_for_game(player, game)
+    return '' unless player && game
+    pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
+
+    if pg
+      return "Your status: #{pg.status}"
+    else
+      return 
+      <<-HTML
+       <div id="status_#{game.id}">
+         <strong>Attending?</strong>
+         <a href='#' onclick="set_attending_status('#{game.id}', 'yes', 'status_#{game.id}'); return false;">Yes</a>
+         <a href='#' onclick="set_attending_status('#{game.id}', 'no', 'status_#{game.id}'); return false;">No</a>
+         <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
+       </div>
+      HTML
+    end
+  end
 end
 

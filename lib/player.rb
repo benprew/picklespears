@@ -39,4 +39,8 @@ class Player
   def set_attending_status_for_game(game, status)
     PlayersGame.new(:player_id => self.id, :game_id => game.id, :status => status).save
   end
+
+  def is_on_team?(team)
+    return PlayersTeam.first(:player_id => self.id, :team_id => team.id)
+  end
 end
