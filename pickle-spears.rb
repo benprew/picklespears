@@ -46,7 +46,7 @@ class PickleSpears
     player = Player.new
 
     if params[:password] != params[:password2]
-      @errors = "Password do not match"
+      @errors = "Passwords '#{params[:password]}' and '#{params[:password2]}' do not match"
       redirect "/player/sign_in?errors=#{@errors}"
     end
 
@@ -137,7 +137,7 @@ helpers do
   end
 
   def status_for_game(player, game)
-    return '' unless player && game && player.is_on_team(game.team)
+    return '' unless player && game && player.is_on_team?(game.team)
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
 
     if pg
