@@ -4,15 +4,6 @@ require 'division'
 require 'player'
 require 'game'
 
-class PlayersTeam
-  include DataMapper::Resource
-  belongs_to :player
-  belongs_to :team
-
-  property :player_id, Integer, :key => true
-  property :team_id, Integer, :key => true
-end
-
 class Team
   include DataMapper::Resource
 

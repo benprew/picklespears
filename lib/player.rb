@@ -2,6 +2,15 @@ require 'db'
 require 'team'
 require 'game'
 
+class PlayersTeam
+  include DataMapper::Resource
+  belongs_to :player
+  belongs_to :team
+
+  property :player_id, Integer, :key => true
+  property :team_id, Integer, :key => true
+end
+
 class Player
   include DataMapper::Resource
 
@@ -21,5 +30,13 @@ class Player
 
   def self.login( email_address, password )
     return Player.first(:email_address => email_address, :password => password)
+  end
+
+  def join_team(team)
+    PlayersTeam.new(:player_id => self.id, :team_id => team.id).save
+  end
+
+  def set_attending_status_for_game(game, status)
+    PlayersGame.new(:player_id => self.id, :game_id => game.id, :status => status).save
   end
 end

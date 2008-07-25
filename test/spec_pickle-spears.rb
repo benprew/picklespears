@@ -20,19 +20,19 @@ context 'PickleSpears' do
 
   specify "post from sign in redirects to player hompage" do
     post_it '/player/sign_in', 'email_address=ben.prew@gmail.com;password=test'
-    assert_equal '/player?id=12', @response.location
+    @response.location.should.equal '/player?id=12'
   end
 
   specify "error if unknown user tries to login" do
     post_it '/player/sign_in', 'email_address=foo'
-    assert_match /Incorrect login/, @response.body
+    @response.body.should.match /Incorrect login/
   end
 
   specify "player page" do
     get_it '/player?id=12'
 
-    assert_match /Teams/, @response.body
-    assert_match /Join a team/i, @response.body
+    @response.body.should.match /Teams/
+    @response.body.should.match /Join a team/i 
     assert_match /Upcoming Games/i, @response.body
   end
 
@@ -45,8 +45,10 @@ context 'PickleSpears' do
     post_it '/player/create', 'name=bennie;email_address=test@test.com;phone_number=503.332.9719;birthdate=20080611;zipcode=97213'
 
     assert include?('Set-Cookie')
-    assert_match /player\?errors=$/, @response.headers['Location'], 'redirect to player homepage, no errors'
+    assert_match /player/, @response.headers['Location'], 'redirect to player homepage, no errors'
 
-    assert_equal 'test@test.com', Player.first.email_address
+    player = Player.first(:name => 'bennie')
+    player.email_address.should.equal 'test@test.com' 
+    player.destroy
   end
 end

@@ -4,7 +4,8 @@
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - " + title
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
-    %script{ :language => 'javascript', :src => '/prototype.js' }
+    %script{ :language => 'javascript', :src => '/jx.js' }
+    %script{ :language => 'javascript', :src => '/pickle-spears.js' }
   %body
     %div{ :style => "text-align: left; float:left" }
       %a{ :href =>"/phpBB2/" } forums
@@ -13,6 +14,8 @@
     %div{ :style => "text-align: right;" }
       - if @name
         = "Welcome #{@name} | "
+        %a{ :href => '/player' } your home
+        |
         %a{ :href => '/sign_out' } sign out
       - else
         %a{ :href => '/player/sign_in' } sign in

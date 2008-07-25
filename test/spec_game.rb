@@ -12,6 +12,12 @@ context 'Player Spec' do
   end
 
   specify 'num guys returns the number of guys confirmed for game' do
-    assert_equal(0, @game.num_guys_confirmed)
+    @game.num_guys_confirmed.should.equal 0
+  end
+
+  specify 'guys confirmed for a game works if someone is actually confirmed' do
+    pg = PlayersGame.first
+    game = Game.get(pg.game_id)
+    game.num_guys_confirmed.should.equal 1
   end
 end

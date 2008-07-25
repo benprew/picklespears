@@ -11,25 +11,22 @@
     %li
       = "Phone: #{@player.phone_number} "
       %a{ :href => '' }= '[edit]'
-
   %p Teams
   %ul
     - @player.teams.each do |team|
       %li
         %a{ :href => href("/team", { 'team_id' => team.id }) }= team.name
         %img{ :src => '/bullet_delete.png' }
-  %a{ :href => "/" }Join a Team
+  %a{ :href => "/" } Join a Team
 %div{ :style => 'float: left' }
   %h2 Upcoming Games
   %ul
     - (@player.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
         = game.description
-        Attending?
-        %a{ :href => href("/game/attending_status", { 'status' => 'yes', 'game_id' => game.id })} Yes
-        %a{ :href => href("/game/attending_status", { 'status' => 'no', 'game_id' => game.id })} No
-        %a{ :href => href("/game/attending_status", { 'status' => 'maybe', 'game_id' => game.id })} Maybe
-        
-  
-    
-    
+        %div{ :id => "status_#{game.id}" }
+          %strong Attending?
+          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'yes', 'status_#{game.id}')" } Yes
+          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'no', 'status_#{game.id}')" } No
+          %a{ :href => '#', :onclick => "set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}')" } Maybe 
+

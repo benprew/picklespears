@@ -95,6 +95,12 @@ class PickleSpears
     haml :team_home
   end
 
+  # Meant to be an ajax call
+  get '/team/join' do
+    @player.join_team(Team.get(params[:team_id]))
+    "Joined!"
+  end
+
   get '/search' do
     @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc])
 
@@ -112,15 +118,9 @@ class PickleSpears
     sass :stylesheet
   end
 
+  # Meant to be called via ajax
   get '/game/attending_status' do
-    pg = @player.players_games.get(params[:game_id])
-    if !pg
-      pg = PlayersGame.new(:player_id => @player.id, :game_id => params[:game_id])
-    end
-    p pg
-    pg.update_attributes(:status => params[:status])
-    pg.save
-
+    @player.set_attending_status_for_game(Game.get(params[:game_id]), params[:status])
     "Status #{params[:status]} recorded"
   end
 end
