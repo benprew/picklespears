@@ -27,6 +27,7 @@ class Player
   property :password, String, :nullable => false
   property :birthdate, String
   property :zipcode, String
+  property :gender, String
 
   def self.login( email_address, password )
     return Player.first(:email_address => email_address, :password => password)
@@ -37,7 +38,10 @@ class Player
   end
 
   def set_attending_status_for_game(game, status)
-    PlayersGame.new(:player_id => self.id, :game_id => game.id, :status => status).save
+    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id) || PlayersGame.new(:player_id => self.id, :game_id => game.id)
+
+    pg.update_attributes(:status => status)
+    pg.save
   end
 
   def is_on_team?(team)

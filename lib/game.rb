@@ -25,11 +25,11 @@ class Game
   property :reminder_sent, Boolean, :nullable => false, :default => false
 
   def num_guys_confirmed
-    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' ? sum + 1 : sum } || 0
+    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' && pg.player.gender == 'guy' ? sum + 1 : sum } || 0
   end
 
   def num_gals_confirmed
-    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' ? sum + 1 : sum } || 0
+    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum } || 0
   end
 end
 

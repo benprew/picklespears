@@ -11,6 +11,7 @@ context 'PickleSpears' do
   before(:each) do
     require 'pickle-spears'
     player = nil
+    @context = Sinatra::EventContext.new(stub("request"), stub("response", :body= => nil), stub("route params"))
   end
 
   specify "post from sign in sets cookie" do
@@ -50,5 +51,36 @@ context 'PickleSpears' do
     player = Player.first(:name => 'bennie')
     player.email_address.should.equal 'test@test.com' 
     player.destroy
+  end
+
+  specify 'attending_status' do
+    pg = PlayersTeam.first
+    assert_equal_ignoring_whitespace(@context.status_for_game(pg.player, pg.team.games.get(4823)), <<-HTML
+    Your status: <strong>yes</strong>
+    <a href="#" onclick="document.getElementById('status_4823').style.display = 'block'">[change]</a>
+    <div id="status_4823" style="display:none">
+      <strong>Attending?</strong>
+      <a href='#' onclick="set_attending_status('4823', 'yes', 'status_4823'); return false;">Yes</a>
+      <a href='#' onclick="set_attending_status('4823', 'no', 'status_4823'); return false;">No</a>
+      <a href='#' onclick="set_attending_status('4823', 'maybe', 'status_4823'); return false;">Maybe</a>
+    </div>
+    HTML
+    )
+  end
+
+  def assert_equal_ignoring_whitespace(should, is)
+    should = should.gsub(/( |\n)+/m, '')
+    is = is.gsub(/( |\n)+/m, '')
+
+    assert_equal(should, is)
+  end
+
+  specify 'let you pick your gender' do
+  end
+
+  specify 'game reminders' do
+  end
+
+  specify 'can set manager for team' do
   end
 end

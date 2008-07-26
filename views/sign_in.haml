@@ -1,6 +1,6 @@
 - title 'sign in'
 %div.error= @errors
-%div{ :style => "float:left;padding: 8px" }
+%div{ :style => "float:left; padding: 8px" }
   %h3 Sign In
   %form{ :method => "post" }
     %table
@@ -20,15 +20,15 @@
   %form{ :method => 'post', :action => '/player/create' }
     %table
       %tr
-        %td Name*:
+        %td Full Name*:
         %td
           %input{ :type => 'text', :name => 'name' }
       %tr
-        %td Email*:
+        %td Your Email*:
         %td
           %input{ :type => 'text', :name => 'email_address' }
       %tr
-        %td Choose a Password*:
+        %td New Password*:
         %td
           %input{ :type => "password", :name => 'password' }
       %tr
@@ -36,11 +36,18 @@
         %td
           %input{ :type => "password", :name => 'password2' }
       %tr
+        %td I am:
+        %td
+          %select{ :name => 'gender' }
+            %option{ :value => '' }select sex
+            %option{ :value => 'guy' }guy
+            %option{ :value => 'gal' }gal
+      %tr
         %td Zip Code:
         %td
           %input{ :type => "text", :name => 'address' }
       %tr
-        %td Birthdate (DD/MM/YYYY):
+        %td Birthday:
         %td
           %input{ :type => "text", :name => 'birthday' }
       %tr

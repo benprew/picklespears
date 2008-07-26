@@ -7,7 +7,9 @@
   %h2{ :style => 'margin-top: 0px;' } Players
   %ul
     - @team.players.each do |player|
-      %li= "#{player.name} (#{player.email_address})"
+      %li
+        %a{ :href => href('/player', { 'id' => player.id }) }= player.name
+        ="(#{player.email_address})"
   %h2 Upcoming Games
   %ul
     - @team.upcoming_games.each do |game|
@@ -19,9 +21,3 @@
   %ul{ :style => 'list-style-type: none; display: inline' }
     %li{ :style => 'display: inline' }= "#{@team.next_game.num_guys_confirmed} guys"
     %li{ :style => 'display: inline' }= "#{@team.next_game.num_gals_confirmed} gals"
-  
-
-
-
-
-

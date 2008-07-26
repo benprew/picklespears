@@ -141,17 +141,21 @@ helpers do
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
 
     if pg
-      return "Your status: #{pg.status}"
+      return %{Your status: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + attending_status_div(game, 'none')
     else
-      return <<-HTML
-       <div id="status_#{game.id}">
-         <strong>Attending?</strong>
-         <a href='#' onclick="set_attending_status('#{game.id}', 'yes', 'status_#{game.id}'); return false;">Yes</a>
-         <a href='#' onclick="set_attending_status('#{game.id}', 'no', 'status_#{game.id}'); return false;">No</a>
-         <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
-       </div>
-      HTML
+      attending_status_div(game)
     end
+  end
+
+  def attending_status_div(game, initial_display_type='block')
+    return <<-HTML
+     <div id="status_#{game.id}" style="display:#{initial_display_type}">
+       <strong>Going?</strong>
+       <a href='#' onclick="set_attending_status('#{game.id}', 'yes', 'status_#{game.id}'); return false;">Yes</a>
+       <a href='#' onclick="set_attending_status('#{game.id}', 'no', 'status_#{game.id}'); return false;">No</a>
+       <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
+     </div>
+    HTML
   end
 end
 

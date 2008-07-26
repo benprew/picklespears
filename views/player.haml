@@ -1,23 +1,34 @@
 - title "#{@player.name}'s homepage"
-%div{ :style => 'float: left; padding: 8px' }
+%div.user_info
   Image of player
-  %ul
-    %li
-      = "Name: #{@player.name} "
-      %a{ :href => '' }= '[edit]'
-    %li
-      = "Email: #{@player.email_address} "
-      %a{ :href => '' }= '[edit]'
-    %li
-      = "Phone: #{@player.phone_number} "
-      %a{ :href => '' }= '[edit]'
-  %p Teams
-  %ul
-    - @player.teams.each do |team|
-      %li
-        %a{ :href => href("/team", { 'team_id' => team.id }) }= team.name
-        %img{ :src => '/bullet_delete.png' }
-  %a{ :href => "/" } Join a Team
+  %table
+    %tr
+      %td.team_header
+        Information 
+        %a{ :href => '' }= '[edit]'
+    %tr
+      %td
+        %ul
+          %li
+            = "Name: #{@player.name} "
+          %li
+            = "Email: #{@player.email_address} "
+          %li
+            = "Phone: #{@player.phone_number} "
+          %li
+            = "Gender: #{@player.gender} "
+  %table
+    %tr
+      %td.team_header
+        Teams
+        %a{ :href => "/" } [Join New]
+    %tr
+      %td
+        %ul
+          - @player.teams.each do |team|
+            %li
+              %a{ :href => href("/team", { 'team_id' => team.id }) }= team.name
+              %img{ :src => '/bullet_delete.png' }
 %div{ :style => 'float: left' }
   %h2 Upcoming Games
   %ul
