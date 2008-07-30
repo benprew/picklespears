@@ -84,27 +84,23 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     assert_equal(should, is)
   end
 
-  specify 'let you pick your gender' do
-  end
+  specify 'select/edit your gender when you create your account' do
+    player = Player.create_test(:gender => 'guy')
+    player.gender.should.equal 'guy'
+    get_it "/player?id=#{player.id}"
 
-  specify 'game reminders' do
-  end
-
-  specify 'can set manager for team' do
+    @response.body.should.match /gender/i
   end
 
   specify 'todo' do
 
     print <<-TODO
-gems/dm-core-0.9.2/lib/dm-core/repository.rb?
 
- repository.adapter.query and repository.adapter.execute will let you speak your adapter's native tongue if you need to
+      [ ] get email reminders working... see http://irclogger.com/sinatra/2008-07-25
+          email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" end 
+          http://github.com/foca/sinatra-mailer/tree/master 
 
-http://irclogger.com/sinatra/2008-07-25
-email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" 
-end 
-
-http://github.com/foca/sinatra-mailer/tree/master 
+      [ ] can set manager for team
     TODO
 
   end

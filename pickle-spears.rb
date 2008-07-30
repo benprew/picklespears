@@ -21,7 +21,14 @@ configure :test do
   DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
   DataMapper.auto_migrate!
 end
-configure :production do DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development') end
+
+configure :production do
+  DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+end
+
+configure :development do
+  DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+end
 
 class PickleSpears
 
