@@ -1,16 +1,9 @@
-require 'db'
+require 'rubygems'
+require 'dm-core'
+require 'date'
 require 'team'
 require 'player'
-
-class PlayersGame
-  include DataMapper::Resource
-  belongs_to :player
-  belongs_to :game
-
-  property :player_id, Integer, :key => true
-  property :game_id, Integer, :key => true
-  property :status, String
-end
+require 'players_game'
 
 class Game
   include DataMapper::Resource
@@ -30,6 +23,17 @@ class Game
 
   def num_gals_confirmed
     players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum } || 0
+  end
+
+  def self.create_test(attrs={})
+    game = Game.new(
+      :date => Date.today(),
+      :description => 'test game',
+      :team_id => 1
+    )
+    game.update_attributes(attrs) if attrs
+    game.save
+    return game
   end
 end
 

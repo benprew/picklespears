@@ -3,15 +3,25 @@
 $:.unshift File.dirname(__FILE__) + '/sinatra/lib'
 
 require 'sinatra'
+require 'rubygems'
+require 'dm-core'
+
 require 'division'
 require 'team'
 require 'time'
 require 'player'
 
+
 set :root, Dir.pwd
 set :views, Dir.pwd + '/views'
 set :public, Dir.pwd + '/public'
 set :sessions, true
+
+configure :test do
+  DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
+  DataMapper.auto_migrate!
+end
+configure :production do DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development') end
 
 class PickleSpears
 
@@ -51,7 +61,7 @@ class PickleSpears
     end
 
     attributes = params
-    attributes.delete(:password2)
+    attributes.delete('password2')
     player.attributes = attributes
 
     begin
@@ -59,8 +69,10 @@ class PickleSpears
     rescue StandardError => err
       if /Duplicate entry/.match(err)
         @errors = "Player name '#{params[:name]}' already exists, please choose another"
+      elsif /may not be/.match(err)
+        @errors = err
       else
-        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'"
+        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'" + err
       end
     end
 

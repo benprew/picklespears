@@ -1,4 +1,5 @@
-require 'db'
+require 'rubygems'
+require 'dm-core'
 require 'date'
 require 'division'
 require 'player'
@@ -26,6 +27,13 @@ class Team
 
   def next_game
     games.first( :date.gte => Date.today(), :order => [ :date.asc ] )
+  end
+
+  def self.create_test(attrs={})
+    team = Team.new(:division_id => 1)
+    team.update_attributes(attrs) if attrs
+    team.save
+    return team
   end
 end
 

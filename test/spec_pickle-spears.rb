@@ -4,14 +4,20 @@ $:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
 
 require 'sinatra'
 require 'sinatra/test/spec'
-require 'mocha'
 require 'pickle-spears'
+require 'mocha'
 
-context 'PickleSpears' do
+context 'spec_pickle-spears' do
   before(:each) do
+    repository.adapter.execute('begin transaction')
+    
     require 'pickle-spears'
     player = nil
     @context = Sinatra::EventContext.new(stub("request"), stub("response", :body= => nil), stub("route params"))
+  end
+
+  after(:each) do
+    repository.adapter.execute('rollback')
   end
 
   specify "post from sign in sets cookie" do
@@ -20,8 +26,9 @@ context 'PickleSpears' do
   end
 
   specify "post from sign in redirects to player hompage" do
+    player = Player.create_test(:email_address => 'ben.prew@gmail.com', :password => 'test')
     post_it '/player/sign_in', 'email_address=ben.prew@gmail.com;password=test'
-    @response.location.should.equal '/player?id=12'
+    @response.location.should.equal '/player?id=' + player.id.to_s
   end
 
   specify "error if unknown user tries to login" do
@@ -30,10 +37,11 @@ context 'PickleSpears' do
   end
 
   specify "player page" do
-    get_it '/player?id=12'
+    player = Player.create_test
+    get_it '/player?id=' + player.id.to_s
 
     @response.body.should.match /Teams/
-    @response.body.should.match /Join a team/i 
+    @response.body.should.match /Join New/i 
     assert_match /Upcoming Games/i, @response.body
   end
 
@@ -43,23 +51,28 @@ context 'PickleSpears' do
   end
 
   specify 'can create player' do
-    post_it '/player/create', 'name=bennie;email_address=test@test.com;phone_number=503.332.9719;birthdate=20080611;zipcode=97213'
+    post_it '/player/create', 'name=bennie;email_address=test@test.com;phone_number=503.332.9719;birthdate=20080611;zipcode=97213;password=test;password2=test'
 
     assert include?('Set-Cookie')
-    assert_match /player/, @response.headers['Location'], 'redirect to player homepage, no errors'
+    assert_match /player$/, @response.headers['Location'], 'redirect to player homepage, no errors'
 
     player = Player.first(:name => 'bennie')
     player.email_address.should.equal 'test@test.com' 
     player.destroy
   end
 
-  specify 'attending_status' do
-    pg = PlayersTeam.first
-    assert_equal_ignoring_whitespace(@context.status_for_game(pg.player, pg.team.games.get(4823)), <<-HTML
+  specify 'attending status' do
+    player = Player.create_test
+    team = Team.create_test
+    game = Game.create_test(:id => 4823)
+    PlayersTeam.create_test(:player => player, :team => team)
+    PlayersGame.create_test(:player => player, :game => game, :status => 'yes' )
+
+    assert_equal_ignoring_whitespace(@context.status_for_game(player, game), <<-HTML
     Your status: <strong>yes</strong>
     <a href="#" onclick="document.getElementById('status_4823').style.display = 'block'">[change]</a>
     <div id="status_4823" style="display:none">
-      <strong>Attending?</strong>
+      <strong>Going?</strong>
       <a href='#' onclick="set_attending_status('4823', 'yes', 'status_4823'); return false;">Yes</a>
       <a href='#' onclick="set_attending_status('4823', 'no', 'status_4823'); return false;">No</a>
       <a href='#' onclick="set_attending_status('4823', 'maybe', 'status_4823'); return false;">Maybe</a>
@@ -68,7 +81,7 @@ context 'PickleSpears' do
     )
   end
 
-  def assert_equal_ignoring_whitespace(should, is)
+  def assert_equal_ignoring_whitespace(is, should)
     should = should.gsub(/( |\n)+/m, '')
     is = is.gsub(/( |\n)+/m, '')
 
@@ -82,5 +95,21 @@ context 'PickleSpears' do
   end
 
   specify 'can set manager for team' do
+  end
+
+  specify 'todo' do
+
+    print <<-TODO
+gems/dm-core-0.9.2/lib/dm-core/repository.rb?
+
+ repository.adapter.query and repository.adapter.execute will let you speak your adapter's native tongue if you need to
+
+http://irclogger.com/sinatra/2008-07-25
+email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" 
+end 
+
+http://github.com/foca/sinatra-mailer/tree/master 
+    TODO
+
   end
 end

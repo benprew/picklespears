@@ -6,7 +6,7 @@ require 'sinatra'
 require 'sinatra/test/unit'
 require 'pickle-spears'
 
-class PickleSpearsTest < Test::Unit::TestCase
+class TestPickleSpears < Test::Unit::TestCase
 
   def test_homepage
     get_it '/'

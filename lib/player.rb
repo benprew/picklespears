@@ -1,6 +1,8 @@
-require 'db'
+require 'rubygems'
+require 'dm-core'
 require 'team'
 require 'game'
+require 'players_game'
 
 class PlayersTeam
   include DataMapper::Resource
@@ -9,6 +11,13 @@ class PlayersTeam
 
   property :player_id, Integer, :key => true
   property :team_id, Integer, :key => true
+
+  def self.create_test(attrs={})
+    pt = PlayersTeam.new
+    pt.update_attributes(attrs) if attrs
+    pt.save
+    return pt
+  end
 end
 
 class Player
@@ -46,5 +55,16 @@ class Player
 
   def is_on_team?(team)
     return PlayersTeam.first(:player_id => self.id, :team_id => team.id)
+  end
+
+  def self.create_test(attrs={})
+    player = Player.new(
+      :name => 'test user',
+      :email_address => 'test_user@test.com',
+      :password => 'test'
+    )
+    player.update_attributes(attrs) if attrs
+    player.save
+    return player
   end
 end

@@ -2,17 +2,15 @@
 
 $:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
 
-require 'test/spec'
-require 'player'
-require 'team'
-require 'game'
+require 'sinatra'
+require 'sinatra/test/spec'
+require 'pickle-spears'
 
-context 'PickleSpears' do
+context 'spec_player' do
 
   specify 'can join a team' do
-    player = Player.new(:name => 'test user')
-    player.save
-    team = Team.get(12)
+    player = Player.create_test(:name => 'test user')
+    team = Team.create_test(:id => 12)
     player.join_team(team)
     pt = PlayersTeam.first(:player_id => player.id, :team_id => team.id)
     pt.player_id.should.equal player.id
@@ -21,10 +19,8 @@ context 'PickleSpears' do
   end
 
   specify 'can attend a game' do
-    player = Player.new(:name => 'test user')
-    player.save
-  
-    game = Game.first
+    player = Player.create_test(:name => 'test user')
+    game = Game.create_test
   
     player.set_attending_status_for_game(game, 'yes')
   

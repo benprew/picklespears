@@ -1,4 +1,5 @@
-require 'db'
+require 'rubygems'
+require 'dm-core'
 require 'team'
 
 class Division
