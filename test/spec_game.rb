@@ -5,11 +5,13 @@ $:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
 require 'sinatra'
 require 'sinatra/test/spec'
 require 'pickle-spears'
+require 'mocha'
 require 'game'
 require 'player'
 require 'time'
+require 'picklespears/test/unit'
 
-context 'spec_game' do
+context 'spec_game', PickleSpears::Test::Unit do
   before(:each) do
     @game = Game.new(:date => Time.now(), :description => 'test game', :team_id => 1)
     @game.save

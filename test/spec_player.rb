@@ -5,8 +5,9 @@ $:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
 require 'sinatra'
 require 'sinatra/test/spec'
 require 'pickle-spears'
+require 'picklespears/test/unit'
 
-context 'spec_player' do
+context 'spec_player', PickleSpears::Test::Unit do
 
   specify 'can join a team' do
     player = Player.create_test(:name => 'test user')

@@ -8,8 +8,9 @@ require 'pickle-spears'
 require 'team'
 require 'game'
 require 'date'
+require 'picklespears/test/unit'
 
-context 'spec_team' do
+context 'spec_team', PickleSpears::Test::Unit do
   before(:each) do
     @team = Team.create_test(:id => 10)
     @team.save

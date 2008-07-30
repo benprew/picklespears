@@ -6,18 +6,14 @@ require 'sinatra'
 require 'sinatra/test/spec'
 require 'pickle-spears'
 require 'mocha'
+require 'picklespears/test/unit'
 
-context 'spec_pickle-spears' do
+context 'spec_pickle-spears', PickleSpears::Test::Unit do
   before(:each) do
-    repository.adapter.execute('begin transaction')
     
     require 'pickle-spears'
     player = nil
     @context = Sinatra::EventContext.new(stub("request"), stub("response", :body= => nil), stub("route params"))
-  end
-
-  after(:each) do
-    repository.adapter.execute('rollback')
   end
 
   specify "post from sign in sets cookie" do

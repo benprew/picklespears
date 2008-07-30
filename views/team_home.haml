@@ -15,9 +15,9 @@
     - @team.upcoming_games.each do |game|
       %li= game.description
 %div{ :style => 'float: left; width: 600px' }
-  %h2{ :style => 'display: inline' }= "Next Game: #{@team.next_game.description}"
+  %h2{ :style => 'display: inline' }= "Next Game: #{@team.next_game && @team.next_game.description}"
   = status_for_game(@player, @team.next_game)
   %br
   %ul{ :style => 'list-style-type: none; display: inline' }
-    %li{ :style => 'display: inline' }= "#{@team.next_game.num_guys_confirmed} guys"
-    %li{ :style => 'display: inline' }= "#{@team.next_game.num_gals_confirmed} gals"
+    %li{ :style => 'display: inline' }= "#{@team.next_game && @team.next_game.num_guys_confirmed} guys"
+    %li{ :style => 'display: inline' }= "#{@team.next_game && @team.next_game.num_gals_confirmed} gals"
