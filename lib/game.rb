@@ -18,11 +18,15 @@ class Game
   property :reminder_sent, Boolean, :nullable => false, :default => false
 
   def num_guys_confirmed
-    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' && pg.player.gender == 'guy' ? sum + 1 : sum } || 0
+    players_games.all.inject(0) do |sum, pg|
+      pg.status == "yes" && pg.player.gender == "guy" ? sum + 1 : sum
+    end
   end
 
   def num_gals_confirmed
-    players_games.all.reduce(0) { |sum, pg| pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum } || 0
+    players_games.all.inject(0) do |sum, pg|
+      pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum
+    end
   end
 
   def self.create_test(attrs={})

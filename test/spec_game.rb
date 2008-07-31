@@ -23,9 +23,8 @@ context 'spec_game', PickleSpears::Test::Unit do
 
   specify 'guys confirmed for a game works if someone is actually confirmed' do
     player = Player.create_test(:gender => 'guy')
-    @pg = PlayersGame.new(:game_id => @game.id, :player_id => player.id)
-    @pg.status = 'yes'
-    @pg.save
+    PlayersGame.create_test(:game => @game, :player => Player.create_test)
+    @pg = PlayersGame.create_test(:game => @game, :player => player, :status => 'yes')
     game = Game.get(@pg.game_id)
     game.num_guys_confirmed.should.equal 1
     game.num_gals_confirmed.should.equal 0
