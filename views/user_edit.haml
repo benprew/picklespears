@@ -1,0 +1,32 @@
+%table
+  %tr
+    %td Full Name*:
+    %td
+      %input{ :type => 'text', :name => 'name', :value => @player && @player.name }
+  %tr
+    %td Your Email*:
+    %td
+      %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
+  %tr
+    %td New Password*:
+    %td
+      %input{ :type => "password", :name => 'password' }
+  %tr
+    %td Re-enter Password*:
+    %td
+      %input{ :type => "password", :name => 'password2' }
+  %tr
+    %td I am:
+    %td
+      %select{ :name => 'gender' }
+        %option{ :value => '' }select sex
+        %option{ :value => 'guy', :selected => @player && @player.gender == 'guy' }guy
+        %option{ :value => 'gal', :selected => @player && @player.gender == 'gal' }gal
+  %tr
+    %td Zip Code:
+    %td
+      %input{ :type => "text", :name => 'address', :value => @player && @player.zipcode }
+  %tr
+    %td Birthday:
+    %td
+      %input{ :type => "text", :name => 'birthday', :value => @player && @player.birthdate }
