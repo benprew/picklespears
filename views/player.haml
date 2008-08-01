@@ -5,7 +5,7 @@
     %tr
       %td.team_header
         Information 
-        %a{ :href => '' }= '[edit]'
+        %a{ :href => '/player/edit' }= '[edit]'
     %tr
       %td
         %ul
@@ -35,5 +35,13 @@
     - (@player.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
         = game.description
-        = status_for_game(@player, game)
+        %div{ :style => "padding-left: 3em" }
+          = status_for_game(@player, game)
+          %li{ :style => 'display: inline' }= "#{game.num_guys_confirmed} guy(s)"
+          %li{ :style => 'display: inline' }= "#{game.num_gals_confirmed} gal(s)"
+          %a{ :href => '#', :onclick => "document.getElementById('#{game.id}_details').style.display = 'block'" }= "[details]"
+          %div{ :style => 'display:none', :id => "#{game.id}_details" }
+            %ul
+            - game.team.players.each do |player|
+              %li= "#{player.name}: #{player.attending_status(game)}"             
 

@@ -53,6 +53,11 @@ class Player
     pg.save
   end
 
+  def attending_status(game)
+    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id)
+    pg ? pg.status : "No Reply"
+  end
+
   def is_on_team?(team)
     return PlayersTeam.first(:player_id => self.id, :team_id => team.id)
   end

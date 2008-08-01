@@ -1,5 +1,4 @@
 - title 'sign in'
-%div.error= @errors
 %div{ :style => "float:left; padding: 8px" }
   %h3 Sign In
   %form{ :method => "post" }
@@ -18,41 +17,6 @@
 %div{ :style => "float:left; padding: 8px" }
   %h3 New to picke Spears?  Create your account
   %form{ :method => 'post', :action => '/player/create' }
-    %table
-      %tr
-        %td Full Name*:
-        %td
-          %input{ :type => 'text', :name => 'name' }
-      %tr
-        %td Your Email*:
-        %td
-          %input{ :type => 'text', :name => 'email_address' }
-      %tr
-        %td New Password*:
-        %td
-          %input{ :type => "password", :name => 'password' }
-      %tr
-        %td Re-enter Password*:
-        %td
-          %input{ :type => "password", :name => 'password2' }
-      %tr
-        %td I am:
-        %td
-          %select{ :name => 'gender' }
-            %option{ :value => '' }select sex
-            %option{ :value => 'guy' }guy
-            %option{ :value => 'gal' }gal
-      %tr
-        %td Zip Code:
-        %td
-          %input{ :type => "text", :name => 'address' }
-      %tr
-        %td Birthday:
-        %td
-          %input{ :type => "text", :name => 'birthday' }
-      %tr
-        %td
-          %input{ :type => 'submit', :name => 'create_account', :value => 'Create Account' }
-      %tr
-        %td
-          %span.smaller * = Required field
+    = user_edit_partial
+    %input{ :type => 'submit', :name => 'create_account', :value => 'Create Account' }
+    %span.smaller * = Required field

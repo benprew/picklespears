@@ -65,13 +65,15 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     PlayersGame.create_test(:player => player, :game => game, :status => 'yes' )
 
     assert_equal_ignoring_whitespace(@context.status_for_game(player, game), <<-HTML
-    Your status: <strong>yes</strong>
+    <div>
+    Going: <strong>yes</strong>
     <a href="#" onclick="document.getElementById('status_4823').style.display = 'block'">[change]</a>
     <div id="status_4823" style="display:none">
       <strong>Going?</strong>
       <a href='#' onclick="set_attending_status('4823', 'yes', 'status_4823'); return false;">Yes</a>
       <a href='#' onclick="set_attending_status('4823', 'no', 'status_4823'); return false;">No</a>
       <a href='#' onclick="set_attending_status('4823', 'maybe', 'status_4823'); return false;">Maybe</a>
+    </div>
     </div>
     HTML
     )
@@ -101,6 +103,10 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
           http://github.com/foca/sinatra-mailer/tree/master 
 
       [ ] can set manager for team
+
+      [ ] can edit user information
+
+      [ ] for :collections => @things, see: http://github.com/cschneid/irclogger
     TODO
 
   end

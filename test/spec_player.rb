@@ -30,4 +30,12 @@ context 'spec_player', PickleSpears::Test::Unit do
     player.destroy
     pg.destroy
   end
+
+  specify 'can update info via post' do
+    Player.create_test( :email_address => 'test', :password => 'test' )
+    post_it '/player/sign_in', 'email_address=test;password=test'
+    post_it '/player/update?name=new_name', '', { "HTTP_COOKIE" => @response.headers['Set-Cookie'] }
+    @response.location.should.equal '/player'
+    Player.first(:email_address => 'test').name.should.equal 'new_name'
+  end
 end

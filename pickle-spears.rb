@@ -102,6 +102,36 @@ class PickleSpears
       redirect "/player?id=#{player.id}"
     end
   end
+
+  get '/player/edit' do
+    haml :player_edit
+  end
+
+  post '/player/update' do
+    player = @player
+
+    if params[:password] != params[:password2]
+      @errors = "Passwords '#{params[:password]}' and '#{params[:password2]}' do not match"
+      redirect "/player/edit?errors=#{@errors}"
+    end
+
+    attributes = params
+    attributes.delete('password2')
+    player.attributes = attributes
+
+    begin
+      player.save
+    rescue StandardError => err
+      if /Duplicate entry/.match(err)
+        @errors = "Player name '#{params[:name]}' already exists, please choose another"
+      elsif /may not be/.match(err)
+        @errors = err
+      else
+        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'" + err
+      end
+    end
+    redirect '/player'
+  end
   
   get '/sign_out' do
     session[:player_id] = nil
@@ -160,7 +190,7 @@ helpers do
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
 
     if pg
-      return %{Your status: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + attending_status_div(game, 'none')
+      return %{<div>Going: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + attending_status_div(game, 'none') + "</div>"
     else
       attending_status_div(game)
     end
@@ -175,6 +205,10 @@ helpers do
        <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
      </div>
     HTML
+  end
+
+  def user_edit_partial
+    haml :user_edit, :layout => false
   end
 end
 

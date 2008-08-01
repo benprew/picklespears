@@ -16,6 +16,7 @@
           %a{ :href => '/sign_out' } sign out
         - else
           %a{ :href => '/player/sign_in' } sign in
+    .error= @errors
     = yield
     %script{ :language => 'javascript', :src => '/jx.js' }
     %script{ :language => 'javascript', :src => '/pickle-spears.js' }
