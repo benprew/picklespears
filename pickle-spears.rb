@@ -22,11 +22,12 @@ configure :test do
   DataMapper.auto_migrate!
 end
 
-configure :production do
-  DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+configure :development do
+  DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
+  DataMapper.auto_migrate!
 end
 
-configure :development do
+configure :production do
   DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
 end
 
@@ -69,6 +70,7 @@ class PickleSpears
 
     attributes = params
     attributes.delete('password2')
+    attributes.delete('create_account')
     player.attributes = attributes
 
     begin
@@ -117,6 +119,7 @@ class PickleSpears
 
     attributes = params
     attributes.delete('password2')
+    attributes.delete('update')
     player.attributes = attributes
 
     begin
