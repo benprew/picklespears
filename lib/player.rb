@@ -37,6 +37,7 @@ class Player
   property :birthdate, String
   property :zipcode, String
   property :gender, String
+  property :image, Object
 
   def self.login( email_address, password )
     return Player.first(:email_address => email_address, :password => password)

@@ -104,7 +104,11 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
 
       [ ] can set manager for team
 
-      [ ] can edit user information
+      [ ] user image
+            post '/sorter' do
+              params[:data][:tempfile].readlines.sort
+            end
+
 
       [ ] for :collections => @things, see: http://github.com/cschneid/irclogger
     TODO

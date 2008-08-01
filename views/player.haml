@@ -1,10 +1,9 @@
 - title "#{@player.name}'s homepage"
 %div.user_info
-  Image of player
   %table
     %tr
-      %td.team_header
-        Information 
+      %th.team_header
+        Info
         %a{ :href => '/player/edit' }= '[edit]'
     %tr
       %td
@@ -19,7 +18,7 @@
             = "Gender: #{@player.gender} "
   %table
     %tr
-      %td.team_header
+      %th.team_header
         Teams
         %a{ :href => "/" } [Join New]
     %tr
@@ -44,4 +43,3 @@
             %ul
             - game.team.players.each do |player|
               %li= "#{player.name}: #{player.attending_status(game)}"             
-

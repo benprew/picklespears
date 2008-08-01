@@ -38,6 +38,8 @@ class PickleSpears
       @player = Player.get(session[:player_id])
       @name = @player.name
     end
+
+    @errors = params[:errors]
   end
 
   get '/' do
@@ -157,7 +159,7 @@ class PickleSpears
     @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc])
 
     if @teams.length == 0
-      haml "%h1 No @teams found"
+      redirect '/?errors="No teams found"'
     elsif @teams.length == 1
       redirect "/team?team_id=#{@teams[0].id.to_s}"
     else

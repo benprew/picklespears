@@ -1,3 +1,6 @@
+!dark_pickle = #a7dd68
+!light_pickle = #ede9ed
+
 body
   font-family: Arial, Sans Serif
   font-size: smaller
@@ -11,7 +14,7 @@ div.division
   border-style: dashed
   border-width: thin
   font-size: larger
-  background-color: #ccccff
+  background-color: = !light_pickle
   margin-top: 2em
   padding: .5em
 
@@ -25,9 +28,10 @@ div.main
 div.error
   background-color: red
   font-weight: bold
+  text-align: center
 
 div.header
-  background-color: #54C571
+  background-color = !dark_pickle
   padding-left: 8px
   padding-top: 8px
   padding-right: 8px
@@ -38,14 +42,14 @@ div.header
 div.user_info
   float: left
   margin: 4px
-  background-color: #C3FDB8
+  background-color = !light_pickle
   border-bottom: thin solid #254117
   border-top: thin solid #254117
 
 table
   width: 100%
 
-td.team_header
-  background-color: #54C571
+th.team_header
+  background-color = !dark_pickle
   border-top: thin solid black
   padding: 4px
