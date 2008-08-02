@@ -6,16 +6,16 @@
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
   %body
     .header
-      %div{ :style => "text-align: left; float:left" }
-        %a{ :href => "/" } home
-      %div{ :style => "text-align: right;" }
-        - if @name
-          = "Welcome #{@name} | "
-          %a{ :href => '/player' } your home
+      %div{ :style => "text-align: right; float:right" }
+        - if @player
+          = "Welcome #{@player.name} | "
+          %a{ :href => '/sign_out' }sign out
           |
-          %a{ :href => '/sign_out' } sign out
-        - else
-          %a{ :href => '/player/sign_in' } sign in
+          %a{ :href => '/player' } home
+        - else 
+          %a{ :href => '/' } home
+          |
+          %a{ :href => '/player/sign_in' } join
     .error= @errors
     = yield
     %script{ :language => 'javascript', :src => '/jx.js' }

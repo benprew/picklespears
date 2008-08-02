@@ -1,20 +1,5 @@
 - title 'sign in'
 %div{ :style => "float:left; padding: 8px" }
-  %h3 Sign In
-  %form{ :method => "post" }
-    %table
-      %tr
-        %td Email:
-        %td
-          %input{ :type => "text", :name => "email_address" }
-      %tr
-        %td Password:
-        %td
-          %input{ :type => "password", :name => 'password' }
-      %tr
-        %td
-          %input{ :type => 'submit', :value => 'Sign In' }
-%div{ :style => "float:left; padding: 8px" }
   %h3 New to picke Spears?  Create your account
   %form{ :method => 'post', :action => '/player/create' }
     = user_edit_partial

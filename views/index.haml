@@ -11,4 +11,18 @@
   %a{ :href => "/browse?league=Men" } Men
   |
   %a{ :href => "/browse?league=Coed" } Coed
-
+%div{ :style => "float:left; padding: 8px" }
+  %h3 Sign In
+  %form{ :method => "post", :action => '/player/sign_in' }
+    %table
+      %tr
+        %td Email:
+        %td
+          %input{ :type => "text", :name => "email_address" }
+      %tr
+        %td Password:
+        %td
+          %input{ :type => "password", :name => 'password' }
+      %tr
+        %td
+          %input{ :type => 'submit', :value => 'Sign In' }
