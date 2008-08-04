@@ -57,9 +57,9 @@ class PickleSpears
     haml :player
   end
 
-  get '/player/sign_in' do
+  get '/player/new' do
     @errors = params[:errors]
-    haml :sign_in
+    haml :player_create
   end
 
   post '/player/create' do
@@ -67,7 +67,7 @@ class PickleSpears
 
     if params[:password] != params[:password2]
       @errors = "Passwords '#{params[:password]}' and '#{params[:password2]}' do not match"
-      redirect "/player/sign_in?errors=#{@errors}"
+      redirect "/player/create?errors=#{@errors}"
     end
 
     attributes = params
@@ -88,11 +88,15 @@ class PickleSpears
     end
 
     if @errors
-      redirect "/player/sign_in?errors=#{@errors}"
+      redirect "/player/create?errors=#{@errors}"
     end
 
     session[:player_id] = player.id
-    redirect '/player'
+    redirect '/player/join_team'
+  end
+
+  get '/player/join_team' do
+    haml :join_team
   end
 
   post '/player/sign_in' do
@@ -100,7 +104,7 @@ class PickleSpears
 
     if !player
       @errors = "Incorrect login or password (login: '#{params[:email_address]}' password: '#{params[:password]}')"
-      haml :sign_in
+      haml :index
     else
       session[:player_id] = player.id
       redirect "/player?id=#{player.id}"

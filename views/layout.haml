@@ -6,7 +6,7 @@
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
   %body
     .header
-      %div{ :style => "text-align: right; float:right" }
+      %div{ :style => "text-align: right" }
         - if @player
           = "Welcome #{@player.name} | "
           %a{ :href => '/sign_out' }sign out
@@ -15,7 +15,7 @@
         - else 
           %a{ :href => '/' } home
           |
-          %a{ :href => '/player/sign_in' } join
+          %a{ :href => '/player/new' } join
     .error= @errors
     = yield
     %script{ :language => 'javascript', :src => '/jx.js' }
