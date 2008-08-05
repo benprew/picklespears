@@ -7,9 +7,14 @@
   %br
   %br
   To find a team, type in part of the team name in the search box and
-  click "search".  Once you're all done adding teams, click "done"
+  click "Team Search".  Once you're all done adding teams, click "Done!"
 .create_form
   %h3 Search
   %form{ :method => 'get', :action => '/player/join_team' }
     %input{ :name => "team", :type => "input" }
     %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+  %form{ :method => 'get', :action => '/player' }
+    %input{ :name => 'done', :value => 'Done!', :type => 'submit' }
+  - @teams.each do |team|
+    = "#{team.name} (division #{team.division.league} #{team.division.name})"
+    %a#join_this_team{ :href => '#', :onclick => "joinTeam('#{team.id}', 'join_this_team'); return false;"}= "[join]"

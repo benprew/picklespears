@@ -1,17 +1,15 @@
 - title "now with more vinegar!"
-%div.main
+.directions
   %img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168" }
-  %form{ :method => "get", :action => "/search", :name => "tn_search_form"}
-    %input{ :name => "team", :type => "input" }
-    %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
-  %br
-  Browse by:
-  %a{ :href => "/browse?league=Women" } Women
-  |
-  %a{ :href => "/browse?league=Men" } Men
-  |
-  %a{ :href => "/browse?league=Coed" } Coed
-%div{ :style => "float:right; padding: 8px" }
+  %h4 WTF is This?
+  %p Welcome to Pickle Spears, your source for all things gamey in Portland.  Right now we are working on adding various soccer schedules and teams to our database.  All Portland Indoor teams are represented.  If you want to have your team added, drop me a line.
+  %h4 Not a Member?
+  Click on the join link in the upper right to get started!
+  %h4 Already a Member?
+  Sign-in in the boxes provided
+  %h4 Just Browsing?
+  Search for a team in the search box, or browse by league...
+.create_form
   %strong Sign In
   %form{ :method => "post", :action => '/player/sign_in' }
     %table
@@ -26,3 +24,14 @@
       %tr
         %td
           %input{ :type => 'submit', :value => 'Sign In' }
+  %h4 Search for a Team
+  %form{ :method => "get", :action => "/search", :name => "tn_search_form"}
+    %input{ :name => "team", :type => "input" }
+    %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+  %br
+  Browse by:
+  %a{ :href => "/browse?league=Women" } Women
+  |
+  %a{ :href => "/browse?league=Men" } Men
+  |
+  %a{ :href => "/browse?league=Coed" } Coed

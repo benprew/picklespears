@@ -96,6 +96,8 @@ class PickleSpears
   end
 
   get '/player/join_team' do
+    @teams = []
+    @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc]) if params[:team]
     haml :join_team
   end
 

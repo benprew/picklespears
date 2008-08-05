@@ -38,4 +38,22 @@ context 'spec_player', PickleSpears::Test::Unit do
     @response.location.should.equal '/player'
     Player.first(:email_address => 'test').name.should.equal 'new_name'
   end
+
+  specify 'join team as part of sign up process works' do
+    Player.create_test( :email_address => 'test', :password => 'test' )
+
+    div = Division.create_test
+    Team.create_test( :name => 'team to find', :division => div )
+    Team.create_test( :name => 'should not be found', :division => div )
+
+    post_it '/player/sign_in', 'email_address=test;password=test'
+    session_id = @response.headers['Set-Cookie']
+
+    get_it '/player/join_team', '', { "HTTP_COOKIE" => session_id }
+    @response.body.should.match /Done!/
+    @response.body.should.not.match /team to find/
+
+    get_it '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
+    @response.body.should.match /team to find/
+  end
 end
