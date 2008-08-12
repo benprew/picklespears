@@ -1,5 +1,5 @@
 !!! strict
-%html
+%html{ :xmlns => 'http://www.w3.org/1999/xhtml', :lang => 'en' }
   %head
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - " + title
@@ -9,14 +9,14 @@
       %div{ :style => "text-align: right" }
         - if @player
           = "Welcome #{@player.name} | "
-          %a{ :href => '/sign_out' }sign out
+          %a{ :href => '/player' } Home
           |
-          %a{ :href => '/player' } home
+          %a{ :href => '/sign_out' } Sign Out
         - else 
-          %a{ :href => '/' } home
+          %a{ :href => '/' } Home
           |
-          %a{ :href => '/player/new' } join
+          %a{ :href => '/player/create' } Join Now!
     .error= @errors
     = yield
-    %script{ :language => 'javascript', :src => '/jx.js' }
-    %script{ :language => 'javascript', :src => '/pickle-spears.js' }
+    %script{ :type => 'application/x-javascript', :src => '/jx.js' }
+    %script{ :type => 'application/x-javascript', :src => '/pickle-spears.js' }

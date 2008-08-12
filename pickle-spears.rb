@@ -24,7 +24,6 @@ end
 
 configure :development do
   DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
-  DataMapper.auto_migrate!
 end
 
 configure :production do
@@ -43,6 +42,7 @@ class PickleSpears
   end
 
   get '/' do
+    @teams = []
     haml :index
   end
   
@@ -57,7 +57,7 @@ class PickleSpears
     haml :player
   end
 
-  get '/player/new' do
+  get '/player/create' do
     @errors = params[:errors]
     haml :player_create
   end
@@ -106,6 +106,7 @@ class PickleSpears
 
     if !player
       @errors = "Incorrect login or password (login: '#{params[:email_address]}' password: '#{params[:password]}')"
+      @teams = []
       haml :index
     else
       session[:player_id] = player.id

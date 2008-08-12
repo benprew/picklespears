@@ -17,7 +17,8 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
   end
 
   specify "post from sign in sets cookie" do
-    post_it '/player/sign_in', 'email=ben.prew@gmail.com'
+    Player.create_test(:email_address => 'test_user', :password => 'test_pass')
+    post_it '/player/sign_in', 'email_address=test_user;password=test_pass'
     assert include?('Set-Cookie')
   end
 

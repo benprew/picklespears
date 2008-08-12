@@ -30,7 +30,7 @@ class Player
 
   property :id, Integer, :serial => true
   property :name, String, :nullable => false, :index => :unique
-  property :email_address, String, :nullable => false
+  property :email_address, String, :nullable => false, :index => :unique
   property :phone_number, String
   property :is_sub, Boolean
   property :password, String, :nullable => false
