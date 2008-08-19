@@ -1,18 +1,19 @@
 #!/usr/bin/env ruby
 
+$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
+
+require 'rubygems'
+require 'dm-core'
 require 'player'
 require 'team'
 require 'date'
 require 'game'
-require 'sinatra'
-require 'sinatra/test/methods'
-require 'pickle-spears'
 
 class Reminder
   def self._send_email_about_game(team, game)
     warn "sending email about #{game.description}"
     team.players.each do |player|
-      get_it '/player/send_game_reminder', 'player_id=#{player.id};game_id=#{game.id}'
+      `wget http://picklespears.com/player/send_game_reminder?player_id=#{player.id};game_id=#{game.id}`
     end
   end
 
