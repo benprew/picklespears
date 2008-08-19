@@ -3,17 +3,20 @@
 $:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
 
 require 'rubygems'
+require 'pickle-spears'
 require 'dm-core'
 require 'player'
 require 'team'
 require 'date'
 require 'game'
+require 'haml'
+
 
 class Reminder
   def self._send_email_about_game(team, game)
     warn "sending email about #{game.description}"
     team.players.each do |player|
-      `wget http://picklespears.com/player/send_game_reminder?player_id=#{player.id};game_id=#{game.id}`
+      get_it '/player/send_game_reminder', 'player_id=#{player.id};game_id=#{game.id}'
     end
   end
 
@@ -27,3 +30,5 @@ class Reminder
     end
   end
 end
+
+Reminder.run

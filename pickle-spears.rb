@@ -165,17 +165,27 @@ class PickleSpears
     "Status #{params[:status]} recorded"
   end
 
-  get '/player/send_game_reminder' do
-    @player = Player.first(params[:player_id])
-    @game = Game.first(params[:game_id])
-    info = {
-      :from    => 'coach@picklespears.com',
-      :to      => @player.email_address,
-      :subject => 'Game Reminder from PickleSpears.com',
-      :body    => haml(:reminder)
-    }
-    email(info)
-    
+  get '/send_game_reminders' do
+    Team.all.each do |team|
+      next_game = team.next_unreminded_game()
+      next if !next_game || next_game.date <= Date.today() + 4
+      output = "sending email about #{game.description}"
+
+      team.players.each do |player|
+        @player = player
+        @game = next_game
+        info = {
+          :from    => 'coach@picklespears.com',
+          :to      => player.email_address,
+          :subject => 'Game Reminder from PickleSpears.com',
+          :body    => haml(:reminder),
+        }
+        email(info)
+      end
+      next_game.reminder_sent = 1
+      next_game.save
+    end
+    output
   end
 end
 
