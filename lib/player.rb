@@ -79,6 +79,7 @@ class Player
     end
 
     attrs.delete('password2')
+    attrs.delete(:password2)
 
     begin
       super(attrs)

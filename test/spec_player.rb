@@ -34,7 +34,9 @@ context 'spec_player', PickleSpears::Test::Unit do
   specify 'can update info via post' do
     Player.create_test( :email_address => 'test', :password => 'test' )
     post_it '/player/sign_in', 'email_address=test;password=test'
-    post_it '/player/update?name=new_name', '', { "HTTP_COOKIE" => @response.headers['Set-Cookie'] }
+    cookie = @response.headers['Set-Cookie']
+    post_it '/player/update?name=new_name', '', { "HTTP_COOKIE" => cookie }
+
     @response.location.should.equal '/player'
     Player.first(:email_address => 'test').name.should.equal 'new_name'
   end
@@ -55,5 +57,10 @@ context 'spec_player', PickleSpears::Test::Unit do
 
     get_it '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
     @response.body.should.match /team to find/
+  end
+
+  specify 'can update password' do
+    player = Player.create_test
+    assert player.update_attributes({ :password => 'test', :password2 => 'test' })
   end
 end

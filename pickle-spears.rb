@@ -5,6 +5,7 @@ $:.unshift File.dirname(__FILE__) + '/sinatra/lib'
 require 'sinatra'
 require 'rubygems'
 require 'dm-core'
+require 'mailer'
 
 require 'division'
 require 'team'
@@ -30,6 +31,16 @@ configure :production do
   set :views, Dir.pwd + '/views'
   set :public, Dir.pwd + '/public'
   DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+
+  Sinatra::Mailer.config = {
+    :host   => 'smtp.throwingbones.com',
+    :port   => '25',              
+    :user   => 'throwingbones',
+    :pass   => '0aefe114',
+    :auth   => :plain, # :plain, :login, :cram_md5, the default is no auth
+    :domain => "localhost.localdomain" # the HELO domain provided by the client to the server 
+  }
+
 end
 
 class PickleSpears
@@ -152,6 +163,19 @@ class PickleSpears
   get '/game/attending_status' do
     @player.set_attending_status_for_game(Game.get(params[:game_id]), params[:status])
     "Status #{params[:status]} recorded"
+  end
+
+  get '/player/send_game_reminder' do
+    @player = Player.first(params[:player_id])
+    @game = Game.first(params[:game_id])
+    info = {
+      :from    => 'coach@picklespears.com',
+      :to      => @player.email_address,
+      :subject => 'Game Reminder from PickleSpears.com',
+      :body    => haml(:reminder)
+    }
+    email(info)
+    
   end
 end
 

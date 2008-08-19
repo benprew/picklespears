@@ -1,0 +1,16 @@
+Dear 
+= @player.name
+,
+
+This is your game reminder. The next game is:
+
+= @game.description
+= @game.date.to_s("%A %B, %d at %I:%M%p")
+
+= "Click here if you will be going: 'yes'"
+
+= "Click here if you can't make it: 'no'"
+
+= "Click here if you're not sure: 'maybe'"
+
+Thank you for using pickle-spears!
