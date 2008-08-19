@@ -166,10 +166,13 @@ class PickleSpears
   end
 
   get '/send_game_reminders' do
+    output = ''
     Team.all.each do |team|
+      output += "<br/> working on team #{team.name}"
       next_game = team.next_unreminded_game()
+      output += " ... with game #{next_game.description}"
       next if !next_game || next_game.date <= Date.today() + 4
-      output = "sending email about #{game.description}"
+      output += "sending email about #{game.description}"
 
       team.players.each do |player|
         @player = player
@@ -185,12 +188,15 @@ class PickleSpears
       next_game.reminder_sent = 1
       next_game.save
     end
-    output
+    template :foo do
+      output
+    end
+    haml :foo
   end
 end
 
 helpers do
-  def title(title=nil)
+  def title(title='')
       @title = title unless title.nil?
       @title
   end
