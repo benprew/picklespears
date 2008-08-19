@@ -15,7 +15,6 @@ class PlayersTeam
   def self.create_test(attrs={})
     pt = PlayersTeam.new
     pt.update_attributes(attrs) if attrs
-    pt.save
     return pt
   end
 end
@@ -69,8 +68,31 @@ class Player
       :email_address => 'test_user@test.com',
       :password => 'test'
     )
-    player.update_attributes(attrs) if attrs
+    player.attributes = attrs if attrs
     player.save
     return player
   end
+
+  def update_attributes(attrs)
+    if attrs[:password] && (attrs[:password] != attrs[:password2])
+      raise "Passwords do not match"
+    end
+
+    attrs.delete('password2')
+
+    begin
+      super(attrs)
+    rescue StandardError => err
+      if /Duplicate entry/.match(err)
+        raise "Player name '#{attrs[:name]}' already exists, please choose another"
+      elsif /may not be/.match(err)
+        raise err
+      else
+        raise "Unknown error occured, please contact 'coach@throwingbones.com' #{err}"
+      end
+    end
+
+    return true
+  end
+
 end

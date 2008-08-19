@@ -11,13 +11,12 @@ require 'team'
 require 'time'
 require 'player'
 
-
-set :root, Dir.pwd
-set :views, Dir.pwd + '/views'
-set :public, Dir.pwd + '/public'
 set :sessions, true
 
 configure :test do
+  set :root, File.dirname(__FILE__)
+  set :views,File.dirname( __FILE__) + '/views'
+  set :public,File.dirname( __FILE__) + '/public'
   DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
   DataMapper.auto_migrate!
 end
@@ -27,6 +26,9 @@ configure :development do
 end
 
 configure :production do
+  set :root, Dir.pwd
+  set :views, Dir.pwd + '/views'
+  set :public, Dir.pwd + '/public'
   DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
 end
 
@@ -63,36 +65,20 @@ class PickleSpears
   end
 
   post '/player/create' do
-    player = Player.new
-
-    if params[:password] != params[:password2]
-      @errors = "Passwords '#{params[:password]}' and '#{params[:password2]}' do not match"
-      redirect "/player/create?errors=#{@errors}"
-    end
-
-    attributes = params
-    attributes.delete('password2')
-    attributes.delete('create_account')
-    player.attributes = attributes
+    @player = Player.new
 
     begin
-      player.save
+      @player.update_attributes(params)
     rescue StandardError => err
-      if /Duplicate entry/.match(err)
-        @errors = "Player name '#{params[:name]}' already exists, please choose another"
-      elsif /may not be/.match(err)
-        @errors = err
-      else
-        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'" + err
-      end
+      @errors = err
     end
 
     if @errors
-      redirect "/player/create?errors=#{@errors}"
+      haml :player_create
+    else
+      session[:player_id] = @player.id
+      redirect '/player/join_team'
     end
-
-    session[:player_id] = player.id
-    redirect '/player/join_team'
   end
 
   get '/player/join_team' do
@@ -110,7 +96,7 @@ class PickleSpears
       haml :index
     else
       session[:player_id] = player.id
-      redirect "/player?id=#{player.id}"
+      redirect "/player"
     end
   end
 
@@ -119,30 +105,13 @@ class PickleSpears
   end
 
   post '/player/update' do
-    player = @player
-
-    if params[:password] != params[:password2]
-      @errors = "Passwords '#{params[:password]}' and '#{params[:password2]}' do not match"
-      redirect "/player/edit?errors=#{@errors}"
-    end
-
-    attributes = params
-    attributes.delete('password2')
-    attributes.delete('update')
-    player.attributes = attributes
-
     begin
-      player.save
+      @player.update_attributes(params)
     rescue StandardError => err
-      if /Duplicate entry/.match(err)
-        @errors = "Player name '#{params[:name]}' already exists, please choose another"
-      elsif /may not be/.match(err)
-        @errors = err
-      else
-        @errors = "Unknown error occured, please contact 'coach@throwingbones.com'" + err
-      end
+      @errors = err
     end
-    redirect '/player'
+
+    redirect @errors ? "/player?errors=#{@errors}" : '/player'
   end
   
   get '/sign_out' do

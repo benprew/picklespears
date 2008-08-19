@@ -16,6 +16,11 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     @context = Sinatra::EventContext.new(stub("request"), stub("response", :body= => nil), stub("route params"))
   end
 
+  specify "null 2nd password works" do
+    post_it '/player/create', 'email_address=test_user;password=test_pass'
+    @response.body.should.match 'Passwords do not match'
+  end
+
   specify "post from sign in sets cookie" do
     Player.create_test(:email_address => 'test_user', :password => 'test_pass')
     post_it '/player/sign_in', 'email_address=test_user;password=test_pass'
@@ -25,7 +30,7 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
   specify "post from sign in redirects to player hompage" do
     player = Player.create_test(:email_address => 'ben.prew@gmail.com', :password => 'test')
     post_it '/player/sign_in', 'email_address=ben.prew@gmail.com;password=test'
-    @response.location.should.equal '/player?id=' + player.id.to_s
+    @response.location.should.equal '/player'
   end
 
   specify "error if unknown user tries to login" do
@@ -48,14 +53,13 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
   end
 
   specify 'can create player' do
-    post_it '/player/create', 'name=bennie;email_address=test@test.com;phone_number=503.332.9719;birthdate=20080611;zipcode=97213;password=test;password2=test'
+    post_it '/player/create', 'name=bennie;email_address=test_com;phone_number=503_332_9719;birthdate=20080611;zipcode=97213;password=test;password2=test'
 
     assert include?('Set-Cookie')
     assert_match /player\/join_team$/, @response.headers['Location'], 'redirect to player homepage, no errors'
 
     player = Player.first(:name => 'bennie')
-    player.email_address.should.equal 'test@test.com' 
-    player.destroy
+    player.email_address.should.equal 'test_com' 
   end
 
   specify 'attending status' do
@@ -99,10 +103,24 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
 
     print <<-TODO
 
-      [ ] get email reminders working... see http://irclogger.com/sinatra/2008-07-25
-          email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" end 
-          http://github.com/foca/sinatra-mailer/tree/master 
+      [ ] Join/Watch Multiple Teams
+      [ ] Communicate with all members of team
+      [ ] Quickly see how many people are coming to the next game
+          [ ] Get reminders about the next game, via email AND sms
+          [ ] get email reminders working... see http://irclogger.com/sinatra/2008-07-25
+              email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" end 
+              http://github.com/foca/sinatra-mailer/tree/master 
 
+      [ ] Manage a team
+          [ ] Send game reminders
+          [ ] See who has paid and how much
+      [ ] Get contact info for players
+          [ ] Allows player to say a little about themselves
+          [ ] Post picture
+          [ ] Forgot username/password
+      [ ] Find teams/players looking for players/teams
+
+    
       [ ] can set manager for team
 
       [ ] user image
