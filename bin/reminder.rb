@@ -8,6 +8,7 @@ require 'pickle-spears'
 
 class Reminder
   def self._send_email_about_game(team, game)
+    warn "sending email about #{game.description}"
     team.players.each do |player|
       get_it '/player/send_game_reminder', 'player_id=#{player.id};game_id=#{game.id}'
     end
