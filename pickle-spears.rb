@@ -196,9 +196,10 @@ class PickleSpears
 end
 
 helpers do
-  def title(title='')
-      @title = title unless title.nil?
-      @title
+  def title(title=nil)
+    @title ||= ''
+    @title = title unless title.nil?
+    @title
   end
 
   def href(url, args)
