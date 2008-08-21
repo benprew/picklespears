@@ -89,7 +89,7 @@ class Player
       elsif /may not be/.match(err)
         raise err
       else
-        raise "Unknown error occured, please contact 'coach@throwingbones.com' #{err}"
+        raise "Unknown error occured, please contact 'ben.prew@gmail.com' #{err}"
       end
     end
 

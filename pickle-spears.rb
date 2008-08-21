@@ -77,9 +77,12 @@ class PickleSpears
 
   post '/player/create' do
     @player = Player.new
+    attrs = params
+    attrs.delete(:create_account)
+    attrs.delete('create_account')
 
     begin
-      @player.update_attributes(params)
+      @player.update_attributes(attrs)
     rescue StandardError => err
       @errors = err
     end
@@ -116,6 +119,9 @@ class PickleSpears
   end
 
   post '/player/update' do
+    attrs = params
+    attrs.delete(:update)
+    attrs.delete('update')
     begin
       @player.update_attributes(params)
     rescue StandardError => err
@@ -178,7 +184,7 @@ class PickleSpears
         @player = player
         @game = next_game
         info = {
-          :from    => 'coach@picklespears.com',
+          :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,
           :subject => 'Game Reminder from PickleSpears.com',
           :body    => haml(:reminder),
