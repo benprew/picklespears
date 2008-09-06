@@ -17,16 +17,12 @@ class Team
   property :name, String
   property :division_id, Integer, :nullable => false
 
-  def next_unreminded_game
-    games.first( :date.gte => Date.today(), :team_id => self.id, :reminder_sent => false, :order => [ :date.asc ] )
-  end
-
   def upcoming_games
     games.all( :date.gte => Date.today(), :order => [ :date.asc ] )
   end
 
   def next_game
-    games.first( :date.gte => Date.today(), :order => [ :date.asc ] )
+    games.first( :date.gte => Date.today(), :team_id => self.id, :order => [ :date.asc ] )
   end
 
   def self.create_test(attrs={})

@@ -6,10 +6,16 @@ require 'pickle-spears'
 require 'picklespears/test/unit'
 
 class TestTeam < PickleSpears::Test::Unit
-  def test_next_unreminded_game
-    team = Team.create_test(:id => 1)
-    game = Game.create_test(:team => team)
-    next_game = Team.get(1).next_unreminded_game
-    assert(next_game)
+  def test_next_game
+    teams = []
+    teams << Team.create_test(:id => 1)
+    teams << Team.create_test(:id => 2)
+    games = []
+    games << Game.create_test(:team => teams[0])
+    games << Game.create_test(:team => teams[1])
+
+    teams.each do |t|
+      assert( t.next_game == games.shift )
+    end
   end
 end

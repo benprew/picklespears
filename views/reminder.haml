@@ -5,7 +5,7 @@ Dear
 This is your game reminder. The next game is:
 
 = @game.description
-= @game.date.to_s("%A %B, %d at %I:%M%p")
+= @game.date.strftime("%A %B, %d at %I:%M%p")
 
 = "Click here if you will be going: 'yes'"
 

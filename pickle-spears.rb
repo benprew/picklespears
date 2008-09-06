@@ -14,36 +14,39 @@ require 'player'
 
 set :sessions, true
 
-configure :test do
-  set :root, File.dirname(__FILE__)
-  set :views,File.dirname( __FILE__) + '/views'
-  set :public,File.dirname( __FILE__) + '/public'
-  DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
-  DataMapper.auto_migrate!
-end
-
-configure :development do
-  DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
-end
-
-configure :production do
-  set :root, Dir.pwd
-  set :views, Dir.pwd + '/views'
-  set :public, Dir.pwd + '/public'
-  DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
-
-  Sinatra::Mailer.config = {
-    :host   => 'smtp.throwingbones.com',
-    :port   => '25',              
-    :user   => 'throwingbones',
-    :pass   => '0aefe114',
-    :auth   => :plain, # :plain, :login, :cram_md5, the default is no auth
-    :domain => "localhost.localdomain" # the HELO domain provided by the client to the server 
-  }
-
-end
-
 class PickleSpears
+  configure :test do
+    Env = :test
+    set :root, File.dirname(__FILE__)
+    set :views,File.dirname( __FILE__) + '/views'
+    set :public,File.dirname( __FILE__) + '/public'
+    DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
+    DataMapper.auto_migrate!
+  end
+
+  configure :development do
+    Env = :development
+    DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
+  end
+
+  configure :production do
+    Env = :production
+    set :root, Dir.pwd
+    set :views, Dir.pwd + '/views'
+    set :public, Dir.pwd + '/public'
+    DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+
+    Sinatra::Mailer.config = {
+      :host   => 'smtp.throwingbones.com',
+      :port   => '25',              
+      :user   => 'throwingbones',
+      :pass   => '0aefe114',
+      :auth   => :plain, # :plain, :login, :cram_md5, the default is no auth
+      :domain => "localhost.localdomain" # the HELO domain provided by the client to the server 
+    }
+
+  end
+
 
   before do
     if session[:player_id]
@@ -174,17 +177,14 @@ class PickleSpears
   get '/send_game_reminders' do
     output = ''
     Team.all.each do |team|
-      next_game = team.next_unreminded_game()
+      next_game = team.next_game()
       output += "<br/> working on team #{team.name} ..."
-
-      p next_game
 
       # skip if more then 4 days away
       if !next_game || next_game.date > ( Date.today() + 4 ) || next_game.reminder_sent
         output += "no upcoming unreminded games"
         next
       end
-
 
       output += "sending email about #{next_game.description}"
 
@@ -197,7 +197,11 @@ class PickleSpears
           :subject => 'Game Reminder from PickleSpears.com',
           :body    => haml(:reminder),
         }
-#        email(info)
+        if Env == :production
+          email(info)
+        elsif Env == :development
+          p info
+        end
       end
       next_game.reminder_sent = true
       next_game.save
