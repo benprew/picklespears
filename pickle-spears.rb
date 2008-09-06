@@ -174,11 +174,19 @@ class PickleSpears
   get '/send_game_reminders' do
     output = ''
     Team.all.each do |team|
-      output += "<br/> working on team #{team.name}"
       next_game = team.next_unreminded_game()
-      output += " ... with game #{next_game.description}"
-      next if !next_game || next_game.date <= Date.today() + 4
-      output += "sending email about #{game.description}"
+      output += "<br/> working on team #{team.name} ..."
+
+      p next_game
+
+      # skip if more then 4 days away
+      if !next_game || next_game.date > ( Date.today() + 4 ) || next_game.reminder_sent
+        output += "no upcoming unreminded games"
+        next
+      end
+
+
+      output += "sending email about #{next_game.description}"
 
       team.players.each do |player|
         @player = player
@@ -189,9 +197,9 @@ class PickleSpears
           :subject => 'Game Reminder from PickleSpears.com',
           :body    => haml(:reminder),
         }
-        email(info)
+#        email(info)
       end
-      next_game.reminder_sent = 1
+      next_game.reminder_sent = true
       next_game.save
     end
     template :foo do

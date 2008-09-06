@@ -18,7 +18,7 @@ class Team
   property :division_id, Integer, :nullable => false
 
   def next_unreminded_game
-    games.first( :date.gte => Date.today(), :reminder_sent => false, :order => [ :date.asc ] )
+    games.first( :date.gte => Date.today(), :team_id => self.id, :reminder_sent => false, :order => [ :date.asc ] )
   end
 
   def upcoming_games
