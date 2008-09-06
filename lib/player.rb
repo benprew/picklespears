@@ -73,7 +73,12 @@ class Player
     return player
   end
 
-  def update_attributes(attrs)
+  def fupdate(attrs)
+    if attrs[:password] == ''
+      attrs.delete('password')
+      attrs.delete(:password)
+    end
+
     if attrs[:password] && (attrs[:password] != attrs[:password2])
       raise "Passwords do not match"
     end
@@ -82,7 +87,7 @@ class Player
     attrs.delete(:password2)
 
     begin
-      super(attrs)
+      self.update_attributes(attrs)
     rescue StandardError => err
       if /Duplicate entry/.match(err)
         raise "Player name '#{attrs[:name]}' already exists, please choose another"

@@ -61,6 +61,6 @@ context 'spec_player', PickleSpears::Test::Unit do
 
   specify 'can update password' do
     player = Player.create_test
-    assert player.update_attributes({ :password => 'test', :password2 => 'test' })
+    assert player.fupdate({ :password => 'test', :password2 => 'test' })
   end
 end

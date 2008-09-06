@@ -82,7 +82,7 @@ class PickleSpears
     attrs.delete('create_account')
 
     begin
-      @player.update_attributes(attrs)
+      @player.fupdate(attrs)
     rescue StandardError => err
       @errors = err
     end
@@ -123,7 +123,7 @@ class PickleSpears
     attrs.delete(:update)
     attrs.delete('update')
     begin
-      @player.update_attributes(params)
+      @player.fupdate(attrs)
     rescue StandardError => err
       @errors = err
     end
