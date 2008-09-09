@@ -18,4 +18,12 @@ class TestTeam < PickleSpears::Test::Unit
       assert( t.next_game == games.shift )
     end
   end
+
+  def test_upcoming_games
+    team = Team.create_test(:id => 10)
+    upcoming_game = Game.create_test(:team => team, :date => Date.today())
+    historical_game = Game.create_test(:team => team, :date => Date.today() - 1)
+    assert_equal(1, team.upcoming_games.length)
+    assert(team.upcoming_games[0] == upcoming_game)
+  end
 end
