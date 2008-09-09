@@ -104,29 +104,24 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     print <<-TODO
 
       [ ] Join/Watch Multiple Teams
+          [ ] Leave a team
       [ ] Communicate with all members of team
       [ ] Quickly see how many people are coming to the next game
-          [ ] Get reminders about the next game, via email AND sms
-          [ ] get email reminders working... see http://irclogger.com/sinatra/2008-07-25
-              email :to => "godfoca@gmail.com", :from => "godfoca@gmail.com", :subject => "cuack 2", :text => "blah" end 
-              http://github.com/foca/sinatra-mailer/tree/master 
-
+          [ ] Get reminders about the next game, via email sms
       [ ] Manage a team
           [ ] Send game reminders
           [ ] See who has paid and how much
       [ ] Get contact info for players
           [ ] Allows player to say a little about themselves
           [ ] Post picture
+              [ ] user image
+                  post '/sorter' do
+                    params[:data][:tempfile].readlines.sort
+                  end
           [ ] Forgot username/password
       [ ] Find teams/players looking for players/teams
 
-    
       [ ] can set manager for team
-
-      [ ] user image
-            post '/sorter' do
-              params[:data][:tempfile].readlines.sort
-            end
 
 
       [ ] for :collections => @things, see: http://github.com/cschneid/irclogger

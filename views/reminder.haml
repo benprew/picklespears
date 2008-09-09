@@ -5,10 +5,6 @@ This is your game reminder. The next game is:
 = @game.description
 = @game.date.strftime("%A %B, %d at %I:%M%p")
 
-= "Click here if you will be going: 'yes'"
-
-= "Click here if you can't make it: 'no'"
-
-= "Click here if you're not sure: 'maybe'"
+= "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
 
 Thank you for using pickle-spears!

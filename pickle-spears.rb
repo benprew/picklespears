@@ -178,7 +178,7 @@ class PickleSpears
     output = ''
     Team.all.each do |team|
       next_game = team.next_game()
-      output += "<br/> working on team #{team.name} ..."
+      output += "\n<br/> working on team #{team.name} ..."
 
       # skip if more then 4 days away
       if !next_game || next_game.date > ( Date.today() + 4 ) || next_game.reminder_sent
