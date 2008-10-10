@@ -2,9 +2,9 @@
 
 This is your game reminder. The next game is:
 
-= @game.description
-= @game.date.strftime("%A %B, %d at %I:%M%p")
+= "    " + @game.description
+= "    " + @game.date.strftime("%A %B, %d at %I:%M%p")
 
 = "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
 
-Thank you for using pickle-spears!
+Thank you for using PickleSpears.com!
