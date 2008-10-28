@@ -34,7 +34,6 @@
       %li
         = escape_once game.description
         %div{ :style => "padding-left: 3em" }
-          = status_for_game(@player, game)
           = "#{game.num_guys_confirmed} guy(s)"
           = "#{game.num_gals_confirmed} gal(s)"
           %a{ :href => '#', :onclick => "document.getElementById('details_#{game.id}').style.display = 'block'" }= "[details]"
@@ -42,3 +41,4 @@
             %ul
               - game.team.players.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"             
+          = status_for_game(@player, game)
