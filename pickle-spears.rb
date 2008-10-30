@@ -195,7 +195,7 @@ class PickleSpears
           :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,
           :subject => "Next Game: #{@game.description}",
-          :text    => haml(:reminder, :layout => false),
+          :html    => haml(:reminder, :layout => false),
         }
         if Env == :production
           email(info)

@@ -1,10 +1,9 @@
-= "Dear #{@player.name},"
-
-This is your game reminder. The next game is:
-
-= "    " + @game.description
-= "    " + @game.date.strftime("%A %B, %d at %I:%M%p")
-
-= "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
-
-Thank you for using PickleSpears.com!
+%p= "Dear #{@player.name},"
+%p This is your game reminder. The next game is:
+%blockquote
+  = @game.description
+%p= "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
+%p
+  Thank you for using
+  %a{ :href=>'http://picklespears.com' } PickleSpears.com
+  !
