@@ -25,8 +25,13 @@
       %td
         %ul
           - @player.teams.each do |team|
-            %li
-              %a{ :href => href("/team", { 'team_id' => team.id }) }= team.name
+            %li{ :style => 'padding: 3px' }
+              %form{ :method => 'post', :action =>'/players_team/delete' }
+                %input{ :type=>'image', :src=>'cancel.png' }
+                %a{ :href => href("/team", { 'team_id' => team.id }) }
+                  = team.name
+                %input{ :type=>'hidden', :name=>:player_id, :value=>@player.id }
+                %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
 %div{ :style => 'float: left; margin: 2em' }
   %h2 Upcoming Games
   %ul

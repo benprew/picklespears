@@ -1,4 +1,5 @@
 !dark_pickle = #a7dd68
+!light_green = #d7ff98
 !light_pickle = #ede9ed
 
 body
@@ -14,7 +15,7 @@ div.division
   border-style: dashed
   border-width: thin
   font-size: larger
-  background-color: = !light_pickle
+  :background-color = !light_pickle
   margin-top: 2em
   padding: .5em
 
@@ -24,10 +25,23 @@ div.main
   float: left
   margin-left: 4em
 
+div.message
+  :background-color = !light_green
+  :font-weight bold
+  :text-align center
+  :float right
+  :margin-right = 30%
+  :border-style dashed
+  :padding 2em
+
 div.error
-  background-color: red
-  font-weight: bold
-  text-align: center
+  :background-color red
+  :font-weight bold
+  :text-align center
+  :float right
+  :margin-right = 30%
+  :border-style dashed
+  :padding 2em
 
 div.header
   background-color = !dark_pickle

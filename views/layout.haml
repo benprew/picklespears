@@ -16,7 +16,10 @@
           %a{ :href => '/' } Home
           |
           %a{ :href => '/player/create' } Join Now!
-    .error= @errors
+    - if @errors
+      .error= @errors
+    - if @messages
+      .message= @messages
     = yield
     %script{ :type => 'application/x-javascript', :src => '/jx.js' }
     %script{ :type => 'application/x-javascript', :src => '/pickle-spears.js' }

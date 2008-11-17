@@ -55,6 +55,7 @@ class PickleSpears
     end
 
     @errors = params[:errors]
+    @messages = params[:messages]
   end
 
   get '/' do
@@ -168,6 +169,13 @@ class PickleSpears
     sass :stylesheet
   end
 
+  post '/players_team/delete' do
+    PlayersTeam.first( :player_id => params[:player_id], :team_id => params[:team_id] ).destroy
+    team = Team.first( :id => params[:team_id])
+    @message = "You have successfully left #{team.name}"
+    redirect sprintf('/player?messages=%s', URI.escape(@message))
+  end
+
   # Meant to be called via ajax
   get '/game/attending_status' do
     @player.set_attending_status_for_game(Game.get(params[:game_id]), params[:status])
@@ -191,6 +199,9 @@ class PickleSpears
       team.players.each do |player|
         @player = player
         @game = next_game
+
+        next unless player.email_address
+
         info = {
           :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,

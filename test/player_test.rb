@@ -59,4 +59,22 @@ class TestPlayer < PickleSpears::Test::Unit
     assert player.fupdate({ :password => 'test', :password2 => 'test' })
   end
 
+  def test_can_leave_a_team
+    player = Player.create_test
+    team = Team.create_test
+    team2 = Team.create_test
+
+    PlayersTeam.new( :player_id => player.id, :team_id => team.id ).save
+    PlayersTeam.new( :player_id => player.id, :team_id => team2.id ).save
+
+    post_it '/players_team/delete', "player_id=#{player.id};team_id=#{team.id}"
+
+    assert_equal(
+      sprintf('/player?messages=%s', URI.escape("You have successfully left #{team.name}")),
+      @response.location)
+
+    pts = PlayersTeam.all
+    assert_equal(1, pts.length)
+    assert_equal(team2.id, pts[0].team_id)
+  end
 end
