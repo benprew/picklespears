@@ -7,7 +7,7 @@ class BuildDb
 
   attr_reader :teams, :divisions, :games
   
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/secondfall/')
+  def initialize(url='http://pdxindoorsoccer.com/Schedules/winter/')
     @@season_url = url
     @games = []
   end
