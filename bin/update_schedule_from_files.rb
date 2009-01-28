@@ -8,6 +8,7 @@ require 'pickle-spears'
 Dir.glob('*.txt').each do |filename|
   f = File.new(filename)
   f.each do |line|
+    line.chop!
     items = line.split "\t"
     team = items.shift
     game_date = items.shift
