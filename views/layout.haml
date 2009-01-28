@@ -6,7 +6,7 @@
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
   %body
     .header
-      %div{ :style => "text-align: right" }
+      %div{ :style => "text-align: right; float: right" }
         - if @player
           = "Welcome #{@player.name} | "
           %a{ :href => '/player' } Home
@@ -16,6 +16,10 @@
           %a{ :href => '/' } Home
           |
           %a{ :href => '/player/create' } Join Now!
+      %div{ :style => "text-align: left;" }
+        %form{ :method => "get", :action => "/search" }
+          %input{ :name => "team", :type => "text" }
+          %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
     - if @errors
       .error= @errors
     - if @messages
