@@ -1,10 +1,9 @@
 #!/usr/local/ruby/bin/ruby
 
-$:.unshift File.dirname(__FILE__) + '/sinatra/lib'
 $:.unshift File.dirname(__FILE__) + '/lib'
 
-require 'sinatra'
 require 'rubygems'
+require 'sinatra'
 require 'dm-core'
 require 'mailer'
 
@@ -196,12 +195,14 @@ class PickleSpears
       end
 
       output += "sending email about #{next_game.description}"
+      next_game.reminder_sent = true
+      next_game.save
 
       team.players.each do |player|
         @player = player
         @game = next_game
 
-        next unless player.email_address
+        next unless player.email_address and player.email_address.match(/@/)
 
         info = {
           :from    => 'ben.prew@gmail.com',
@@ -215,8 +216,6 @@ class PickleSpears
           p info
         end
       end
-      next_game.reminder_sent = true
-      next_game.save
     end
     template :foo do
       output
