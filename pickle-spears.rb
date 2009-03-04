@@ -5,7 +5,7 @@ $:.unshift File.dirname(__FILE__) + '/lib'
 require 'rubygems'
 require 'sinatra'
 require 'dm-core'
-require 'mailer'
+require 'pony'
 
 require 'division'
 require 'team'
@@ -15,6 +15,7 @@ require 'player'
 set :sessions, true
 
 class PickleSpears
+
   configure :test do
     Env = :test
     set :root, File.dirname(__FILE__)
@@ -35,15 +36,6 @@ class PickleSpears
     set :views, Dir.pwd + '/views'
     set :public, Dir.pwd + '/public'
     DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
-
-    Sinatra::Mailer.config = {
-      :host   => 'smtp.throwingbones.com',
-      :port   => '25',              
-      :user   => 'throwingbones',
-      :pass   => '0aefe114',
-      :auth   => :plain, # :plain, :login, :cram_md5, the default is no auth
-      :domain => "localhost.localdomain" # the HELO domain provided by the client to the server 
-    }
 
   end
 
@@ -195,6 +187,7 @@ class PickleSpears
       end
 
       output += "sending email about #{next_game.description}"
+ 
       next_game.reminder_sent = true
       next_game.save
 
@@ -202,7 +195,7 @@ class PickleSpears
         @player = player
         @game = next_game
 
-        next unless player.email_address and player.email_address.match(/@/)
+        next unless (player.email_address and player.email_address.match(/@/))
 
         info = {
           :from    => 'ben.prew@gmail.com',
@@ -211,7 +204,7 @@ class PickleSpears
           :html    => haml(:reminder, :layout => false),
         }
         if Env == :production
-          email(info)
+          Pony.mail(info)
         elsif Env == :development
           p info
         end
@@ -225,6 +218,7 @@ class PickleSpears
 end
 
 helpers do
+
   def title(title=nil)
     @title ||= ''
     @title = title unless title.nil?
