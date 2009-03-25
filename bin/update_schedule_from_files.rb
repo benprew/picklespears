@@ -1,9 +1,18 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+require 'sinatra'
+
+require 'picklespears/db'
 require 'team'
 require 'game'
 require 'division'
-require 'pickle-spears'
+
+Sinatra::Default.set(
+  :run => false,
+  :raise_errors => true,
+  :logging => false
+)
 
 Dir.glob('*.txt').each do |filename|
   f = File.new(filename)

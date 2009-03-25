@@ -11,34 +11,23 @@ require 'division'
 require 'team'
 require 'time'
 require 'player'
+require 'picklespears/db'
 
 set :sessions, true
 
 class PickleSpears
 
   configure :test do
-    Env = :test
     set :root, File.dirname(__FILE__)
     set :views,File.dirname( __FILE__) + '/views'
     set :public,File.dirname( __FILE__) + '/public'
-    DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
-    DataMapper.auto_migrate!
-  end
-
-  configure :development do
-    Env = :development
-    DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
   end
 
   configure :production do
-    Env = :production
     set :root, Dir.pwd
     set :views, Dir.pwd + '/views'
     set :public, Dir.pwd + '/public'
-    DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
-
   end
-
 
   before do
     if session[:player_id]
@@ -157,7 +146,7 @@ class PickleSpears
   end
 
   get '/stylesheet.css' do
-    headers 'Content-Type' => 'text/css'
+    response['Content-Type'] = 'text/css'
     sass :stylesheet
   end
 
@@ -203,9 +192,9 @@ class PickleSpears
           :subject => "Next Game: #{@game.description}",
           :body    => haml(:reminder, :layout => false),
         }
-        if Env == :production
+        if production?
           Pony.mail(info)
-        elsif Env == :development
+        else
           p info
         end
       end
