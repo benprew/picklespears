@@ -127,6 +127,22 @@ class PickleSpears
     haml :team_home
   end
 
+  get '/team/edit' do
+    @team = Team.get(params[:team_id])
+    @divisions = Division.all()
+    
+    haml :team_edit
+  end
+
+  post '/team/update' do
+    @team = Team.get(params[:team_id])
+    @team.name = params[:name]
+    @team.division_id = params[:division_id]
+    @team.save
+
+    redirect href("/team", { :team_id => params[:team_id], :message => "Team updated!" })
+  end
+
   # Meant to be an ajax call
   get '/team/join' do
     @player.join_team(Team.get(params[:team_id]))
@@ -215,8 +231,7 @@ helpers do
   end
 
   def href(url, args)
-    # assumes you're using haml to do escaping
-    return "#{url}?" + (args.map { |key, val| "#{key}=#{escape_once(val)}"}).join(";")
+    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val)}"}).join("&")
   end
 
   def status_for_game(player, game)

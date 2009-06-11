@@ -1,4 +1,7 @@
 require 'rubygems'
+require 'echoe'
+
+Echoe.new('pickle_spears')
 
 $ruby         = `which ruby`.chomp
 $pid_file     = '/var/run/pickle-spears'
@@ -13,7 +16,7 @@ desc 'Install pickle-spears as a daemon and run it at boot.'
 task :daemonize => 'daemon:at_boot' do
   sh '/etc/init.d/pickle-spears start' do |successful, _|
     if successful
-      puts '=> Point your browser at http://0.0.0.0:4567 and start to use your wiki!'
+      puts "=> Point your browser at http://0.0.0.0:#{$port} to use your app!"
     else
       'Something went wrong.'
     end
