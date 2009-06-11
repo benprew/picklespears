@@ -1,0 +1,15 @@
+- title "Edit @team.name"
+%div{ :style => 'text-align: center; padding-bottom: 1em;' }
+  %form{ :method => 'post', :action => '/team/update' }
+    %input{ :type => :hidden, :name => :team_id, :value => @team.id }
+    Name:
+    %input{ :type => :text, :name => :name, :value => @team.name }
+    %br
+    Division:
+    %select{ :name => 'division_id' }
+      - @divisions.each do |division|
+        - if division.id == @team.division_id
+          %option{ :value => division.id, :selected => :selected  }= division.name
+        - else
+          %option{ :value => division.id }= division.name
+    %input{ :type => :submit, :name => :update, :value => 'Update' }
