@@ -12,7 +12,7 @@
     to get started!  Membership is free and will always remain free
 
   %h4 Already a Member?
-  %p Sign in using the boxes on the left.
+  %p Sign in using the boxes on the right.
 
   %h4 Just Browsing?
   %p You can quickly search for a team name, and anytime you're interested in signing up, you can click on the "Join Now" link in the upper right.
@@ -23,20 +23,6 @@
     %a{ :href => 'ben.prew@gmail.com' } ben.prew@gmail.com
 
 .create_form
-  %strong Sign In
-  %form{ :method => "post", :action => '/player/sign_in' }
-    %table
-      %tr
-        %td Email:
-        %td
-          %input{ :type => "text", :name => "email_address" }
-      %tr
-        %td Password:
-        %td
-          %input{ :type => "password", :name => 'password' }
-      %tr
-        %td
-          %input{ :type => 'submit', :value => 'Sign In' }
   %h4 Search for a Team
   %form{ :method => "get", :action => "/search" }
     %div
@@ -53,3 +39,17 @@
       %p
         %a{ :href => "/team?team_id=#{team.id}"}= team.name
         = "(division #{team.division.league} #{team.division.name})"
+  %h4 Sign In
+  %form{ :method => "post", :action => '/player/sign_in' }
+    %table
+      %tr
+        %td Email:
+        %td
+          %input{ :type => "text", :name => "email_address" }
+      %tr
+        %td Password:
+        %td
+          %input{ :type => "password", :name => 'password' }
+      %tr
+        %td
+          %input{ :type => 'submit', :value => 'Sign In' }
