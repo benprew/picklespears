@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dm-core'
 require 'date'
 require 'division'
 require 'player'
@@ -13,7 +11,7 @@ class Team
   has n, :players_teams
   has n, :players, :through => :players_teams
 
-  property :id, Integer, :serial => true
+  property :id, Serial
   property :name, String
   property :division_id, Integer, :nullable => false
 
@@ -27,7 +25,8 @@ class Team
 
   def self.create_test(attrs={})
     team = Team.new(:division_id => 1)
-    team.update_attributes(attrs) if attrs
+    team.save
+    team.update(attrs) if attrs
     team.save
     return team
   end

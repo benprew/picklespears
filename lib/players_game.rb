@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dm-core'
 require 'team'
 require 'player'
 
@@ -14,7 +12,8 @@ class PlayersGame
 
   def self.create_test(attrs={})
     pg = PlayersGame.new
-    pg.update_attributes(attrs) if attrs
+    pg.save
+    pg.update(attrs) if attrs
     pg.save
     return pg
   end

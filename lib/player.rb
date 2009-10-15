@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dm-core'
 require 'team'
 require 'game'
 require 'players_game'
@@ -13,7 +11,7 @@ class Player
   has n, :players_games
   has n, :games, :through => :players_games
 
-  property :id, Integer, :serial => true
+  property :id, Serial
   property :name, String, :nullable => false, :index => :unique
   property :email_address, String, :nullable => false, :index => :unique
   property :phone_number, String
@@ -34,8 +32,8 @@ class Player
 
   def set_attending_status_for_game(game, status)
     pg = PlayersGame.first(:player_id => self.id, :game_id => game.id) || PlayersGame.new(:player_id => self.id, :game_id => game.id)
-
-    pg.update_attributes(:status => status)
+    pg.save
+    pg.update(:status => status)
     pg.save
   end
 
@@ -73,7 +71,7 @@ class Player
     attrs.delete(:password2)
 
     begin
-      self.update_attributes(attrs)
+      self.update(attrs)
     rescue StandardError => err
       if /Duplicate entry/.match(err)
         raise "Player name '#{attrs[:name]}' already exists, please choose another"

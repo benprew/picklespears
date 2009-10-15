@@ -3,15 +3,17 @@
 $:.unshift File.dirname(__FILE__) + '/lib'
 
 require 'rubygems'
-require 'sinatra'
 require 'dm-core'
+require 'sinatra'
 require 'pony'
+require 'haml'
+require 'sass'
 
+require 'picklespears/db'
 require 'division'
 require 'team'
 require 'time'
 require 'player'
-require 'picklespears/db'
 
 set :sessions, true
 

@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dm-core'
 require 'date'
 require 'team'
 require 'player'
@@ -11,7 +9,7 @@ class Game
   has n, :players_games
   has n, :players, :through => :players_games
 
-  property :id, Integer, :serial => true
+  property :id, Serial
   property :date, Date, :nullable => false
   property :description, String, :nullable => false
   property :team_id, Integer, :nullable => false
@@ -35,7 +33,8 @@ class Game
       :description => 'test game',
       :team_id => 1
     )
-    game.update_attributes(attrs) if attrs
+    game.save
+    game.update(attrs) if attrs
     game.save
     return game
   end

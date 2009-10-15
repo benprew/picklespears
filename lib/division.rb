@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dm-core'
 require 'team'
 
 class Division
@@ -7,7 +5,7 @@ class Division
 
   has n, :teams, :order => [:name.asc]
 
-  property :id, Integer, :serial => true
+  property :id, Serial
   property :name, String
   property :league, String
   
@@ -15,7 +13,8 @@ class Division
 
   def self.create_test(attrs={})
     division = Division.new( :name => 'test division' )
-    division.update_attributes(attrs) if attrs
+    division.save
+    division.update(attrs) if attrs
     division.save
     return division
   end

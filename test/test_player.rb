@@ -1,13 +1,17 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
-
-require 'sinatra'
-require 'sinatra/test/unit'
+require 'rubygems'
 require 'pickle-spears'
 require 'picklespears/test/unit'
+require 'rack/test'
 
 class TestPlayer < PickleSpears::Test::Unit
+  include Rack::Test::Methods
+
+  def app
+    Sinatra::Application
+  end
+
   def test_can_join_a_team
     player = Player.create_test(:name => 'test user')
     team = Team.create_test(:id => 12)
@@ -28,11 +32,11 @@ class TestPlayer < PickleSpears::Test::Unit
 
   def test_can_update_info_via_post
     Player.create_test( :email_address => 'test', :password => 'test' )
-    post_it '/player/sign_in', 'email_address=test;password=test'
-    cookie = @response.headers['Set-Cookie']
-    post_it '/player/update?name=new_name', '', { "HTTP_COOKIE" => cookie }
+    post '/player/sign_in', :email_address => 'test', :password=> 'test'
+    session_id = last_response.headers['Set-Cookie']
+    post '/player/update?name=new_name', '', { "HTTP_COOKIE" => session_id }
 
-    assert_equal('/player', @response.location)
+    assert_equal('/player', last_response.location)
     assert_equal('new_name', Player.first(:email_address => 'test').name)
   end
 
@@ -43,15 +47,15 @@ class TestPlayer < PickleSpears::Test::Unit
     Team.create_test( :name => 'team to find', :division => div )
     Team.create_test( :name => 'should not be found', :division => div )
 
-    post_it '/player/sign_in', 'email_address=test;password=test'
-    session_id = @response.headers['Set-Cookie']
+    post '/player/sign_in', :email_address => 'test', :password=> 'test'
+    session_id = last_response.headers['Set-Cookie']
 
-    get_it '/player/join_team', '', { "HTTP_COOKIE" => session_id }
-    assert_match(/Done!/, @response.body)
-    assert_no_match(/team to find/, @response.body)
+    get '/player/join_team', '', { "HTTP_COOKIE" => session_id }
+    assert_match(/Done!/, last_response.body)
+    assert_no_match(/team to find/, last_response.body)
 
-    get_it '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
-    assert_match(/team to find/, @response.body)
+    get '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
+    assert_match(/team to find/, last_response.body)
   end
 
   def test_can_update_password
@@ -67,11 +71,11 @@ class TestPlayer < PickleSpears::Test::Unit
     PlayersTeam.new( :player_id => player.id, :team_id => team.id ).save
     PlayersTeam.new( :player_id => player.id, :team_id => team2.id ).save
 
-    post_it '/players_team/delete', "player_id=#{player.id};team_id=#{team.id}"
+    post '/players_team/delete', "player_id=#{player.id};team_id=#{team.id}"
 
     assert_equal(
       sprintf('/player?messages=%s', URI.escape("You have successfully left #{team.name}")),
-      @response.location)
+      last_response.location)
 
     pts = PlayersTeam.all
     assert_equal(1, pts.length)

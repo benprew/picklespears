@@ -1,9 +1,9 @@
-$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
+#!/usr/bin/env ruby
 
-require 'sinatra'
-require 'sinatra/test/unit'
+require 'rubygems'
 require 'pickle-spears'
 require 'picklespears/test/unit'
+require 'rack/test'
 
 class TestTeam < PickleSpears::Test::Unit
   def test_next_game

@@ -1,13 +1,22 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
-
-require 'sinatra'
-require 'sinatra/test/unit'
+require 'rubygems'
 require 'pickle-spears'
+require 'rack/test'
 require 'picklespears/test/unit'
 
+set :environment, :test
+
+DataMapper.setup(:default, 'sqlite3::memory:')
+DataMapper.auto_migrate!
+
 class TestGame < PickleSpears::Test::Unit
+  include Rack::Test::Methods
+
+  def app
+    Sinatra::Application
+  end
+
   def setup
     super
     @game = Game.create_test(:date => Time.now(), :description => 'test game', :team_id => 1)

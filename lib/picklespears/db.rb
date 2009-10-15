@@ -1,11 +1,9 @@
-require 'rubygems'
-require 'dm-core'
-
-# default to a dev connection
-DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
-
 configure :production do
-  DataMapper.setup(:default, 'mysql://rails_user:foo@localhost/rails_development')
+  DataMapper.setup(:default, 'mysql://picklespears:burn0ut!@localhost/picklespears')
+end
+
+configure :development do
+  DataMapper.setup(:default, 'mysql://picklespears:burn0ut!@localhost/picklespearsdev')
 end
 
 configure :test do
@@ -13,6 +11,3 @@ configure :test do
   DataMapper.auto_migrate!
 end
 
-configure :development do
-  DataMapper.setup(:default, 'sqlite3:///tmp/dev_db')
-end

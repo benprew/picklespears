@@ -1,7 +1,5 @@
 require 'rubygems'
-require 'echoe'
-
-Echoe.new('pickle_spears')
+require 'hoe'
 
 $ruby         = `which ruby`.chomp
 $pid_file     = '/var/run/pickle-spears'
@@ -11,6 +9,13 @@ $executable   = 'pickle-spears.rb'
 $daemon_name  = 'pickle-spears'
 $executable_dir = Dir.pwd
 $port         = 4567
+
+Hoe.spec 'picklespears' do
+  developer('Ben Prew', 'ben.prew@gmail.com')
+#  self.VERSION = '1.0'
+
+  # self.rubyforge_name = 'picklespearsx' # if different than 'picklespears'
+end
 
 desc 'Install pickle-spears as a daemon and run it at boot.'
 task :daemonize => 'daemon:at_boot' do
