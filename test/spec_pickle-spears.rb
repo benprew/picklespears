@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname(__FILE__) + '/../sinatra/lib'
-
-require 'sinatra'
-require 'sinatra/test/spec'
-require 'pickle-spears'
-require 'mocha'
 require 'picklespears/test/unit'
+require 'rack/test'
+require 'mocha'
 
 context 'spec_pickle-spears', PickleSpears::Test::Unit do
+
+  include Rack::Test::Methods
+
   before(:each) do
     
     require 'pickle-spears'

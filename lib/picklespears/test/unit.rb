@@ -1,10 +1,19 @@
+require 'rubygems'
 require 'test/unit'
+require 'pickle-spears'
+require 'rack/test'
+
+set :environment, :test
+
+DataMapper.setup(:default, 'sqlite3::memory:')
+DataMapper.auto_migrate!
 
 # needed so I can call my class PS::Test::Unit -- below
 class PickleSpears::Test
 end
 
 class PickleSpears::Test::Unit < Test::Unit::TestCase
+  include Rack::Test::Methods
 
   def setup
     repository.adapter.execute('begin transaction')
@@ -12,6 +21,10 @@ class PickleSpears::Test::Unit < Test::Unit::TestCase
 
   def teardown
     repository.adapter.execute('rollback')
+  end
+
+  def app
+    Sinatra::Application
   end
 
   # needed for a "default" test?

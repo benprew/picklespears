@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require 'pickle-spears'
 require 'picklespears/test/unit'
-require 'rack/test'
 
 class TestTeam < PickleSpears::Test::Unit
   def test_next_game

@@ -1,16 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require 'pickle-spears'
 require 'picklespears/test/unit'
-require 'rack/test'
 
 class TestPlayer < PickleSpears::Test::Unit
-  include Rack::Test::Methods
-
-  def app
-    Sinatra::Application
-  end
 
   def test_can_join_a_team
     player = Player.create_test(:name => 'test user')
