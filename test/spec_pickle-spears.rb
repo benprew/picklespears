@@ -2,63 +2,63 @@
 
 require 'picklespears/test/unit'
 require 'rack/test'
-require 'mocha'
 
 context 'spec_pickle-spears', PickleSpears::Test::Unit do
 
   include Rack::Test::Methods
 
+  def app
+    Sinatra::Application
+  end
+
   before(:each) do
-    
-    require 'pickle-spears'
     player = nil
-    @context = Sinatra::EventContext.new(stub("request"), stub("response", :body= => nil), stub("route params"))
   end
 
   specify "null 2nd password works" do
-    post_it '/player/create', 'email_address=test_user;password=test_pass'
-    @response.body.should.match 'Passwords do not match'
+    post '/player/create', 'email_address=test_user;password=test_pass'
+    last_response.body.should match(/Passwords do not match/)
   end
 
   specify "post from sign in sets cookie" do
     Player.create_test(:email_address => 'test_user', :password => 'test_pass')
-    post_it '/player/sign_in', 'email_address=test_user;password=test_pass'
-    assert include?('Set-Cookie')
+    post '/player/sign_in', 'email_address=test_user;password=test_pass'
+    last_response.should include('Set-Cookie')
   end
 
   specify "post from sign in redirects to player hompage" do
     player = Player.create_test(:email_address => 'ben.prew@gmail.com', :password => 'test')
-    post_it '/player/sign_in', 'email_address=ben.prew@gmail.com;password=test'
-    @response.location.should.equal '/player'
+    post '/player/sign_in', 'email_address=ben.prew@gmail.com;password=test'
+    last_response.location.should == '/player'
   end
 
   specify "error if unknown user tries to login" do
-    post_it '/player/sign_in', 'email_address=foo'
-    @response.body.should.match /Incorrect login/
+    post '/player/sign_in', 'email_address=foo'
+    last_response.body.should match /Incorrect login/
   end
 
   specify "player page" do
     player = Player.create_test
-    get_it '/player?id=' + player.id.to_s
+    get '/player?id=' + player.id.to_s
 
-    @response.body.should.match /Teams/
-    @response.body.should.match /Join New/i 
-    assert_match /Upcoming Games/i, @response.body
+    last_response.body.should match(/Teams/)
+    last_response.body.should match(/Join New/i)
+    last_response.body.should match(/Upcoming Games/i)
   end
 
   specify "show a default page" do
-    get_it '/'
-    assert ok?
+    get '/'
+    last_response.ok?
   end
 
   specify 'can create player' do
-    post_it '/player/create', 'name=bennie;email_address=test_com;phone_number=503_332_9719;birthdate=20080611;zipcode=97213;password=test;password2=test'
+    post '/player/create', 'name=bennie;email_address=test_com;phone_number=503_332_9719;birthdate=20080611;zipcode=97213;password=test;password2=test'
 
-    assert include?('Set-Cookie')
-    assert_match /player\/join_team$/, @response.headers['Location'], 'redirect to player homepage, no errors'
+    last_response.headers.should include('Set-Cookie')
+    last_response.headers['Location'].should match(/player\/join_team$/)
 
     player = Player.first(:name => 'bennie')
-    player.email_address.should.equal 'test_com' 
+    player.email_address.should == 'test_com' 
   end
 
   specify 'attending status' do
@@ -68,7 +68,9 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     PlayersTeam.create_test(:player => player, :team => team)
     PlayersGame.create_test(:player => player, :game => game, :status => 'yes' )
 
-    assert_equal_ignoring_whitespace(@context.status_for_game(player, game), <<-HTML
+    get '/player', :id => player.id
+    assert_equal_ignoring_whitespace(last_response.body,
+<<-HTML
     <div>
     Going: <strong>yes</strong>
     <a href="#" onclick="document.getElementById('status_4823').style.display = 'block'">[change]</a>
@@ -87,15 +89,15 @@ context 'spec_pickle-spears', PickleSpears::Test::Unit do
     should = should.gsub(/( |\n)+/m, '')
     is = is.gsub(/( |\n)+/m, '')
 
-    assert_equal(should, is)
+    should.should match Regexp.new(is)
   end
 
-  specify 'select/edit your gender when you create your account' do
+  specify 'select or edit your gender when you create your account' do
     player = Player.create_test(:gender => 'guy')
-    player.gender.should.equal 'guy'
-    get_it "/player?id=#{player.id}"
+    player.gender.should == 'guy'
+    get "/player?id=#{player.id}"
 
-    @response.body.should.match /gender/i
+    last_response.body.should match(/gender/i)
   end
 
   specify 'todo' do

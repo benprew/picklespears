@@ -13,6 +13,11 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_equal(pt.player_id, player.id)
   end
 
+  def test_null_2nd_password_works
+    post '/player/create', :email_address => 'test_user', :password => 'test_pass'
+    assert_match(/Passwords do not match/, last_response.body)
+  end
+
   def test_can_attend_a_game
     player = Player.create_test(:name => 'test user')
     game = Game.create_test
