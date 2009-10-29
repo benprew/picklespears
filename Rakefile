@@ -9,7 +9,7 @@ $port         = 4567
 
 desc 'Run unit tests'
 task :test do
-  system '/usr/bin/testrb -Ilib test/test*.rb'
+  system 'testrb -Ilib test/test*.rb'
 end
 
 desc 'Install pickle-spears as a daemon and run it at boot.'
