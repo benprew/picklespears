@@ -5,17 +5,14 @@ $:.unshift File.dirname(__FILE__) + '/../lib'
 
 require 'rubygems'
 require 'sinatra'
+require 'dm-core'
 
 require 'picklespears/db'
 require 'team'
 require 'game'
 require 'division'
 
-Sinatra::Default.set(
-  :run => false,
-  :raise_errors => true,
-  :logging => false
-)
+set :run, false
 
 Dir.glob('*.txt').each do |filename|
   f = File.new(filename)
