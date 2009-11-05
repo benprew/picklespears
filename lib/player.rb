@@ -2,6 +2,7 @@ require 'team'
 require 'game'
 require 'players_game'
 require 'players_team'
+require 'md5'
 
 class Player
   include DataMapper::Resource
@@ -55,6 +56,10 @@ class Player
     player.attributes = attrs if attrs
     player.save
     return player
+  end
+
+  def md5_email
+    return MD5::md5(email_address)
   end
 
   def fupdate(attrs)

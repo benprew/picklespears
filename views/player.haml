@@ -7,6 +7,7 @@
         %a{ :href => '/player/edit' }= '[edit]'
     %tr
       %td
+        %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
         %ul
           %li
             = "Name: #{@player.name} "
