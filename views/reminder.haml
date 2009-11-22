@@ -1,9 +1,9 @@
-= "Dear #{@player.name},"
+%p= "Dear #{@player.name},"
 
-This is your game reminder. The next game is:
+%p This is your game reminder. The next game is:
 
-= "\t#{@game.description}"
+%blockquote= "\t#{@game.description}"
 
-="You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
+%p= "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
 
-Thank you for using PickleSpears.com!
+%p Thank you for using PickleSpears.com!

@@ -3,9 +3,9 @@
 $:.unshift File.dirname(__FILE__) + '/lib'
 
 require 'rubygems'
+require 'pony'
 require 'dm-core'
 require 'sinatra'
-require 'pony'
 require 'haml'
 require 'sass'
 
@@ -209,6 +209,7 @@ class PickleSpears
           :to      => player.email_address,
           :subject => "Next Game: #{@game.description}",
           :body    => haml(:reminder, :layout => false),
+          :content_type => 'text/html',
         }
         if production?
           Pony.mail(info)
