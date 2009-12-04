@@ -4,6 +4,8 @@
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - " + title
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
+    %link{ :rel => "stylesheet", :href => "/grid.css", :type => "text/css" }
+
   %body
     .header
       %div{ :style => "text-align: right; float: right" }
@@ -24,6 +26,7 @@
       .error= @errors
     - if @messages
       .message= @messages
+    
     = yield
     %script{ :type => 'text/javascript', :src => '/jx.js' }
     %script{ :type => 'text/javascript', :src => '/pickle-spears.js' }

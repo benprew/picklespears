@@ -1,5 +1,6 @@
 - title "Edit @team.name"
-%div{ :style => 'text-align: center; padding-bottom: 1em;' }
+.grid_3 &nbsp;
+.grid_6
   %form{ :method => 'post', :action => '/team/update' }
     %input{ :type => :hidden, :name => :team_id, :value => @team.id }
     Name:
@@ -12,4 +13,12 @@
           %option{ :value => division.id, :selected => :selected  }= division.name
         - else
           %option{ :value => division.id }= division.name
+    %br
     %input{ :type => :submit, :name => :update, :value => 'Update' }
+    %br
+  All Games:
+  %ul
+    - @team.games.all(:order => [ :date.desc ]).each do |game|
+      %li= game.description
+.grid_3 &nbsp;
+.clear

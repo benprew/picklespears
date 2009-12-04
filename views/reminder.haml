@@ -4,6 +4,15 @@
 
 %blockquote= "\t#{@game.description}"
 
-%p= "You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
+- if @player.attending_status(@game) == 'No Reply' 
+  Can you make the game?
+  %br
+  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'Yes') } Yes
+  %br
+  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'No') } No
+  %br
+  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'Maybe') } Maybe
+- else
+  ="You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
 
 %p Thank you for using PickleSpears.com!

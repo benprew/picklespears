@@ -142,7 +142,7 @@ class PickleSpears
     @team.division_id = params[:division_id]
     @team.save
 
-    redirect href("/team", { :team_id => params[:team_id], :message => "Team updated!" })
+    redirect url_for("/team", { :team_id => params[:team_id], :message => "Team updated!" })
   end
 
   # Meant to be an ajax call
@@ -173,6 +173,14 @@ class PickleSpears
     team = Team.first( :id => params[:team_id])
     @message = "You have successfully left #{team.name}"
     redirect sprintf('/player?messages=%s', URI.escape(@message))
+  end
+
+  get '/player/attending_status_for_game' do
+    game_id = params[:game_id]
+    @status = params[:status]
+    @player = Player.get(params[:player_id])
+    @player.set_attending_status_for_game(Game.get(game_id), @status)
+    haml :attending_status_for_game
   end
 
   # Meant to be called via ajax
@@ -233,8 +241,8 @@ helpers do
     @title
   end
 
-  def href(url, args)
-    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val)}"}).join("&")
+  def url_for(url, args)
+    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join(";")
   end
 
   def status_for_game(player, game)

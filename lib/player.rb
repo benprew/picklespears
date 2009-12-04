@@ -32,7 +32,7 @@ class Player
   end
 
   def set_attending_status_for_game(game, status)
-    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id) || PlayersGame.new(:player_id => self.id, :game_id => game.id)
+    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id) || PlayersGame.new(:player_id => self.id, :game_id => game.id, :status => status)
     pg.save
     pg.update(:status => status)
     pg.save

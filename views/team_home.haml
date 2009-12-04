@@ -3,13 +3,13 @@
   %h1{ :style => 'display: inline' }= @team.name
   - if @player && !@player.is_on_team?(@team)
     %a#join_this_team{ :href => '#', :onclick => "joinTeam('#{@team.id}', 'join_this_team'); return false;"} Join this team!
-  %a{ :href => href('/team/edit', {:team_id => @team.id.to_s }) } [Edit]
+  %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Edit]
 %div{ :style => 'float:left; width: 250px' }
   %h2{ :style => 'margin-top: 0px;' } Players
   %ul
     - @team.players.each do |player|
       %li
-        %a{ :href => href('/player', { 'id' => player.id.to_s }) }= player.name
+        %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
         ="(#{player.email_address})"
   %h2 Upcoming Games
   %ul
