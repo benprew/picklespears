@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+@site = 'picklespears'
+@site_url = 'picklespears.com'
+
+puts 'restarting sinatra site';
+# for some reason 'restart' doesn't always work, but stop/start seems to
+puts  `/etc/init.d/#{@site} stop`;
+puts  `/etc/init.d/#{@site} start`;
+puts  'waiting for the webserver to "warm-up"';
+sleep(5);
+puts  'spidering site'
+puts `/usr/local/bin/ruby ~/src/websites/util/spider_site.rb http://#{@site_url}`
