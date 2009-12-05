@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-@site = 'picklespears'
+@site = 'pickle-spears'
 @site_url = 'picklespears.com'
 
 puts 'restarting sinatra site';
