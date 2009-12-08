@@ -7,11 +7,11 @@
 - if @player.attending_status(@game) == 'No Reply' 
   Can you make the game?
   %br
-  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'Yes') } Yes
+  %a{ :href => url_for('http://picklespears.com/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'yes') } Yes
   %br
-  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'No') } No
+  %a{ :href => url_for('http://picklespears.com/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'no') } No
   %br
-  %a{ :href => url_for('/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'Maybe') } Maybe
+  %a{ :href => url_for('http://picklespears.com/player/attending_status_for_game', :game_id => @game.id, :player_id => @player.id, :status => 'maybe') } Maybe
 - else
   ="You are currently marked as '#{@player.attending_status(@game)}' for this game.  To change your status sign in and update it in your homepage"
 
