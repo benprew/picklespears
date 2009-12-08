@@ -8,15 +8,20 @@
     %tr
       %td
         %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
+        %br
+        Public Info:
         %ul
           %li
             = "Name: #{@player.name} "
           %li
-            = "Email: #{@player.email_address} "
-          %li
-            = "Phone: #{@player.phone_number} "
-          %li
             = "Gender: #{@player.gender} "
+        - if @session_player.id == @player.id
+          Private Info:
+          %ul
+            %li
+              = "Email: #{@player.email_address} "
+            %li
+              = "Phone: #{@player.phone_number} "
   %table
     %tr
       %th.team_header

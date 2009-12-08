@@ -10,7 +10,6 @@
     - @team.players.each do |player|
       %li
         %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
-        ="(#{player.email_address})"
   %h2 Upcoming Games
   %ul
     - @team.upcoming_games.each do |game|

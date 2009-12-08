@@ -54,6 +54,7 @@ class PickleSpears
 
   get '/player' do
     @player = Player.get(params[:id] || session[:player_id])
+    @session_player = Player.get(session[:player_id])
     haml :player
   end
 
