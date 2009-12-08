@@ -1,10 +1,9 @@
 - title "browsing league: #{@league}"
 - @divisions.each do |division|
   .division
-    %form{ :action => '/team', :method => 'get' }
-      = division.name + ' -'
-      %select{ :name => 'team_id' }
-        - division.teams.each do |team|
-          %option{ :value => team.id }= team.name
-      %input{ :type => "submit", :value => "Go" }
+    = division.name + ' -'
+    %ul
+    - division.teams.each do |team|
+      %li
+        %a{ :href => url_for('/team', :team_id => team.id) }= team.name
 
