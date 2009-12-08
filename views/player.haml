@@ -1,27 +1,28 @@
-- title "#{@player.name}'s homepage"
+- title "#{@player_from_request.name}'s homepage"
 .user_info
   %table
     %tr
       %th.team_header
         Info
-        %a{ :href => '/player/edit' }= '[edit]'
+        - if @player_from_request.id == @player.id
+          %a{ :href => '/player/edit' }= '[edit]'
     %tr
       %td
-        %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
+        %img{ :src => "http://www.gravatar.com/avatar/#{@player_from_request.md5_email}" }
         %br
         Public Info:
         %ul
           %li
-            = "Name: #{@player.name} "
+            = "Name: #{@player_from_request.name} "
           %li
-            = "Gender: #{@player.gender} "
-        - if @session_player.id == @player.id
+            = "Gender: #{@player_from_request.gender} "
+        - if @player.id == @player_from_request.id
           Private Info:
           %ul
             %li
-              = "Email: #{@player.email_address} "
+              = "Email: #{@player_from_request.email_address} "
             %li
-              = "Phone: #{@player.phone_number} "
+              = "Phone: #{@player_from_request.phone_number} "
   %table
     %tr
       %th.team_header
@@ -30,18 +31,18 @@
     %tr
       %td
         %ul
-          - @player.teams.each do |team|
+          - @player_from_request.teams.each do |team|
             %li{ :style => 'padding: 3px' }
-              %form{ :method => 'post', :action =>'/players_team/delete' }
-                %input{ :type=>'image', :src=>'cancel.png' }
-                %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }
-                  = team.name
-                %input{ :type=>'hidden', :name=>:player_id, :value=>@player.id }
-                %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
+              %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
+              - if @player.id == @player_from_request.id
+                %form{ :method => 'post', :action =>'/players_team/delete' }
+                  %input{ :type=>'image', :src=>'/cancel.png' }
+                  %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
+                  %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
 %div{ :style => 'float: left; margin: 2em' }
   %h2 Upcoming Games
   %ul
-    - (@player.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
+    - (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
         = escape_once game.description
         %div{ :style => "padding-left: 3em" }
@@ -52,4 +53,4 @@
             %ul
               - game.team.players.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"             
-          = status_for_game(@player, game)
+          = status_for_game(@player_from_request, game)
