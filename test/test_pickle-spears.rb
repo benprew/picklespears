@@ -14,7 +14,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
     Team.create_test( :division => div )
     get '/browse', :league => 'Women'
     assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, last_response.body
-    assert_match /<select/, last_response.body, 'do we have at least one team'
+    assert_match /href='\/team/, last_response.body, 'do we have at least one team'
   end
 
   def test_team_home
