@@ -1,41 +1,37 @@
-$ruby         = `which ruby`.chomp
-$pid_file     = '/var/run/pickle-spears'
-$server       = 'mongrel'
-$environment  = 'production'
-$executable   = 'pickle-spears.rb'
-$daemon_name  = 'pickle-spears'
-$executable_dir = Dir.pwd
-$port         = 4567
+require 'rake'
+require 'rake/testtask'
 
-desc 'Run unit tests'
-task :test do
-  system 'testrb -Ilib test/test*.rb'
+Rake::TestTask.new do |t|
+	t.test_files = FileList['test/test_*.rb']
+	t.verbose = true
 end
 
-desc 'Install pickle-spears as a daemon and run it at boot.'
+executable     = 'pickle-spears.rb'
+daemon_name    = 'pickle-spears'
+executable_dir = Dir.pwd
+port           = 4567
+
+desc "Install #{daemon_name} as a daemon and run it at boot."
 task :daemonize => 'daemon:at_boot' do
-  sh '/etc/init.d/pickle-spears start' do |successful, _|
-    if successful
-      puts "=> Point your browser at http://0.0.0.0:#{$port} to use your app!"
-    else
-      'Something went wrong.'
-    end
+  if system "/etc/init.d/#{daemon_name} start"
+    puts "=> Point your browser at http://0.0.0.0:#{port} to use your app!"
+  else
+    puts 'Something went wrong.'
   end
 end
-
 
 namespace :daemon do
   task :install do
     File.open('daemon.d', 'w') do |f|
-      f << File.read('daemon.d.in') % [ $executable_dir, $executable, "-p #{$port}" ]
+      f << File.read('daemon.d.in') % [ executable_dir, executable, "-p #{port}" ]
     end
-    sh 'cp -f daemon.d /etc/init.d/' + $daemon_name
-    sh 'chmod +x /etc/init.d/' + $daemon_name 
-    sh 'rm daemon.d'
+    `cp -f daemon.d /etc/init.d/#{daemon_name}`
+    `chmod +x /etc/init.d/#{daemon_name}`
+    `rm daemon.d`
   end
 
   task :at_boot => :install do
-    sh 'ln -sf ../init.d/pickle-spears /etc/rc.d/rc2.d/S95' + $daemon_name
-    sh 'ln -sf ../init.d/pickle-spears /etc/rc.d/rc2.d/K15' + $daemon_name
+    `ln -sf ../init.d/pickle-spears /etc/rc.d/rc2.d/S95#{daemon_name}`
+    `ln -sf ../init.d/pickle-spears /etc/rc.d/rc2.d/K15#{daemon_name}`
   end
 end
