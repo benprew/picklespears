@@ -178,8 +178,8 @@ class PickleSpears
   get '/player/attending_status_for_game' do
     game_id = params[:game_id]
     @status = params[:status]
-    @player = Player.get(params[:player_id])
-    @player.set_attending_status_for_game(Game.get(game_id), @status)
+    @player_from_request = Player.get(params[:player_id])
+    @player_from_request.set_attending_status_for_game(Game.get(game_id), @status)
     haml :attending_status_for_game
   end
 
