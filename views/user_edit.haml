@@ -8,6 +8,10 @@
     %td
       %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
   %tr
+    %td Phone:
+    %td
+      %input{ :type => "text", :name => 'phone_number', :value => @player && @player.phone_number}
+  %tr
     %td New Password*:
     %td
       %input{ :type => "password", :name => 'password' }
@@ -30,3 +34,10 @@
     %td Birthday:
     %td
       %input{ :type => "text", :name => 'birthdate', :value => @player && @player.birthdate }
+  %tr
+    %td Image:
+    %td
+      Add one at
+      %a{ :href => 'http://en.gravatar.com/' } gravatar.com
+      (That's what all the cool kids do)
+      
