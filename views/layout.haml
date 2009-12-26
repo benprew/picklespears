@@ -5,6 +5,18 @@
     %title= "Pickle Spears - " + title
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
     %link{ :rel => "stylesheet", :href => "/grid.css", :type => "text/css" }
+    -# for google webmaster tools
+    %meta{ :name=>"google-site-verification", :content=>"DKQPrb8YpUIifJ7YdL6-1ckIGNxvAoQoT9E6-fBSv14" }
+
+    %script{ :type=>"text/javascript" }
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXX-X']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+      })();
 
   %body
     .header
