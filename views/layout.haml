@@ -20,25 +20,25 @@
 
   %body
     .header
-      %div{ :style => "text-align: right; float: right" }
-        - if @player
-          = "Welcome #{@player.name} | "
-          %a{ :href => '/player' } Home
-          |
-          %a{ :href => '/sign_out' } Sign Out
-        - else 
-          %a{ :href => '/' } Home
-          |
-          %a{ :href => '/player/create' } Join Now!
-      %div{ :style => "text-align: left;" }
+      %div{ :style => "text-align: right;" }
         %form{ :method => "get", :action => "/search" }
+          - if @player
+            = "Welcome #{@player.name} | "
+            %a{ :href => '/player' } Home
+            |
+            %a{ :href => '/sign_out' } Logout
+          - else
+            %a{ :href => '/' } Home
+            |
+            %a{ :href => '/login' } Login
           %input{ :name => "team", :type => "text" }
           %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+
     - if @errors
       .error= @errors
     - if @messages
       .message= @messages
-    
-    = yield
+    .container_12
+      = yield
     %script{ :type => 'text/javascript', :src => '/jx.js' }
     %script{ :type => 'text/javascript', :src => '/pickle-spears.js' }
