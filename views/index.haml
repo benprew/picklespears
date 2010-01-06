@@ -1,28 +1,38 @@
 - title "now with more vinegar!"
-.directions
+.grid_12{ :style => 'text-align: center' }
+  %h1 The Best Way To Manage Your Sports Teams
+.clear
+.grid_6
+  %ul
+    %li Track all of your favorite sports teams.  
+    %li Find a team to play on.  Pickle Spears maintains a list of teams looking for new players.
+    %li Find a player for your team.  Pickle Spears maintains a list of players looking to join a team.
+    %li Know who's coming to your games.
+    %li Find subs quickly
+.grid_6
   %img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168", :alt => 'Pickle Spears logo' }
-  %h4 What is Pickle Spears?
-  %p Pickle Spears is the easiest way to keep track of your favorite sports teams.  Want to start playing on an intramural league, but don't know anyone?  Pickle Spears maintains a list of teams looking for new players, or players looking to join a team.  As a manager, have you ever wondered who was going to show up to your next game?  What about finding subs quickly?  Pickle Spears will send reminder emails to your teammates and will show you who's coming to the next game.
+.clear
+.grid_6
 
-  %p Right now we are working on adding various soccer schedules and teams to our database.  All Portland Indoor teams are represented.  If you want to have your team added, drop me a line.
+  %p
+    Right now we are working on adding various soccer schedules and
+    teams to our database.  All Portland Indoor teams are represented.
+    If you want to have your team added, drop us a line (<a
+    href="mailto:team@picklespears.com">team@picklespears.com</a>).
 
   %h4 Interested in Joining?
   %p
-    %a{ :href=>'/player/create' } Click Here
+    %a{ :href=>'/login' } Click Here
     to get started!  Membership is free and will always remain free
-
-  %h4 Already a Member?
-  %p Sign in using the boxes on the right.
 
   %h4 Just Browsing?
   %p You can quickly search for a team name, and anytime you're interested in signing up, you can click on the "Join Now" link in the upper right.
 
   %h4 Other Questions?
   %p
-    Drop me a line 
-    %a{ :href => 'mailto:ben.prew@gmail.com' } ben.prew@gmail.com
-
-.create_form
+    Drop us a line 
+    %a{ :href => 'mailto:team@picklespears.com' } team@picklespears.com
+.grid_6
   %h4 Search for a Team
   %form{ :method => "get", :action => "/search" }
     %div
@@ -34,22 +44,9 @@
   %a{ :href => "/browse?league=Men" } Men
   |
   %a{ :href => "/browse?league=Coed" } Coed
-  %div
-    - @teams.each do |team|
-      %p
-        %a{ :href => "/team?team_id=#{team.id}"}= team.name
-        = "(division #{team.division.league} #{team.division.name})"
-  %h4 Sign In
-  %form{ :method => "post", :action => '/player/sign_in' }
-    %table
-      %tr
-        %td Email:
-        %td
-          %input{ :type => "text", :name => "email_address" }
-      %tr
-        %td Password:
-        %td
-          %input{ :type => "password", :name => 'password' }
-      %tr
-        %td
-          %input{ :type => 'submit', :value => 'Sign In' }
+  - if @teams.length > 0
+    %div
+      - @teams.each do |team|
+        %p
+          %a{ :href => "/team?team_id=#{team.id}"}= team.name
+          = "(division #{team.division.league} #{team.division.name})"

@@ -48,4 +48,29 @@ class TestPickleSpears < PickleSpears::Test::Unit
     get '/'
     assert_match /join/, last_response.body
   end
+
+  def test_todo
+
+    print <<-TODO
+
+      [x] Join/Watch Multiple Teams
+          [x] Leave a team
+      [ ] Communicate with all members of team
+      [x] Quickly see how many people are coming to the next game
+          [x] Get reminders about the next game, via email sms
+      [ ] Manage a team
+          [ ] Send game reminders
+          [ ] See who has paid and how much
+      [ ] Get contact info for players
+          [ ] Allows player to say a little about themselves
+      [ ] Find teams/players looking for players/teams
+
+      [ ] can set manager for team
+
+
+      [ ] for :collections => @things, see: http://github.com/cschneid/irclogger
+    TODO
+
+  end
+
 end
