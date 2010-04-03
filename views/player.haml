@@ -53,4 +53,5 @@
             %ul
               - game.team.players.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"             
-          = status_for_game(@player_from_request, game)
+          - if @player_from_request.id == @player.id
+            = status_for_game(@player_from_request, game)
