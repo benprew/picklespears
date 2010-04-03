@@ -20,7 +20,7 @@ class Player
   property :birthdate, String
   property :zipcode, String
   property :gender, String
-  property :openid, String, :length => 1024
+  property :openid, String, :length => 1024, :index => :unique
 
   def join_team(team)
     PlayersTeam.new(:player_id => self.id, :team_id => team.id).save

@@ -104,7 +104,6 @@ class PickleSpears
   end
 
   get '/login/openid' do
-    p params
     openid = params[:openid_identifier]
     begin
       oidreq = openid_consumer.begin(openid)
