@@ -17,14 +17,10 @@ class Player
   property :email_address, String, :nullable => false, :index => :unique
   property :phone_number, String
   property :is_sub, Boolean
-  property :password, String, :nullable => false
   property :birthdate, String
   property :zipcode, String
   property :gender, String
-
-  def self.login( email_address, password )
-    return Player.first(:email_address => email_address, :password => password)
-  end
+  property :openid, String, :length => 1024
 
   def join_team(team)
     PlayersTeam.new(:player_id => self.id, :team_id => team.id).save
@@ -49,8 +45,7 @@ class Player
   def self.create_test(attrs={})
     player = Player.new(
       :name => 'test user',
-      :email_address => 'test_user@test.com',
-      :password => 'test'
+      :email_address => 'test_user@test.com'
     )
     player.attributes = attrs if attrs
     player.save
@@ -62,18 +57,6 @@ class Player
   end
 
   def fupdate(attrs)
-    if attrs[:password] == ''
-      attrs.delete('password')
-      attrs.delete(:password)
-    end
-
-    if attrs[:password] && (attrs[:password] != attrs[:password2])
-      raise "Passwords do not match"
-    end
-
-    attrs.delete('password2')
-    attrs.delete(:password2)
-
     begin
       self.update(attrs)
     rescue StandardError => err

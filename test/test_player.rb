@@ -13,11 +13,6 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_equal(pt.player_id, player.id)
   end
 
-  def test_null_2nd_password_works
-    post '/player/create', :email_address => 'test_user', :password => 'test_pass'
-    assert_match(/Passwords do not match/, last_response.body)
-  end
-
   def test_can_attend_a_game
     player = Player.create_test(:name => 'test user')
     game = Game.create_test
@@ -29,8 +24,8 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_can_update_info_via_post
-    Player.create_test( :email_address => 'test', :password => 'test' )
-    post '/player/sign_in', :email_address => 'test', :password=> 'test'
+    Player.create_test( :openid => 'test' )
+    get '/login/openid/complete', :openid_identifier => 'test'
     session_id = last_response.headers['Set-Cookie']
     post '/player/update?name=new_name', '', { "HTTP_COOKIE" => session_id }
 
@@ -39,13 +34,13 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_join_team_as_part_of_sign_up_process_works
-    Player.create_test( :email_address => 'test', :password => 'test' )
+    Player.create_test( :email_address => 'test' )
 
     div = Division.create_test
     Team.create_test( :name => 'team to find', :division => div )
     Team.create_test( :name => 'should not be found', :division => div )
 
-    post '/player/sign_in', :email_address => 'test', :password=> 'test'
+    get '/login/openid/complete', :openid_identifier => 'test'
     session_id = last_response.headers['Set-Cookie']
 
     get '/player/join_team', '', { "HTTP_COOKIE" => session_id }
@@ -54,11 +49,6 @@ class TestPlayer < PickleSpears::Test::Unit
 
     get '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
     assert_match(/team to find/, last_response.body)
-  end
-
-  def test_can_update_password
-    player = Player.create_test
-    assert player.fupdate({ :password => 'test', :password2 => 'test' })
   end
 
   def test_can_leave_a_team

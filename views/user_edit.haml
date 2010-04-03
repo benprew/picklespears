@@ -12,14 +12,6 @@
     %td
       %input{ :type => "text", :name => 'phone_number', :value => @player && @player.phone_number}
   %tr
-    %td New Password*:
-    %td
-      %input{ :type => "password", :name => 'password' }
-  %tr
-    %td Re-enter Password*:
-    %td
-      %input{ :type => "password", :name => 'password2' }
-  %tr
     %td I am:
     %td
       %select{ :name => 'gender' }
@@ -40,4 +32,6 @@
       Add one at
       %a{ :href => 'http://en.gravatar.com/' } gravatar.com
       (That's what all the cool kids do)
+      %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
+
       
