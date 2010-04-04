@@ -51,7 +51,11 @@ class PickleSpears
 
   get '/' do
     @teams = []
-    haml :index
+    if @player
+      redirect '/player'
+    else
+      haml :index
+    end
   end
   
   get '/browse' do
@@ -226,11 +230,12 @@ class PickleSpears
   end
 
   get '/player/attending_status_for_game' do
-    game_id = params[:game_id]
+    game = Game.get(params[:game_id])
     @status = params[:status]
     @player_from_request = Player.get(params[:player_id])
-    @player_from_request.set_attending_status_for_game(Game.get(game_id), @status)
-    haml :attending_status_for_game
+    @player_from_request.set_attending_status_for_game(game, @status)
+    message = haml :attending_status_for_game, :layout => false
+    redirect url_for("/team", :messages => message, :team_id => game.team.id)
   end
 
   # Meant to be called via ajax

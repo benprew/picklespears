@@ -46,11 +46,17 @@
           %input{ :name => "team", :type => "text" }
           %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
 
-    - if @errors
-      .error= @errors
-    - if @messages
-      .message= @messages
     .container_12
+      - if @errors
+        .grid_4
+        .grid_4
+          .error= @errors
+        .clear
+      - if @messages
+        .grid_4 &nbsp;
+        .grid_4
+          .message= @messages
+        .clear
       = yield
     %script{ :type => 'text/javascript', :src => '/jx.js' }
     %script{ :type => 'text/javascript', :src => '/pickle-spears.js' }
