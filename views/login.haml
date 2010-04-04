@@ -1,3 +1,5 @@
+%h1 To login, click on a image below
+
 %script{ :type => "text/javascript", :src => "/js/openid-jquery.js" }
 %script{ :type => "text/javascript" }
   $(document).ready(function() {
@@ -17,8 +19,16 @@
       #openid_input_area
         %input{ :id => "openid_identifier", :name => "openid_identifier", :type => "text", :value =>"http://" }
         %input{ :id => "openid_submit", :type => "submit", :value => "Sign-In" }
-      :markdown
-        OpenID is service that allows you to log-on to many different websites using a single indentity.
-        Find out [more](http://openid.net/what/) about OpenID and [how to get an OpenID enabled account](http://openid.net/get/) 
+
+:markdown
+  ### Where are the login username and password fields? ###
+  Picklespears has switched to using OpenID to manage usernames and
+  passwords.  OpenID is service that allows you to log-on to many
+  different websites using a single indentity.  Find out
+  [more](http://openid.net/what/) about OpenID and [how to get an
+  OpenID enabled account](http://openid.net/get/)
+
+
+
 
 
