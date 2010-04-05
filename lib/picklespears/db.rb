@@ -1,13 +1,17 @@
-configure :production do
-  DataMapper.setup(:default, 'mysql://picklespears:burn0ut!@localhost/picklespears')
+require 'rubygems'
+require 'dm-core'
+require 'yaml'
+
+def make_connect_string(db_config, environment)
+  db_info = db_config[environment.to_s]
+  return sprintf "%s://%s:%s@localhost/%s", db_info['adapter'], db_info['username'], db_info['password'], db_info['database']
 end
 
-configure :development do
-  DataMapper.setup(:default, 'mysql://picklespears:burn0ut!@localhost/picklespearsdev')
-end
+db_config = YAML::load File.open(File.dirname(__FILE__) + '/../../config/database.yml')
 
-configure :test do
+if test?
   DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
   DataMapper.auto_migrate!
+else
+  DataMapper.setup(:default, make_connect_string(db_config, :production))
 end
-
