@@ -13,7 +13,7 @@ set :repository, 'git://github.com/benprew/picklespears.git'
 set :branch, 'master'
 set :deploy_via, :remote_cache
 
-set :app_port, 10000
+set :app_port, 4567
 set :app_name, 'picklespears.rb'
 set :web, "apache"
 set :use_sudo, false
