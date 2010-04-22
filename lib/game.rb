@@ -10,10 +10,10 @@ class Game
   has n, :players, :through => :players_games
 
   property :id, Serial
-  property :date, Date, :nullable => false
-  property :description, String, :nullable => false
-  property :team_id, Integer, :nullable => false
-  property :reminder_sent, Boolean, :nullable => false, :default => false
+  property :date, Date, :required => true
+  property :description, String, :required => true
+  property :team_id, Integer, :required => true
+  property :reminder_sent, Boolean, :required => true, :default => false
 
   def num_guys_confirmed
     players_games.all.inject(0) do |sum, pg|

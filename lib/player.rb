@@ -13,8 +13,8 @@ class Player
   has n, :games, :through => :players_games
 
   property :id, Serial
-  property :name, String, :nullable => false, :index => :unique
-  property :email_address, String, :nullable => false, :index => :unique
+  property :name, String, :required => true, :index => :unique
+  property :email_address, String, :required => true, :index => :unique
   property :phone_number, String
   property :is_sub, Boolean
   property :birthdate, String

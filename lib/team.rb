@@ -13,7 +13,7 @@ class Team
 
   property :id, Serial
   property :name, String
-  property :division_id, Integer, :nullable => false
+  property :division_id, Integer, :required => true
 
   def upcoming_games
     games.all( :date.gte => Date.today(), :order => [ :date.asc ] )
