@@ -12,6 +12,8 @@ db_config = YAML::load File.open(File.dirname(__FILE__) + '/../../config/databas
 if test?
   DataMapper.setup(:default, 'sqlite3:///tmp/test_db')
   DataMapper.auto_migrate!
-else
+elsif production?
   DataMapper.setup(:default, make_connect_string(db_config, :production))
+else
+  DataMapper.setup(:default, make_connect_string(db_config, :development))
 end
