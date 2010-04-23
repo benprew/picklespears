@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'pickle-spears'
+require 'picklespears'
 require 'picklespears/test/unit'
 
 class TestPlayer < PickleSpears::Test::Unit
@@ -24,11 +24,8 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_can_update_info_via_post
-    Player.create_test( :openid => 'test' )
-    get '/login/openid/complete', :openid_identifier => 'test'
-    session_id = last_response.headers['Set-Cookie']
-    post '/player/update?name=new_name', '', { "HTTP_COOKIE" => session_id }
-
+    player = Player.create_test( :email_address => 'test' )
+    post '/player/update', { :name => 'new_name' }, 'rack.session' => { :player_id => player.id }
     assert_equal('/player', last_response.location)
     assert_equal('new_name', Player.first(:email_address => 'test').name)
   end

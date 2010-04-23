@@ -1,9 +1,7 @@
 require 'rubygems'
 require 'test/unit'
-require 'pickle-spears'
+require 'picklespears'
 require 'rack/test'
-
-set :environment, :test
 
 DataMapper.setup(:default, 'sqlite3::memory:')
 DataMapper.auto_migrate!

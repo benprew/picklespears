@@ -22,7 +22,11 @@ require 'team'
 require 'time'
 require 'player'
 
-set :sessions, true
+if test?
+  set :sessions, false
+else
+  set :sessions, true
+end
 
 class PickleSpears
 
@@ -40,7 +44,6 @@ class PickleSpears
 
   before do
     if session[:player_id]
-      p session[:player_id]
       @player = Player.get(session[:player_id])
       @name = @player.name
     end

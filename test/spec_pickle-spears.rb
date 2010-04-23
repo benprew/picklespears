@@ -3,7 +3,7 @@
 require 'picklespears/test/unit'
 require 'rack/test'
 
-context 'spec_pickle-spears', PickleSpears::Test::Unit do
+context 'spec_picklespears', PickleSpears::Test::Unit do
 
   include Rack::Test::Methods
 

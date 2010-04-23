@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'pickle-spears'
+require 'picklespears'
 require 'picklespears/test/unit'
 
 class TestTeam < PickleSpears::Test::Unit
