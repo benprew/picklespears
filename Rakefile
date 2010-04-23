@@ -1,9 +1,12 @@
 require 'rake'
 require 'rake/testtask'
 
+task :default => :test
+
 Rake::TestTask.new do |t|
-	t.test_files = FileList['test/test_*.rb']
-	t.verbose = true
+  ENV['RACK_ENV'] = 'test'
+  t.test_files = FileList['test/test_*.rb']
+  t.verbose = true
 end
 
 executable     = 'pickle-spears.rb'
