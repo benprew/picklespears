@@ -8,14 +8,6 @@ require 'dm-core'
 require 'sinatra'
 require 'haml'
 require 'sass'
-
-require 'erb'
-
-# open id
-gem 'ruby-openid', '>=2.1.2'
-require 'openid'
-require 'openid/store/filesystem'
-
 require 'picklespears/db'
 require 'division'
 require 'team'
@@ -27,6 +19,10 @@ if test?
 else
   set :sessions, true
 end
+
+# Must be done after sessions
+require 'rack/openid'
+use Rack::OpenID
 
 class PickleSpears
 
@@ -104,59 +100,37 @@ class PickleSpears
   end
 
 
-################
+################ OpenID login
 
   get '/login' do    
     haml :login
   end
 
-  get '/login/openid' do
-    openid = params[:openid_identifier]
-    begin
-      oidreq = openid_consumer.begin(openid)
-    rescue OpenID::DiscoveryFailure => why
-      "Sorry, we couldn't find your identifier '#{openid}'"
-    else
-      # You could request additional information here - see specs:
-      # http://openid.net/specs/openid-simple-registration-extension-1_0.html
-      # oidreq.add_extension_arg('sreg','required','nickname')
-      # oidreq.add_extension_arg('sreg','optional','fullname, email')
-      
-      # Send request - first parameter: Trusted Site,
-      # second parameter: redirect target
-      redirect oidreq.redirect_url(root_url, root_url + "/login/openid/complete")
-    end
-  end
-
-  get '/login/openid/complete' do
-    oidresp = openid_consumer.complete(params, request.url)
-    openid = params[:openid_identifier]
-
-    case oidresp.status
-      when OpenID::Consumer::FAILURE
-        "Sorry, we could not authenticate you with the identifier '#{openid}'."
-
-      when OpenID::Consumer::SETUP_NEEDED
-        "Immediate request failed - Setup Needed"
-
-      when OpenID::Consumer::CANCEL
-        "Login cancelled."
-
-      when OpenID::Consumer::SUCCESS
-        player = Player.first(:openid => oidresp.identity_url)
+  post '/login/openid' do
+    if resp = request.env["rack.openid.response"]
+      if resp.status == :success
+        player = Player.first(:openid => resp.identity_url)
         if player
           session[:player_id] = player.id
           redirect '/player'
         else
-          player = Player.create(:openid => oidresp.identity_url, :name => '')
+          player = Player.create(:openid => resp.identity_url, :name => '')
           player.save
           session[:player_id] = player.id
           redirect url_for('/player/edit', :messages => "You have just created an account, please edit your information")
         end
+      else
+        "Error: #{resp.status}"
+      end
+    else
+      headers 'WWW-Authenticate' => Rack::OpenID.build_header(
+        :identifier => params["openid_identifier"]
+      )
+      throw :halt, [401, 'got openid?']
     end
   end
 
-#############
+##############
 
   get '/player/edit' do
     haml :player_edit
@@ -327,11 +301,6 @@ helpers do
 
   def user_edit_partial
     haml :user_edit, :layout => false
-  end
-
-  def openid_consumer
-    @openid_consumer ||= OpenID::Consumer.new(session,
-      OpenID::Store::Filesystem.new("#{File.dirname(__FILE__)}/tmp/openid"))  
   end
 
   def root_url

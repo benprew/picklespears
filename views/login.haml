@@ -9,7 +9,7 @@
 
 .grid_12
   -# <!-- Simple OpenID Selector -->
-  %form{ :action => "/login/openid", :method => "get", :id => "openid_form" }
+  %form{ :action => "/login/openid", :method => "post", :id => "openid_form" }
     %input{ :type => "hidden", :name => "action", :value => "verify" }
     %fieldset
       %legend Sign-in or Create New Account
