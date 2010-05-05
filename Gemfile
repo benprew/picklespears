@@ -1,0 +1,7 @@
+source "http://rubygems.org"
+gem "datamapper"
+gem "sinatra"
+gem "haml"
+gem "pony"
+gem "ruby-openid"
+gem "rack-openid"
