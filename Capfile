@@ -6,9 +6,34 @@ load    'config/deploy'
 
 after 'deploy:update', :daemonize
 after 'deploy:update', :link_shared_files
+after "deploy:update_code" do
+  bundler.bundle_new_release
+end
 
 after 'deploy', 'deploy:cleanup'
 after 'deploy', 'deploy:restart'
+
+namespace :bundler do
+  task :create_symlink, :roles => :app do
+    shared_dir = File.join(shared_path, 'bundle')
+    release_dir = File.join(current_release, '.bundle')
+    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
+  end
+
+  task :bundle_new_release, :roles => :app do
+    bundler.create_symlink
+    run "cd #{release_path} && /usr/local/ruby/bin/bundle install --without test"
+  end
+
+  task :lock, :roles => :app do
+    run "cd #{current_release} && /usr/local/ruby/bin/bundle lock;"
+  end
+
+  task :unlock, :roles => :app do
+    run "cd #{current_release} && /usr/local/ruby/bin/bundle unlock;"
+  end
+end
+
 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
