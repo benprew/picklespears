@@ -8,6 +8,7 @@ gem "haml"
 gem "pony"
 gem "ruby-openid"
 gem "rack-openid"
+gem "maruku"
 
 group :test do
   gem "rack-test"
