@@ -7,7 +7,7 @@ class BuildDb
 
   attr_reader :teams, :divisions, :games
   
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/spring/')
+  def initialize(url='http://pdxindoorsoccer.com/Schedules/summer/')
     @@season_url = url
     @games = []
   end
@@ -36,7 +36,7 @@ class BuildDb
       f = File.new(file, 'w')
       teams.each do |name|
         games = _all_games_for_team(file, name)
-        games.each { |g| f.write( [ name, g.flatten ].join("\t")) }
+        games.each { |g| f.write( [ name, g.flatten ].join("\t") + "\n") }
       end
       f.close
     end
@@ -46,12 +46,12 @@ class BuildDb
     names = Set.new
     open(@@season_url + "/" + file) do |f|
       f.each do |line|
+      	line = _clean_line(line)
         m = /\s+VS\s+(.*)/i.match(line)
         if m
-          foo = m[1].gsub(/\s+$/, '')
-          foo = foo.gsub(/\s+/, ' ')
+          foo = m[1].strip
           names.add foo
-        end
+	end
       end
     end
     names
@@ -60,7 +60,9 @@ class BuildDb
   def _all_games_for_team(file, team_name)
     games = []
     open(@@season_url + "/" + file) do |f|
-      f.grep(Regexp.new(Regexp.quote(team_name))).each do |line|
+      f.each do |line|
+      	line = _clean_line(line)
+      	next unless line.match(Regexp.quote(team_name))
         date = _parse_date_from_schedule_line(line)
         next unless date
         # add a year
@@ -72,7 +74,7 @@ class BuildDb
   end
 
   def _parse_date_from_schedule_line(line)
-    m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+(\d+|MIDNITE|NOON)(:15)\s+(AM|PM)?/.match(line)
+    m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+(\d+|MIDNITE|NOON)(:15)\s*(AM|PM)?\s+(.*)VS(.*)/.match(line)
     if m && m[1] && m[2]
       hour = m[3]
       minute = m[4]
@@ -93,6 +95,10 @@ class BuildDb
     end
   end
 
+  def _clean_line(line)
+  	line.strip.gsub(/\s+/, ' ').upcase.gsub(/[^A-Z0-9:&!.\/ ]/, '')
+  end
+
   def run()
     div_files = build_divisions()
     build_teams(div_files)
@@ -102,7 +108,4 @@ end
 
 db_builder = BuildDb.new();
 db_builder.run()
-
-
-
 
