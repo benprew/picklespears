@@ -3,6 +3,8 @@
 $:.unshift File.dirname(__FILE__) + '/lib'
 
 require 'rubygems'
+require 'bundler'
+Bundler.setup
 
 require 'pony'
 require 'dm-core'
