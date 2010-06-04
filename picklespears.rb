@@ -242,16 +242,13 @@ class PickleSpears
       next_game.save
 
       team.players.each do |player|
-        @player = player
-        @game = next_game
-
         next unless (player.email_address and player.email_address.match(/@/))
 
         info = {
           :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,
-          :subject => "Next Game: #{@game.description}",
-          :body    => haml(:reminder, :layout => false),
+          :subject => "Next Game: #{game.description}",
+          :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => game }),
           :content_type => 'text/html',
         }
         if production?
@@ -261,10 +258,10 @@ class PickleSpears
         end
       end
     end
-    template :foo do
+    template :output do
       output
     end
-    haml :foo
+    haml :output
   end
 end
 
