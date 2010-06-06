@@ -7,7 +7,9 @@ def make_connect_string(db_config, environment)
   if db_info['adapter'] == 'sqlite3'
     return sprintf "%s:///var/db/%s", db_info['adapter'], db_info['database']
   else
-    return sprintf "%s://%s:%s@localhost/%s", db_info['adapter'], db_info['username'], db_info['password'], db_info['database']
+    db_str = sprintf "%s://%s:%s@localhost/%s", db_info['adapter'], db_info['username'], db_info['password'], db_info['database']
+    warn db_str
+    return db_str
   end
 end
 

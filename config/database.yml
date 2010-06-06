@@ -7,6 +7,8 @@ production:
 development:
   adapter: postgres
   database: picklespearsdev
+  username: test
+  password: test
 
 test:
   adapter: sqlite3
