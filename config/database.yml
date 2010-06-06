@@ -1,0 +1,11 @@
+production:
+  adapter: postgres
+  database: picklespears
+
+development:
+  adapter: postgres
+  database: picklespearsdev
+
+test:
+  adapter: sqlite3
+  database: picklespearstest
