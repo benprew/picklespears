@@ -1,37 +1,55 @@
-%table
-  %tr
-    %td Full Name*:
-    %td
-      %input{ :type => 'text', :name => 'name', :value => @player && @player.name }
-  %tr
-    %td Your Email*:
-    %td
-      %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
-  %tr
-    %td Phone:
-    %td
-      %input{ :type => "text", :name => 'phone_number', :value => @player && @player.phone_number}
-  %tr
-    %td I am:
-    %td
-      %select{ :name => 'gender' }
-        %option{ :value => '' }select sex
-        %option{ :value => 'guy', :selected => @player && @player.gender == 'guy' }guy
-        %option{ :value => 'gal', :selected => @player && @player.gender == 'gal' }gal
-  %tr
-    %td Zip Code:
-    %td
-      %input{ :type => "text", :name => 'zipcode', :value => @player && @player.zipcode }
-  %tr
-    %td Birthday:
-    %td
-      %input{ :type => "text", :name => 'birthdate', :value => @player && @player.birthdate }
-  %tr
-    %td Image:
-    %td
-      Add one at
-      %a{ :href => 'http://en.gravatar.com/' } gravatar.com
-      (That's what all the cool kids do)
-      %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
-
-      
+%form{ :action => '/player/update', :method => 'post' }
+  .grid_6
+    %table
+      %tr
+        %td Full Name*:
+        %td
+          %input{ :type => 'text', :name => 'name', :value => @player && @player.name }
+      %tr
+        %td Your Email*:
+        %td
+          %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
+      %tr
+        %td Phone:
+        %td
+          %input{ :type => "text", :name => 'phone_number', :value => @player && @player.phone_number}
+      %tr
+        %td I am:
+        %td
+          %select{ :name => 'gender' }
+            %option{ :value => '' }select sex
+            %option{ :value => 'guy', :selected => @player && @player.gender == 'guy' }guy
+            %option{ :value => 'gal', :selected => @player && @player.gender == 'gal' }gal
+      %tr
+        %td Zip Code:
+        %td
+          %input{ :type => "text", :name => 'zipcode', :value => @player && @player.zipcode }
+      %tr
+        %td Birthday:
+        %td
+          %input{ :type => "text", :name => 'birthdate', :value => @player && @player.birthdate }
+      %tr
+        %td
+          Image:
+          Add one at
+          %a{ :href => 'http://en.gravatar.com/' } gravatar.com
+        %td
+          %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
+      %tr
+        %td
+          %input{ :type => 'submit', :name => 'update', :value => 'Update Info' }
+      %tr
+        %td
+          %h3 Current Teams
+      - @player.teams.each do |team| 
+        %tr
+          %td{ :style => 'padding: 3px' }
+            %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
+          %td
+            %form{ :method => 'post', :action =>'/players_team/delete' }
+              %input{ :type=>'submit', :value=>'Leave Team' }
+              %input{ :type=>'hidden', :name=>:player_id, :value=>@player.id }
+              %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
+  
+  
+  
