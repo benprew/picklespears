@@ -1,12 +1,11 @@
 - title "Edit @team.name"
-.grid_3 &nbsp;
 .grid_6
   %form{ :method => 'post', :action => '/team/update' }
     %input{ :type => :hidden, :name => :team_id, :value => @team.id }
-    Name:
+    %strong Name:
     %input{ :type => :text, :name => :name, :value => @team.name }
     %br
-    Division:
+    %strong Division:
     %select{ :name => 'division_id' }
       - @divisions.each do |division|
         - if division.id == @team.division_id
@@ -16,9 +15,20 @@
     %br
     %input{ :type => :submit, :name => :update, :value => 'Update' }
     %br
-  All Games:
+.clear
+.grid_6
+  %h3 Upcoming Games
   %ul
-    - @team.games.all(:order => [ :date.desc ]).each do |game|
+    - @team.upcoming_games.each do |game|
       %li= game.description
-.grid_3 &nbsp;
+.grid_6
+  %h3 Players
+  %table
+    - @team.players.each do |p|
+      %tr
+        %td= p.name
+        %td
+          %a{ :href => "mailto:#{p.email_address}" }= p.email_address
+        %td
+          %input{ :type => 'submit', :value => 'Remove Player' }
 .clear

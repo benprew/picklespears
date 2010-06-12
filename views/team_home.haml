@@ -4,7 +4,7 @@
   - if @player && !@player.is_on_team?(@team)
     %a#join_this_team{ :href => '#', :onclick => "joinTeam('#{@team.id}', 'join_this_team'); return false;"} Join this team!
   - if @player && @player.is_on_team?(@team)
-    %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Edit]
+    %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Manage]
 .clear
 .grid_4{ :style => 'float:left; width: 250px' }
   %h2{ :style => 'margin-top: 0px;' } Players
