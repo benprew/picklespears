@@ -23,6 +23,11 @@ task :daemonize => 'daemon:at_boot' do
   end
 end
 
+task :cron => :environment do
+  # daily
+  `bin/reminder.sh`
+end
+
 namespace :daemon do
   task :install do
     File.open('daemon.d', 'w') do |f|
