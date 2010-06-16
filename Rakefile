@@ -23,7 +23,7 @@ task :daemonize => 'daemon:at_boot' do
   end
 end
 
-task :cron => :environment do
+task :cron do
   # daily
   `bin/reminder.sh`
 end
