@@ -250,6 +250,15 @@ class PickleSpears
           :subject => "Next Game: #{game.description}",
           :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => game }),
           :content_type => 'text/html',
+          :via => :smtp,
+          :via_options => {
+            :address        => "smtp.sendgrid.net",
+            :port           => "25",
+            :authentication => :plain,
+            :user_name      => ENV['SENDGRID_USERNAME'],
+            :password       => ENV['SENDGRID_PASSWORD'],
+            :domain         => ENV['SENDGRID_DOMAIN'],
+          }
         }
         if production?
           Pony.mail(info)
