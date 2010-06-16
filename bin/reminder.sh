@@ -1,4 +1,4 @@
 #!/bin/bash
 
-wget http://picklespears.com/send_game_reminders
+wget -O- http://picklespears.com/send_game_reminders
 
