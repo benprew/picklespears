@@ -3,7 +3,6 @@ require 'test/unit'
 require 'picklespears'
 require 'rack/test'
 
-DataMapper.setup(:default, 'sqlite3::memory:')
 DataMapper.auto_migrate!
 
 # needed so I can call my class PS::Test::Unit -- below
