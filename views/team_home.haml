@@ -23,3 +23,6 @@
   %ul{ :style => 'list-style-type: none; display: inline' }
     %li{ :style => 'display: inline' }= "#{@team.next_game && @team.next_game.num_guys_confirmed} guys"
     %li{ :style => 'display: inline' }= "#{@team.next_game && @team.next_game.num_gals_confirmed} gals"
+  %ul
+    - @team.players.each do |player|
+      %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(@team.next_game)}"             
