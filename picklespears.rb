@@ -247,8 +247,8 @@ class PickleSpears
         info = {
           :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,
-          :subject => "Next Game: #{game.description}",
-          :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => game }),
+          :subject => "Next Game: #{next_game.description}",
+          :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
           :content_type => 'text/html',
           :via => :smtp,
           :via_options => {
