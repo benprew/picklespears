@@ -7,7 +7,7 @@ class BuildDb
 
   attr_reader :teams, :divisions, :games
   
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/summer/')
+  def initialize(url='http://pdxindoorsoccer.com/Schedules/firstfall/')
     @@season_url = url
     @games = []
   end
@@ -74,23 +74,21 @@ class BuildDb
   end
 
   def _parse_date_from_schedule_line(line)
-    m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+(\d+|MIDNITE|NOON)(:15)\s*(AM|PM)?\s+(.*)VS(.*)/.match(line)
+    m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+([0-9:]+|MIDNITE:?\d*|NOON:?\d*)\s*(AM|PM)?\s+(.*)VS(.*)/.match(line)
     if m && m[1] && m[2]
       hour = m[3]
-      minute = m[4]
-      am_pm = m[5]
+      am_pm = m[4]
       if hour == "NOON"
-        hour = 12
+        hour = '12:00'
         am_pm = 'PM'
       end
       if hour == 'MIDNITE'
-        hour = 11
-        minute = ':59'
+        hour = '11:59'
         am_pm = 'PM'
       end
-      return Time.parse(m[1] + " " + m[2] + " #{hour}#{minute} #{am_pm}")
+      return Time.parse(m[1] + " " + m[2] + " #{hour} #{am_pm}")
     else
-      print "Unable to parse time:" + line
+      warn "Unable to parse time:" + line
       return false
     end
   end
