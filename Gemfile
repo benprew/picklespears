@@ -12,8 +12,7 @@ group :production do
 end
 
 group :development do
-  gem "dm-mysql-adapter"
-  gem "mysql"
+  gem "dm-postgres-adapter"
 end
 
 group :test do
