@@ -4,6 +4,9 @@ $:.unshift File.dirname(__FILE__) + '/../lib'
 
 
 require 'rubygems'
+require 'bundler'
+Bundler.setup
+
 require 'sinatra'
 require 'dm-core'
 
