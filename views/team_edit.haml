@@ -22,7 +22,7 @@
     %li
       %input{ :type => 'text', :name => 'game_description' }
       %input{ :type => 'text', :name => 'date', :size => 12 }
-      %input{ :type => 'submit', :value => 'Add Game' }
+      %input{ :type => 'submit', :value => 'Add Game', :disabled => 'disabled' }
     - @team.upcoming_games.each do |game|
       %li= game.description
 .grid_6
@@ -40,7 +40,7 @@
         %td
           %input{ :type => 'text', :value => 'email' }
         %td
-          %input{ :type => 'submit', :value => 'Add Player' }
+          %input{ :type => 'submit', :value => 'Add Player', :disabled => 'disabled' }
       - @team.players.each do |p|
         %tr
           %td= p.name
