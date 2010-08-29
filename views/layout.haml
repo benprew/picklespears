@@ -4,7 +4,12 @@
     %meta{ :content => "text/html; charset=ISO-8859-1", 'http-equiv' => "content-type" }
     %title= "Pickle Spears - " + title
     %link{ :rel => "stylesheet", :href => "/stylesheet.css", :type => "text/css" }
+
+    -# 960 grid layout
+    %link{ :rel => "stylesheet", :href => "/reset.css", :type => "text/css" }
+    %link{ :rel => "stylesheet", :href => "/text.css", :type => "text/css" }
     %link{ :rel => "stylesheet", :href => "/grid.css", :type => "text/css" }
+
     -# for google webmaster tools
     %meta{ :name=>"google-site-verification", :content=>"DKQPrb8YpUIifJ7YdL6-1ckIGNxvAoQoT9E6-fBSv14" }
 
@@ -53,7 +58,7 @@
           .error= @errors
         .clear
       - if @messages
-        .grid_4 &nbsp;
+        .grid_4
         .grid_4
           .message= @messages
         .clear

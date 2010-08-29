@@ -180,6 +180,22 @@ class PickleSpears
     redirect url_for("/team", { :team_id => params[:team_id], :message => "Team updated!" })
   end
 
+  post '/player/remove_from_team' do
+    team_id = params[:team_id]
+    player_id = params[:player_id]
+    pt = PlayersTeam.first(:player_id => player_id, :team_id => team_id)
+
+    url_params = { :team_id => team_id }
+    if !pt || !pt.destroy
+      url_params[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
+    else
+      url_params[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
+    end
+
+
+    redirect url_for '/team/edit', url_params
+  end
+
   # Meant to be an ajax call
   get '/team/join' do
     @player.join_team(Team.get(params[:team_id]))
@@ -189,9 +205,9 @@ class PickleSpears
   get '/search' do
     @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc])
 
-    if @teams.length == 0
-      redirect '/?errors="No teams found"'
-    elsif @teams.length == 1
+    @errors = "No teams found" if @teams.length == 0
+
+    if @teams.length == 1
       redirect "/team?team_id=#{@teams[0].id.to_s}"
     else
       haml :search

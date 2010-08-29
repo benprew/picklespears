@@ -19,16 +19,36 @@
 .grid_6
   %h3 Upcoming Games
   %ul
+    %li
+      %input{ :type => 'text', :name => 'game_description' }
+      %input{ :type => 'text', :name => 'date', :size => 12 }
+      %input{ :type => 'submit', :value => 'Add Game' }
     - @team.upcoming_games.each do |game|
       %li= game.description
 .grid_6
   %h3 Players
   %table
-    - @team.players.each do |p|
+    %thead
+      %th
+        Name
+      %th
+        Email
+    %tbody
       %tr
-        %td= p.name
         %td
-          %a{ :href => "mailto:#{p.email_address}" }= p.email_address
+          %input{ :type => 'text', :value => 'name' }
         %td
-          %input{ :type => 'submit', :value => 'Remove Player' }
+          %input{ :type => 'text', :value => 'email' }
+        %td
+          %input{ :type => 'submit', :value => 'Add Player' }
+      - @team.players.each do |p|
+        %tr
+          %td= p.name
+          %td
+            %a{ :href => "mailto:#{p.email_address}" }= p.email_address
+          %td
+            %form{ :action => '/player/remove_from_team', :method => 'post'}
+              %input{ :type => 'submit', :value => 'Remove Player' }
+              %input{ :type => 'hidden', :name => 'player_id', :value => p.id }
+              %input{ :type => 'hidden', :name => 'team_id', :value => @team.id }
 .clear

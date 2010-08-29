@@ -52,7 +52,6 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_todo
 
     print <<-TODO
-
       [x] Join/Watch Multiple Teams
           [x] Leave a team
       [ ] Communicate with all members of team

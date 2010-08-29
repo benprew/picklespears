@@ -27,7 +27,10 @@
     %tr
       %th.team_header
         Teams
-        %a{ :href => "/" } [Join New]
+        %form{ :method => "get", :action => "/search" }
+          %input{ :name => "team", :type => "text" }
+          %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+
     %tr
       %td
         %ul
@@ -36,7 +39,6 @@
               %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
               - if @player.id == @player_from_request.id
                 %form{ :method => 'post', :action =>'/players_team/delete' }
-                  %input{ :type=>'image', :src=>'/cancel.png' }
                   %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
                   %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
 %div{ :style => 'float: left; margin: 2em' }
