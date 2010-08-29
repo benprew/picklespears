@@ -1,4 +1,4 @@
-- title "Edit @team.name"
+- title "Edit #{@team.name}"
 .grid_6
   %form{ :method => 'post', :action => '/team/update' }
     %input{ :type => :hidden, :name => :team_id, :value => @team.id }
