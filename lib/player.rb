@@ -3,7 +3,6 @@ require 'game'
 require 'players_game'
 require 'players_team'
 require 'digest/md5'
-# require 'md5'
 
 class Player
   include DataMapper::Resource
