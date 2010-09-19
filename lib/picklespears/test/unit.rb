@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'test/unit'
 require 'picklespears'
 require 'rack/test'
