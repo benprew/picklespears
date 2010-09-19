@@ -52,11 +52,18 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_todo
 
     print <<-TODO
-      [x] Join/Watch Multiple Teams
-          [x] Leave a team
+
+
+      [ ] Add a new team
+      [ ] Add a game
+      [ ] Add a player to a team (name, email)
+
+      [ ] Change login to just use passwords instead of openid
+      
+      [ ] restructure file layout similar to monkrb
+      [ ] Investigate webrat for testing
+
       [ ] Communicate with all members of team
-      [x] Quickly see how many people are coming to the next game
-          [x] Get reminders about the next game, via email sms
       [ ] Manage a team
           [ ] Send game reminders
           [ ] See who has paid and how much
@@ -65,9 +72,6 @@ class TestPickleSpears < PickleSpears::Test::Unit
       [ ] Find teams/players looking for players/teams
 
       [ ] can set manager for team
-
-
-      [ ] for :collections => @things, see: http://github.com/cschneid/irclogger
     TODO
 
   end
