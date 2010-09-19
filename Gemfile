@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+gem "i18n"
 gem "data_mapper"
 gem "sinatra"
 gem "haml"
