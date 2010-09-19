@@ -4,7 +4,7 @@
     %tr
       %th.team_header
         Info
-        - if @player_from_request.id == @player.id
+        - if @player && @player_from_request.id == @player.id
           %a{ :href => '/player/edit' }= '[edit]'
     %tr
       %td
@@ -16,7 +16,7 @@
             = "Name: #{@player_from_request.name} "
           %li
             = "Gender: #{@player_from_request.gender} "
-        - if @player.id == @player_from_request.id
+        - if @player && @player.id == @player_from_request.id
           Private Info:
           %ul
             %li
@@ -37,7 +37,7 @@
           - @player_from_request.teams.each do |team|
             %li{ :style => 'padding: 3px' }
               %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
-              - if @player.id == @player_from_request.id
+              - if @player && @player.id == @player_from_request.id
                 %form{ :method => 'post', :action =>'/players_team/delete' }
                   %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
                   %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
@@ -55,5 +55,5 @@
             %ul
               - game.team.players.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"             
-          - if @player_from_request.id == @player.id
+          - if @player && @player_from_request.id == @player.id
             = status_for_game(@player_from_request, game)
