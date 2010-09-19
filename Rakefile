@@ -5,6 +5,7 @@ task :default => :test
 
 Rake::TestTask.new do |t|
   ENV['RACK_ENV'] = 'test'
+  t.libs << '.'
   t.test_files = FileList['test/test_*.rb']
   t.verbose = true
 end

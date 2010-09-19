@@ -2,7 +2,8 @@ require 'team'
 require 'game'
 require 'players_game'
 require 'players_team'
-require 'md5'
+require 'digest/md5'
+# require 'md5'
 
 class Player
   include DataMapper::Resource
@@ -53,7 +54,7 @@ class Player
   end
 
   def md5_email
-    return MD5::md5(email_address)
+    return Digest::MD5.hexdigest(email_address)
   end
 
   def fupdate(attrs)
