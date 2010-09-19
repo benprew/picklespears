@@ -118,7 +118,7 @@ class PickleSpears
           redirect '/player'
         else
 
-          DataMapper.repository(:default).adapter.execute("INSERT INTO players (openid, name) VALUES ( ?, ?)", resp.identity_url, '')
+          DataMapper.repository(:default).adapter.execute("INSERT INTO players (openid, name) VALUES ( ?, ?)", resp.identity_url, 'Unknown player')
           @player = Player.first(:openid => resp.identity_url)
           session[:player_id] = @player.id
           redirect url_for('/player/edit', :messages => "You have just created an account, please edit your information")
