@@ -1,5 +1,16 @@
+:javascript
+  $(document).ready(function() {
+    $("#add_game_form").submit( function() {
+      date = Date.parse($("#game_date_string").val())
+      $("#massaged_date").text(date.toString("MM/DD/YYYY h:mm tt"))
+    });
+  });
+
+
 - title "Edit #{@team.name}"
+.clear
 .grid_6
+  %h3 Team Info
   %form{ :method => 'post', :action => '/team/update' }
     %input{ :type => :hidden, :name => :team_id, :value => @team.id }
     %strong Name:
@@ -18,11 +29,15 @@
 .clear
 .grid_6
   %h3 Upcoming Games
+  %div
+    %form{ :action => '/team/add_game', :method => :post, :id => :new_game_form }
+      %strong Add Game:
+      %br
+      %input{ :type => 'text', :name => 'date', :size => 20, :id => :game_date_string }
+      %input{ :type => :hidden, :name => :massaged_date, :id => :massaged_date }
+      %input{ :type => 'submit', :value => 'Add Game', :disabled => :disabled }
+      %p Example: Thursday 6pm or 5/17/2009 14:40
   %ul
-    %li
-      %input{ :type => 'text', :name => 'game_description' }
-      %input{ :type => 'text', :name => 'date', :size => 12 }
-      %input{ :type => 'submit', :value => 'Add Game', :disabled => 'disabled' }
     - @team.upcoming_games.each do |game|
       %li= game.description
 .grid_6
