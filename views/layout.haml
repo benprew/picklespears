@@ -15,21 +15,24 @@
 
     -# <!-- Simple OpenID Selector -->
     %link{ :rel => "stylesheet", :href => "/css/openid.css", :type => 'text/css' }
+    %script{ :type => 'text/javascript', :src => '/js/date.js' }
     %script{ :type => 'text/javascript', :src => 'http://www.google.com/jsapi' }
     %script{ :type => 'text/javascript' }
       // Load jQuery
-      google.load("jquery", "1.2.6");
+      google.load("jquery", "1.4.2");
 
     - configure :production do
-      %script{ :type=>"text/javascript" }
+      :javascript
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-12117986-1']);
         _gaq.push(['_trackPageview']);
         (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
         })();
+
+
 
   %body
     .header
