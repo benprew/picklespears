@@ -2,8 +2,7 @@
 
 $:.unshift File.dirname(__FILE__) + '/lib'
 
-require 'bundler'
-Bundler.setup
+require 'bundler/setup'
 
 require 'pony'
 require 'dm-core'

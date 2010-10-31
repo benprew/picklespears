@@ -1,4 +1,4 @@
-#!/usr/local/ruby/bin/ruby
+#!/usr/bin/ruby
 
 require 'open-uri'
 require 'set'
@@ -7,7 +7,7 @@ class BuildDb
 
   attr_reader :teams, :divisions, :games
   
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/firstfall/')
+  def initialize(url='http://pdxindoorsoccer.com/Schedules/secondfall/')
     @@season_url = url
     @games = []
   end
