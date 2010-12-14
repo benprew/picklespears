@@ -3,22 +3,29 @@
 require 'date'
 
 class Array
-  def slide_down
-    return self[1, self.length] + [self[0]]
+  def rotate_left!
+    push shift unless length == 0
   end
 end
 
 def build_games(teams)
   rounds = []
-  rounds_needed = teams.length % 2 == 0 ? 8 : 8 + ((8 - teams.length) / 2.0).ceil
+  games_per_team = Hash[*teams.map{ |t| [t, 0] }.flatten]
 
-  while rounds.length < rounds_needed do
+  while teams.length > 1 do
     mid = teams.length / 2
     first_half = teams[0, mid]
     last_half = teams[mid, teams.length]
-    rounds += [ first_half.zip last_half.reverse ]
-    teams = teams.slide_down
+    round = first_half.zip last_half.reverse
+    rounds += [ round ]
+
+    round.each { |g| g.each { |t| games_per_team[t] += 1 } }
+    teams = teams.select { |t| games_per_team[t] < 8 }
+    teams.rotate_left!
   end
+
+  raise "unable to schedule game for team #{teams[0]}" if teams.length == 1
+
   rounds
 end
 
@@ -49,7 +56,7 @@ coed_play_times = [
 ]
 
 teams = [
-  [ 'Coed', '4a', [ 'FC-Harpoon', 'Moto Machende', 'Burninators', 'Defectors', 'Bigfoot', 'Black & Blue' ] ]
+  [ 'Coed', '4a', (1..5).map { |i| "team #{i}" } ]
 ]
 
 teams.each do |team_info|
