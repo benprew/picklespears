@@ -13,16 +13,13 @@ module RoundRobinSchedule
       top = _teams[0, mid]
       bottom = _teams[mid, _teams.length]
  
-      round = (top.zip bottom).select{ |g| !g.include? nil }
-
+      round = (top.zip bottom).select { |g| !g.include? nil }
       rounds += [ round ]
-
-      round.each { |g| g.each { |t| games_per_team[t] += 1 } }
       _teams = [ top.shift ] + _rotate_clockwise(top, bottom)
 
+      round.each { |g| g.each { |t| games_per_team[t] += 1 } }
       _teams = _teams.select { |t| games_per_team[t] < matches_to_play }
       _teams = _teams.select { |t| t != nil } if _teams.length % 2 != 0
-
     end
 
     rounds
