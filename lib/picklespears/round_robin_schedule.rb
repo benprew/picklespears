@@ -1,10 +1,13 @@
 module RoundRobinSchedule
 
   def build_games(teams, matches_to_play)
+
+    raise "not enough teams to schedule" unless teams and teams.length > 1
+
     rounds = []
     games_per_team = Hash.new(0)
-
     _teams = []
+
     _teams.replace(teams)
     _teams << nil if _teams.length % 2
 

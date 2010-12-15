@@ -83,6 +83,23 @@ class TestScheduler < PickleSpears::Test::Unit
     end
   end
 
+  def test_invalid_input
+    assert_raises RuntimeError, LoadError do
+      build_games([ 'team 1' ], 0)
+    end
+
+    assert_raises RuntimeError, LoadError do
+       build_games(['team 1'], 3)
+    end
+
+    assert_raises RuntimeError, LoadError do
+       build_games([], 3)
+    end
+    assert_raises RuntimeError, LoadError do
+       build_games(nil, 3)
+    end
+  end
+
   def _pairings(team1, team2, rounds)
     pairing = [ team1, team2 ].sort
 
