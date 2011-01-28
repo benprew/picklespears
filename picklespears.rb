@@ -298,7 +298,7 @@ helpers do
   end
 
   def url_for(url, args)
-    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join(";")
+    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
   end
 
   def status_for_game(player, game)
