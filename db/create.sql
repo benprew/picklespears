@@ -1,55 +1,53 @@
-drop table if exists divisions;
-drop table if exists teams;
-drop table if exists games;
-drop table if exists players;
-drop table if exists players_teams;
+CREATE TABLE divisions (
+    id SERIAL PRIMARY KEY,
+    name CHARACTER VARYING(128) NOT NULL,
+    league CHARACTER VARYING(128) NOT NULL
+);
 
-create table divisions (
-  id     int           not null auto_increment,
-  name   varchar(128)  not null,
-  league varchar(128)  not null,
-  primary key (id)
-) engine=InnoDB;
+CREATE TABLE teams (
+    id SERIAL PRIMARY KEY,
+    name character varying(128) NOT NULL,
+    division_id integer NOT NULL,
+    FOREIGN KEY (division_id) REFERENCES divisions (id)
+);
 
-create table teams (
-  id int not null auto_increment,
-  name varchar(128) not null,
-  division_id int not null,
-  constraint fk_teams_divisions foreign key (division_id) references divisions(id),
-  primary key (id)
-) engine=InnoDB;
+CREATE TABLE games (
+    id SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    description CHARACTER VARYING(256) NOT NULL,
+    team_id INTEGER NOT NULL,
+    reminder_sent BOOLEAN DEFAULT false NOT NULL,
+    FOREIGN KEY (team_id) REFERENCES teams (id)
+);
 
-create table games (
-  id int not null auto_increment,
-  date date not null,
-  description varchar(256) not null,
-  reminder_sent boolean not null default false,
-  team_id int not null,
-  constraint fk_games_teams foreign key (team_id) references teams(id),
-  primary key (id)
-) engine=InnoDB;
+CREATE TABLE players (
+    id SERIAL PRIMARY KEY,
+    name character varying(128) NOT NULL,
+    email_address character varying(256),
+    phone_number character varying(16),
+    is_sub boolean DEFAULT false NOT NULL,
+    birthdate character varying(32),
+    zipcode character varying(16),
+    gender character varying(16),
+    openid character varying(1024)
+);
 
-create table players (
-  id int not null auto_increment,
-  name varchar(128) not null,
-  email_address varchar(256),
-  phone_number varchar(16),
-  is_sub boolean not null default false,
-  primary key (id)
-) engine=InnoDB;
+CREATE TABLE players_games (
+    game_id integer NOT NULL,
+    player_id integer NOT NULL,
+    status character varying(16) NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES games (id),
+    FOREIGN KEY (player_id) REFERENCES players (id)
+);
 
-create table players_teams (
-  player_id int not null,
-  team_id int null null,
-  constraint fk_players_players_teams foreign key (player_id)
-  	     references players(id),
-  constraint fk_teams_players_teams foreign key (team_id)
-  	     references teams(id)
-) engine=InnoDB;
+CREATE TABLE players_teams (
+    player_id integer NOT NULL,
+    team_id integer NOT NULL,
+    FOREIGN KEY (player_id) REFERENCES players (id),
+    FOREIGN KEY (team_id) REFERENCES teams (id)
+);
 
-create table players_games (
-       game_id int not null,
-       player_id int not null,
-       status varchar(16) not null,
-       primary key (game_id, player_id)
-) engine=InnoDB;
+CREATE TABLE schema_migrations (
+    version character varying(255) PRIMARY KEY NOT NULL
+);
+

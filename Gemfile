@@ -7,22 +7,19 @@ gem "pony"
 gem "ruby-openid"
 gem "rack-openid"
 gem "maruku"
-
-group :production do
-  gem "dm-postgres-adapter"
-end
+gem "dm-postgres-adapter"
 
 group :development do
-  gem "dm-postgres-adapter"
 
   # for heroku
   gem "heroku"
   gem "taps"
   gem "sequel"
   gem "pg"
+  gem "vagrant"
+  gem "shotgun"
 end
 
 group :test do
   gem "rack-test"
-  gem "dm-sqlite-adapter"
 end
