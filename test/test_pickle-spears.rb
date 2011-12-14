@@ -54,6 +54,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_todo
 
     print <<-TODO
+
     == Schedule system ==
       [ ] can set manager for team
       [ ] can schedule refs for games

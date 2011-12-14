@@ -1,42 +1,39 @@
 #!/usr/local/ruby/bin/ruby
 
-$:.unshift File.dirname(__FILE__) + '/lib'
-
 require 'bundler/setup'
-
 require 'pony'
 require 'dm-core'
 require 'sinatra'
 require 'haml'
 require 'sass'
-require 'picklespears/db'
-require 'division'
-require 'team'
 require 'time'
-require 'player'
 
-if test?
-  set :sessions, false
-else
-  set :sessions, true
-end
-
-# Must be done after sessions
-require 'rack/openid'
-use Rack::OpenID
+require_relative 'lib/picklespears/db'
+require_relative 'lib/division'
+require_relative 'lib/team'
+require_relative 'lib/player'
+require_relative 'routes/init'
 
 class PickleSpears
+
+  enable :sessions
+  # Must be done after sessions
+  require 'rack/openid'
+  use Rack::OpenID
 
   configure :test do
     set :root, File.dirname(__FILE__)
     set :views,File.dirname( __FILE__) + '/views'
     set :public,File.dirname( __FILE__) + '/public'
+    set :sessions, false
   end
 
   configure :production do
     set :root, Dir.pwd
     set :views, Dir.pwd + '/views'
     set :public, Dir.pwd + '/public'
+    set :haml, { :ugly=>true }
+    set :clean_trace, true
   end
 
   before do
@@ -47,6 +44,10 @@ class PickleSpears
 
     @errors = params[:errors]
     @messages = params[:messages]
+  end
+
+  get '/schedule' do
+
   end
 
   get '/' do
@@ -64,41 +65,6 @@ class PickleSpears
     haml :browse
   end
 
-  get '/player' do
-    @player_from_request = Player.get(params[:id] || session[:player_id])
-    haml :player
-  end
-
-  get '/player/create' do
-    @errors = params[:errors]
-    haml :player_create
-  end
-
-  post '/player/create' do
-    @player = Player.new
-    attrs = params
-    attrs.delete(:create_account)
-    attrs.delete('create_account')
-
-    begin
-      @player.fupdate(attrs)
-    rescue StandardError => err
-      @errors = err
-    end
-
-    if @errors
-      haml :player_create
-    else
-      session[:player_id] = @player.id
-      redirect '/player/join_team'
-    end
-  end
-
-  get '/player/join_team' do
-    @teams = []
-    @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc]) if params[:team]
-    haml :join_team
-  end
 
 
 ################ OpenID login
@@ -134,23 +100,6 @@ class PickleSpears
 
 ##############
 
-  get '/player/edit' do
-    haml :player_edit
-  end
-
-  post '/player/update' do
-    attrs = params
-    attrs.delete(:update)
-    attrs.delete('update')
-    begin
-      @player.fupdate(attrs)
-    rescue StandardError => err
-      @errors = err
-    end
-
-    redirect @errors ? "/player?errors=#{@errors}" : '/player'
-  end
-
   get '/sign_out' do
     session[:player_id] = nil
     redirect '/'
@@ -176,22 +125,6 @@ class PickleSpears
     @team.save
 
     redirect url_for("/team", { :team_id => params[:team_id], :message => "Team updated!" })
-  end
-
-  post '/player/remove_from_team' do
-    team_id = params[:team_id]
-    player_id = params[:player_id]
-    pt = PlayersTeam.first(:player_id => player_id, :team_id => team_id)
-
-    url_params = { :team_id => team_id }
-    if !pt || !pt.destroy
-      url_params[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
-    else
-      url_params[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
-    end
-
-
-    redirect url_for '/team/edit', url_params
   end
 
   # Meant to be an ajax call
@@ -222,15 +155,6 @@ class PickleSpears
     team = Team.first( :id => params[:team_id])
     @message = "You have successfully left #{team.name}"
     redirect sprintf('/player?messages=%s', URI.escape(@message))
-  end
-
-  get '/player/attending_status_for_game' do
-    game = Game.get(params[:game_id])
-    @status = params[:status]
-    @player_from_request = Player.get(params[:player_id])
-    @player_from_request.set_attending_status_for_game(game, @status)
-    message = haml :attending_status_for_game, :layout => false
-    redirect url_for("/team", :messages => message, :team_id => game.team.id)
   end
 
   # Meant to be called via ajax
