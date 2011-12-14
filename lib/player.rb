@@ -1,8 +1,8 @@
-require 'team'
-require 'game'
-require 'players_game'
-require 'players_team'
 require 'digest/md5'
+require_relative 'team'
+require_relative 'game'
+require_relative 'players_game'
+require_relative 'players_team'
 
 class Player
   include DataMapper::Resource

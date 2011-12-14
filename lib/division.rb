@@ -1,4 +1,4 @@
-require 'team'
+require_relative 'team'
 
 class Division
   include DataMapper::Resource
@@ -8,7 +8,7 @@ class Division
   property :id, Serial
   property :name, String
   property :league, String
-  
+
   attr_accessor :file
 
   def self.create_test(attrs={})

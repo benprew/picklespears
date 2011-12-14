@@ -1,5 +1,5 @@
-require 'player'
-require 'team'
+require_relative 'player'
+require_relative 'team'
 
 class PlayersTeam
   include DataMapper::Resource

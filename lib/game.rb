@@ -1,7 +1,7 @@
 require 'date'
-require 'team'
-require 'player'
-require 'players_game'
+require_relative 'team'
+require_relative 'player'
+require_relative 'players_game'
 
 class Game
   include DataMapper::Resource
