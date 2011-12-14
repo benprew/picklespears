@@ -57,7 +57,7 @@ class PickleSpears
       haml :index
     end
   end
-  
+
   get '/browse' do
     @divisions = Division.all(:league => params[:league], :order => [:name.asc])
     @league = params[:league]
@@ -103,7 +103,7 @@ class PickleSpears
 
 ################ OpenID login
 
-  get '/login' do    
+  get '/login' do
     haml :login
   end
 
@@ -150,7 +150,7 @@ class PickleSpears
 
     redirect @errors ? "/player?errors=#{@errors}" : '/player'
   end
-  
+
   get '/sign_out' do
     session[:player_id] = nil
     redirect '/'
@@ -158,14 +158,14 @@ class PickleSpears
 
   get '/team' do
     @team = Team.get(params[:team_id])
-  
+
     haml :team_home
   end
 
   get '/team/edit' do
     @team = Team.get(params[:team_id])
     @divisions = Division.all()
-    
+
     haml :team_edit
   end
 
@@ -252,7 +252,7 @@ class PickleSpears
       end
 
       output += "sending email about #{next_game.description}"
- 
+
       next_game.reminder_sent = true
       next_game.save
 
