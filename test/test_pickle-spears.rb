@@ -32,12 +32,12 @@ class TestPickleSpears < PickleSpears::Test::Unit
     skipped_team = Team.create_test(:name => 'THE HBRPO', :division => div)
 
     teams = Team.all( :name.like => '%HA%', :order => [:name.asc] )
-    get '/search', :team => 'Ha'
+    get '/team/search', :team => 'Ha'
     [ found_team, found_team2 ].each do |team|
       assert_match /team_id=#{team.id}/, last_response.body, "team #{team.id} is found"
     end
 
-    get '/search', :team => 'Harpoon'
+    get '/team/search', :team => 'Harpoon'
     assert_equal '/team?team_id=10', (last_response.headers)['Location']
   end
 

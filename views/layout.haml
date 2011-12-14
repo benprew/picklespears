@@ -41,7 +41,7 @@
         %h2{ :style => "padding-left: 4px; margin: 0px; text-align: left; float: left" } PickleSpears
       %div{ :style => "text-align: right;" }
 
-        %form{ :method => "get", :action => "/search" }
+        %form{ :method => "get", :action => "/team/search" }
           - if @player
             = "Welcome #{@player.name} | "
             %a{ :href => '/player' } Home
