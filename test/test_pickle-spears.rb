@@ -11,15 +11,17 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
   def test_browse
     div = Division.create_test(:league => 'Women')
-    Team.create_test( :division => div )
+
+    Team.create_test( :division => div, :name => 'Barcelona' )
+
     get '/browse', :league => 'Women'
     assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, last_response.body
-    assert_match /href='\/team/, last_response.body, 'do we have at least one team'
+    assert_match /Barcelona/, last_response.body, 'do we have at least one team'
   end
 
   def test_team_home
-    Team.create_test(:id => 1, :name => 'test team')
-    get '/team', :team_id => 1
+    team = Team.create_test( :name => 'test team' )
+    get '/team', :team_id => team.id
     assert_match /Upcoming Games/, last_response.body, 'upcoming games'
   end
 
@@ -52,14 +54,19 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_todo
 
     print <<-TODO
+    == Schedule system ==
+      [ ] can set manager for team
+      [ ] can schedule refs for games
+      [ ] can enter results of games
+      [ ] can show schedues of upcoming games
 
-
+    == Team management ==
       [ ] Add a new team
       [ ] Add a game
       [ ] Add a player to a team (name, email)
 
       [ ] Change login to just use passwords instead of openid
-      
+
       [ ] restructure file layout similar to monkrb
       [ ] Investigate webrat for testing
 
@@ -71,7 +78,6 @@ class TestPickleSpears < PickleSpears::Test::Unit
           [ ] Allows player to say a little about themselves
       [ ] Find teams/players looking for players/teams
 
-      [ ] can set manager for team
     TODO
 
   end

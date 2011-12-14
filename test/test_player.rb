@@ -16,9 +16,9 @@ class TestPlayer < PickleSpears::Test::Unit
   def test_can_attend_a_game
     player = Player.create_test(:name => 'test user')
     game = Game.create_test
-  
+
     player.set_attending_status_for_game(game, 'yes')
-  
+
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
     assert_equal('yes', pg.status)
   end
@@ -45,7 +45,7 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_no_match(/team to find/, last_response.body)
 
     get '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
-    assert_match(/team to find/, last_response.body)
+    assert_match(/find a team/, last_response.body)
   end
 
   def test_can_leave_a_team
