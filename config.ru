@@ -1,5 +1,2 @@
-$LOAD_PATH << '.'
-require 'picklespears'
-
-run Sinatra::Application
-
+require ::File.join( ::File.dirname(__FILE__), 'picklespears' )
+run PickleSpears.new
