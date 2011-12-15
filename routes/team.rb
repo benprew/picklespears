@@ -1,4 +1,4 @@
-class PickleSpears
+class PickleSpears < Sinatra::Application
   get '/team' do
     @team = Team.get(params[:team_id])
 
@@ -38,7 +38,4 @@ class PickleSpears
       haml :search
     end
   end
-
-
-
 end

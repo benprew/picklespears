@@ -11,7 +11,7 @@ require 'time'
 require_relative 'routes/init'
 require_relative 'models/init'
 
-class PickleSpears
+class PickleSpears < Sinatra::Application
   set :haml, :ugly => true, :format => :html5
 
   enable :sessions

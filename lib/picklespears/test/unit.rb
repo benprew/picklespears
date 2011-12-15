@@ -20,7 +20,7 @@ class PickleSpears::Test::Unit < Test::Unit::TestCase
   end
 
   def app
-    Sinatra::Application
+    PickleSpears
   end
 
   # needed for a "default" test?

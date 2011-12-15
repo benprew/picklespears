@@ -1,4 +1,4 @@
-class PickleSpears
+class PickleSpears < Sinatra::Application
   get '/player' do
     @player_from_request = Player.get(params[:id] || session[:player_id])
     haml :player
