@@ -8,13 +8,11 @@ require 'haml'
 require 'sass'
 require 'time'
 
-require_relative 'lib/picklespears/db'
-require_relative 'lib/division'
-require_relative 'lib/team'
-require_relative 'lib/player'
 require_relative 'routes/init'
+require_relative 'models/init'
 
 class PickleSpears
+  set :haml, :ugly => true, :format => :html5
 
   enable :sessions
   # Must be done after sessions
@@ -22,17 +20,10 @@ class PickleSpears
   use Rack::OpenID
 
   configure :test do
-    set :root, File.dirname(__FILE__)
-    set :views,File.dirname( __FILE__) + '/views'
-    set :public,File.dirname( __FILE__) + '/public'
     set :sessions, false
   end
 
   configure :production do
-    set :root, Dir.pwd
-    set :views, Dir.pwd + '/views'
-    set :public, Dir.pwd + '/public'
-    set :haml, { :ugly=>true }
     set :clean_trace, true
   end
 

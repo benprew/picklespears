@@ -16,7 +16,7 @@ def make_connect_string(db_config, environment)
   end
 end
 
-db_config = YAML::load File.open(File.dirname(__FILE__) + '/../../config/database.yml')
+db_config = YAML::load File.open(File.dirname(__FILE__) + '/../config/database.yml')
 
 if test?
   DataMapper.setup(:default, make_connect_string(db_config, :test))
@@ -26,4 +26,9 @@ else
   DataMapper.setup(:default, make_connect_string(db_config, :development))
 end
 
-#require_relative 'users'
+require_relative 'division'
+require_relative 'game'
+require_relative 'player'
+require_relative 'players_game'
+require_relative 'players_team'
+require_relative 'team'
