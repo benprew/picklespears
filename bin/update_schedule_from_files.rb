@@ -1,54 +1,45 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname(__FILE__) + '/../lib'
+require 'pp'
 
-require 'bundler/setup'
+require_relative '../picklespears'
 
-require 'sinatra'
-require 'dm-core'
-
-require 'picklespears/db'
-require 'team'
-require 'game'
-require 'division'
-
-set :run, false
+missing_teams = Set.new
 
 Dir.glob('*.txt').each do |filename|
   f = File.new(filename)
   f.each do |line|
     line.chop!
-    items = line.split "\t"
-    team = items.shift
-    game_date = items.shift
-    game_description = items.join " "
-    league = \
-      filename[0,1] == 'm' ? 'Men' \
-      : filename[0,1] == 'w' ? 'Women' \
-      : 'Coed'
-    possible_new_div = Division.first_or_create(:name => filename.match(/[^.]+/)[0], :league => league)
-    teams = Team.all(:name => team)
-    if teams.length == 0
-      warn "no team found for '#{team}' : #{filename}"
-      next
-    end
-    found_team = false
-    teams.each do |t|
-      
-      next unless t.division.league == possible_new_div.league
+    (league, division, home, away, game_date, game_description) = line.split "|"
 
-      found_team = true
-      if possible_new_div && t.division.name != possible_new_div.name
-        warn "TEAM: #{team} - Updating division from #{t.division.name} to #{possible_new_div.name}"
-        t.division = possible_new_div
-        t.save
-        possible_new_div.save
+    division = Division.first(:name => division, :league => league)
+    [ home, away ].each do |team|
+      teams = Team.all(:name => team)
+      if teams.length == 0
+        missing_teams << "#{team} #{division.name}"
+        next
       end
-      next if Game.first(:description => game_description, :team_id => t.id )
-      warn "building games for #{team}"
-      g = Game.new(:date => game_date, :description => game_description, :team => t)
-      g.save
+      found_team = false
+
+      teams.each do |t|
+        next unless t.division.league == division.league
+
+        found_team = true
+        if t.division.name != division.name
+          warn "TEAM: #{team} - Updating division from #{t.division.name} to #{division.name}"
+          t.division = division
+          t.save
+        end
+        Game.first_or_create(
+          :date => game_date,
+          :description => game_description,
+          :team_id => t.id
+        ).save
+      end
+      missing_teams << "#{team} #{division.name}" unless found_team
     end
-    warn "no team found for '#{team}' : #{filename}" unless found_team
   end
 end
+
+puts "Couldn't find teams for:"
+pp missing_teams

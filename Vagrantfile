@@ -20,6 +20,10 @@ Vagrant::Config.run do |config|
   # via the IP.
   config.vm.network "33.33.33.10"
 
+  config.vm.customize do |vm|
+      vm.memory_size = 1024
+  end
+
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
   # config.vm.forward_port "http", 80, 8080

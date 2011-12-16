@@ -26,7 +26,7 @@ class TestPlayer < PickleSpears::Test::Unit
   def test_can_update_info_via_post
     player = Player.create_test( :email_address => 'test' )
     post '/player/update', { :name => 'new_name' }, 'rack.session' => { :player_id => player.id }
-    assert_equal('/player', last_response.location)
+    assert_equal('http://example.org/player', last_response.location)
     assert_equal('new_name', Player.first(:email_address => 'test').name)
   end
 
@@ -59,7 +59,7 @@ class TestPlayer < PickleSpears::Test::Unit
     post '/players_team/delete', "player_id=#{player.id};team_id=#{team.id}"
 
     assert_equal(
-      sprintf('/player?messages=%s', URI.escape("You have successfully left #{team.name}")),
+      sprintf('http://example.org/player?messages=%s', URI.escape("You have successfully left #{team.name}")),
       last_response.location)
 
     pts = PlayersTeam.all

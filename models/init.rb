@@ -3,11 +3,9 @@ require 'dm-core'
 require 'dm-migrations'
 require 'yaml'
 
-def make_connect_string(db_config, environment)
+def make_connect_string(db_info)
   # for Heroku
   return ENV['DATABASE_URL'] if ENV['DATABASE_URL']
-
-  db_info = db_config[environment.to_s]
 
   if db_info['adapter'] == 'sqlite3'
     return sprintf "%s:%s", db_info['adapter'], db_info['database']
@@ -16,15 +14,7 @@ def make_connect_string(db_config, environment)
   end
 end
 
-db_config = YAML::load File.open(File.dirname(__FILE__) + '/../config/database.yml')
-
-if test?
-  DataMapper.setup(:default, make_connect_string(db_config, :test))
-elsif production?
-  DataMapper.setup(:default, make_connect_string(db_config, :production))
-else
-  DataMapper.setup(:default, make_connect_string(db_config, :development))
-end
+DataMapper.setup(:default, make_connect_string(settings.db))
 
 require_relative 'division'
 require_relative 'game'
@@ -32,3 +22,5 @@ require_relative 'player'
 require_relative 'players_game'
 require_relative 'players_team'
 require_relative 'team'
+
+DataMapper.finalize

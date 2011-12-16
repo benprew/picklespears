@@ -12,7 +12,8 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_browse
     div = Division.create_test(:league => 'Women')
 
-    Team.create_test( :division => div, :name => 'Barcelona' )
+    team = Team.create_test( :division => div, :name => 'Barcelona' )
+    Game.create_test( :team => team )
 
     get '/browse', :league => 'Women'
     assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, last_response.body
@@ -38,7 +39,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
     end
 
     get '/team/search', :team => 'Harpoon'
-    assert_equal '/team?team_id=10', (last_response.headers)['Location']
+    assert_equal 'http://example.org/team?team_id=10', last_response.location
   end
 
   def test_stylesheet

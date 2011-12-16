@@ -3,6 +3,7 @@
 Exec { path => "/usr/bin:/bin:/usr/sbin" }
 
 package { "libsqlite3-dev"     : ensure => installed }
+package { "g++"                : ensure => installed }
 package { "libpq-dev"          : ensure => installed }
 package { "ruby1.9.1"          : ensure => installed }
 package { "nginx"              : ensure => installed }

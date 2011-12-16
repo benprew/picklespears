@@ -4,12 +4,12 @@ require 'bundler/setup'
 require 'pony'
 require 'dm-core'
 require 'sinatra'
+require 'sinatra/config_file'
 require 'haml'
 require 'sass'
 require 'time'
 
-require_relative 'routes/init'
-require_relative 'models/init'
+config_file 'config/config.yml'
 
 class PickleSpears < Sinatra::Application
   set :haml, :ugly => true, :format => :html5
@@ -203,6 +203,9 @@ helpers do
   def root_url
     request.url.match(/(^.*\/{2}[^\/]*)/)[1]
   end
-
 end
+
+require_relative 'routes/init'
+require_relative 'models/init'
+
 

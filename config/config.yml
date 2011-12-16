@@ -1,0 +1,20 @@
+production:
+  db:
+    adapter: postgres
+    password: f0rd.Tough
+    username: picklespears
+    database: picklespears
+
+development:
+  db:
+    adapter: postgres
+    password: f0rd.Tough
+    username: picklespears
+    database: picklespears
+
+test:
+  db:
+    adapter: postgres
+    password: f0rd.Tough
+    username: picklespears
+    database: picklespearstest
