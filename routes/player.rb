@@ -31,7 +31,7 @@ class PickleSpears < Sinatra::Application
 
   get '/player/join_team' do
     @teams = []
-    @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc]) if params[:team]
+    @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all if params[:team]
     haml :join_team
   end
 

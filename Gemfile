@@ -1,6 +1,5 @@
 source "http://rubygems.org"
 gem "i18n"
-gem "data_mapper"
 gem "sinatra"
 gem "sinatra-contrib"
 gem "haml"
@@ -9,7 +8,7 @@ gem "pony"
 gem "ruby-openid"
 gem "rack-openid"
 gem "maruku"
-gem "dm-postgres-adapter"
+gem "sequel"
 
 group :development do
   gem "pg"

@@ -4,33 +4,20 @@ require_relative 'game'
 require_relative 'players_game'
 require_relative 'players_team'
 
-class Player
-  include DataMapper::Resource
-
-  has n, :players_teams
-  has n, :teams, :through => :players_teams
-  has n, :players_games
-  has n, :games, :through => :players_games
-
-  property :id, Serial
-  property :name, String, :required => true, :index => :unique
-  property :email_address, String, :required => true, :index => :unique
-  property :phone_number, String
-  property :is_sub, Boolean
-  property :birthdate, String
-  property :zipcode, String
-  property :gender, String
-  property :openid, String, :length => 1024, :index => :unique
+class Player < Sequel::Model
+  one_to_many :players_teams
+  one_to_many :players_games
+  many_to_many :teams, :join_table => :players_teams
+  many_to_many :game, :join_table => :players_games
 
   def join_team(team)
     PlayersTeam.new(:player_id => self.id, :team_id => team.id).save
   end
 
   def set_attending_status_for_game(game, status)
-    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id) || PlayersGame.new(:player_id => self.id, :game_id => game.id, :status => status)
-    pg.save
-    pg.update(:status => status)
-    pg.save
+    PlayersGame.unrestrict_primary_key
+    PlayersGame.find_or_create(:player_id => self.id, :game_id => game.id){ |pg| pg.status = status }.save
+    PlayersGame.restrict_primary_key
   end
 
   def attending_status(game)
@@ -47,7 +34,7 @@ class Player
       :name => 'test user',
       :email_address => 'test_user@test.com'
     )
-    player.attributes = attrs if attrs
+    player.update(attrs) if attrs
     player.save
     return player
   end
@@ -71,5 +58,4 @@ class Player
 
     return true
   end
-
 end

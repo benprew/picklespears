@@ -7,7 +7,7 @@ class TestPlayer < PickleSpears::Test::Unit
 
   def test_can_join_a_team
     player = Player.create_test(:name => 'test user')
-    team = Team.create_test(:id => 12)
+    team = Team.create_test
     player.join_team(team)
     pt = PlayersTeam.first(:player_id => player.id, :team_id => team.id)
     assert_equal(pt.player_id, player.id)
@@ -34,8 +34,8 @@ class TestPlayer < PickleSpears::Test::Unit
     Player.create_test( :email_address => 'test' )
 
     div = Division.create_test
-    Team.create_test( :name => 'team to find', :division => div )
-    Team.create_test( :name => 'should not be found', :division => div )
+    Team.create_test( :name => 'team to find', :division_id => div.id )
+    Team.create_test( :name => 'should not be found', :division_id => div.id )
 
     get '/login/openid/complete', :openid_identifier => 'test'
     session_id = last_response.headers['Set-Cookie']

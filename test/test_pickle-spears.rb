@@ -13,7 +13,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
     div = Division.create_test(:league => 'Women')
 
     team = Team.create_test( :division => div, :name => 'Barcelona' )
-    Game.create_test( :team => team )
+    Game.create_test( :team_id => team.id, :date => Date.today + 1 )
 
     get '/browse', :league => 'Women'
     assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, last_response.body
@@ -28,18 +28,18 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
   def test_search
     div = Division.create_test(:league => 'manly men')
-    found_team = Team.create_test(:name => 'THE HARPOON', :id => 10, :division => div)
-    found_team2 = Team.create_test(:name => 'THE AHAS', :division => div)
-    skipped_team = Team.create_test(:name => 'THE HBRPO', :division => div)
+    found_team = Team.create_test(:name => 'THE HARPOON', :division_id => div.id)
+    found_team2 = Team.create_test(:name => 'THE AHAS', :division_id => div.id)
+    skipped_team = Team.create_test(:name => 'THE HBRPO', :division_id => div.id)
 
-    teams = Team.all( :name.like => '%HA%', :order => [:name.asc] )
+    teams = Team.filter(:name.like '%HA%').order(:name.asc).all
     get '/team/search', :team => 'Ha'
     [ found_team, found_team2 ].each do |team|
       assert_match /team_id=#{team.id}/, last_response.body, "team #{team.id} is found"
     end
 
     get '/team/search', :team => 'Harpoon'
-    assert_equal 'http://example.org/team?team_id=10', last_response.location
+    assert_equal "http://example.org/team?team_id=#{found_team.id}", last_response.location
   end
 
   def test_stylesheet

@@ -3,26 +3,19 @@ require_relative 'team'
 require_relative 'player'
 require_relative 'players_game'
 
-class Game
-  include DataMapper::Resource
-  belongs_to :team
-  has n, :players_games
-  has n, :players, :through => :players_games
-
-  property :id, Serial
-  property :date, Date, :required => true
-  property :description, String, :required => true
-  property :team_id, Integer, :required => true
-  property :reminder_sent, Boolean, :required => true, :default => false
+class Game < Sequel::Model
+  many_to_one :games
+  one_to_many :players_games
+  many_to_many :players, :join_table => :players_games
 
   def num_guys_confirmed
-    players_games.all.inject(0) do |sum, pg|
+    players_games.inject(0) do |sum, pg|
       pg.status == "yes" && pg.player.gender == "guy" ? sum + 1 : sum
     end
   end
 
   def num_gals_confirmed
-    players_games.all.inject(0) do |sum, pg|
+    players_games.inject(0) do |sum, pg|
       pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum
     end
   end
@@ -39,4 +32,3 @@ class Game
     return game
   end
 end
-

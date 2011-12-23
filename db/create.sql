@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS players_games;
+DROP TABLE IF EXISTS players_teams;
+DROP TABLE IF EXISTS players;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS teams;
+DROP TABLE IF EXISTS divisions;
+
 CREATE TABLE divisions (
     id SERIAL PRIMARY KEY,
     name CHARACTER VARYING(128) NOT NULL,
@@ -7,17 +14,17 @@ CREATE TABLE divisions (
 CREATE TABLE teams (
     id SERIAL PRIMARY KEY,
     name character varying(128) NOT NULL,
-    division_id integer NOT NULL,
-    FOREIGN KEY (division_id) REFERENCES divisions (id)
+    division_id integer NOT NULL
+      REFERENCES divisions DEFERRABLE
 );
 
 CREATE TABLE games (
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
     description CHARACTER VARYING(256) NOT NULL,
-    team_id INTEGER NOT NULL,
-    reminder_sent BOOLEAN DEFAULT false NOT NULL,
-    FOREIGN KEY (team_id) REFERENCES teams (id)
+    team_id INTEGER NOT NULL
+      REFERENCES teams DEFERRABLE,
+    reminder_sent BOOLEAN DEFAULT false NOT NULL
 );
 
 CREATE TABLE players (
@@ -33,21 +40,17 @@ CREATE TABLE players (
 );
 
 CREATE TABLE players_games (
-    game_id integer NOT NULL,
-    player_id integer NOT NULL,
+    game_id integer NOT NULL
+      REFERENCES games DEFERRABLE,
+    player_id integer NOT NULL
+      REFERENCES players DEFERRABLE,
     status character varying(16) NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES games (id),
-    FOREIGN KEY (player_id) REFERENCES players (id)
+    PRIMARY KEY (game_id, player_id)
 );
 
 CREATE TABLE players_teams (
-    player_id integer NOT NULL,
-    team_id integer NOT NULL,
-    FOREIGN KEY (player_id) REFERENCES players (id),
-    FOREIGN KEY (team_id) REFERENCES teams (id)
+    player_id integer NOT NULL
+      REFERENCES players DEFERRABLE,
+    team_id integer NOT NULL
+      REFERENCES teams (id) DEFERRABLE
 );
-
-CREATE TABLE schema_migrations (
-    version character varying(255) PRIMARY KEY NOT NULL
-);
-

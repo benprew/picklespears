@@ -1,19 +1,15 @@
 require_relative 'team'
 require_relative 'player'
 
-class PlayersGame
-  include DataMapper::Resource
-  belongs_to :player
-  belongs_to :game
-
-  property :player_id, Integer, :key => true
-  property :game_id, Integer, :key => true
-  property :status, String
+class PlayersGame < Sequel::Model
+  many_to_one :player
+  many_to_one :game
 
   def self.create_test(attrs={})
     pg = PlayersGame.new
-    pg.save
+    PlayersGame.unrestrict_primary_key
     pg.update(attrs) if attrs
+    PlayersGame.restrict_primary_key
     pg.save
     return pg
   end

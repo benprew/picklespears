@@ -2,21 +2,21 @@ require 'test/unit'
 require 'picklespears'
 require 'rack/test'
 
-DataMapper.auto_migrate!
+DB << open(File.dirname(__FILE__) + '/../../../db/create.sql', 'r').read
 
 # needed so I can call my class PS::Test::Unit -- below
 class PickleSpears::Test
 end
 
 class PickleSpears::Test::Unit < Test::Unit::TestCase
+
   include Rack::Test::Methods
 
-  def setup
-    repository.adapter.execute('begin transaction')
-  end
-
-  def teardown
-    repository.adapter.execute('rollback')
+  def run(*args, &block)
+    Sequel::Model.db.transaction(:rollback => :always) do
+      Sequel::Model.db << "SET CONSTRAINTS ALL DEFERRED"
+      super
+    end
   end
 
   def app

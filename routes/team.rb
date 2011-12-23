@@ -1,6 +1,6 @@
 class PickleSpears < Sinatra::Application
   get '/team' do
-    @team = Team.get(params[:team_id])
+    @team = Team[params[:team_id]]
 
     haml :team_home
   end
@@ -28,7 +28,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/team/search' do
-    @teams = Team.all(:name.like => '%' + params[:team].upcase + '%', :order => [:name.asc])
+    @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all
 
     @errors = "No teams found" if @teams.length == 0
 

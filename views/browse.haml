@@ -1,9 +1,9 @@
 - title "browsing league: #{@league}"
 - @divisions.each do |division|
+  - next unless division.teams_with_upcoming_games.length > 0
   .division
     = division.name + ' -'
     %ul
-    - division.teams.each do |team|
-      - next unless team.games.length > 0
+    - division.teams_with_upcoming_games.each do |team|
       %li
         %a{ :href => url_for('/team', :team_id => team.id) }= team.name

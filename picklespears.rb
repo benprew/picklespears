@@ -2,7 +2,6 @@
 
 require 'bundler/setup'
 require 'pony'
-require 'dm-core'
 require 'sinatra'
 require 'sinatra/config_file'
 require 'haml'
@@ -29,7 +28,7 @@ class PickleSpears < Sinatra::Application
 
   before do
     if session[:player_id]
-      @player = Player.get(session[:player_id])
+      @player = Player[session[:player_id]]
       @name = @player.name
     end
 
@@ -51,7 +50,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/browse' do
-    @divisions = Division.all(:league => params[:league], :order => [:name.asc])
+    @divisions = Division.filter(:league => params[:league]).order(:name.asc).all
     @league = params[:league]
     haml :browse
   end
@@ -100,8 +99,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/players_team/delete' do
-    PlayersTeam.first( :player_id => params[:player_id], :team_id => params[:team_id] ).destroy
-    team = Team.first( :id => params[:team_id])
+    PlayersTeam.filter( :player_id => params[:player_id], :team_id => params[:team_id] ).delete
+    team = Team[params[:team_id]]
     @message = "You have successfully left #{team.name}"
     redirect sprintf('/player?messages=%s', URI.escape(@message))
   end
