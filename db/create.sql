@@ -30,9 +30,8 @@ CREATE TABLE games (
 CREATE TABLE players (
     id SERIAL PRIMARY KEY,
     name character varying(128) NOT NULL,
-    email_address character varying(256),
+    email_address character varying(256) NOT NULL,
     phone_number character varying(16),
-    is_sub boolean DEFAULT false NOT NULL,
     birthdate character varying(32),
     zipcode character varying(16),
     gender character varying(16),
@@ -52,5 +51,7 @@ CREATE TABLE players_teams (
     player_id integer NOT NULL
       REFERENCES players DEFERRABLE,
     team_id integer NOT NULL
-      REFERENCES teams (id) DEFERRABLE
+      REFERENCES teams (id) DEFERRABLE,
+    is_sub boolean DEFAULT false NOT NULL,
+    is_manager boolean DEFAULT false NOT NULL
 );

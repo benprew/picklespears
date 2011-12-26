@@ -6,14 +6,14 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/team/edit' do
-    @team = Team.get(params[:team_id])
+    @team = Team[params[:team_id]]
     @divisions = Division.all()
 
     haml :team_edit
   end
 
   post '/team/update' do
-    @team = Team.get(params[:team_id])
+    @team = Team[params[:team_id]]
     @team.name = params[:name]
     @team.division_id = params[:division_id]
     @team.save
@@ -23,7 +23,7 @@ class PickleSpears < Sinatra::Application
 
   # Meant to be an ajax call
   get '/team/join' do
-    @player.join_team(Team.get(params[:team_id]))
+    @player.join_team(Team[params[:team_id]])
     "Joined!"
   end
 

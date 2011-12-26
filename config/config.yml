@@ -11,6 +11,7 @@ development:
     password: f0rd.Tough
     username: picklespears
     database: picklespears
+    logfile: '/tmp/picklespearsdev.log'
 
 test:
   db:

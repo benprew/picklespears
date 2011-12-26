@@ -10,6 +10,15 @@ class Player < Sequel::Model
   many_to_many :teams, :join_table => :players_teams
   many_to_many :game, :join_table => :players_games
 
+  plugin :validation_helpers
+
+  def validate
+    super
+    validates_presence [:name, :email_address]
+    validates_unique :name
+    validates_unique :email_address
+  end
+
   def join_team(team)
     PlayersTeam.new(:player_id => self.id, :team_id => team.id).save
   end
@@ -41,21 +50,5 @@ class Player < Sequel::Model
 
   def md5_email
     return Digest::MD5.hexdigest(email_address)
-  end
-
-  def fupdate(attrs)
-    begin
-      self.update(attrs)
-    rescue StandardError => err
-      if /Duplicate entry/.match(err)
-        raise "Player name '#{attrs[:name]}' already exists, please choose another"
-      elsif /may not be/.match(err)
-        raise err
-      else
-        raise "Unknown error occured, please contact 'ben.prew@gmail.com' #{err}"
-      end
-    end
-
-    return true
   end
 end

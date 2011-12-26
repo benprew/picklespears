@@ -58,7 +58,7 @@
       - if @errors
         .grid_4
         .grid_4
-          .error= @errors
+          .error= @errors.gsub /\n/, "<br />"
         .clear
       - if @messages
         .grid_4

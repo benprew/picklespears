@@ -1,6 +1,6 @@
 class PickleSpears < Sinatra::Application
   get '/player' do
-    @player_from_request = Player.get(params[:id] || session[:player_id])
+    @player_from_request = Player[params[:id] || session[:player_id]]
     haml :player
   end
 
@@ -43,13 +43,16 @@ class PickleSpears < Sinatra::Application
     attrs = params
     attrs.delete(:update)
     attrs.delete('update')
-    begin
-      @player.fupdate(attrs)
-    rescue StandardError => err
-      @errors = err
-    end
 
-    redirect @errors ? "/player?errors=#{@errors}" : '/player'
+    @player.set attrs
+
+    if @player.valid?
+      @player.save
+      redirect to '/player'
+    else
+      errors = @player.errors.map { |k, v| "#{k} #{v.join ''}" }.join "\n"
+      redirect to url_for '/player/edit', :errors => errors
+    end
   end
 
   post '/player/remove_from_team' do
@@ -69,9 +72,9 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/player/attending_status_for_game' do
-    game = Game.get(params[:game_id])
+    game = Game[params[:game_id]]
     @status = params[:status]
-    @player_from_request = Player.get(params[:player_id])
+    @player_from_request = Player[params[:player_id]]
     @player_from_request.set_attending_status_for_game(game, @status)
     message = haml :attending_status_for_game, :layout => false
     redirect url_for("/team", :messages => message, :team_id => game.team.id)

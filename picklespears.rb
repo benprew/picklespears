@@ -70,10 +70,10 @@ class PickleSpears < Sinatra::Application
           redirect '/player'
         else
 
-          DataMapper.repository(:default).adapter.execute("INSERT INTO players (openid, name) VALUES ( ?, ?)", resp.identity_url, 'Unknown player')
-          @player = Player.first(:openid => resp.identity_url)
+          @player = Player.create(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
+          @messages = "You have just created an account, please edit your information"
           session[:player_id] = @player.id
-          redirect url_for('/player/edit', :messages => "You have just created an account, please edit your information")
+          haml :user_edit
         end
       else
         "Error: #{resp.status}"
@@ -107,7 +107,7 @@ class PickleSpears < Sinatra::Application
 
   # Meant to be called via ajax
   get '/game/attending_status' do
-    @player.set_attending_status_for_game(Game.get(params[:game_id]), params[:status])
+    @player.set_attending_status_for_game(Game[params[:game_id]], params[:status])
     "Status #{params[:status]} recorded"
   end
 
