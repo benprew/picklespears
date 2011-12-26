@@ -12,8 +12,14 @@ class TestGame < PickleSpears::Test::Unit
     assert_equal(0, @game.num_guys_confirmed)
   end
 
+  def test_team
+    team = Team.create_test
+    game = Game.create_test(:team_id => team.id)
+    assert_equal(game.team.id, team.id)
+  end
+
   def test_guys_confirmed_for_a_game
-    player = Player.create_test(:gender => 'guy')
+    player = Player.create_test(:gender => 'guy', :name => 'test player', :email_address => 'none@none.com')
     PlayersGame.create_test(
       :game_id => @game.id,
       :player_id => Player.create_test.id,

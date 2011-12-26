@@ -4,7 +4,7 @@ require_relative 'player'
 require_relative 'players_game'
 
 class Game < Sequel::Model
-  many_to_one :games
+  many_to_one :team
   one_to_many :players_games
   many_to_many :players, :join_table => :players_games
 
