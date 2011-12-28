@@ -12,7 +12,8 @@ class BuildDb
   end
 
   def run
-    outfile = File.new('pi_games.txt', 'w')
+    games = []
+
     Division.find_all().each do |division|
       file = division.name + ".txt"
       warn "working on #{file}"
@@ -22,14 +23,20 @@ class BuildDb
             line = _clean_line(line)
             data = _parse_schedule_line(line)
             next unless data
-            outfile.write [division.league, division.name, data[:home], data[:away], data[:time], "#{data[:home]} vs #{data[:away]}"].join("|") + "\n"
+            data[:league] = division.league
+            data[:division] = division.name
+            data[:description] = "#{data[:home]} vs #{data[:away]}"
+            games << data
           end
         end
       rescue OpenURI::HTTPError
         warn "Error opening file #{file} : #{$!}"
       end
     end
-    outfile.close
+
+    File.open('pi_games.txt', 'w') do |f|
+      f.puts *games.map { |g| [:league, :division, :home, :away, :time, :description].map { |i| g[i] }.join("|") }
+    end
   end
 
   def _parse_schedule_line(line)
@@ -46,10 +53,13 @@ class BuildDb
         hour = '11:59'
         am_pm = 'PM'
       end
+      time = Time.parse(m[1] + " " + m[2] + " #{hour} #{am_pm}")
+      # the Dec/Jan boundary without a year means we may try to create a jan game in the wrong year
+      time = Time.mktime(time.year + 1, time.month, time.day, time.hour, time.min) if time.to_date < Date.today() - 120
       return {
         :home => m[5].strip,
         :away => m[6].strip,
-        :time => Time.parse(m[1] + " " + m[2] + " #{hour} #{am_pm}")
+        :time => time
       }
     else
       warn "Unable to parse line" + line

@@ -5,8 +5,23 @@ require 'pp'
 require_relative '../picklespears'
 
 missing_teams = Set.new
+@@force_team_create = true
+
+def deal_with_missing_team(name, division, game_date, game_description)
+  if @@force_team_create == true
+    warn "Creating Team: #{name}"
+    Game.create(
+      :date => game_date,
+      :description => game_description,
+      :team_id => Team.create(:name => name, :division_id => division.id).id
+    )
+  else
+    missing_teams << "#{name} #{division.name}"
+  end
+end
 
 Dir.glob('*.txt').each do |filename|
+  puts filename
   f = File.new(filename)
   f.each do |line|
     line.chop!
@@ -14,9 +29,9 @@ Dir.glob('*.txt').each do |filename|
 
     division = Division.first(:name => division, :league => league)
     [ home, away ].each do |team|
-      teams = Team.all(:name => team)
+      teams = Team.filter(:name => team).all
       if teams.length == 0
-        missing_teams << "#{team} #{division.name}"
+        deal_with_missing_team(team, division, game_date, game_description)
         next
       end
       found_team = false
@@ -30,16 +45,19 @@ Dir.glob('*.txt').each do |filename|
           t.division = division
           t.save
         end
-        Game.first_or_create(
+        Game.find_or_create(
           :date => game_date,
           :description => game_description,
           :team_id => t.id
-        ).save
+        )
       end
-      missing_teams << "#{team} #{division.name}" unless found_team
+
+      deal_with_missing_team(team, division, game_date, game_description) unless found_team
     end
   end
 end
 
-puts "Couldn't find teams for:"
-pp missing_teams
+if missing_teams.length > 0
+  puts "Couldn't find teams for:"
+  pp missing_teams
+end
