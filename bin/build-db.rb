@@ -7,7 +7,7 @@ require_relative '../picklespears'
 
 class BuildDb
 
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/secondfall/')
+  def initialize(url='http://pdxindoorsoccer.com/Schedules/winter/')
     @@season_url = url
   end
 
