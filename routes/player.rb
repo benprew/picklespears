@@ -58,10 +58,9 @@ class PickleSpears < Sinatra::Application
   post '/player/remove_from_team' do
     team_id = params[:team_id]
     player_id = params[:player_id]
-    pt = PlayersTeam.first(:player_id => player_id, :team_id => team_id)
 
     url_params = { :team_id => team_id }
-    if !pt || !pt.destroy
+    if !PlayersTeam.filter(:player_id => player_id, :team_id => team_id).delete
       url_params[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
     else
       url_params[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
