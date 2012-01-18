@@ -118,7 +118,7 @@ class PickleSpears < Sinatra::Application
       output += "\n<br/> working on team #{team.name} ..."
 
       # skip if more then 4 days away
-      if !next_game || next_game.date > ( Date.today.to_time + 4 ) || next_game.reminder_sent
+      if !next_game || next_game.date > (Date.today + 4).to_time || next_game.reminder_sent
         output += "no upcoming unreminded games"
         next
       end
