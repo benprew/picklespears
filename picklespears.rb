@@ -18,6 +18,8 @@ class PickleSpears < Sinatra::Application
   require 'rack/openid'
   use Rack::OpenID
 
+  DATE_FORMAT='%a %b %e %I:%M %p'
+
   configure :test do
     set :sessions, false
   end
@@ -134,18 +136,18 @@ class PickleSpears < Sinatra::Application
         info = {
           :from    => 'ben.prew@gmail.com',
           :to      => player.email_address,
-          :subject => "Next Game: #{next_game.description}",
+          :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
           :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
           :content_type => 'text/html',
           :via => :smtp,
           :via_options => {
-	    :address => 'smtp.sendgrid.net',
-	    :port => '587',
-	    :domain => 'heroku.com',
-	    :user_name => ENV['SENDGRID_USERNAME'],
-	    :password => ENV['SENDGRID_PASSWORD'],
-	    :authentication => :plain,
-	    :enable_starttls_auto => true
+            :address => 'smtp.sendgrid.net',
+            :port => '587',
+            :domain => 'heroku.com',
+            :user_name => ENV['SENDGRID_USERNAME'],
+            :password => ENV['SENDGRID_PASSWORD'],
+            :authentication => :plain,
+            :enable_starttls_auto => true
           }
         }
         if production?

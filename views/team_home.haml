@@ -15,10 +15,10 @@
   %h2 Upcoming Games
   %ul
     - @team.upcoming_games.each do |game|
-      %li= "#{game.date.strftime('%m/%d/%Y %I:%M %p')} - #{game.description}"
+      %li= "#{game.date.strftime(DATE_FORMAT)} - #{game.description}"
 .grid_8{ :style => 'float: left; width: 600px' }
   - if @team.next_game
-    %h2{ :style => 'display: inline' }= "#{@team.next_game.date.strftime('%m/%d/%Y %I:%M %p')} - #{@team.next_game.description}"
+    %h2{ :style => 'display: inline' }= "#{@team.next_game.date.strftime(DATE_FORMAT)} - #{@team.next_game.description}"
     = status_for_game(@player, @team.next_game)
     %br
     %ul{ :style => 'list-style-type: none; display: inline' }

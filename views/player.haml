@@ -46,7 +46,7 @@
   %ul
     - (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
       %li
-        = "#{game.date.strftime('%m/%d/%Y %I:%M %p')} - #{escape_once game.description}"
+        = "#{game.date.strftime(DATE_FORMAT)} - #{escape_once game.description}"
         %div{ :style => "padding-left: 3em" }
           = "#{game.num_guys_confirmed} guy(s)"
           = "#{game.num_gals_confirmed} gal(s)"
