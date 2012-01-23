@@ -4,6 +4,11 @@ class PickleSpears < Sinatra::Application
     haml :player
   end
 
+  get '/player/logout' do
+    session[:player_id] = nil
+    redirect '/'
+  end
+
   get '/player/create' do
     @errors = params[:errors]
     haml :player_create

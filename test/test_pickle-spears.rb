@@ -6,7 +6,6 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_homepage
     get '/'
     assert_match( /<title>Pickle Spears - now with more vinegar!<\/title>/, last_response.body )
-    assert_match( /<div class='header'/, last_response.body )
   end
 
   def test_browse

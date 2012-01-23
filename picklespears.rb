@@ -44,11 +44,7 @@ class PickleSpears < Sinatra::Application
 
   get '/' do
     @teams = []
-    if @player
-      redirect '/player'
-    else
-      haml :index
-    end
+    haml :index
   end
 
   get '/browse' do
@@ -89,11 +85,6 @@ class PickleSpears < Sinatra::Application
   end
 
 ##############
-
-  get '/sign_out' do
-    session[:player_id] = nil
-    redirect '/'
-  end
 
   get '/stylesheet.css' do
     response['Content-Type'] = 'text/css'
@@ -198,16 +189,14 @@ helpers do
     HTML
   end
 
-  def user_edit_partial
-    haml :user_edit, :layout => false
-  end
-
   def root_url
     request.url.match(/(^.*\/{2}[^\/]*)/)[1]
+  end
+
+  def partial(page, variables={})
+    haml ('partials/' + page.to_s).to_sym, {layout => :false}, variables
   end
 end
 
 require_relative 'routes/init'
 require_relative 'models/init'
-
-

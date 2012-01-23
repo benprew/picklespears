@@ -1,52 +1,67 @@
 - title "now with more vinegar!"
-.grid_12{ :style => 'text-align: center' }
-  %h1 The Best Way To Manage Your Sports Teams
-.clear
-.grid_6
-  %ul
-    %li Track all of your favorite sports teams.  
-    %li Find a team to play on.  Pickle Spears maintains a list of teams looking for new players.
-    %li Find a player for your team.  Pickle Spears maintains a list of players looking to join a team.
-    %li Know who's coming to your games.
-    %li Find subs quickly
-.grid_6
-  %img{ :src => "pickle_spears_logo.jpg", :width => "275", :height => "168", :alt => 'Pickle Spears logo' }
-.clear
-.grid_6
+%article{ :class => "half-block" }
+  .article-container
+    %header
+      %h2 The Best Way To Manage Your Sports Teams
+    %section
+      %ul
+        %li Track all of your favorite sports teams.  
+        %li Find a team to play on.  Pickle Spears maintains a list of teams looking for new players.
+        %li Find a player for your team.  Pickle Spears maintains a list of players looking to join a team.
+        %li Know who's coming to your games.
+        %li Find subs quickly
+      %p
+        Right now we are working on adding various soccer schedules and
+        teams to our database.  All Portland Indoor teams are represented.
+        If you want to have your team added, drop us a line (<a
+        href="mailto:team@picklespears.com">team@picklespears.com</a>).
+%article{ :class => "half-block clearrm" }
+  .article-container
+    %header
+      %h2 Search for a Team
+    %section
+      %form{ :method => "get", :action => "/team/search" }
+        %div
+          %input{ :name => "team", :type => "text" }
+          %button Team Search
+      Browse by:
+      %a{ :href => "/browse?league=Women" } Women
+      |
+      %a{ :href => "/browse?league=Men" } Men
+      |
+      %a{ :href => "/browse?league=Coed" } Coed
+      - if @teams.length > 0
+        %div
+          - @teams.each do |team|
+            %p
+              %a{ :href => "/team?team_id=#{team.id}"}= team.name
+              = "(division #{team.division.league} #{team.division.name})"
+.clearfix
+%article{ :class => "quarter-block nested" }
+  .article-container
+    %header
+      %h2 Want to Join?
+    %section
+      %p
+        %a{ :href=>'/login' } Click Here
+        to get started!  Membership is free and will always remain free
 
-  %p
-    Right now we are working on adding various soccer schedules and
-    teams to our database.  All Portland Indoor teams are represented.
-    If you want to have your team added, drop us a line (<a
-    href="mailto:team@picklespears.com">team@picklespears.com</a>).
+%article{ :class => "quarter-block nested" }
+  .article-container
+    %header
+      %h2 Just Browsing?
+    %section
+      %p You can quickly search for a team or browse by league on the left.
 
-  %h4 Interested in Joining?
-  %p
-    %a{ :href=>'/login' } Click Here
-    to get started!  Membership is free and will always remain free
+%article{ :class => "quarter-block nested clearrm" }
+  .article-container
+    %header
+      %h2 Questions?
+    %section
+      %p
+        Drop us a line 
+        %a{ :href => 'mailto:team@picklespears.com' } team@picklespears.com
 
-  %h4 Just Browsing?
-  %p You can quickly search for a team name, and anytime you're interested in signing up, you can click on the "Join Now" link in the upper right.
-
-  %h4 Other Questions?
-  %p
-    Drop us a line 
-    %a{ :href => 'mailto:team@picklespears.com' } team@picklespears.com
-.grid_6
-  %h4 Search for a Team
-  %form{ :method => "get", :action => "/team/search" }
-    %div
-      %input{ :name => "team", :type => "text" }
-      %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
-  Browse by:
-  %a{ :href => "/browse?league=Women" } Women
-  |
-  %a{ :href => "/browse?league=Men" } Men
-  |
-  %a{ :href => "/browse?league=Coed" } Coed
-  - if @teams.length > 0
-    %div
-      - @teams.each do |team|
-        %p
-          %a{ :href => "/team?team_id=#{team.id}"}= team.name
-          = "(division #{team.division.league} #{team.division.name})"
+%article{ :class => "full-block cleafix" }
+  .article-container
+    %section

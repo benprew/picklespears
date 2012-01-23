@@ -2,11 +2,10 @@
 .grid_12
   %form{ :method => "get", :action => "/team/search" }
     %input{ :name => "team", :type => "text" }
-    %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
+    %button Team Search
   - @teams.each do |team|
     %p
       %a{ :href => "/team?team_id=#{team.id}"}= team.name
       = "(division #{team.division.league} #{team.division.name})"
       %a{ :id => "join_team_#{team.id}", :href => '#', :onclick => "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
-
 .clear

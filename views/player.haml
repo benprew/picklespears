@@ -1,59 +1,42 @@
 - title "#{@player_from_request.name}'s homepage"
-.user_info
-  %table
-    %tr
-      %th.team_header
-        Info
-        - if @player && @player_from_request.id == @player.id
-          %a{ :href => '/player/edit' }= '[edit]'
-    %tr
-      %td
-        %img{ :src => "http://www.gravatar.com/avatar/#{@player_from_request.md5_email}" }
-        %br
-        Public Info:
-        %ul
+%article{ :class => 'quarter-block' }
+  .article-container
+    %section
+      %img{ :src => "http://www.gravatar.com/avatar/#{@player_from_request.md5_email}" }
+      %br
+      %ul
+        %li
+          = "Name: #{@player_from_request.name} "
+        %li
+          = "Gender: #{@player_from_request.gender} "
+%article{ :class => 'quarter-block' }
+  .article-container
+    %header
+      %h2 Teams
+    %section
+      - @player_from_request.teams.each do |team|
+        %li{ :style => 'padding: 3px' }
+          %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
+          - if @player && @player.id == @player_from_request.id
+            %form{ :method => 'post', :action =>'/players_team/delete' }
+              %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
+              %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
+%article{ :class => 'half-block clearrm' }
+  .article-container
+    %header
+      %h2 Upcoming Games
+    %section
+      %ul
+        - (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
           %li
-            = "Name: #{@player_from_request.name} "
-          %li
-            = "Gender: #{@player_from_request.gender} "
-        - if @player && @player.id == @player_from_request.id
-          Private Info:
-          %ul
-            %li
-              = "Email: #{@player_from_request.email_address} "
-            %li
-              = "Phone: #{@player_from_request.phone_number} "
-  %table
-    %tr
-      %th.team_header
-        Teams
-        %form{ :method => "get", :action => "/team/search" }
-          %input{ :name => "team", :type => "text" }
-          %input{ :name => "tn_search", :value => "Team Search", :type => "submit" }
-
-    %tr
-      %td
-        %ul
-          - @player_from_request.teams.each do |team|
-            %li{ :style => 'padding: 3px' }
-              %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
-              - if @player && @player.id == @player_from_request.id
-                %form{ :method => 'post', :action =>'/players_team/delete' }
-                  %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
-                  %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
-%div{ :style => 'float: left; margin: 2em' }
-  %h2 Upcoming Games
-  %ul
-    - (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
-      %li
-        = "#{game.date.strftime(DATE_FORMAT)} - #{escape_once game.description}"
-        %div{ :style => "padding-left: 3em" }
-          = "#{game.num_guys_confirmed} guy(s)"
-          = "#{game.num_gals_confirmed} gal(s)"
-          %a{ :href => '#', :onclick => "document.getElementById('details_#{game.id}').style.display = 'block'" }= "[details]"
-          %div{ :style => 'display:none; border: thin solid black', :id => "details_#{game.id}" }
-            %ul
-              - game.team.players.each do |player|
-                %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"
-          - if @player && @player_from_request.id == @player.id
-            = status_for_game(@player_from_request, game)
+            = "#{game.date.strftime(DATE_FORMAT)} - #{escape_once game.description}"
+            %div{ :style => "padding-left: 3em" }
+              = "#{game.num_guys_confirmed} guy(s)"
+              = "#{game.num_gals_confirmed} gal(s)"
+              %a{ :href => '#', :onclick => "document.getElementById('details_#{game.id}').style.display = 'block'" }= "[details]"
+              %div{ :style => 'display:none; border: thin solid black', :id => "details_#{game.id}" }
+                %ul
+                  - game.team.players.each do |player|
+                    %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"
+              - if @player && @player_from_request.id == @player.id
+                = status_for_game(@player_from_request, game)

@@ -28,14 +28,18 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/team/search' do
-    @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all
+    if params[:team]
+      @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all
+    else
+      @teams = []
+    end
 
-    @errors = "No teams found" if @teams.length == 0
+    @errors = "No teams found" if params[:team] && @teams.length == 0
 
     if @teams.length == 1
       redirect "/team?team_id=#{@teams[0].id.to_s}"
     else
-      haml :search
+      partial :search
     end
   end
 end

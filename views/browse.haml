@@ -1,9 +1,19 @@
 - title "browsing league: #{@league}"
-- @divisions.each do |division|
-  - next unless division.teams_with_upcoming_games.length > 0
-  .division
-    = division.name + ' -'
-    %ul
-    - division.teams_with_upcoming_games.each do |team|
-      %li
-        %a{ :href => url_for('/team', :team_id => team.id) }= team.name
+%article{ :class => "half-block" }
+  .article-container
+    %header
+      %h2= "Divisions for #{@league}"
+    %section
+      %ul.accordion
+        - @divisions.each do |division|
+          - next unless division.teams_with_upcoming_games.length > 0
+          %li
+            %a.accordion-switch{ :href => '' }
+              %h3
+                %span{ :class => 'emoticon soccer'}:soccer:
+                = division.name
+            %div
+              %ul
+                - division.teams_with_upcoming_games.sort { |a, b| a.name <=> b.name }.each do |team|
+                  %li
+                    %a{ :href => url_for('/team', :team_id => team.id) }= team.name
