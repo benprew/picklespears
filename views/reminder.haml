@@ -2,7 +2,7 @@
 
 %p This is your game reminder. The next game is:
 
-%blockquote= "\t#{game.description}"
+%blockquote= "\t#{game.date.strftime(DATE_FORMAT)} #{game.description}"
 
 - if player.attending_status(game) == 'No Reply' 
   Can you make the game?
