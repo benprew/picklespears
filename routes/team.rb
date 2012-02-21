@@ -5,6 +5,11 @@ class PickleSpears < Sinatra::Application
     haml :team_home
   end
 
+  get '/team/calendar' do
+    @team = Team[params[:team_id]]
+    haml :team_calendar
+  end
+
   get '/team/edit' do
     @team = Team[params[:team_id]]
     @divisions = Division.all()

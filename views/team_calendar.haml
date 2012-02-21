@@ -1,0 +1,20 @@
+- title "Calendar for #{@team.name}"
+%article{ :class => "full-block" }
+  .article-container
+    %header
+      %h2= "Calendar for #{@team.name}"
+    %section
+      %div{ :class => 'fullcalendar' }
+- if @team.name
+  :javascript
+    $(document).ready(function() {
+      //jQuery Full Calendar
+      $('.fullcalendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        events: 'https://www.google.com/calendar/feeds/hdrpoibg8cshmj0d6b8q4h0rbs%40group.calendar.google.com/public/basic'
+      });
+    });

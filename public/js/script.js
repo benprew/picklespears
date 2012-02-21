@@ -16,8 +16,8 @@ $(function () {
 
 	// jQuery jWYSIWYG Editor
 	$('.wysiwyg').wysiwyg({ iFrameClass:'wysiwyg-iframe' });
-	
-	// jQuery dataTables
+
+  // jQuery dataTables
 	$('.datatable').dataTable();
 
 	// jQuery Custome File Input
@@ -30,13 +30,13 @@ $(function () {
 	$('table.data').each(function() {
 		var chartWidth = $(this).parent().width()*0.90; // Set chart width to 90% of its parent
 		var chartType = ''; // Set chart type
-			
+
 		if ($(this).attr('data-chart')) { // If exists chart-chart attribute
 			chartType = $(this).attr('data-chart'); // Get chart type from data-chart attribute
 		} else {
 			chartType = 'area'; // If data-chart attribute is not set, use 'area' type as default. Options: 'bar', 'area', 'pie', 'line'
 		}
-		
+
 		if(chartType == 'line' || chartType == 'pie') {
 			$(this).hide().visualize({
 				type: chartType,
@@ -50,7 +50,7 @@ $(function () {
 					var html ='';
 					for(var i=0; i<data.point.length; i++){
 						html += '<p class="chart_tooltip"><strong>'+data.point[i].value+'</strong> '+data.point[i].yLabels[0]+'</p>';
-					}	
+					}
 					return html;
 				}
 			});
@@ -134,7 +134,7 @@ $(function () {
 	$('.wizard-content:first').show(); // Show default step
 	$('.wizard-steps li:first-child').find('a').addClass('current');
 	$('.wizard-steps a').click(
-		function() { 
+		function() {
 			var step = $(this).attr('href'); // Set variable 'step' to the value of href of clicked wizard step
 			$('.wizard-steps a').removeClass('current');
 			$(this).addClass('current');
@@ -146,7 +146,7 @@ $(function () {
 		}
 	);
 	$('.wizard-next').click(
-		function() { 
+		function() {
 			var step = $(this).attr('href'); // Set variable 'step' to the value of href of clicked wizard step
 			$('.wizard-steps a').removeClass('current');
 			$('.wizard-steps a[href="'+step+'"]').addClass('current');
@@ -165,20 +165,20 @@ $(function () {
 
 	if (window.location.hash && window.location.hash.match(/^#tab\d+$/)) {
 		var tabID = window.location.hash;
-		
+
 		$('.tab-switch a[href='+tabID+']').addClass('current').parent().siblings().find('a').removeClass('current');
 		$('div'+tabID).parent().find('.tab').hide();
 		$('div'+tabID).show();
 	} else if (window.location.hash && window.location.hash.match(/^#sidetab\d+$/)) {
 		var sidetabID = window.location.hash;
-		
+
 		$('.sidetab-switch a[href='+sidetabID+']').addClass('current');
 		$('div'+sidetabID).parent().find('.sidetab').hide();
 		$('div'+sidetabID).show();
 	}
-	
+
 	$('.tab-switch a').click(
-		function() { 
+		function() {
 			var tab = $(this).attr('href'); // Set variable 'tab' to the value of href of clicked tab
 			$(this).parent().siblings().find('a').removeClass('current'); // Remove 'current' class from all tabs
 			$(this).addClass('current'); // Add class 'current' to clicked tab
@@ -191,7 +191,7 @@ $(function () {
 	);
 
 	$('.sidetab-switch a').click(
-		function() { 
+		function() {
 			var sidetab = $(this).attr('href'); // Set variable 'sidetab' to the value of href of clicked sidetab
 			$(this).parent().siblings().find('a').removeClass('current'); // Remove 'current' class from all sidetabs
 			$(this).addClass('current'); // Add class 'current' to clicked sidetab
@@ -199,11 +199,11 @@ $(function () {
 			$(sidetab).show(); // Show the content div with the id equal to the id of clicked tab
 			$(sidetab).find('.visualize').trigger('visualizeRefresh'); // Refresh jQuery Visualize
 			$('.fullcalendar').fullCalendar('render'); // Refresh jQuery FullCalendar
-			
+
 			return false;
 		}
 	);
-	
+
 	// Content box accordions
 	$('.accordion li div').hide();
 	$('.accordion li:first-child div').show();
@@ -214,7 +214,7 @@ $(function () {
 			return false;
 		}
 	);
-	
+
 	//Minimize Content Article
 	$('article header h2').css({ 'cursor':'s-resize' }); // Minizmie is not available without javascript, so we don't change cursor style with CSS
 	$('article header h2').click( // Toggle the Box Content
@@ -223,72 +223,10 @@ $(function () {
 			$(this).parent().parent().find('section, footer').toggle();
 		}
 	);
-	
+
 	// Progress bar animation
 	$('.progress-bar').each(function() {
 		var progress = $(this).children().width();
 		$(this).children().css({ 'width':0 }).animate({width:progress},3000);
 	});
-	
-	//jQuery Full Calendar
-	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();
-	
-	$('.fullcalendar').fullCalendar({
-		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,basicWeek,basicDay'
-		},
-		editable: true,
-		events: [
-			{
-				title: 'All Day Event',
-				start: new Date(y, m, 1)
-			},
-			{
-				title: 'Long Event',
-				start: new Date(y, m, d-5),
-				end: new Date(y, m, d-2)
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: new Date(y, m, d-3, 16, 0),
-				allDay: false
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: new Date(y, m, d+4, 16, 0),
-				allDay: false
-			},
-			{
-				title: 'Meeting',
-				start: new Date(y, m, d, 10, 30),
-				allDay: false
-			},
-			{
-				title: 'Lunch',
-				start: new Date(y, m, d, 12, 0),
-				end: new Date(y, m, d, 14, 0),
-				allDay: false
-			},
-			{
-				title: 'Birthday Party',
-				start: new Date(y, m, d+1, 19, 0),
-				end: new Date(y, m, d+1, 22, 30),
-				allDay: false
-			},
-			{
-				title: 'Click for Walking Pixels',
-				start: new Date(y, m, 28),
-				end: new Date(y, m, 29),
-				url: 'http://www.walkingpixels.com/'
-			}
-		]
-	});
-	
 });
