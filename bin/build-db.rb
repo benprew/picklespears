@@ -7,7 +7,7 @@ require_relative '../picklespears'
 
 class BuildDb
 
-  def initialize(url='http://pdxindoorsoccer.com/Schedules/winter/')
+  def initialize(url='http://pdxindoorsoccer.com/wp-content/schedules/spring/')
     @@season_url = url
   end
 
@@ -15,7 +15,7 @@ class BuildDb
     games = []
 
     Division.find_all().each do |division|
-      file = division.name + ".txt"
+      file = division.league.downcase + '/DIV%20' + division.name[1,3].upcase + ".TXT"
       warn "working on #{file}"
       begin
         open(@@season_url + "/" + file) do |f|
