@@ -71,7 +71,7 @@ class PickleSpears < Sinatra::Application
           @player = Player.create(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
           @messages = "You have just created an account, please edit your information"
           session[:player_id] = @player.id
-          haml :user_edit
+          partial :user_edit
         end
       else
         "Error: #{resp.status}"
