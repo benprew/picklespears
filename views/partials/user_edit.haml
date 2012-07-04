@@ -45,13 +45,12 @@
     %header
       %h2 Current Teams
     %section
-      %table
-      - @player.teams.each do |team|
-        %tr
-          %td{ :style => 'padding: 3px' }
-            %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
-          %td
-            %form{ :method => 'post', :action =>'/players_team/delete' }
-              %input{ :type=>'submit', :value=>'Leave Team' }
+      %dl
+        - @player.teams.each do |team|
+          %form{ :method => 'post', :action =>'/players_team/delete' }
+            %dt
+              %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
+            %dd
+              %button Leave Team
               %input{ :type=>'hidden', :name=>:player_id, :value=>@player.id }
               %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
