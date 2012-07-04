@@ -39,6 +39,7 @@
           %dd
             %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
         %button Update Info
+        %input{ :type => 'hidden', :name => 'openid', :value => @player.openid }
 %article{ :class => "half-block nested clearrm" }
   .article-container
     %header

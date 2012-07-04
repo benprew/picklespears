@@ -14,26 +14,6 @@ class PickleSpears < Sinatra::Application
     haml :player_create
   end
 
-  post '/player/create' do
-    @player = Player.new
-    attrs = params
-    attrs.delete(:create_account)
-    attrs.delete('create_account')
-
-    begin
-      @player.fupdate(attrs)
-    rescue StandardError => err
-      @errors = err
-    end
-
-    if @errors
-      haml :player_create
-    else
-      session[:player_id] = @player.id
-      redirect '/player/join_team'
-    end
-  end
-
   get '/player/join_team' do
     @teams = []
     @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all if params[:team]
@@ -45,18 +25,22 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/player/update' do
+    @player ||= Player.new
     attrs = params
     attrs.delete(:update)
     attrs.delete('update')
+
+    attrs.delete('openid') if @player.openid
 
     @player.set attrs
 
     if @player.valid?
       @player.save
+      session[:player_id] = @player.id
       redirect to '/player'
     else
-      errors = @player.errors.map { |k, v| "#{k} #{v.join ''}" }.join "\n"
-      redirect to url_for '/player/edit', :errors => errors
+      @errors = @player.errors.map { |k, v| "#{k} #{v.join ''}" }.join "\n"
+      partial :user_edit
     end
   end
 

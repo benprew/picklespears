@@ -68,7 +68,7 @@ class PickleSpears < Sinatra::Application
           redirect '/player'
         else
 
-          @player = Player.create(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
+          @player = Player.new(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
           @messages = "You have just created an account, please edit your information"
           session[:player_id] = @player.id
           partial :user_edit
