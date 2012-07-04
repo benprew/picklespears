@@ -26,7 +26,6 @@ class Game < Sequel::Model
       :description => 'test game',
       :team_id => 1
     )
-    game.save
     game.update(attrs) if attrs
     game.save
     return game

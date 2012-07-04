@@ -22,6 +22,12 @@ postgres::database { "picklespears":
   require => Package['postgresql-8.4'],
 }
 
+postgres::database { "picklespearstest":
+  ensure => present,
+  name => 'picklespearstest',
+  require => Package['postgresql-8.4'],
+}
+
 postgres::role { "picklespears":
   password => "md570a9605e0eb7892dd928b47db8e2d0ca",
   ensure => present,
