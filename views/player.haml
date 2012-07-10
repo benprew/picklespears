@@ -4,23 +4,17 @@
     %section
       %img{ :src => "http://www.gravatar.com/avatar/#{@player_from_request.md5_email}" }
       %br
-      %ul
-        %li
-          = "Name: #{@player_from_request.name} "
-        %li
-          = "Gender: #{@player_from_request.gender} "
-%article{ :class => 'quarter-block' }
+      %p
+        %a{ :href=> url_for('/player', { :id => @player_from_request.id }) }= @player_from_request.name
+      %br
   .article-container
     %header
-      %h2 Teams
+      %h3 Teams
     %section
-      - @player_from_request.teams.each do |team|
-        %li{ :style => 'padding: 3px' }
-          %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
-          - if @player && @player.id == @player_from_request.id
-            %form{ :method => 'post', :action =>'/players_team/delete' }
-              %input{ :type=>'hidden', :name=>:player_id, :value=>@player_from_request.id }
-              %input{ :type=>'hidden', :name=>:team_id, :value=>team.id }
+      %ul
+        - @player_from_request.teams.each do |team|
+          %li
+            %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
 %article{ :class => 'half-block clearrm' }
   .article-container
     %header

@@ -1493,3 +1493,8 @@ table .actions .delete { background:url('../img/icons/icon_table_delete.png') no
 	text-align:center;
 	font-size:1000%;
 }
+
+dl.user-info dt {
+  float: left;
+  margin-right: 10px;
+}
