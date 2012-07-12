@@ -10,9 +10,9 @@ gem "rack-openid"
 gem "maruku"
 gem "sequel"
 gem "thin"
+gem "pg"
 
 group :development do
-  gem "pg"
   gem "vagrant"
   gem "shotgun"
 end
