@@ -9,6 +9,7 @@ gem "ruby-openid"
 gem "rack-openid"
 gem "maruku"
 gem "sequel"
+gem "thin"
 
 group :development do
   gem "pg"
