@@ -1,4 +1,3 @@
 #!/bin/bash
 
-wget -O- http://picklespears.com/send_game_reminders
-
+/usr/bin/wget -O- http://picklespears.com/send_game_reminders
