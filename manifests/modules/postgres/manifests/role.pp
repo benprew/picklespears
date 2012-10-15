@@ -21,7 +21,7 @@ define postgres::role($ensure, $password = false) {
         present: {
             # The createuser command always prompts for the password.
             exec { "Create $name postgres role":
-                command => "/usr/bin/psql -c \"CREATE ROLE $name $passtext\"",
+                command => "/usr/bin/psql -c \"CREATE ROLE $name $passtext LOGIN\"",
                 user => "postgres",
                 unless => "/usr/bin/psql -c '\\du' | grep '^  *$name  *|'"
             }
