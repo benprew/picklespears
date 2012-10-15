@@ -60,7 +60,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/login/openid' do
-    if resp == request.env["rack.openid.response"]
+    if request.env["rack.openid.response"]
+      resp = request.env["rack.openid.response"]
       if resp.status == :success
         player = Player.first(:openid => resp.identity_url)
         if player
