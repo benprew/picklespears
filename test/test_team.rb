@@ -22,4 +22,12 @@ class TestTeam < PickleSpears::Test::Unit
     assert_equal(1, team.upcoming_games.length)
     assert_equal(team.upcoming_games[0].id, upcoming_game.id)
   end
+
+  def test_add_player_to_team
+    team = Team.create_test
+    post '/team/add_player', team_id: team.id, :email => 'foo@bar.com', :name => 'Billy'
+
+    assert last_response.ok?
+    assert_match 'Player "Billy" added', last_response.body
+  end
 end

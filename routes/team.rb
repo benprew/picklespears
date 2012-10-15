@@ -47,4 +47,22 @@ class PickleSpears < Sinatra::Application
       partial :search
     end
   end
+
+  post '/team/add_player' do
+    @player = Player.find_or_create(:email_address => params[:email]) { |p| p.name = params[:name] }
+    @team = Team[params[:team_id]]
+    @divisions = Division.all()
+
+    @errors = "Unable to find/create player" unless @player
+    @errors += "Unable to find team" unless @team
+
+    if (@player && @team)
+      @team.add_player(@player)
+      @messages = "Player \"#{@player.name}\" added"
+    end
+
+    # TODO: send email to user to register
+
+    haml :team_edit
+  end
 end

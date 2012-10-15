@@ -49,13 +49,14 @@
       %th
         Email
     %tbody
+      %form{ :action => '/team/add_player', :method => 'post'}
       %tr
         %td
           %input{ :type => 'text', :value => 'name' }
         %td
           %input{ :type => 'text', :value => 'email' }
         %td
-          %input{ :type => 'submit', :value => 'Add Player', :disabled => 'disabled' }
+          %input{ :type => 'submit', :value => 'Add Player' }
       - @team.players.each do |p|
         %tr
           %td= p.name
