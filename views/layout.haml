@@ -54,14 +54,14 @@
           %h1 Game scheduler
         - if @player
           %section{ :id => "user-info" }
-            %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}" }
+            %img{ :src => "http://www.gravatar.com/avatar/#{@player.md5_email}", :alt => 'player' }
             %div
               %a{ :href => '/player', :title => 'Account Settings and Profile Page' }= @player.name
               %ul
                 %li
-                  %a{ :class => "button-link", :href => "/player/logout", :title => "Logout", :rel => "tooltip" } Logout
+                  %a{ :class => "button-link", :href => "/player/logout", :title => "Logout" } Logout
                 %li
-                  %a{ :class => "button-link", :href => "/player/edit", :title => "Edit", :rel => "tooltip" } Edit
+                  %a{ :class => "button-link", :href => "/player/edit", :title => "Edit" } Edit
         %nav{ :id => "main-nav" }
           %ul
             %li

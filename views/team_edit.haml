@@ -42,21 +42,27 @@
       %li= game.description
 .grid_6
   %h3 Players
+  %form{ :action => '/team/add_player', :method => 'post'}
+    %table
+      %thead
+        %th Name
+        %th Email
+        %th Action
+      %tbody
+        %tr
+          %td
+            %input{ :type => 'text', :value => 'name' }
+          %td
+            %input{ :type => 'text', :value => 'email' }
+          %td
+            %input{ :type => 'submit', :value => 'Add Player' }
+
   %table
     %thead
-      %th
-        Name
-      %th
-        Email
+      %th Name
+      %th Email
+      %th Action
     %tbody
-      %form{ :action => '/team/add_player', :method => 'post'}
-      %tr
-        %td
-          %input{ :type => 'text', :value => 'name' }
-        %td
-          %input{ :type => 'text', :value => 'email' }
-        %td
-          %input{ :type => 'submit', :value => 'Add Player' }
       - @team.players.each do |p|
         %tr
           %td= p.name
