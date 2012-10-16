@@ -2,6 +2,12 @@ import "postgres"
 
 Exec { path => "/usr/bin:/bin:/usr/sbin" }
 
+exec { "apt-update":
+  command     => "/usr/bin/apt-get update",
+  refreshonly => true,
+  require     => Exec['ruby-1.9.3-repository'],
+}
+
 package { "curl"                       : ensure => installed, require => Exec["apt-update"] }
 package { "g++"                        : ensure => installed, require => Exec["apt-update"] }
 package { "git-core"                   : ensure => installed, require => Exec["apt-update"] }
@@ -15,7 +21,7 @@ package { "postgresql-8.4"             : ensure => installed, require => Exec["a
 package { "rake"                       : ensure => installed, require => Exec["apt-update"] }
 package { "ruby1.9.3"                  : ensure => installed, require => Exec["apt-update"] }
 package { "vim"                        : ensure => installed, require => Exec["apt-update"] }
-package { "python-software-properties" : ensure => installed, require => Exec["apt-update"] }
+package { "python-software-properties" : ensure => installed }
 package { "make"                       : ensure => installed, require => Exec["apt-update"] }
 
 postgres::database { "picklespears":
@@ -27,11 +33,13 @@ postgres::database { "picklespears":
 exec { "picklespears-privs":
   command => "/usr/bin/psql -c \"grant all on database picklespears to picklespears\"",
   user => 'postgres',
+  require => Package['postgresql-8.4'],
 }
 
 exec { "picklespearstest-privs":
   command => "/usr/bin/psql -c \"grant all on database picklespearstest to picklespears\"",
   user => 'postgres',
+  require => Package['postgresql-8.4'],
 }
 
 postgres::database { "picklespearstest":
@@ -60,12 +68,7 @@ exec { "ruby-alternative":
 
 exec { "ruby-1.9.3-repository":
   command => "/usr/bin/add-apt-repository ppa:brightbox/ruby-ng",
-}
-
-exec { "apt-update":
-  command     => "/usr/bin/apt-get update",
-  refreshonly => true,
-  require     => Exec['ruby-1.9.3-repository'],
+  require => Package['python-software-properties'],
 }
 
 group { "puppet":
@@ -73,8 +76,8 @@ group { "puppet":
 }
 
 exec { "bundler":
-  command => "/opt/vagrant_ruby/bin/gem install bundler",
-  require => Package['ruby-1.9.3'],
+  command => "/usr/bin/gem install bundler",
+  require => Package['ruby1.9.3'],
 }
 
 file { "/etc/init.d":
