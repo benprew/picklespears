@@ -25,7 +25,7 @@ class TestTeam < PickleSpears::Test::Unit
 
   def test_add_player_to_team
     team = Team.create_test
-    post '/team/add_player', team_id: team.id, :email => 'foo@bar.com', :name => 'Billy'
+    post "/team/#{team.id}/add_player", email: 'foo@bar.com', name: 'Billy'
 
     assert last_response.ok?
     assert_match 'Player "Billy" added', last_response.body

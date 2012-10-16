@@ -42,7 +42,7 @@
       %li= game.description
 .grid_6
   %h3 Players
-  %form{ :action => '/team/add_player', :method => 'post'}
+  %form{ action: "/team/#{@team.id}/add_player", method: 'post'}
     %table
       %thead
         %th Name
@@ -51,11 +51,11 @@
       %tbody
         %tr
           %td
-            %input{ :type => 'text', :value => 'name' }
+            %input{ type: 'text', name: 'name', placeholder: 'Player Name' }
           %td
-            %input{ :type => 'text', :value => 'email' }
+            %input{ type: 'text', name: 'email', placeholder: 'Email Address' }
           %td
-            %input{ :type => 'submit', :value => 'Add Player' }
+            %input{ type: 'submit', value: 'Add Player' }
 
   %table
     %thead

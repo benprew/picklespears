@@ -34,8 +34,8 @@ class PickleSpears < Sinatra::Application
       @name = @player.name
     end
 
-    @errors = params[:errors]
-    @messages = params[:messages]
+    @errors = params[:errors] || ""
+    @messages = params[:messages] || ""
   end
 
   get '/schedule' do

@@ -48,13 +48,13 @@ class PickleSpears < Sinatra::Application
     end
   end
 
-  post '/team/add_player' do
+  post '/team/:team_id/add_player' do
     @player = Player.find_or_create(:email_address => params[:email]) { |p| p.name = params[:name] }
     @team = Team[params[:team_id]]
     @divisions = Division.all()
 
-    @errors = "Unable to find/create player" unless @player
-    @errors += "Unable to find team" unless @team
+    @errors = "Unable to find/create player." unless @player
+    @errors << "Unable to find team." unless @team
 
     if (@player && @team)
       @team.add_player(@player)

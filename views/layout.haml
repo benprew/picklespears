@@ -76,9 +76,9 @@
               %li
                 %a{ :class => "no-submenu", :href => "/login" } Login
       %section{ :role => "main" }
-        - if @errors
+        - if !@errors.empty?
           %div{ :class => "notification error" }= @errors.gsub /\n/, "<br />"
-        - if @messages
+        - if !@messages.empty?
           %div{ :class => "notification success" }= @messages
         = yield
     %script{ :type => 'text/javascript', :src => '/jx.js' }
