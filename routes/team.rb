@@ -23,7 +23,9 @@ class PickleSpears < Sinatra::Application
     @team.division_id = params[:division_id]
     @team.save
 
-    redirect url_for("/team", { :team_id => params[:team_id], :message => "Team updated!" })
+    flash[:messages] = "Team updated!"
+
+    redirect url_for("/team", { :team_id => params[:team_id] })
   end
 
   # Meant to be an ajax call
@@ -57,8 +59,12 @@ class PickleSpears < Sinatra::Application
     @errors << "Unable to find team." unless @team
 
     if (@player && @team)
-      @team.add_player(@player)
-      @messages = "Player \"#{@player.name}\" added"
+      if @team.players.include?(@player)
+        flash[:messages] = "Player \"#{@player.name}\" already on roster, not re-adding"
+      else
+        @team.add_player(@player)
+        flash[:messages] = "Player \"#{@player.name}\" added"
+      end
     end
 
     # TODO: send email to user to register

@@ -7,22 +7,21 @@ require 'sinatra/config_file'
 require 'haml'
 require 'sass'
 require 'time'
+require 'rack-flash'
 
 config_file 'config/config.yml'
 
 class PickleSpears < Sinatra::Application
   set :haml, :ugly => true, :format => :html5
 
+
   enable :sessions
   # Must be done after sessions
   require 'rack/openid'
   use Rack::OpenID
+  use Rack::Flash, :accessorize => [:errors, :messages]
 
   DATE_FORMAT='%a %b %e %I:%M %p'
-
-  configure :test do
-    set :sessions, false
-  end
 
   configure :production do
     set :clean_trace, true
@@ -33,9 +32,6 @@ class PickleSpears < Sinatra::Application
       @player = Player[session[:player_id]]
       @name = @player.name
     end
-
-    @errors = params[:errors] || ""
-    @messages = params[:messages] || ""
   end
 
   get '/schedule' do
@@ -70,7 +66,7 @@ class PickleSpears < Sinatra::Application
         else
 
           @player = Player.new(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
-          @messages = "You have just created an account, please edit your information"
+          flash[:messages] = "You have just created an account, please edit your information"
           session[:player_id] = @player.id
           partial :user_edit
         end
@@ -95,8 +91,8 @@ class PickleSpears < Sinatra::Application
   post '/players_team/delete' do
     team = Team[params[:team_id]]
     team.remove_player(@player)
-    @message = "You have successfully left #{team.name}"
-    redirect sprintf('/player?messages=%s', URI.escape(@message))
+    flash[:messages] = "You have successfully left #{team.name}"
+    redirect '/player'
   end
 
   # Meant to be called via ajax

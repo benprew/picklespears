@@ -24,7 +24,7 @@
         - else
           %option{ :value => division.id }= division.name
     %br
-    %input{ :type => :submit, :name => :update, :value => 'Update' }
+    %button Update
     %br
 .clear
 .grid_6
@@ -35,7 +35,7 @@
       %br
       %input{ :type => 'text', :name => 'date', :size => 20, :id => :game_date_string }
       %input{ :type => :hidden, :name => :massaged_date, :id => :massaged_date }
-      %input{ :type => 'submit', :value => 'Add Game', :disabled => :disabled }
+      %button{ disabled: :disabled } Add Game
       %p Example: Thursday 6pm or 5/17/2009 14:40
   %ul
     - @team.upcoming_games.each do |game|

@@ -1,6 +1,7 @@
 require 'test/unit'
-require 'picklespears'
 require 'rack/test'
+require 'picklespears'
+require 'ostruct'
 
 DB << open(File.dirname(__FILE__) + '/../../../db/create.sql', 'r').read
 
@@ -21,6 +22,13 @@ class PickleSpears::Test::Unit < Test::Unit::TestCase
 
   def app
     PickleSpears
+  end
+
+  def login(player)
+    resp = OpenStruct.new
+    resp.status = :success
+    resp.identity_url = player.openid
+    post '/login/openid', {}, { 'rack.openid.response' => resp }
   end
 
   # needed for a "default" test?

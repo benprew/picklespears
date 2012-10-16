@@ -37,7 +37,8 @@ class Player < Sequel::Model
   def self.create_test(attrs={})
     player = Player.new(
       :name => 'test user',
-      :email_address => 'test_user@test.com'
+      :email_address => 'test_user@test.com',
+      :openid => 'test_user_id',
     )
     player.update(attrs) if attrs
     player.save

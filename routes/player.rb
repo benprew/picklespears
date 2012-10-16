@@ -48,15 +48,13 @@ class PickleSpears < Sinatra::Application
     team_id = params[:team_id]
     player_id = params[:player_id]
 
-    url_params = { :team_id => team_id }
     if !PlayersTeam.filter(:player_id => player_id, :team_id => team_id).delete
-      url_params[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
+      flash[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
     else
-      url_params[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
+      flash[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
     end
 
-
-    redirect url_for '/team/edit', url_params
+    redirect url_for '/team/edit', team_id: team_id
   end
 
   get '/player/attending_status_for_game' do
@@ -64,9 +62,7 @@ class PickleSpears < Sinatra::Application
     @status = params[:status]
     @player_from_request = Player[params[:player_id]]
     @player_from_request.set_attending_status_for_game(game, @status)
-    message = haml :attending_status_for_game, :layout => false
-    redirect url_for("/team", :messages => message, :team_id => game.team.id)
+    flash[:messages] = haml :attending_status_for_game, :layout => false
+    redirect url_for("/team", :team_id => game.team.id)
   end
-
-
 end

@@ -29,5 +29,9 @@ class TestTeam < PickleSpears::Test::Unit
 
     assert last_response.ok?
     assert_match 'Player "Billy" added', last_response.body
+
+    post "/team/#{team.id}/add_player", email: 'foo@bar.com', name: 'Billy'
+    assert last_response.ok?
+    assert_match 'Player "Billy" already on roster', last_response.body
   end
 end

@@ -24,10 +24,11 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_can_update_info_via_post
-    player = Player.create_test( :email_address => 'test' )
-    post '/player/update', { :name => 'new_name' }, 'rack.session' => { :player_id => player.id }
-    assert_equal('http://example.org/player', last_response.location)
-    assert_equal('new_name', Player.first(:email_address => 'test').name)
+    player = Player.create_test
+    login(player)
+    post '/player/update', { :name => 'new_name' }
+    assert_equal 'http://example.org/player', last_response.location
+    assert_equal 'new_name', player.reload.name
   end
 
   def test_join_team_as_part_of_sign_up_process_works
@@ -53,11 +54,10 @@ class TestPlayer < PickleSpears::Test::Unit
     team.add_player(player)
     team2.add_player(player)
 
-    post '/players_team/delete', { team_id: team.id }, 'rack.session' => { :player_id => player.id }
-
-    assert_equal(
-      sprintf('http://example.org/player?messages=%s', URI.escape("You have successfully left #{team.name}")),
-      last_response.location)
+    login(player)
+    post '/players_team/delete', { team_id: team.id }
+    follow_redirect!
+    assert_match "You have successfully left #{team.name}", last_response.body
 
     pts = PlayersTeam.all
     assert_equal(1, pts.length)
