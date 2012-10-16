@@ -28,7 +28,7 @@ class PickleSpears < Sinatra::Application
 
   # Meant to be an ajax call
   get '/team/join' do
-    @player.join_team(Team[params[:team_id]])
+    @player.add_team(Team[params[:team_id]])
     "Joined!"
   end
 

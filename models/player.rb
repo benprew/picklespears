@@ -19,10 +19,6 @@ class Player < Sequel::Model
     validates_unique :email_address
   end
 
-  def join_team(team)
-    PlayersTeam.new(:player_id => self.id, :team_id => team.id).save
-  end
-
   def set_attending_status_for_game(game, status)
     PlayersGame.unrestrict_primary_key
     PlayersGame.find_or_create(:player_id => self.id, :game_id => game.id){ |pg| pg.status = status }.save

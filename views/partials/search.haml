@@ -7,5 +7,5 @@
     %p
       %a{ :href => "/team?team_id=#{team.id}"}= team.name
       = "(division #{team.division.league} #{team.division.name})"
-      %a{ :id => "join_team_#{team.id}", :href => '#', :onclick => "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
+      %a{ class: "button-link", :id => "join_team_#{team.id}", :href => '#', :onclick => "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
 .clear

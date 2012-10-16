@@ -53,5 +53,6 @@ CREATE TABLE players_teams (
     team_id integer NOT NULL
       REFERENCES teams (id) DEFERRABLE,
     is_sub boolean DEFAULT false NOT NULL,
-    is_manager boolean DEFAULT false NOT NULL
+    is_manager boolean DEFAULT false NOT NULL,
+    PRIMARY KEY (player_id, team_id)
 );

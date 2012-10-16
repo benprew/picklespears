@@ -8,7 +8,7 @@ class TestPlayer < PickleSpears::Test::Unit
   def test_can_join_a_team
     player = Player.create_test(:name => 'test user')
     team = Team.create_test
-    player.join_team(team)
+    player.add_team(team)
     pt = PlayersTeam.first(:player_id => player.id, :team_id => team.id)
     assert_equal(pt.player_id, player.id)
   end
@@ -31,20 +31,17 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_join_team_as_part_of_sign_up_process_works
-    Player.create_test( :email_address => 'test' )
+    Player.create_test
 
     div = Division.create_test
     Team.create_test( :name => 'team to find', :division_id => div.id )
     Team.create_test( :name => 'should not be found', :division_id => div.id )
 
-    get '/login/openid/complete', :openid_identifier => 'test'
-    session_id = last_response.headers['Set-Cookie']
-
-    get '/player/join_team', '', { "HTTP_COOKIE" => session_id }
+    get '/player/join_team'
     assert_match(/Done!/, last_response.body)
     assert_no_match(/team to find/, last_response.body)
 
-    get '/player/join_team?team=find', '', { "HTTP_COOKIE" => session_id }
+    get '/player/join_team?team=find'
     assert_match(/find a team/, last_response.body)
   end
 
@@ -53,10 +50,10 @@ class TestPlayer < PickleSpears::Test::Unit
     team = Team.create_test
     team2 = Team.create_test
 
-    PlayersTeam.new( :player_id => player.id, :team_id => team.id ).save
-    PlayersTeam.new( :player_id => player.id, :team_id => team2.id ).save
+    team.add_player(player)
+    team2.add_player(player)
 
-    post '/players_team/delete', "player_id=#{player.id};team_id=#{team.id}"
+    post '/players_team/delete', { team_id: team.id }, 'rack.session' => { :player_id => player.id }
 
     assert_equal(
       sprintf('http://example.org/player?messages=%s', URI.escape("You have successfully left #{team.name}")),

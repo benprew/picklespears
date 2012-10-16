@@ -93,8 +93,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/players_team/delete' do
-    PlayersTeam.filter( :player_id => params[:player_id], :team_id => params[:team_id] ).delete
     team = Team[params[:team_id]]
+    team.remove_player(@player)
     @message = "You have successfully left #{team.name}"
     redirect sprintf('/player?messages=%s', URI.escape(@message))
   end
