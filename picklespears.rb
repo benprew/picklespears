@@ -25,6 +25,7 @@ class PickleSpears < Sinatra::Application
 
   configure :production do
     set :clean_trace, true
+    require 'newrelic_rpm'
   end
 
   before do

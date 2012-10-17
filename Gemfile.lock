@@ -23,6 +23,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.2.2)
+    newrelic_rpm (3.5.0)
     pg (0.14.1)
     polyglot (0.3.3)
     pony (1.4)
@@ -80,6 +81,7 @@ DEPENDENCIES
   haml
   i18n
   maruku
+  newrelic_rpm
   pg
   pony
   rack-flash3

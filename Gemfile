@@ -12,6 +12,7 @@ gem "maruku"
 gem "sequel"
 gem "thin"
 gem "pg"
+gem "newrelic_rpm"
 
 group :development do
   gem "vagrant"
