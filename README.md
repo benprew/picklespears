@@ -1,28 +1,16 @@
-= picklespears
+# Sports Team Manager
 
 * (http://picklespears.com)
 
-== DESCRIPTION:
+## DESCRIPTION:
 
-FIX (describe your package)
+Sports Team Manager is a web app designed to allow a recreational sports team manager to track games and players coming to those games.  It tracks response status from players and reminds them several days before the game.  Also, it allows players to join multiple teams, and see their upcoming schedule of games, useful for players that play on multiple teams.
 
-== FEATURES/PROBLEMS:
+## REQUIREMENTS:
 
-* FIX (list of features or problems)
+Built with Ruby and Sinatra, see the Gemfile for app-specific requirements.
 
-== SYNOPSIS:
-
-  FIX (code sample of usage)
-
-== REQUIREMENTS:
-
-* FIX (list of requirements)
-
-== INSTALL:
-
-* FIX (sudo gem install, anything else)
-
-== LICENSE:
+## LICENSE:
 
 (The MIT License)
 
