@@ -1,8 +1,0 @@
-.autotest
-History.txt
-Manifest.txt
-README.txt
-Rakefile
-bin/picklespears
-lib/picklespears.rb
-test/test_picklespears.rb
