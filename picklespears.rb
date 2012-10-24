@@ -123,7 +123,7 @@ class PickleSpears < Sinatra::Application
         next unless (player.email_address and player.email_address.match(/@/))
 
         info = {
-          :from    => 'ben.prew@gmail.com',
+          :from    => 'team@picklespears.com',
           :to      => player.email_address,
           :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
           :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
