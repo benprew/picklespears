@@ -24,11 +24,8 @@ class PickleSpears::Test::Unit < Test::Unit::TestCase
     PickleSpears
   end
 
-  def login(player)
-    resp = OpenStruct.new
-    resp.status = :success
-    resp.identity_url = player.openid
-    post '/login/openid', {}, { 'rack.openid.response' => resp }
+  def login(player, password)
+    post '/player/login', email_address: player.email_address, password: password
   end
 
   # needed for a "default" test?

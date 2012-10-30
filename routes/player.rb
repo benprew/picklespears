@@ -4,8 +4,24 @@ class PickleSpears < Sinatra::Application
     haml :player
   end
 
+  get '/player/login' do
+    haml :login
+  end
+
+  post '/player/login' do
+    if player = Player.authenticate(params[:email_address], params[:password])
+      session[:player_id] = player.id
+      player.update(last_login: Date.today)
+      redirect '/'
+    else
+      flash[:errors] = 'Incorrect username or password'
+      redirect '/player/login'
+    end
+  end
+
   get '/player/logout' do
-    session[:player_id] = nil
+    session[:player_id].delete
+    flash[:messages] = "You have been logged out"
     redirect '/'
   end
 

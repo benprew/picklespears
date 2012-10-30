@@ -1,32 +1,17 @@
 %article{ :class => "full-block" }
   .article-container
     %header
-      %h2 To login, click on a image below
+      %h2 Login
     %section
-      %script{ :type => "text/javascript", :src => "/js/openid-jquery.js" }
-      %script{ :type => "text/javascript" }
-        $(document).ready(function() {
-        openid.init('openid_identifier');
-        });
-        - #<!-- /Simple OpenID Selector -->
-
-      %div
-        - # <!-- Simple OpenID Selector -->
-        %form{ :action => "/login/openid", :method => "post", :id => "openid_form" }
-          %input{ :type => "hidden", :name => "action", :value => "verify" }
-          %fieldset
-            %legend Sign-in or Create New Account
-            #openid_choice
-              %p Please click your account provider:
-              #openid_btns
-            #openid_input_area
-              %input{ :id => "openid_identifier", :name => "openid_identifier", :type => "text", :value =>"http://" }
-              %input{ :id => "openid_submit", :type => "submit", :value => "Sign-In" }
-
-      :markdown
-        ### Where are the login username and password fields? ###
-        Picklespears has switched to using OpenID to manage usernames and
-        passwords.  OpenID is service that allows you to log-on to many
-        different websites using a single indentity.  Find out
-        [more](http://openid.net/what/) about OpenID and [how to get an
-        OpenID enabled account](http://openid.net/get/)
+      %form{ :action => '/player/login', :method => 'post' }
+        %dl
+          %dt
+            %label Email Address:
+          %dd
+            %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
+          %dt
+            %label Password:
+          %dd
+            %input{ type: "password", name: 'password' }
+          %dt
+        %button Login

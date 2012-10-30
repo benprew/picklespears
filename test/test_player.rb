@@ -25,7 +25,7 @@ class TestPlayer < PickleSpears::Test::Unit
 
   def test_can_update_info_via_post
     player = Player.create_test
-    login(player)
+    login(player, 'secret')
     post '/player/update', { :name => 'new_name' }
     assert_equal 'http://example.org/player', last_response.location
     assert_equal 'new_name', player.reload.name
@@ -54,7 +54,7 @@ class TestPlayer < PickleSpears::Test::Unit
     team.add_player(player)
     team2.add_player(player)
 
-    login(player)
+    login(player, 'secret')
     post '/players_team/delete', { team_id: team.id }
     follow_redirect!
     assert_match "You have successfully left #{team.name}", last_response.body

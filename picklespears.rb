@@ -8,6 +8,7 @@ require 'haml'
 require 'sass'
 require 'time'
 require 'rack-flash'
+require 'bcrypt'
 
 config_file 'config/config.yml'
 
@@ -50,40 +51,6 @@ class PickleSpears < Sinatra::Application
     haml :browse
   end
 
-################ OpenID login
-
-  get '/login' do
-    haml :login
-  end
-
-  post '/login/openid' do
-    if request.env["rack.openid.response"]
-      resp = request.env["rack.openid.response"]
-      if resp.status == :success
-        player = Player.first(:openid => resp.identity_url)
-        if player
-          session[:player_id] = player.id
-          redirect '/player'
-        else
-
-          @player = Player.new(:openid => resp.identity_url, :name => 'Unknown player', :email_address => 'none@none.com')
-          flash[:messages] = "You have just created an account, please edit your information"
-          session[:player_id] = @player.id
-          partial :user_edit
-        end
-      else
-        "Error: #{resp.status}"
-      end
-    else
-      headers 'WWW-Authenticate' => Rack::OpenID.build_header(
-        :identifier => params["openid_identifier"]
-      )
-      throw :halt, [401, 'got openid?']
-    end
-  end
-
-##############
-
   get '/stylesheet.css' do
     response['Content-Type'] = 'text/css'
     sass :stylesheet
@@ -123,27 +90,13 @@ class PickleSpears < Sinatra::Application
         next unless (player.email_address and player.email_address.match(/@/))
 
         info = {
-          :from    => 'team@picklespears.com',
           :to      => player.email_address,
           :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
           :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
           :content_type => 'text/html',
-          :via => :smtp,
-          :via_options => {
-            :address => 'smtp.sendgrid.net',
-            :port => '587',
-            :domain => 'heroku.com',
-            :user_name => ENV['SENDGRID_USERNAME'],
-            :password => ENV['SENDGRID_PASSWORD'],
-            :authentication => :plain,
-            :enable_starttls_auto => true
-          }
         }
-        if production?
-          Pony.mail(info)
-        else
-          p info
-        end
+
+        send_email(info)
       end
     end
     template :output do
@@ -176,6 +129,28 @@ helpers do
     end
   end
 
+  def send_email(options)
+    message = {
+      from: 'team@picklespears.com',
+      via: :smtp,
+      via_options: {
+        address: 'smtp.sendgrid.net',
+        port: '587',
+        domain: 'heroku.com',
+        user_name: ENV['SENDGRID_USERNAME'],
+        password: ENV['SENDGRID_PASSWORD'],
+        authentication: :plain,
+        enable_starttls_auto: true
+      }
+    }.merge(options)
+
+    if production?
+      Pony.mail(message)
+    else
+      p message
+    end
+  end
+
   def attending_status_div(game, initial_display_type='block')
     return <<-HTML
      <div id="status_#{game.id}" style="display:#{initial_display_type}">
@@ -185,10 +160,6 @@ helpers do
        <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
      </div>
     HTML
-  end
-
-  def root_url
-    request.url.match(/(^.*\/{2}[^\/]*)/)[1]
   end
 
   def partial(page, variables={})

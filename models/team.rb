@@ -24,4 +24,17 @@ class Team < Sequel::Model
     team.save
     return team
   end
+
+  def add_player(player)
+    super
+    send_welcome_to_team_email(player)
+  end
+
+  def send_welcome_to_team_email(player)
+    info = {
+      to: player.email_address,
+      subject: "Teamvite: You've been added to #{name}",
+      message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://teamvite.com)",
+    }
+  end
 end

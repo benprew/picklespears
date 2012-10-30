@@ -74,7 +74,7 @@
               %a{ :class => "no-submenu", :href => "/team/search" } Search
             - if !@player
               %li
-                %a{ :class => "no-submenu", :href => "/login" } Login
+                %a{ :class => "no-submenu", :href => "/player/login" } Login
       %section{ :role => "main" }
         - if flash[:errors]
           %div{ :class => "notification error" }= flash[:errors]

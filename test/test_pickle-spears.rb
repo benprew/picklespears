@@ -64,12 +64,8 @@ class TestPickleSpears < PickleSpears::Test::Unit
     == Team management ==
       [ ] Add a new team
       [ ] Add a game
-      [ ] Add a player to a team (name, email)
-
-      [ ] Change login to just use passwords instead of openid
 
       [ ] restructure file layout similar to monkrb
-      [ ] Investigate webrat for testing
 
       [ ] Communicate with all members of team
       [ ] Manage a team

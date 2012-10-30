@@ -17,6 +17,19 @@ class Player < Sequel::Model
     validates_presence [:name, :email_address]
     validates_unique :name
     validates_unique :email_address
+    send_welcome_email if new?
+#    validates_presence :password if new?
+  end
+
+  def send_welcome_email
+    # TODO
+  end
+
+  def self.authenticate(email, password)
+    current_user = self.first(email_address: email)
+    return nil if current_user.nil?
+    return current_user if current_user.password && BCrypt::Password.new(current_user.password) == password
+    nil
   end
 
   def set_attending_status_for_game(game, status)
@@ -36,9 +49,10 @@ class Player < Sequel::Model
 
   def self.create_test(attrs={})
     player = Player.new(
-      :name => 'test user',
-      :email_address => 'test_user@test.com',
-      :openid => 'test_user_id',
+      name: 'test user',
+      email_address: 'test_user@test.com',
+      openid: 'test_user_id',
+      password: BCrypt::Password.create('secret'),
     )
     player.update(attrs) if attrs
     player.save

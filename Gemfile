@@ -13,6 +13,8 @@ gem "sequel"
 gem "thin"
 gem "pg"
 gem "newrelic_rpm"
+gem "fb_graph"
+gem "bcrypt-ruby"
 
 group :development do
   gem "vagrant"

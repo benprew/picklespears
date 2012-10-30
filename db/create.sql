@@ -31,11 +31,13 @@ CREATE TABLE players (
     id SERIAL PRIMARY KEY,
     name character varying(128) NOT NULL,
     email_address character varying(256) NOT NULL,
+    password character varying(64),
     phone_number character varying(16),
     birthdate character varying(32),
     zipcode character varying(16),
     gender character varying(16),
-    openid character varying(1024)
+    openid character varying(1024),
+    last_login DATE
 );
 
 CREATE TABLE players_games (
