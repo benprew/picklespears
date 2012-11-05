@@ -29,15 +29,16 @@ CREATE TABLE games (
 
 CREATE TABLE players (
     id SERIAL PRIMARY KEY,
-    name character varying(128) NOT NULL,
-    email_address character varying(256) NOT NULL,
-    password character varying(64),
-    phone_number character varying(16),
-    birthdate character varying(32),
-    zipcode character varying(16),
-    gender character varying(16),
-    openid character varying(1024),
-    last_login DATE
+    name CHARACTER VARYING(128) NOT NULL,
+    email_address CHARACTER VARYING(256) NOT NULL,
+    password_hash CHARACTER VARYING(64),
+    phone_number CHARACTER VARYING(16),
+    birthdate CHARACTER VARYING(32),
+    zipcode CHARACTER VARYING(16),
+    gender CHARACTER VARYING(16),
+    openid CHARACTER VARYING(1024),
+    last_login DATE,
+    google_calendar_id CHARACTER VARYING(64)
 );
 
 CREATE TABLE players_games (
