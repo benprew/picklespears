@@ -1,17 +1,5 @@
-%article{ :class => "full-block" }
-  .article-container
-    %header
-      %h2 Login
-    %section
-      %form{ :action => '/player/login', :method => 'post' }
-        %dl
-          %dt
-            %label Email Address:
-          %dd
-            %input{ :type => 'text', :name => 'email_address', :value => @player && @player.email_address }
-          %dt
-            %label Password:
-          %dd
-            %input{ type: "password", name: 'password' }
-          %dt
-        %button Login
+%h2 Login
+%form.form-inline{ :action => '/player/login', :method => 'post' }
+  %input{ :type => 'text', :name => 'email_address', placeholder: "Email Address" }
+  %input{ type: "password", name: 'password', placeholder: "Password" }
+  %button{ class: "btn btn-primary" } Login

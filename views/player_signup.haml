@@ -1,0 +1,25 @@
+- title 'create your account'
+%h2.page_title Sign Up
+%form.form-horizontal{:action => "/player/signup", :method => "post"}
+  .control-group
+    %label.control-label{:for => "player_email"} Email Address
+    .controls
+      %input{ id: :player_email, name: "player[email_address]", type: :email, value: params[:email_address] }
+  .control-group      
+    %label.control-label{:for => "player_password"} Password
+    .controls
+      %input{ id: :player_password, name: "player[password]", type: :password }
+  .control-group      
+    %label.control-label{:for => "player_password_confirmation"} Confirm Password
+    .controls
+      %input{ :id => "player_password_confirmation", :name => "player[password_confirmation]", :size => 30, :type => "password" }
+  .control-group
+    .controls
+      %button{ class: "btn btn-primary" } Sign up
+      - if Sinatra.const_defined?('FacebookObject')
+        .third_party_signup
+          %h3.section_title One click signup:
+          .login_link.facebook_login
+            = render_facebook_connect_link('Signup using facebook', :size => 'large')
+Already have an account?
+%a{:href => "/player/login", :class => 'sinatra_authentication_link'} Login here.

@@ -12,7 +12,7 @@ class PickleSpears < Sinatra::Application
     if player = Player.authenticate(params[:email_address], params[:password])
       session[:player_id] = player.id
       player.update(last_login: Date.today)
-      redirect '/'
+      redirect '/player'
     else
       flash[:errors] = 'Incorrect username or password'
       redirect '/player/login'
@@ -20,14 +20,27 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/player/logout' do
-    session[:player_id].delete
+    session.delete(:player_id)
     flash[:messages] = "You have been logged out"
     redirect '/'
   end
 
-  get '/player/create' do
-    @errors = params[:errors]
-    haml :player_create
+  get '/player/signup' do
+    haml :player_signup
+  end
+
+  post '/player/signup' do
+    params['player'][:name] = params['player'][:email_address]
+    @player = Player.new(params['player'])
+    if @player.valid?
+      @player.save
+      session[:player_id] = @player.id
+      flash[:success] = "Account created."
+      redirect '/player/edit'
+    else
+      flash[:errors] = "There were some problems creating your account: #{@player.errors}."
+      redirect url_for('/player/signup?', params['player'])
+    end
   end
 
   get '/player/join_team' do

@@ -42,7 +42,7 @@ class PickleSpears < Sinatra::Application
 
   get '/' do
     @teams = []
-    haml :index
+    haml :index, layout: false
   end
 
   get '/browse' do

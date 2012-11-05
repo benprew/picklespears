@@ -5,6 +5,7 @@ require_relative 'players_game'
 require_relative 'players_team'
 
 class Player < Sequel::Model
+  attr_writer :password_confirmation
   one_to_many :players_teams
   one_to_many :players_games
   many_to_many :teams, :join_table => :players_teams
@@ -17,18 +18,24 @@ class Player < Sequel::Model
     validates_presence [:name, :email_address]
     validates_unique :name
     validates_unique :email_address
-    send_welcome_email if new?
 #    validates_presence :password if new?
+    errors.add :passwords, ' don\'t match' unless @password == @password_confirmation
   end
 
   def send_welcome_email
+    true
     # TODO
+  end
+
+  def password=(pass)
+    @password = pass
+    self.password_hash = BCrypt::Password.create(@password)
   end
 
   def self.authenticate(email, password)
     current_user = self.first(email_address: email)
     return nil if current_user.nil?
-    return current_user if current_user.password && BCrypt::Password.new(current_user.password) == password
+    return current_user if current_user.password_hash && BCrypt::Password.new(current_user.password_hash) == password
     nil
   end
 
@@ -52,7 +59,7 @@ class Player < Sequel::Model
       name: 'test user',
       email_address: 'test_user@test.com',
       openid: 'test_user_id',
-      password: BCrypt::Password.create('secret'),
+      password_hash: BCrypt::Password.create('secret'),
     )
     player.update(attrs) if attrs
     player.save
