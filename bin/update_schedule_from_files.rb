@@ -20,7 +20,7 @@ def deal_with_missing_team(name, division, game_date, game_description)
   end
 end
 
-Dir.glob('*.txt').each do |filename|
+ARGV.each do |filename|
   puts filename
   f = File.new(filename)
   f.each do |line|
