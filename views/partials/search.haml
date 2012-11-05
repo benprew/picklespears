@@ -1,11 +1,10 @@
 - title "search results"
-.grid_12
-  %form{ :method => "get", :action => "/team/search" }
-    %input{ :name => "team", :type => "text" }
-    %button Team Search
-  - @teams.each do |team|
-    %p
-      %a{ :href => "/team?team_id=#{team.id}"}= team.name
-      = "(division #{team.division.league} #{team.division.name})"
-      %a{ class: "button-link", :id => "join_team_#{team.id}", :href => '#', :onclick => "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
-.clear
+%form.form-inline{ method: "get", action: "/team/search" }
+  %input{ name: :team, type: :text, value: @query }
+  %button.btn Search
+- @teams.each do |team|
+  %p
+    %a{ href: "/team?team_id=#{team.id}"}= team.name
+    = "(division #{team.division.league} #{team.division.name})"
+    - if @player
+      %a{ class: "button-link", id: "join_team_#{team.id}", href: '#', onclick: "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
