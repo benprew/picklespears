@@ -131,7 +131,7 @@ helpers do
 
   def send_email(options)
     message = {
-      from: 'team@picklespears.com',
+      from: 'team@teamvite.com',
       via: :smtp,
       via_options: {
         address: 'smtp.sendgrid.net',
