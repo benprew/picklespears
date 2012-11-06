@@ -69,4 +69,8 @@ class Player < Sequel::Model
   def md5_email
     return Digest::MD5.hexdigest(email_address)
   end
+
+  def password_reset_link
+    return "http://teamvite.com/player/reset/#{password_reset_hash}"
+  end
 end

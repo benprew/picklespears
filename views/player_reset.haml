@@ -1,0 +1,14 @@
+- title 'reset your password'
+%h2.page_title Reset Password
+%form.form-horizontal{:action => "/player/reset/#{@sha}", :method => "post"}
+  .control-group      
+    %label.control-label{:for => "player_password"} Password
+    .controls
+      %input{ id: :player_password, name: "player[password]", type: :password }
+  .control-group      
+    %label.control-label{:for => "player_password_confirmation"} Confirm Password
+    .controls
+      %input{ :id => "player_password_confirmation", :name => "player[password_confirmation]", :size => 30, :type => "password" }
+  .control-group
+    .controls
+      %button{ class: "btn btn-primary" } Reset Password

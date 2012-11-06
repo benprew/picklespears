@@ -9,6 +9,7 @@ require 'sass'
 require 'time'
 require 'rack-flash'
 require 'bcrypt'
+require 'digest'
 
 config_file 'config/config.yml'
 
@@ -89,14 +90,13 @@ class PickleSpears < Sinatra::Application
       team.players.each do |player|
         next unless (player.email_address and player.email_address.match(/@/))
 
-        info = {
+        send_email(
           :to      => player.email_address,
           :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
           :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
           :content_type => 'text/html',
-        }
+        )
 
-        send_email(info)
       end
     end
     template :output do
@@ -163,7 +163,7 @@ helpers do
   end
 
   def partial(page, variables={})
-    haml ('partials/' + page.to_s).to_sym, {layout => :false}, variables
+    haml ('partials/' + page.to_s).to_sym, { layout: false }, variables
   end
 end
 

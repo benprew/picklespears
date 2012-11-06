@@ -38,7 +38,9 @@ CREATE TABLE players (
     gender CHARACTER VARYING(16),
     openid CHARACTER VARYING(1024),
     last_login DATE,
-    google_calendar_id CHARACTER VARYING(64)
+    google_calendar_id CHARACTER VARYING(64),
+    password_reset_hash CHARACTER VARYING(64),
+    password_reset_issued_on DATE,
 );
 
 CREATE TABLE players_games (

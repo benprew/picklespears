@@ -94,4 +94,48 @@ class PickleSpears < Sinatra::Application
     flash[:messages] = haml :attending_status_for_game, :layout => false
     redirect url_for("/team", :team_id => game.team.id)
   end
+
+  get '/player/forgot_password' do
+    haml :player_forgot_password
+  end
+
+  post '/player/forgot_password' do
+    @email_address = params[:email_address]
+    @player = Player.first(email_address: @email_address)
+    @player.password_reset_hash = Digest::SHA2.new.to_s
+    @player.password_reset_issued_on = Date.today
+    @player.save
+
+    send_email(
+      to: @email_address,
+      subject: "Reset your password for Teamvite.com",
+      html_body: partial(:password_reset_email),
+    )
+    haml :password_reset_sent
+  end
+
+  get '/player/reset/:reset_sha' do
+    @sha = params[:reset_sha]
+    player = Player.first(password_reset_hash: @sha)
+
+    if (player && Date.today <= player.password_reset_issued_on + 2)
+      session[:player_id] = player.id
+      haml :player_reset
+    else
+      flash[:errors] = "Password reset link expired or invalid."
+      redirect '/player/login'
+    end
+  end
+
+  post '/player/reset/:reset_sha' do
+    if (params['player'][:password] != params['player'][:password_confirmation])
+      flash[:errors] = "Passwords don't match"
+      redirect "/player/reset/#{params[:reset_sha]}"
+    else
+      @player.set(params['player'].select { |k,v| [:password, :password_confirmation].include?(k)})
+      @player.save
+      flash[:success] = "Password reset successfully"
+      redirect '/player/login'
+    end
+  end
 end

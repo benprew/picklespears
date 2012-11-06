@@ -1,5 +1,14 @@
+
 %h2 Login
-%form.form-inline{ :action => '/player/login', :method => 'post' }
-  %input{ :type => 'text', :name => 'email_address', placeholder: "Email Address" }
-  %input{ type: "password", name: 'password', placeholder: "Password" }
-  %button{ class: "btn btn-primary" } Login
+.span5
+  %form.form-horizontal{ :action => '/player/login', :method => 'post' }
+    .control-group
+      .controls
+        %input.input-xlarge{ :type => 'email', :name => 'email_address', placeholder: "Email" }
+    .control-group
+      .controls
+        %input.input-xlarge{ type: "password", name: 'password', placeholder: "Password" }
+    .control-group
+      .controls
+        %button{ class: "btn btn-primary" } Login
+        %a.pull-right{ href: '/player/forgot_password' } Forgot your password?
