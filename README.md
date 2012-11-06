@@ -1,10 +1,10 @@
-# Sports Team Manager
+# Teamvite - Sports Team Management
 
-* (http://picklespears.com)
+* http://teamvite.com
 
 ## DESCRIPTION:
 
-Sports Team Manager is a web app designed to allow a recreational sports team manager to track games and players coming to those games.  It tracks response status from players and reminds them several days before the game.  Also, it allows players to join multiple teams, and see their upcoming schedule of games, useful for players that play on multiple teams.
+Teamvite is a web app designed to allow a recreational sports team manager to track games and players coming to those games.  It tracks response status from players and reminds them several days before the game.  Also, it allows players to join multiple teams, and see their upcoming schedule of games, useful for players that play on multiple teams.
 
 ## REQUIREMENTS:
 
