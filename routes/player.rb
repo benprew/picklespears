@@ -102,7 +102,7 @@ class PickleSpears < Sinatra::Application
   post '/player/forgot_password' do
     @email_address = params[:email_address]
     @player = Player.first(email_address: @email_address)
-    @player.password_reset_hash = Digest::SHA2.new.to_s
+    @player.password_reset_hash = Digest::SHA2.new.update(@player.to_s + Time.now.to_s).to_s
     @player.password_reset_issued_on = Date.today
     @player.save
 
@@ -128,14 +128,19 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/player/reset/:reset_sha' do
-    if (params['player'][:password] != params['player'][:password_confirmation])
-      flash[:errors] = "Passwords don't match"
-      redirect "/player/reset/#{params[:reset_sha]}"
-    else
-      @player.set(params['player'].select { |k,v| [:password, :password_confirmation].include?(k)})
+    @player.set(params['player'].select { |k,v|
+      [:password, :password_confirmation].include?(k.to_sym)
+    })
+
+    if @player.valid?
+      @player.password_reset_issued_on = nil
+      @player.password_reset_hash = nil
       @player.save
       flash[:success] = "Password reset successfully"
       redirect '/player/login'
+    else
+      flash[:errors] = "Passwords don't match"
+      redirect "/player/reset/#{params[:reset_sha]}"
     end
   end
 end
