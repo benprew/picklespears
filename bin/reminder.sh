@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl http://teamvite.com/send_game_reminders
+curl -L http://www.teamvite.com/send_game_reminders
