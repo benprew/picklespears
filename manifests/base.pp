@@ -5,7 +5,7 @@ Exec { path => "/usr/bin:/bin:/usr/sbin" }
 exec { "apt-update":
   command     => "/usr/bin/apt-get update",
   refreshonly => true,
-  require     => Exec['ruby-1.9.3-repository'],
+  require     => Exec['ruby-1.9.3-repository', 'postgres-9-repository'],
 }
 
 package { "curl"                       : ensure => installed, require => Exec["apt-update"] }
@@ -17,7 +17,7 @@ package { "libsqlite3-dev"             : ensure => installed, require => Exec["a
 package { "libxml2-dev"                : ensure => installed, require => Exec["apt-update"] }
 package { "libxslt1-dev"               : ensure => installed, require => Exec["apt-update"] }
 package { "nginx"                      : ensure => installed, require => Exec["apt-update"] }
-package { "postgresql-8.4"             : ensure => installed, require => Exec["apt-update"] }
+package { "postgresql-9.2"             : ensure => installed, require => Exec["apt-update"] }
 package { "rake"                       : ensure => installed, require => Exec["apt-update"] }
 package { "ruby1.9.3"                  : ensure => installed, require => Exec["apt-update"] }
 package { "vim"                        : ensure => installed, require => Exec["apt-update"] }
@@ -27,31 +27,31 @@ package { "make"                       : ensure => installed, require => Exec["a
 postgres::database { "picklespears":
   ensure => present,
   name => 'picklespears',
-  require => Package['postgresql-8.4'],
+  require => Package['postgresql-9.2'],
 }
 
 exec { "picklespears-privs":
   command => "/usr/bin/psql -c \"grant all on database picklespears to picklespears\"",
   user => 'postgres',
-  require => Package['postgresql-8.4'],
+  require => Package['postgresql-9.2'],
 }
 
 exec { "picklespearstest-privs":
   command => "/usr/bin/psql -c \"grant all on database picklespearstest to picklespears\"",
   user => 'postgres',
-  require => Package['postgresql-8.4'],
+  require => Package['postgresql-9.2'],
 }
 
 postgres::database { "picklespearstest":
   ensure => present,
   name => 'picklespearstest',
-  require => Package['postgresql-8.4'],
+  require => Package['postgresql-9.2'],
 }
 
 postgres::role { "picklespears":
   password => "md570a9605e0eb7892dd928b47db8e2d0ca",
   ensure => present,
-  require => Package['postgresql-8.4'],
+  require => Package['postgresql-9.2'],
 }
 
 exec { "ruby-alternative":
@@ -68,6 +68,11 @@ exec { "ruby-alternative":
 
 exec { "ruby-1.9.3-repository":
   command => "/usr/bin/add-apt-repository ppa:brightbox/ruby-ng",
+  require => Package['python-software-properties'],
+}
+
+exec { "postgres-9-repository":
+  command => "/usr/bin/add-apt-repository ppa:pitti/postgresql",
   require => Package['python-software-properties'],
 }
 
