@@ -151,19 +151,8 @@ helpers do
     end
   end
 
-  def attending_status_div(game, initial_display_type='block')
-    return <<-HTML
-     <div id="status_#{game.id}" style="display:#{initial_display_type}">
-       <strong>Going?</strong>
-       <a href='#' onclick="set_attending_status('#{game.id}', 'yes', 'status_#{game.id}'); return false;">Yes</a>
-       <a href='#' onclick="set_attending_status('#{game.id}', 'no', 'status_#{game.id}'); return false;">No</a>
-       <a href='#' onclick="set_attending_status('#{game.id}', 'maybe', 'status_#{game.id}'); return false;">Maybe</a>
-     </div>
-    HTML
-  end
-
   def partial(page, variables={})
-    haml ('partials/' + page.to_s).to_sym, { layout: false }, variables
+    haml ('partials/' + page.to_s).to_sym, { layout: false }.merge(variables)
   end
 end
 
