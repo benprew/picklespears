@@ -5,7 +5,7 @@ require 'picklespears/test/unit'
 class TestPickleSpears < PickleSpears::Test::Unit
   def test_homepage
     get '/'
-    assert_match( /<title>Pickle Spears - now with more vinegar!<\/title>/, last_response.body )
+    assert_match( /<title>Teamvite/, last_response.body )
   end
 
   def test_browse
@@ -15,8 +15,8 @@ class TestPickleSpears < PickleSpears::Test::Unit
     Game.create_test( :team_id => team.id, :date => Date.today + 1 )
 
     get '/browse', :league => 'Women'
-    assert_match /<title>Pickle Spears - browsing league: Women<\/title>/, last_response.body
-    assert_match /Barcelona/, last_response.body, 'do we have at least one team'
+    assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
+    assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
   end
 
   def test_team_home
@@ -48,7 +48,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
   def test_not_signed_in_by_default
     get '/'
-    assert_match /join/, last_response.body
+    assert_match /login/, last_response.body
   end
 
   def test_todo
