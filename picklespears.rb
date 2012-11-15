@@ -123,9 +123,9 @@ helpers do
     pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
 
     if pg
-      return %{<div>Going: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + attending_status_div(game, 'none') + "</div>"
+      return %{<div>Going: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + partial(:attending_status, locals: { game: game }) + "</div>"
     else
-      attending_status_div(game)
+      return partial :attending_status, locals: { game: game }
     end
   end
 
