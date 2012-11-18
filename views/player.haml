@@ -11,25 +11,4 @@
         %li
           %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
   .span9
-    %h3 Upcoming Games
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Date
-          %th Description
-          %th Attending
-          %th Your Response
-      %tbody
-        - (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }.each do |game|
-          %tr
-            %td= game.date.strftime(DATE_FORMAT)
-            %td= escape_once game.description
-            %td
-              %a.opener{ id: "players-games-#{game.id}", href: '#' }= "#{game.num_players_going} Players"
-              .dialog{ id: "dialog-players-games-#{game.id}" }
-                %ul
-                  - game.team.players.sort{ |a, b| a.name <=> b.name }.each do |player|
-                    %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"
-            %td
-              - if @player && @player_from_request.id == @player.id
-                = partial :game_status, locals: { player: @player_from_request, game: game }
+    = partial :upcoming_games, locals: { games: (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }, player: @player == @player_from_request ? @player : nil }

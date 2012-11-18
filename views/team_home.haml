@@ -1,31 +1,17 @@
 - title @team.name
-.grid_12{ :style => 'text-align: center; padding-bottom: 1em;' }
-  %h1{ :style => 'display: inline' }= @team.name
-  - if @player && !@player.is_on_team?(@team)
-    %a#join_this_team{ class: "button-link", :href => '#', :onclick => "joinTeam('#{@team.id}', 'join_this_team'); return false;"} Join this team!
-  - if @player && @player.is_on_team?(@team)
-    %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Manage]
-.clear
-.grid_4{ :style => 'float:left; width: 250px' }
-  %h2{ :style => 'margin-top: 0px;' } Players
-  %ul
-    - @team.players.each do |player|
-      %li
-        %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
-  %h2 Upcoming Games
-  %ul
-    - @team.upcoming_games.each do |game|
-      %li= "#{game.date.strftime(DATE_FORMAT)} - #{game.description}"
-.grid_8{ :style => 'float: left; width: 600px' }
-  - if @team.next_game
-    %h2{ :style => 'display: inline' }= "#{@team.next_game.date.strftime(DATE_FORMAT)} - #{@team.next_game.description}"
-    = status_for_game(@player, @team.next_game)
-    %br
-    %ul{ :style => 'list-style-type: none; display: inline' }
-      %li{ :style => 'display: inline' }= "#{@team.next_game.num_guys_confirmed} guys"
-      %li{ :style => 'display: inline' }= "#{@team.next_game.num_gals_confirmed} gals"
+.row
+  .span9.offset3
+    %h1{ :style => 'display: inline' }= @team.name
+    - if @player && !@player.is_on_team?(@team)
+      %a#join_this_team{ class: "button-link", :href => '#', :onclick => "joinTeam('#{@team.id}', 'join_this_team'); return false;"} Join this team!
+    - if @player && @player.is_on_team?(@team)
+      %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Manage]
+.row
+  .span3
+    %h2{ :style => 'margin-top: 0px;' } Players
     %ul
       - @team.players.each do |player|
-        %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(@team.next_game)}"
-  - else
-    %h2 No upcoming games
+        %li
+          %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
+  .span9
+    = partial :upcoming_games, locals: { games: @team.upcoming_games, player: @player }
