@@ -67,7 +67,7 @@ class PickleSpears < Sinatra::Application
   # Meant to be called via ajax
   get '/game/attending_status' do
     @player.set_attending_status_for_game(Game[params[:game_id]], params[:status])
-    "Status #{params[:status]} recorded"
+    "<p>Status #{params[:status]} recorded</p>"
   end
 
   get '/send_game_reminders' do
@@ -107,7 +107,6 @@ class PickleSpears < Sinatra::Application
 end
 
 helpers do
-
   def title(title=nil)
     @title ||= ''
     @title = title unless title.nil?
@@ -116,17 +115,6 @@ helpers do
 
   def url_for(url, args)
     return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
-  end
-
-  def status_for_game(player, game)
-    return '' unless player && game && player.is_on_team?(game.team)
-    pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
-
-    if pg
-      return %{<div>Going: <strong>#{pg.status}</strong> <a href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'">[change]</a>} + partial(:attending_status, locals: { game: game }) + "</div>"
-    else
-      return partial :attending_status, locals: { game: game }
-    end
   end
 
   def send_email(options)

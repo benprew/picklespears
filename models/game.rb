@@ -8,6 +8,12 @@ class Game < Sequel::Model
   one_to_many :players_games
   many_to_many :players, :join_table => :players_games
 
+  def num_players_going
+    players_games.inject(0) do |sum, pg|
+      pg.status == "yes" ? sum + 1 : sum
+    end
+  end
+
   def num_guys_confirmed
     players_games.inject(0) do |sum, pg|
       pg.status == "yes" && pg.player.gender == "guy" ? sum + 1 : sum

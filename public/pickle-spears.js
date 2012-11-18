@@ -13,3 +13,24 @@ function set_attending_status(game_id, attending_status, elem_id) {
     }
   )
 }
+
+$(function() {
+  $( ".dialog" ).dialog({
+      autoOpen: false,
+      modal: true,
+  });
+
+  $( ".opener" ).click(function(e) {
+    e.preventDefault();
+    $("#dialog-" + e.srcElement.id).dialog("open");
+    return false;
+  });
+
+  $("a[href*='/game/attending_status']").click(function(e) {
+    e.preventDefault();
+    function updateDiv(data) {
+      $("#status_" + e.srcElement.id).html(data);
+    }
+    $.get(e.srcElement.href, { game_id: e.srcElement.id }, updateDiv)
+  });
+});

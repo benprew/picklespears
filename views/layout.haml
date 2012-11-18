@@ -24,6 +24,8 @@
 
     / Le styles
     %link{:href => "/assets/css/bootstrap.min.css", :rel => "stylesheet"}
+    %link{ rel: "stylesheet", href: "http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" }
+
     :css
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -85,6 +87,7 @@
 
       = yield
     / /container
-    %script{ src: "http://code.jquery.com/jquery-latest.js" }
+    %script{ src: "http://code.jquery.com/jquery-latest.min.js" }
+    %script{ src: "http://code.jquery.com/ui/1.9.1/jquery-ui.min.js" }
     %script{ src: "/assets/js/bootstrap.js" }
     %script{ src: "/pickle-spears.js" }
