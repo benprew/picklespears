@@ -40,7 +40,7 @@ CREATE TABLE players (
     last_login DATE,
     google_calendar_id CHARACTER VARYING(64),
     password_reset_hash CHARACTER VARYING(64),
-    password_reset_issued_on DATE,
+    password_reset_expires_on DATE
 );
 
 CREATE TABLE players_games (

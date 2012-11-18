@@ -103,7 +103,7 @@ class PickleSpears < Sinatra::Application
     @email_address = params[:email_address]
     @player = Player.first(email_address: @email_address)
     @player.password_reset_hash = Digest::SHA2.new.update(@player.to_s + Time.now.to_s).to_s
-    @player.password_reset_issued_on = Date.today
+    @player.password_reset_expires_on = Date.today + 2
     @player.save
 
     send_email(
@@ -118,7 +118,7 @@ class PickleSpears < Sinatra::Application
     @sha = params[:reset_sha]
     player = Player.first(password_reset_hash: @sha)
 
-    if (player && Date.today <= player.password_reset_issued_on + 2)
+    if (player && Date.today <= player.password_reset_expires_on)
       session[:player_id] = player.id
       haml :player_reset
     else
@@ -133,7 +133,7 @@ class PickleSpears < Sinatra::Application
     })
 
     if @player.valid?
-      @player.password_reset_issued_on = nil
+      @player.password_reset_expires_on = nil
       @player.password_reset_hash = nil
       @player.save
       flash[:success] = "Password reset successfully"
