@@ -1,76 +1,66 @@
-:javascript
-  $(document).ready(function() {
-    $("#add_game_form").submit( function() {
-      date = Date.parse($("#game_date_string").val())
-      $("#massaged_date").text(date.toString("MM/DD/YYYY h:mm tt"))
-    });
-  });
-
-
 - title "Edit #{@team.name}"
-.clear
-.grid_6
-  %h3 Team Info
-  %form{ :method => 'post', :action => '/team/update' }
-    %input{ :type => :hidden, :name => :team_id, :value => @team.id }
-    %strong Name:
-    %input{ :type => :text, :name => :name, :value => @team.name }
-    %br
-    %strong Division:
-    %select{ :name => 'division_id' }
-      - @divisions.each do |division|
-        - if division.id == @team.division_id
-          %option{ :value => division.id, :selected => :selected  }= division.name
-        - else
-          %option{ :value => division.id }= division.name
-    %br
-    %button Update
-    %br
-.clear
-.grid_6
-  %h3 Upcoming Games
-  %div
-    %form{ :action => '/team/add_game', :method => :post, :id => :new_game_form }
-      %strong Add Game:
+.row
+  .span6
+    %h3 Team Info
+    %form{ :method => 'post', :action => '/team/update' }
+      %input{ :type => :hidden, :name => :team_id, :value => @team.id }
+      %strong Name:
+      %input{ :type => :text, :name => :name, :value => @team.name }
       %br
-      %input{ :type => 'text', :name => 'date', :size => 20, :id => :game_date_string }
-      %input{ :type => :hidden, :name => :massaged_date, :id => :massaged_date }
-      %button{ disabled: :disabled } Add Game
-      %p Example: Thursday 6pm or 5/17/2009 14:40
-  %ul
-    - @team.upcoming_games.each do |game|
-      %li= game.description
-.grid_6
-  %h3 Players
-  %form{ action: "/team/#{@team.id}/add_player", method: 'post'}
-    %table
+      %strong Division:
+      %select{ :name => 'division_id' }
+        - @divisions.each do |division|
+          - if division.id == @team.division_id
+            %option{ :value => division.id, :selected => :selected  }= division.name
+          - else
+            %option{ :value => division.id }= division.name
+      %br
+      %button.btn Update
+      %br
+.row
+  .span6
+    %h3 Upcoming Games
+    %div
+      %form.form-inline{ :action => '/team/add_game', :method => :post, :id => :new_game_form }
+        %strong Add Game:
+        %br
+        %input{ :type => 'text', :name => 'date', :size => 20, :id => :game_date_string }
+        %input{ :type => :hidden, :name => :massaged_date, :id => :massaged_date }
+        %button.btn{ disabled: :disabled } Add Game
+        %p Example: Thursday 6pm or 5/17/2009 14:40
+    %ul
+      - @team.upcoming_games.each do |game|
+        %li= game.description
+  .span6
+    %h3 Players
+    %form.form-inline{ action: "/team/#{@team.id}/add_player", method: 'post'}
+      %table.table
+        %thead
+          %th Name
+          %th Email
+          %th Action
+        %tbody
+          %tr
+            %td
+              %input{ type: 'text', name: 'name', placeholder: 'Player Name' }
+            %td
+              %input{ type: 'text', name: 'email', placeholder: 'Email Address' }
+            %td
+              %button.btn Add Player
+
+    %table.table
       %thead
         %th Name
         %th Email
         %th Action
       %tbody
-        %tr
-          %td
-            %input{ type: 'text', name: 'name', placeholder: 'Player Name' }
-          %td
-            %input{ type: 'text', name: 'email', placeholder: 'Email Address' }
-          %td
-            %button Add Player
-
-  %table
-    %thead
-      %th Name
-      %th Email
-      %th Action
-    %tbody
-      - @team.players.each do |p|
-        %tr
-          %td= p.name
-          %td
-            %a{ :href => "mailto:#{p.email_address}" }= p.email_address
-          %td
-            %form{ :action => '/player/remove_from_team', :method => 'post'}
-              %input{ :type => 'submit', :value => 'Remove Player' }
-              %input{ :type => 'hidden', :name => 'player_id', :value => p.id }
-              %input{ :type => 'hidden', :name => 'team_id', :value => @team.id }
-.clear
+        - @team.players.each do |p|
+          %tr
+            %td= p.name
+            %td
+              %a{ :href => "mailto:#{p.email_address}" }= p.email_address
+            %td
+              %form.form-inline{ :action => '/player/remove_from_team', :method => 'post'}
+                %button.btn Remove Player
+                %input{ :type => 'hidden', :name => 'player_id', :value => p.id }
+                %input{ :type => 'hidden', :name => 'team_id', :value => @team.id }

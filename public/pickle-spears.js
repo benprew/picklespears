@@ -34,3 +34,11 @@ $(function() {
     $.get(e.srcElement.href, { game_id: e.srcElement.id }, updateDiv)
   });
 });
+
+$(document).ready(function() {
+  $("#add_game_form").submit( function() {
+    date = Date.parse($("#game_date_string").val())
+    $("#massaged_date").text(date.toString("MM/DD/YYYY h:mm tt"))
+  });
+});
+
