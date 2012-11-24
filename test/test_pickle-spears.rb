@@ -50,33 +50,4 @@ class TestPickleSpears < PickleSpears::Test::Unit
     get '/'
     assert_match /login/, last_response.body
   end
-
-  def test_todo
-
-    print <<-TODO
-
-    == Schedule system ==
-      [ ] can set manager for team
-      [ ] can schedule refs for games
-      [ ] can enter results of games
-      [ ] can show schedues of upcoming games
-
-    == Team management ==
-      [ ] Add a new team
-      [ ] Add a game
-
-      [ ] restructure file layout similar to monkrb
-
-      [ ] Communicate with all members of team
-      [ ] Manage a team
-          [ ] Send game reminders
-          [ ] See who has paid and how much
-      [ ] Get contact info for players
-          [ ] Allows player to say a little about themselves
-      [ ] Find teams/players looking for players/teams
-
-    TODO
-
-  end
-
 end
