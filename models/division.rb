@@ -5,7 +5,7 @@ class Division < Sequel::Model
   many_to_one :league
 
   def self.create_test(attrs={})
-    division = Division.new( :name => 'test division', :league => 'test league' )
+    division = Division.new( :name => 'test division', :league_id => 1 )
     division.save
     division.update(attrs) if attrs
     division.save

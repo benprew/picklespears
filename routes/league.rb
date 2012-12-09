@@ -7,7 +7,7 @@ class PickleSpears < Sinatra::Application
   get '/league/manage' do
     @games = []
     if params[:date]
-      date = Date.parse(params[:date])
+      date = Date.parse(params[:date]) || Date.today
 
       @games = Game.where( id: DB[%q{SELECT max(g.id) from players p
         INNER JOIN league_managers lm ON (p.id = lm.player_id)

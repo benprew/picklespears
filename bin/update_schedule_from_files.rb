@@ -37,7 +37,7 @@ ARGV.each do |filename|
       found_team = false
 
       teams.each do |t|
-        next unless t.division.league == division.league
+        next unless t.division.league == division.league.name
 
         found_team = true
         if t.division.name != division.name

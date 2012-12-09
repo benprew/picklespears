@@ -9,12 +9,13 @@ class TestPickleSpears < PickleSpears::Test::Unit
   end
 
   def test_browse
-    div = Division.create_test(:league => 'Women')
+    league = League.create_test(name: 'Women')
+    div = Division.create_test(league_id: league.id)
 
     team = Team.create_test( :division => div, :name => 'Barcelona' )
     Game.create_test( :team_id => team.id, :date => Date.today + 1 )
 
-    get '/browse', :league => 'Women'
+    get '/browse', league_id: league.id
     assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
     assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
   end
@@ -26,7 +27,8 @@ class TestPickleSpears < PickleSpears::Test::Unit
   end
 
   def test_search
-    div = Division.create_test(:league => 'manly men')
+    league = League.create_test(name: 'manly men')
+    div = Division.create_test(league_id: league.id)
     found_team = Team.create_test(:name => 'THE HARPOON', :division_id => div.id)
     found_team2 = Team.create_test(:name => 'THE AHAS', :division_id => div.id)
     skipped_team = Team.create_test(:name => 'THE HBRPO', :division_id => div.id)

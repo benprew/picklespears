@@ -56,11 +56,11 @@
                   .input-append
                     %input{ type: "text", class: "input-medium search-query", name: :team, placeholder: "Search" }
               %li
-                %a{ :href => "/browse?league=Men" } Mens Teams
+                %a{ :href => "/browse?league_id=3" } Mens Teams
               %li
-                %a{ :href => "/browse?league=Women" } Womens Teams
+                %a{ :href => "/browse?league_id=1" } Womens Teams
               %li
-                %a{ :href => "/browse?league=Coed" } Coed Teams
+                %a{ :href => "/browse?league_id=2" } Coed Teams
               -if @player
                 %li.dropdown
                   %a.dropdown-toggle{ href: '#', 'data-toggle' => :dropdown }

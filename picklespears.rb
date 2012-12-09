@@ -48,8 +48,8 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/browse' do
-    @divisions = Division.filter(:league => params[:league]).order(:name.asc).all
-    @league = params[:league]
+    @divisions = Division.filter(:league_id => params[:league_id]).order(:name.asc).all
+    @league = League[params[:league_id]].name
     haml :browse
   end
 

@@ -5,6 +5,6 @@
 - @teams.each do |team|
   %p
     %a{ href: "/team?team_id=#{team.id}"}= team.name
-    = "(division #{team.division.league} #{team.division.name})"
+    = "(division #{team.division.league.name} #{team.division.name})"
     - if @player
       %a{ class: "button-link", id: "join_team_#{team.id}", href: '#', onclick: "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
