@@ -1,0 +1,26 @@
+-# %form.form-inline
+-#   Specific Game:
+-#   %input{ type: :text, name: :team }
+-#   %button.btn{ disabled: true} Search
+
+-# Or
+
+%form.form-inline
+  Pick a Day:
+  %input{ type: :date, name: :date, value: date }
+  %button.btn Go
+
+.row
+  .span10
+    %table.table.table-striped
+      %thead
+        %th Date
+        %th Game
+        %th Print
+      %tbody
+        - @games.each do |game|
+          %tr
+            %td= "#{game.date.strftime(DATE_FORMAT)}"
+            %td= "#{game.description}"
+            %td
+              %a.btn.btn-mini{ href: "/league/game_report/#{game.id}.pdf" } Print

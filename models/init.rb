@@ -20,6 +20,7 @@ DB = Sequel.connect(
 )
 
 require_relative 'division'
+require_relative 'league'
 require_relative 'game'
 require_relative 'player'
 require_relative 'players_game'

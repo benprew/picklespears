@@ -2,6 +2,7 @@ require_relative 'team'
 
 class Division < Sequel::Model
   one_to_many :teams
+  many_to_one :league
 
   def self.create_test(attrs={})
     division = Division.new( :name => 'test division', :league => 'test league' )

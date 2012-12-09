@@ -3,13 +3,15 @@ require_relative 'team'
 require_relative 'game'
 require_relative 'players_game'
 require_relative 'players_team'
+require_relative 'league'
 
 class Player < Sequel::Model
   attr_writer :password_confirmation
   one_to_many :players_teams
   one_to_many :players_games
   many_to_many :teams, :join_table => :players_teams
-  many_to_many :game, :join_table => :players_games
+  many_to_many :games, :join_table => :players_games
+  many_to_many :leagues, join_table: :league_managers
 
   plugin :validation_helpers
 
@@ -72,5 +74,9 @@ class Player < Sequel::Model
 
   def password_reset_link
     return "http://teamvite.com/player/reset/#{password_reset_hash}"
+  end
+
+  def is_league_manager?
+    !leagues.empty?
   end
 end

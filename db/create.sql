@@ -1,14 +1,22 @@
+DROP TABLE IF EXISTS league_managers;
 DROP TABLE IF EXISTS players_games;
 DROP TABLE IF EXISTS players_teams;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS teams;
 DROP TABLE IF EXISTS divisions;
+DROP TABLE IF EXISTS leagues;
+
+CREATE TABLE leagues (
+    id SERIAL PRIMARY KEY,
+    name CHARACTER VARYING(128) NOT NULL
+);
 
 CREATE TABLE divisions (
     id SERIAL PRIMARY KEY,
     name CHARACTER VARYING(128) NOT NULL,
-    league CHARACTER VARYING(128) NOT NULL
+    league_id integer NOT NULL
+      REFERENCES leagues DEFERRABLE
 );
 
 CREATE TABLE teams (
@@ -61,3 +69,12 @@ CREATE TABLE players_teams (
     is_manager boolean DEFAULT false NOT NULL,
     PRIMARY KEY (player_id, team_id)
 );
+
+CREATE TABLE league_managers (
+    player_id integer NOT NULL
+      REFERENCES players DEFERRABLE,
+    league_id integer NOT NULL
+      REFERENCES leagues DEFERRABLE,
+    PRIMARY KEY (player_id, league_id)
+);
+

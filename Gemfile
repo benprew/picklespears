@@ -15,6 +15,7 @@ gem "pg"
 gem "newrelic_rpm"
 gem "fb_graph"
 gem "bcrypt-ruby"
+gem "prawn"
 
 group :development do
   gem "vagrant"

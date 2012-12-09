@@ -10,6 +10,7 @@ require 'time'
 require 'rack-flash'
 require 'bcrypt'
 require 'digest'
+require 'prawn'
 
 config_file 'config/config.yml'
 
