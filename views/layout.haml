@@ -55,6 +55,9 @@
                 %form{ class: "navbar-search", action: '/team/search' }
                   .input-append
                     %input{ type: "text", class: "input-medium search-query", name: :team, placeholder: "Search" }
+              - if is_league_manager?
+                %li
+                  %a{ :href => "/league/manage" } Manage Leagues
               %li
                 %a{ :href => "/browse?league_id=3" } Mens Teams
               %li
