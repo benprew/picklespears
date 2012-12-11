@@ -94,7 +94,7 @@ class PickleSpears < Sinatra::Application
         send_email(
           :to      => player.email_address,
           :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
-          :body    => haml(:reminder, :layout => false, :locals => { :player => player, :game => next_game }),
+          :body    => partial :reminder, :locals => { :player => player, :game => next_game }),
           :content_type => 'text/html',
         )
 

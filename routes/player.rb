@@ -1,11 +1,11 @@
 class PickleSpears < Sinatra::Application
   get '/player' do
     @player_from_request = Player[params[:id] || session[:player_id]]
-    haml :player
+    haml 'player/index'.to_sym
   end
 
   get '/player/login' do
-    haml :login
+    haml 'player/login'.to_sym
   end
 
   post '/player/login' do
@@ -26,7 +26,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/player/signup' do
-    haml :player_signup
+    haml 'player/signup'.to_sym
   end
 
   post '/player/signup' do
@@ -46,11 +46,11 @@ class PickleSpears < Sinatra::Application
   get '/player/join_team' do
     @teams = []
     @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all if params[:team]
-    haml :join_team
+    haml 'player/join_team'.to_sym
   end
 
   get '/player/edit' do
-    haml :player_edit
+    haml 'player/edit'.to_sym
   end
 
   post '/player/update' do
@@ -91,12 +91,12 @@ class PickleSpears < Sinatra::Application
     @status = params[:status]
     @player_from_request = Player[params[:player_id]]
     @player_from_request.set_attending_status_for_game(game, @status)
-    flash[:messages] = haml :attending_status_for_game, :layout => false
+    flash[:messages] = haml 'player/attending_status_for_game'.to_sym, :layout => false
     redirect url_for("/team", :team_id => game.team.id)
   end
 
   get '/player/forgot_password' do
-    haml :player_forgot_password
+    haml 'player/forgot_password'.to_sym
   end
 
   post '/player/forgot_password' do
@@ -111,7 +111,7 @@ class PickleSpears < Sinatra::Application
       subject: "Reset your password for Teamvite.com",
       html_body: partial(:password_reset_email),
     )
-    haml :password_reset_sent
+    haml 'player/password_reset_sent'.to_sym
   end
 
   get '/player/reset/:reset_sha' do
@@ -120,7 +120,7 @@ class PickleSpears < Sinatra::Application
 
     if (player && Date.today <= player.password_reset_expires_on)
       session[:player_id] = player.id
-      haml :player_reset
+      haml 'player/reset'.to_sym
     else
       flash[:errors] = "Password reset link expired or invalid."
       redirect '/player/login'

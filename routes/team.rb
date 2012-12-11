@@ -2,19 +2,19 @@ class PickleSpears < Sinatra::Application
   get '/team' do
     @team = Team[params[:team_id]]
 
-    haml :team_home
+    haml 'team/index'.to_sym
   end
 
   get '/team/calendar' do
     @team = Team[params[:team_id]]
-    haml :team_calendar
+    haml 'team/calendar'.to_sym
   end
 
   get '/team/edit' do
     @team = Team[params[:team_id]]
     @divisions = Division.all()
 
-    haml :team_edit
+    haml 'team/edit'.to_sym
   end
 
   post '/team/update' do
@@ -45,7 +45,7 @@ class PickleSpears < Sinatra::Application
     @errors = "No teams found" if params[:team] && @teams.length == 0
 
     if @teams.length == 1
-      redirect "/team?team_id=#{@teams[0].id.to_s}"
+      redirect url_for("/team", { team_id: @teams[0].id })
     else
       partial :search
     end
@@ -69,7 +69,6 @@ class PickleSpears < Sinatra::Application
     end
 
     # TODO: send email to user to register
-
-    haml :team_edit
+    haml 'team/edit'.to_sym
   end
 end
