@@ -6,9 +6,9 @@ class PickleSpears < Sinatra::Application
 
   get '/league/manage' do
     @games = []
-    if params[:date]
-      date = Date.parse(params[:date]) || Date.today
+    date = params[:date] ? Date.parse(params[:date]) : Date.today
 
+    if date
       @games = Game.where( id: DB[%q{SELECT max(g.id) from players p
         INNER JOIN league_managers lm ON (p.id = lm.player_id)
         INNER JOIN divisions d ON (d.league_id = lm.league_id)
@@ -16,7 +16,9 @@ class PickleSpears < Sinatra::Application
         INNER JOIN games g on (g.team_id = t.id)
         WHERE g.date between ? AND ? GROUP BY g.description }, date, date + 1].all.map { |i| i.values }.flatten).order( :date )
     else
+      flash[:errors] = "Did not understand date: #{params[:date]}"
     end
+
     haml 'league/manage'.to_sym, locals: { date: date }
   end
 
