@@ -18,7 +18,7 @@
       %button.btn Update
       %br
 .row
-  .span6
+  .span5
     %h3 Upcoming Games
     %div
       %form.form-inline{ :action => '/team/add_game', :method => :post, :id => :new_game_form }
@@ -30,8 +30,8 @@
         %p Example: Thursday 6pm or 5/17/2009 14:40
     %ul
       - @team.upcoming_games.each do |game|
-        %li= game.description
-  .span6
+        %li= "#{game.date.strftime(DATE_FORMAT)} #{game.description}"
+  .span7
     %h3 Players
     %form.form-inline{ action: "/team/#{@team.id}/add_player", method: 'post'}
       %table.table

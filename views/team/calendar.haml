@@ -1,10 +1,6 @@
 - title "Calendar for #{@team.name}"
-%article{ :class => "full-block" }
-  .article-container
-    %header
-      %h2= "Calendar for #{@team.name}"
-    %section
-      %div{ :class => 'fullcalendar' }
+%h2= "Calendar for #{@team.name}"
+%div{ :class => 'fullcalendar' }
 - if @team.name
   :javascript
     $(document).ready(function() {
