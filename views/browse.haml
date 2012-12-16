@@ -1,19 +1,26 @@
 - title "browsing league: #{@league}"
-%article{ :class => "half-block" }
-  .article-container
-    %header
-      %h2= "Divisions for #{@league}"
-    %section
-      %ul.accordion
-        - @divisions.each do |division|
-          - next unless division.teams_with_upcoming_games.length > 0
-          %li
-            %a.accordion-switch{ :href => '' }
-              %h3
-                %span{ :class => 'emoticon soccer'}:soccer:
-                = division.name
-            %div
-              %ul
-                - division.teams_with_upcoming_games.sort { |a, b| a.name <=> b.name }.each do |team|
-                  %li
-                    %a{ :href => url_for('/team', :team_id => team.id) }= team.name
+%h2= "Teams for #{@league}"
+- @divisions.each do |division|
+- next unless division.teams_with_upcoming_games.length > 0
+  .row
+    .span10
+      %h3= division.name
+      %table.table.table-striped
+        %thead
+          %th Team
+          %th Wins
+          %th Losses
+          %th Ties
+          %th Bonus Points
+          %th Points
+        %tbody
+          - division.teams_with_upcoming_games.sort { |a, b| a.name <=> b.name }.each do |team|
+            %tr
+              %td
+                %a{ href: url_for('/team', {team_id: team.id}) }= team.name
+              %td 0
+              %td 0
+              %td 0
+              %td 0
+              %td 0
+
