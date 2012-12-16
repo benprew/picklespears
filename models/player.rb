@@ -79,4 +79,12 @@ class Player < Sequel::Model
   def is_league_manager?
     !leagues.empty?
   end
+
+  def upcoming_teams_games
+    teams_games = []
+    teams.each do |t|
+      teams_games += t.upcoming_games.map{ |g| [t, g] }
+    end
+    teams_games.sort{ |a, b| a[1].date <=> b[1].date }
+  end
 end

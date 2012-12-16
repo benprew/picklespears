@@ -13,7 +13,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
     div = Division.create_test(league_id: league.id)
 
     team = Team.create_test( :division => div, :name => 'Barcelona' )
-    Game.create_test( :team_id => team.id, :date => Date.today + 1 )
+    team.add_game(Game.create_test date: Date.today + 1)
 
     get '/browse', league_id: league.id
     assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)

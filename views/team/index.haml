@@ -14,4 +14,4 @@
         %li
           %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
   .span9
-    = partial :upcoming_games, locals: { games: @team.upcoming_games, player: @player }
+    = partial :upcoming_games, locals: { teams_games: @team.upcoming_games.map { |g| [@team, g] }, player: @player }

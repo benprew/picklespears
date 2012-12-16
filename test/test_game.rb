@@ -5,17 +5,12 @@ require 'picklespears/test/unit'
 class TestGame < PickleSpears::Test::Unit
   def setup
     super
-    @game = Game.create_test(:date => Time.now(), :description => 'test game', :team_id => 1)
+    @game = Game.create_test(:date => Time.now(), :description => 'test game')
+    @game.add_team(Team.create_test)
   end
 
   def test_num_guys_returns_the_number_of_guys_confirmed_for_game
     assert_equal(0, @game.num_guys_confirmed)
-  end
-
-  def test_team
-    team = Team.create_test
-    game = Game.create_test(:team_id => team.id)
-    assert_equal(game.team.id, team.id)
   end
 
   def test_guys_confirmed_for_a_game

@@ -7,10 +7,11 @@ class Team < Sequel::Model
   many_to_one :division
   one_to_many :games
   one_to_many :players_teams
-  many_to_many :players, :join_table => :players_teams
+  many_to_many :players, join_table: :players_teams
+  many_to_many :games, join_table: :teams_games
 
   def upcoming_games
-    Game.filter(:team_id => self.id).filter{ date >= Date.today()}.order(:date.asc).all
+    games.select{ |g| g.date.to_date >= Date.today() }.sort { |a, b| a.date <=> b.date }
   end
 
   def next_game

@@ -11,4 +11,4 @@
         %li
           %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
   .span9
-    = partial :upcoming_games, locals: { games: (@player_from_request.teams.map { |t| t.upcoming_games }).flatten.sort { |a, b| a.date <=> b.date }, player: @player == @player_from_request ? @player : nil }
+    = partial :upcoming_games, locals: { teams_games: @player_from_request.upcoming_teams_games, player: @player == @player_from_request ? @player : nil }

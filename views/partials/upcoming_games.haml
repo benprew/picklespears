@@ -8,7 +8,7 @@
       - if player
         %th Your Response
   %tbody
-    - games.each do |game|
+    - teams_games.each do |team, game|
       %tr
         %td= game.date.strftime(DATE_FORMAT)
         %td= escape_once game.description
@@ -16,7 +16,7 @@
           %a.opener{ id: "players-games-#{game.id}", href: '#' }= "#{game.num_players_going} Players"
           .dialog{ id: "dialog-players-games-#{game.id}" }
             %ul
-              - game.team.players.sort{ |a, b| a.name <=> b.name }.each do |player|
+              - team.players.sort{ |a, b| a.name <=> b.name }.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"
         - if player
           %td

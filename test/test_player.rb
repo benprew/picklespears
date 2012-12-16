@@ -63,4 +63,19 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_equal(1, pts.length)
     assert_equal(team2.id, pts[0].team_id)
   end
+
+  def upcoming_teams_games
+    player = Player.create_test
+    team = Team.create_test
+    team2 = Team.create_test
+    not_on_team = Team.create_test
+    player.add_team(team)
+    player.add_team(team2)
+
+    team.add_game(Game.create_test id: 1, date: Date.today + 2)
+    team2.add_game(Game.create_test id: 2, date: Date.today)
+    not_on_team.add_game(Game.create_test id: 3, date: Date.today + 1)
+
+    assert_equal([[team2, Game[2]],[team, Game[1]]], player.upcoming_teams_games)
+  end
 end

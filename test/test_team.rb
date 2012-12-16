@@ -8,7 +8,7 @@ class TestTeam < PickleSpears::Test::Unit
     teams = []
     teams << Team.create_test
     teams << Team.create_test
-    games = teams.map { |t| Game.create_test(:team_id => t.id) }
+    games = teams.map { |t| t.add_game(Game.create_test) }
 
     teams.each do |t|
       assert( t.next_game == games.shift )
@@ -17,10 +17,14 @@ class TestTeam < PickleSpears::Test::Unit
 
   def test_upcoming_games
     team = Team.create_test
-    upcoming_game = Game.create_test(:team_id => team.id, :date => Time.now())
-    historical_game = Game.create_test(:team_id => team.id, :date => Date.today() - 1)
-    assert_equal(1, team.upcoming_games.length)
-    assert_equal(team.upcoming_games[0].id, upcoming_game.id)
+    upcoming_game = Game.create_test(:date => Time.now())
+    upcoming_game.add_team(team)
+    upcoming_game2 = Game.create_test(:date => Time.now() + 1)
+    upcoming_game2.add_team(team)
+    historical_game = Game.create_test(:date => Date.today() - 1)
+    historical_game.add_team(team)
+
+    assert_equal([ upcoming_game, upcoming_game2 ], team.upcoming_games)
   end
 
   def test_add_player_to_team

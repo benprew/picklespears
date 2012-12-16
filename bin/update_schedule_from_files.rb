@@ -7,14 +7,17 @@ require_relative '../picklespears'
 missing_teams = Set.new
 @@force_team_create = true
 
-def deal_with_missing_team(name, division, game_date, game_description)
+def deal_with_missing_team(name, division, game_date, game_description, is_home_team=false)
   if @@force_team_create == true
     warn "Creating Team: #{name}"
-    Game.create(
+    game = Game.create(
       :date => game_date,
       :description => game_description,
-      :team_id => Team.create(:name => name, :division_id => division.id).id
     )
+    TeamsGames.find_or_create(
+      game_id: game.id,
+      team_id: Team.create(:name => name, :division_id => division.id),
+      ) { |tg| tg.is_home_team = is_home_team}
   else
     missing_teams << "#{name} #{division.name}"
   end
@@ -28,33 +31,39 @@ ARGV.each do |filename|
     (league, division, home, away, game_date, game_description) = line.split "|"
 
     division = Division.first(:name => division, :league => league)
-    [ home, away ].each do |team|
-      teams = Team.filter(:name => team).all
-      if teams.length == 0
-        deal_with_missing_team(team, division, game_date, game_description)
-        next
-      end
-      found_team = false
-
-      teams.each do |t|
-        next unless t.division.league == division.league.name
-
-        found_team = true
-        if t.division.name != division.name
-          warn "TEAM: #{team} - Updating division from #{t.division.name} to #{division.name}"
-          t.division = division
-          t.save
-        end
-        Game.find_or_create(
-          :date => game_date,
-          :description => game_description,
-          :team_id => t.id
-        )
-      end
-
-      deal_with_missing_team(team, division, game_date, game_description) unless found_team
-    end
+    add_game_for_team(division, home, true)
+    add_game_for_team(division, away, false)
   end
+end
+
+def add_game_for_team(division, team, is_home_team=false)
+  teams = Team.filter(:name => team).all
+  if teams.length == 0
+    deal_with_missing_team(team, division, game_date, game_description, is_home_team)
+    next
+  end
+  found_team = false
+
+  teams.each do |t|
+    next unless t.division.league == division.league
+
+    found_team = true
+    if t.division != division
+      warn "TEAM: #{team} - Updating division from #{t.division.name} to #{division.name}"
+      t.division = division
+      t.save
+    end
+    game = Game.find_or_create(
+      :date => game_date,
+      :description => game_description
+      )
+    TeamsGame.find_or_create(
+      game_id: game.id,
+      team_id: team.id
+      ) { |tg| tg.is_home_team = is_home_team }
+  end
+
+  deal_with_missing_team(team, division, game_date, game_description, is_home_team) unless found_team
 end
 
 if missing_teams.length > 0

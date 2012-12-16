@@ -13,7 +13,8 @@ class PickleSpears < Sinatra::Application
         INNER JOIN league_managers lm ON (p.id = lm.player_id)
         INNER JOIN divisions d ON (d.league_id = lm.league_id)
         INNER JOIN teams t on (t.division_id = d.id)
-        INNER JOIN games g on (g.team_id = t.id)
+        INNER JOIN teams_games tg on (t.id = tg.team_id)
+        INNER JOIN games g on (g.id = tg.game_id)
         WHERE g.date between ? AND ? GROUP BY g.description }, date, date + 1].all.map { |i| i.values }.flatten).order( :date )
     else
       flash[:errors] = "Did not understand date: #{params[:date]}"
@@ -26,7 +27,7 @@ class PickleSpears < Sinatra::Application
     game = Game[params[:game_id]]
 
     unless game
-      flash[:errors] = "Invalide game id #{params[:game_id]}"
+      flash[:errors] = "Invalid game id: #{params[:game_id]}"
       redirect '/league/manage'
     end
 

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS teams_games;
 DROP TABLE IF EXISTS league_managers;
 DROP TABLE IF EXISTS players_games;
 DROP TABLE IF EXISTS players_teams;
@@ -30,8 +31,6 @@ CREATE TABLE games (
     id SERIAL PRIMARY KEY,
     date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     description CHARACTER VARYING(256) NOT NULL,
-    team_id INTEGER NOT NULL
-      REFERENCES teams DEFERRABLE,
     reminder_sent BOOLEAN DEFAULT false NOT NULL
 );
 
@@ -76,5 +75,17 @@ CREATE TABLE league_managers (
     league_id integer NOT NULL
       REFERENCES leagues DEFERRABLE,
     PRIMARY KEY (player_id, league_id)
+);
+
+CREATE TABLE teams_games (
+  game_id INTEGER NOT NULL
+    REFERENCES games DEFERRABLE,
+  team_id INTEGER NOT NULL
+    REFERENCES teams DEFERRABLE,
+  is_home_team BOOLEAN DEFAULT false NOT NULL,
+  has_coed_bonus_point BOOLEAN DEFAULT false NOT NULL,
+  goals_scored INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (game_id, team_id),
+  UNIQUE INDEX (game_id, is_home_team)
 );
 
