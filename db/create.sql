@@ -85,7 +85,6 @@ CREATE TABLE teams_games (
   is_home_team BOOLEAN DEFAULT false NOT NULL,
   has_coed_bonus_point BOOLEAN DEFAULT false NOT NULL,
   goals_scored INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (game_id, team_id),
-  UNIQUE INDEX (game_id, is_home_team)
+  PRIMARY KEY (game_id, team_id)
 );
 
