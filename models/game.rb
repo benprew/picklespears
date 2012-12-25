@@ -7,6 +7,11 @@ class Game < Sequel::Model
   one_to_many :players_games
   many_to_many :players, join_table: :players_games
   many_to_many :teams, join_table: :teams_games
+#  many_to_many :teams, join_table: :teams_games, select: [ :is_home_team, :has_coed_bonus_point, :goals_scored ]
+
+  def division
+    teams.first.division if teams
+  end
 
   def num_players_going
     players_games.inject(0) do |sum, pg|

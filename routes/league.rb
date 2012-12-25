@@ -36,13 +36,12 @@ class PickleSpears < Sinatra::Application
     pdffile = "public/#{params[:game_id]}.pdf"
     Prawn::Document.generate(pdffile, template: 'pdfs/PI_template.pdf') do
       text_box game.date.strftime(DATE_FORMAT), at: [152, 679]
-      text_box game.team.division.name, at: [152, 650]
+      text_box game.division.name, at: [152, 650]
 
       text_box home_team, at: [22, 525], size: 16
       text_box away_team, at: [292, 525], size: 16
-
-
     end
+
     send_file pdffile
   end
 
