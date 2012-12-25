@@ -47,7 +47,7 @@ class PickleSpears < Sinatra::Application
     if @teams.length == 1
       redirect url_for("/team", { team_id: @teams[0].id })
     else
-      partial :search
+      haml 'team/search'.to_sym
     end
   end
 
