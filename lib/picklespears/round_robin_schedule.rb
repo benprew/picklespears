@@ -15,7 +15,7 @@ module RoundRobinSchedule
       mid = _teams.length / 2
       top = _teams[0, mid]
       bottom = _teams[mid, _teams.length]
- 
+
       round = (top.zip bottom).select { |g| !g.include? nil }
       rounds += [ round ]
       _teams = [ top.shift ] + _rotate_clockwise(top, bottom)
