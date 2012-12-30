@@ -1,0 +1,3 @@
+%select{ name: :division_id }
+  - divisions.each do |division|
+    %option{ value: division.id }= division.name

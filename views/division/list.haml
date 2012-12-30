@@ -1,0 +1,6 @@
+- title "All Divisions"
+%ul
+  - divisions.each do |division|
+    %li
+      %a{ href: url_for('/division', division_id: division.id)}= division.name
+
