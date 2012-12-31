@@ -2,9 +2,21 @@
 %form.form-inline{ method: "get", action: "/team/search" }
   %input{ name: :team, type: :text, value: @query }
   %button.btn Search
-- @teams.each do |team|
-  %p
-    %a{ href: "/team?team_id=#{team.id}"}= team.name
-    = "(division #{team.division.league.name} #{team.division.name})"
-    - if @player
-      %a{ class: "button-link", id: "join_team_#{team.id}", href: '#', onclick: "joinTeam('#{team.id}', 'join_team_#{team.id}'); return false;"} Join this team!
+%table.table.table-striped
+  %thead
+    %th Name
+    %th Division
+    %th Player Status
+  %tbody
+  - @teams.each do |team|
+    %tr
+      %td
+        %a{ href: "/team?team_id=#{team.id}"}= team.name
+      %td
+        = "#{team.division.league.name} #{team.division.name}"
+      %td
+        - if @player
+          - if !@player.teams.include?(team)
+            %a.join_team.btn.btn-mini{ id: team.id, href: '#'} Join this team!
+          - else
+            You play on this team
