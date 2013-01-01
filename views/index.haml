@@ -5,8 +5,8 @@
     %title Teamvite: Manage your sports teams
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     / Le styles
-    %link{:href => "../assets/css/bootstrap.css", :rel => "stylesheet"}
-    %link{:href => "../assets/css/bootstrap-responsive.css", :rel => "stylesheet"}
+    %link{:href => "/bootstrap/css/bootstrap.css", :rel => "stylesheet"}
+    %link{:href => "/bootstrap/css/bootstrap-responsive.css", :rel => "stylesheet"}
     :css
       /* GLOBAL STYLES
       -------------------------------------------------- */
@@ -240,11 +240,11 @@
       /[if lt IE 9]
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       / Fav and touch icons
-      / %link{:href => "../assets/ico/favicon.ico", :rel => "shortcut icon"}
-      / %link{:href => "../assets/ico/apple-touch-icon-144-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "144x144"}
-      / %link{:href => "../assets/ico/apple-touch-icon-114-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114"}
-      / %link{:href => "../assets/ico/apple-touch-icon-72-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72"}
-      / %link{:href => "../assets/ico/apple-touch-icon-57-precomposed.png", :rel => "apple-touch-icon-precomposed"}
+      / %link{:href => "../bootstrap/ico/favicon.ico", :rel => "shortcut icon"}
+      / %link{:href => "../bootstrap/ico/apple-touch-icon-144-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "144x144"}
+      / %link{:href => "../bootstrap/ico/apple-touch-icon-114-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114"}
+      / %link{:href => "../bootstrap/ico/apple-touch-icon-72-precomposed.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72"}
+      / %link{:href => "../bootstrap/ico/apple-touch-icon-57-precomposed.png", :rel => "apple-touch-icon-precomposed"}
   %body
     /
       NAVBAR
@@ -270,7 +270,7 @@
     #myCarousel.carousel.slide
       .carousel-inner
         .item.active
-          %img{:alt => "", :src => "../assets/img/kids_team.jpg"}
+          %img{:alt => "", :src => "/bootstrap/img/kids_team.jpg"}
             .container
               .carousel-caption
                 %h1 Teamvite
@@ -321,5 +321,5 @@
         %p= "&copy; 2012 Teamvite"
     / /.container
     %script{ src: "http://code.jquery.com/jquery-latest.js" }
-    %script{ src: "/assets/js/bootstrap.min.js" }
+    %script{ src: "/bootstrap/js/bootstrap.min.js" }
     %script{ src: "/pickle-spears.js" }
