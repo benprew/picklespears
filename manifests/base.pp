@@ -24,6 +24,12 @@ package { "vim"                        : ensure => installed, require => Exec["a
 package { "python-software-properties" : ensure => installed }
 package { "make"                       : ensure => installed, require => Exec["apt-update"] }
 
+# security packages
+package { "ufw"                        : ensure => installed, require => Exec["apt-update"] }
+package { "fail2ban"                   : ensure => installed, require => Exec["apt-update"] }
+package { "logcheck"                   : ensure => installed, require => Exec["apt-update"] }
+package { "psad"                       : ensure => installed, require => Exec["apt-update"] }
+
 postgres::database { "picklespears":
   ensure => present,
   name => 'picklespears',
