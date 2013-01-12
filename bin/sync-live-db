@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd ~/src/picklespears
+latest_backup_id=`heroku pgbackups | tail -n1 | awk '{print $1}'`
+backup_url=`heroku pgbackups:url $latest_backup_id`
+/usr/bin/curl "$backup_url" > ps.db
+echo "This will overwrite data in picklespears. Sleeping for 5 seconds for possible abort"
+sleep 5;
+ssh teamvitedev 'cd src/picklespears && pg_restore -d picklespears -U picklespears -c -O ps.db -1 -n public'
+
+# TO restore to heroku
+# DB=ps_up.db
+# pg_dump -U picklespears picklespears >$DB
+# scp $DB throwingbones.com:src/websites/throwingbones/site/public
+# # NOTE: I don't know why the database is called DATABASE_URL, but it is...
+# heroku pgbackups:restore DATABASE_URL http://verastreet.com/$DB
+# ssh throwingbones.com rm src/websites/throwingbones/site/public/$DB
