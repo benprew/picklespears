@@ -15,15 +15,18 @@ class BuildDb
     games = []
 
     Division.find_all().each do |division|
-      file = division.league.downcase + '/DIV%20' + division.name[1,3].upcase + ".TXT"
+      league_name = division.league.name.downcase.gsub(/portland indoor /, '')
+      file = "#{league_name}/#{division.name.upcase}.TXT"
       warn "working on #{file}"
       begin
-        open(@@season_url + "/" + file) do |f|
+        url = @@season_url + "/" + file
+        warn url
+        open(url) do |f|
           f.each do |line|
             line = _clean_line(line)
             data = _parse_schedule_line(line)
             next unless data
-            data[:league] = division.league
+            data[:league] = division.league.name
             data[:division] = division.name
             data[:description] = "#{data[:home]} vs #{data[:away]}"
             games << data
@@ -73,4 +76,4 @@ class BuildDb
 
 end
 
-BuildDb.new().run();
+BuildDb.new(ARGV[0]).run();
