@@ -15,8 +15,12 @@ def make_connect_string(db_info)
 end
 
 DB = Sequel.connect(
-  make_connect_string(settings.db),
-  :logger => Logger.new(settings.db[:logfile])
+  if settings.method_defined?(:db)
+    make_connect_string(settings.db),
+    :logger => Logger.new(settings.db[:logfile])
+  else
+    make_connect_string
+  end
 )
 
 require_relative 'division'
