@@ -141,7 +141,7 @@ helpers do
   end
 
   def partial(page, variables={})
-    haml ('partials/' + page.to_s).to_sym, { layout: false }.merge(variables)
+    haml "partials/#{page}".to_sym, { layout: false }.merge(variables)
   end
 end
 
