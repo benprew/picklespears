@@ -14,7 +14,7 @@ def make_connect_string(db_info)
   end
 end
 
-DB = Sequel.connect(make_connect_string)
+DB = Sequel.connect(make_connect_string(''))
 
 require_relative 'division'
 require_relative 'league'
