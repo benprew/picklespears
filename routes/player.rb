@@ -92,7 +92,7 @@ class PickleSpears < Sinatra::Application
     @player_from_request = Player[params[:player_id]]
     @player_from_request.set_attending_status_for_game(game, @status)
     flash[:messages] = haml 'player/attending_status_for_game'.to_sym, :layout => false
-    redirect url_for("/team", :team_id => game.team.id)
+    redirect url_for("/team", :team_id => game.team_player_plays_on(@player_from_request).id)
   end
 
   get '/player/forgot_password' do
