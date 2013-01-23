@@ -14,14 +14,7 @@ def make_connect_string(db_info)
   end
 end
 
-DB = Sequel.connect(
-  if settings.method_defined?(:db)
-    make_connect_string(settings.db),
-    :logger => Logger.new(settings.db[:logfile])
-  else
-    make_connect_string
-  end
-)
+DB = Sequel.connect(make_connect_string)
 
 require_relative 'division'
 require_relative 'league'
