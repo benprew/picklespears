@@ -13,8 +13,8 @@
         %td= game.date.strftime(DATE_FORMAT)
         %td= escape_once game.description
         %td
-          %a.opener{ id: "players-games-#{game.id}", href: '#' }= "#{game.num_players_going} Players"
-          .dialog{ id: "dialog-players-games-#{game.id}" }
+          %a{ href: '#' 'data-toggle' => :modal, 'data-target' => "#dialog-players-game-#{game.id}" }= "#{game.num_players_going} Players"
+          %div{ id: "dialog-players-games-#{game.id}" }
             %ul
               - team.players.sort{ |a, b| a.name <=> b.name }.each do |player|
                 %li{ :style => 'margin-left: 3em'}= "#{player.name}: #{player.attending_status(game)}"

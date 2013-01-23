@@ -1,15 +1,4 @@
 $(function() {
-  $( ".dialog" ).dialog({
-      autoOpen: false,
-      modal: true,
-  });
-
-  $( ".opener" ).click(function(e) {
-    e.preventDefault();
-    $("#dialog-" + e.srcElement.id).dialog("open");
-    return false;
-  });
-
   $("a[href*='/game/attending_status']").click(function(e) {
     e.preventDefault();
     function updateDiv(data) {
