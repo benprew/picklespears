@@ -4,9 +4,6 @@ require 'yaml'
 require 'logger'
 
 def make_connect_string(db_info)
-  # for Heroku
-  return ENV['DATABASE_URL'] if ENV['DATABASE_URL']
-
   if db_info[:adapter] == 'sqlite3'
     return sprintf "%s:%s", db_info[:adapter], db_info[:database]
   else
@@ -14,7 +11,14 @@ def make_connect_string(db_info)
   end
 end
 
-DB = Sequel.connect(ENV['DATABASE_URL'])
+unless settings.respond_to?(:db)
+  # running on Heroku
+  DB = Sequel.connect(ENV['DATABASE_URL'])
+else
+  DB = Sequel.connect(
+    make_connect_string(settings.db),
+    :logger => Logger.new(settings.db[:logfile]))
+end
 
 require_relative 'division'
 require_relative 'league'
