@@ -42,9 +42,7 @@ class Player < Sequel::Model
   end
 
   def set_attending_status_for_game(game, status)
-    PlayersGame.unrestrict_primary_key
     PlayersGame.find_or_create(:player_id => self.id, :game_id => game.id){ |pg| pg.status = status }.save
-    PlayersGame.restrict_primary_key
   end
 
   def attending_status(game)

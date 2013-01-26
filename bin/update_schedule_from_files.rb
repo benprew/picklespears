@@ -11,12 +11,10 @@ def deal_with_missing_team(name, division, game_date, game_description, is_home_
       :date => game_date,
       :description => game_description,
     )
-    TeamsGame.unrestrict_primary_key
     TeamsGame.find_or_create(
       game_id: game.id,
       team_id: Team.create(:name => name, :division_id => division.id).id,
       ) { |tg| tg.is_home_team = is_home_team}
-    TeamsGame.restrict_primary_key
   else
     missing_teams << "#{name} #{division.name}"
   end
