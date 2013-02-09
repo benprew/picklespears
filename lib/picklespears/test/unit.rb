@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'test/unit'
 require 'rack/test'
 require 'picklespears'
@@ -28,7 +30,4 @@ class PickleSpears::Test::Unit < Test::Unit::TestCase
     post '/player/login', email_address: player.email_address, password: password
   end
 
-  # needed for a "default" test?
-  def test_foo
-  end
 end
