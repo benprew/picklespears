@@ -16,10 +16,12 @@ gem "newrelic_rpm"
 gem "fb_graph"
 gem "bcrypt-ruby"
 gem "prawn"
+gem 'gga4r', git: "http://github.com/benprew/gga4r"
 
 group :development do
   gem "vagrant"
   gem "shotgun"
+  gem 'pry'
 end
 
 group :test do
