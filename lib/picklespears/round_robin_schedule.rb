@@ -6,9 +6,8 @@ module RoundRobinSchedule
 
     rounds = []
     games_per_team = Hash.new(0)
-    _teams = []
+    _teams = teams.dup
 
-    _teams.replace(teams)
     _teams << nil if _teams.length % 2
 
     while _teams.length > 1 do
@@ -27,6 +26,8 @@ module RoundRobinSchedule
 
     rounds
   end
+
+  private
 
   def _rotate_clockwise(top, bottom)
     top.unshift bottom.shift
