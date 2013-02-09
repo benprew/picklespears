@@ -16,6 +16,7 @@ package { "libpq-dev"                  : ensure => installed, require => Exec["a
 package { "libsqlite3-dev"             : ensure => installed, require => Exec["apt-update"] }
 package { "libxml2-dev"                : ensure => installed, require => Exec["apt-update"] }
 package { "libxslt1-dev"               : ensure => installed, require => Exec["apt-update"] }
+package { "libyaml-dev"                : ensure => installed, require => Exec["apt-update"] }
 package { "nginx"                      : ensure => installed, require => Exec["apt-update"] }
 package { "postgresql-9.2"             : ensure => installed, require => Exec["apt-update"] }
 package { "rake"                       : ensure => installed, require => Exec["apt-update"] }
