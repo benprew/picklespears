@@ -45,7 +45,10 @@ class Schedule
   end
 
   def add_game!(game)
-    @scheduled_times[self.next(game.team_ids, game.league_id)] = game.dup
+    game_time = self.next(game.team_ids, game.league_id)
+    game_time.team_ids = game.team_ids
+    game_time.league_id = game.league_id
+    @scheduled_times[game_time.date] = game_time
   end
 
   def next(team_pairing, league_id)
@@ -72,7 +75,7 @@ class Schedule
       end
     end
 
-    @game_times.delete_at(game_time_index).date
+    @game_times.delete_at(game_time_index)
   end
 
   def max_games_for_day(day)
@@ -159,65 +162,50 @@ class Schedule
   # week for the game, this compresses the schedule and means that a
   # single mutation can remove a game following an empty game day,
   # instead of multiple mutations if we did a strict datetime swap
-  def swap_game_weeks(game_index, range)
+  def swap_game_weeks(game1_date)
     other_game_index = nil
 
+    # this is bad, we should be looking for games that will swap into
+    # another week and fill an empty slot, not just swapping for empty
+    # slots
+
     # this should include available slots, as we will want to swap into an empty slot as often as possible
-    (@schedule.game_times + @games.shuffle).each do |slot|
-      if @schedule.swappable?(@games[game_index], slot)
-        other_game_index = slot?
+    (empty_game_dates + games().shuffle.map(&:date)).each do |date|
+      if swappable?(@scheduled_times[game1_date], @scheduled_times[date])
+        game2_date = date
         break
       end
     end
 
-    raise "Could not find a game to swap for #{@games[game_index]}" unless other_game_index
+    raise "Could not find a game to swap for #{@scheduled_times[game1_date]}" unless game2_date
 
-    # schedule has a list of game_times that it hasn't used, so we can ask it for the next game
+    # schedule has a list of game_dates that it hasn't used, so we can ask it for the next game
     # swap needs to swap position AND game dates, not either/or
-    new_other_time =
-      [@schedule.next_for_week(@games[game_index].date, @games[other_game_index]), @games[game_index].date].delete_if { |o| o == nil }.min
-
-    if new_other_time != @games[game_index].date
-      # puts "other: #{@games[other_game_index]} new time: #{new_other_time}"
-      # puts "game1: #{@games[game_index]}"
-      prior_len = @schedule.game_times.length
-      @schedule.game_times.reject! { |gt| gt.game_date == new_other_time }
-      raise "Did not delete #{new_other_time} from #{@schedule.game_times}" if prior_len == @schedule.game_times.length
-    else
-      # puts "# game times: #{@schedule.game_times.length}"
-    end
+    new_other_date =
+      [@schedule.next_for_week(game1_date, @scheduled_times[game2_date]), game1_date].delete_if { |o| o == nil }.min
 
     # this is a little hinky, but should be fine after game swap
-    @games[game_index].date = new_other_time
-
-    swap_game!(game_index, other_game_index)
-  end
-
-  def swap_game!(game1_index, game2_index)
-
-    game1 = @games[game1_index]
-    game2 = @games[game2_index]
-
-    # swap dates
-    tmp_date = @games[game1_index].date
-    @games[game1_index].date = @games[game2_index].date
-    @games[game2_index].date = tmp_date
-
-    # swap locations
-    @games[game2_index] = game1
-    @games.delete_at(game1_index)
-
-    # insert in the correct position, TODO: use bsearch if slow
-    index_to_reinsert = -1
-    @games.each_index do |i|
-      if @games[i].date > game2.date
-        puts "#{@games[i].date} #{game2.date}"
-        index_to_reinsert = i
-        break
-      end
+    if new_other_date != game1_date
+      # puts "other: #{@games[other_game_index]} new date: #{new_other_date}"
+      # puts "game1: #{@games[game_index]}"
+      swap_games!(new_other_date, game1_date)
     end
 
-    @games.insert(index_to_reinsert, game2)
+    swap_games!(new_other_date, game2_date)
   end
 
+  def swap_games!(game1_date, game2_date)
+    # league ids is property of the date slot, not of the teams playing
+    tmp_league_ids = @scheduled_times[game1_date].league_ids
+    @scheduled_times[game1_date].league_ids = @scheduled_times[game2_date].league_ids
+    @scheduled_times[game2_date].league_ids = tmp_league_ids
+
+    tmp_game = @scheduled_times[game1_date]
+    @scheduled_times[game1_date] = @scheduled_times[game2_date]
+    @scheduled_times[game2_date] = tmp_game
+  end
+
+  def emtpy_game_dates
+    @scheduled_times.select { |gt| !gt.team_ids }.map(&:date)
+  end
 end

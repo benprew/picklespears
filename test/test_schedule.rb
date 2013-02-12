@@ -53,12 +53,13 @@ class TestSchedule < PickleSpears::Test::Unit
     assert !@schedule.last_game_of_day?(Time.new(2013,3,16, 23,10,00, '+00:00'))
   end
 
-  # def test_game_swap
-  #   @schedule.send(:swap_game!, 0, 2)
+  def test_game_swap
+    games = @schedule.games
+    @schedule.send(:swap_games!, games[0].date, games[2].date)
 
-  #   assert_equal @times.map(&:to_s), @schedule.games.map { |g| g.date.to_s }
-  #   assert_equal [ @games[2], @games[1], @games[0], @games[3] ].map(&:id), @schedule.games.map(&:id)
-  # end
+    assert_equal games.map(&:date), @schedule.games.map(&:date)
+    assert_equal [ @games[2], @games[1], @games[0], @games[3] ].map(&:id), @schedule.games.map(&:id)
+  end
 
   # def test_ideal_solution_fitness
   #   assert !@schedule.instance_variable_get(:@score_by_games)
