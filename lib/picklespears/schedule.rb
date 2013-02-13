@@ -15,7 +15,7 @@ class Schedule
   end
 
   def games
-    @scheduled_times.select { |k, v| v.team_ids }.sort_by { |arr| arr[0] }.map{ |a| game = a[1]; game.date = a[0]; game }
+    @scheduled_times.select { |k, v| v.team_ids && v.team_ids.length > 0 }.sort_by { |arr| arr[0] }.map{ |a| game = a[1]; game.date = a[0]; game }
   end
 
   def first_game_of_day?(date)
@@ -48,7 +48,11 @@ class Schedule
     game_time = self.next(game.team_ids, game.league_id)
     game_time.team_ids = game.team_ids
     game_time.league_id = game.league_id
-    @scheduled_times[game_time.date] = game_time
+    @scheduled_times[game_time.delete_field(:date)] = game_time
+  end
+
+  def empty_game_dates
+    @scheduled_times.select { |time, game_slot| !game_slot.team_ids }.keys
   end
 
   def next(team_pairing, league_id)
@@ -91,6 +95,43 @@ class Schedule
     raise "TODO: Not implemented"
   end
 
+  # swaps the game weeks, choosing the first available time in that
+  # week for the game, this compresses the schedule and means that a
+  # single mutation can remove a game following an empty game day,
+  # instead of multiple mutations if we did a strict datetime swap
+  def swap_game_weeks(game1_date)
+    other_game_index = nil
+    game2_date = nil
+
+    # this is bad, we should be looking for games that will swap into
+    # another week and fill an empty slot, not just swapping for empty
+    # slots
+
+    # this should include available slots, as we will want to swap into an empty slot as often as possible
+    (empty_game_dates + games().shuffle.map(&:date)).each do |date|
+      if swappable?(@scheduled_times[game1_date], @scheduled_times[date])
+        game2_date = date
+        break
+      end
+    end
+
+    raise "Could not find a game to swap for #{@scheduled_times[game1_date]}" unless game2_date
+
+    # schedule has a list of game_dates that it hasn't used, so we can ask it for the next game
+    # swap needs to swap position AND game dates, not either/or
+    new_other_date =
+      [next_for_week(game1_date, @scheduled_times[game2_date]), game1_date].delete_if { |o| o == nil }.min
+
+    # this is a little hinky, but should be fine after game swap
+    if new_other_date != game1_date
+      # puts "other: #{@games[other_game_index]} new date: #{new_other_date}"
+      # puts "game1: #{@games[game_index]}"
+      swap_games!(new_other_date, game1_date)
+    end
+
+    swap_games!(new_other_date, game2_date)
+  end
+
   private
 
   def slot_for_day(date)
@@ -98,6 +139,7 @@ class Schedule
   end
 
   def teams_have_game_this_week(week_no, teams)
+    return false unless teams
     !@scheduled_times.select { |k, v| v.team_ids && k.strftime('%W') == week_no && !(v.team_ids & teams).empty? }.empty?
   end
 
@@ -129,7 +171,7 @@ class Schedule
 
   def in_scheduled_time?(game1, game2)
     game2_time = game2.date.strftime("%H:%M")
-    return @schedule.time_slots.select do |slot|
+    return @time_slots.select do |slot|
       sd = slot[:slot_info]
       slot[:league_ids].include?(game1.league_id) && slot[:league_ids].include?(game2.league_id) &&
       (0..sd.num_games).map { |i| add_num_games_to_start_time(sd.first_game_time, i).strftime("%H:%M") }.include?(game2_time) &&
@@ -149,49 +191,13 @@ class Schedule
     return false if game.date.to_date - game.date.wday == week
 
     game.team_ids.each do |team_id|
-      @games.each do |g|
+      games().each do |g|
         next unless g.date.to_date - g.date.wday == week
         return true if g.team_ids.include?(team_id)
       end
     end
 
     return false
-  end
-
-  # swaps the game weeks, choosing the first available time in that
-  # week for the game, this compresses the schedule and means that a
-  # single mutation can remove a game following an empty game day,
-  # instead of multiple mutations if we did a strict datetime swap
-  def swap_game_weeks(game1_date)
-    other_game_index = nil
-
-    # this is bad, we should be looking for games that will swap into
-    # another week and fill an empty slot, not just swapping for empty
-    # slots
-
-    # this should include available slots, as we will want to swap into an empty slot as often as possible
-    (empty_game_dates + games().shuffle.map(&:date)).each do |date|
-      if swappable?(@scheduled_times[game1_date], @scheduled_times[date])
-        game2_date = date
-        break
-      end
-    end
-
-    raise "Could not find a game to swap for #{@scheduled_times[game1_date]}" unless game2_date
-
-    # schedule has a list of game_dates that it hasn't used, so we can ask it for the next game
-    # swap needs to swap position AND game dates, not either/or
-    new_other_date =
-      [@schedule.next_for_week(game1_date, @scheduled_times[game2_date]), game1_date].delete_if { |o| o == nil }.min
-
-    # this is a little hinky, but should be fine after game swap
-    if new_other_date != game1_date
-      # puts "other: #{@games[other_game_index]} new date: #{new_other_date}"
-      # puts "game1: #{@games[game_index]}"
-      swap_games!(new_other_date, game1_date)
-    end
-
-    swap_games!(new_other_date, game2_date)
   end
 
   def swap_games!(game1_date, game2_date)
@@ -203,9 +209,5 @@ class Schedule
     tmp_game = @scheduled_times[game1_date]
     @scheduled_times[game1_date] = @scheduled_times[game2_date]
     @scheduled_times[game2_date] = tmp_game
-  end
-
-  def emtpy_game_dates
-    @scheduled_times.select { |gt| !gt.team_ids }.map(&:date)
   end
 end
