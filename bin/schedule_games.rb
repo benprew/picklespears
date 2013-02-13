@@ -1,95 +1,135 @@
 #!/usr/local/ruby/bin/ruby
 
 require 'date'
-require 'time'
-require 'picklespears/round_robin_schedule'
+require 'gga4r'
 require_relative '../picklespears'
+require 'picklespears/schedule_builder'
+require 'picklespears/round_robin_schedule'
+require 'picklespears/schedule'
 
 include RoundRobinSchedule
-
-class Schedule
-  attr :schedule, :current_week
-
-  def initialize(schedule_array, season_start_date)
-    @schedule = schedule_array
-    @current_week = season_start_date
-    @games = build_week(current_week)
-  end
-
-  def next
-    if @games.length < 1
-      @current_week += 7
-      @games = build_week(@current_week)
-    end
-    @games.shift
-  end
-
-  def add_scheduled_exception
-    raise "TODO: Not implemented"
-  end
-
-  private
-
-  def build_week(week)
-    @schedule.map do |day|
-      build_game_times(week, day.wday, day.num_games, day.first_game_time)
-    end.flatten
-  end
-
-  def build_game_times(week_start, weekday_offset, num_games_for_day, first_game_time, game_length_in_minutes=50)
-    start_date = week_start + weekday_offset
-    num_games_for_day -= 1
-    return (0..num_games_for_day).map do |i|
-      dt = DateTime.strptime("#{start_date} #{first_game_time} CET", '%Y-%m-%d %H:%M %Z')
-      time = dt.to_time
-      time + (60 * game_length_in_minutes * i)
-    end
-  end
-end
-
-def games_for_teams(teams, schedule)
-  build_games(teams, 8).each do |round|
-    round.each do |game|
-      p "#{schedule.next} #{game}"
-    end
-  end
-end
-
-def rounds_for_league(league_ids, schedule)
-  division_rounds = []
-  Division.filter(league_id: league_ids).order(:name.asc).each do |division|
-    # TODO: This will need to be changed ot teams in the current season
-    teams = division.teams_with_upcoming_games
-    next unless teams.length > 0
-    division_rounds << games_for_teams(teams, schedule)
-  end
-
-  return division_rounds
-end
 
 MENS_LEAGUE_ID = 1
 COED_LEAGUE_ID = 2
 WOMENS_LEAGUE_ID = 3
 
-coed_schedule = Schedule.new(
-  [
-    OpenStruct.new({ wday: 0, num_games: 12, first_game_time: '13:10'}),
-    OpenStruct.new({ wday: 4, num_games: 8, first_game_time: '18:10'}),
-    OpenStruct.new({ wday: 6, num_games: 11, first_game_time: '13:10'}),
-  ],
-  Date.today - Date.today.wday
-)
+# def games_for_teams(teams, schedule, league_id)
+#   build_games(teams, 8).each do |round|
+#     p round
+#     round.each do |game|
+#       p "#{schedule.next(league_id)} #{game}"
+#     end
+#     raise
+#   end
+# end
 
-rounds_for_league(COED_LEAGUE_ID, coed_schedule)
+def rounds_for_league(league_ids, schedule)
+  division_rounds = []
+  games = []
+  Division.filter(league_id: league_ids).order(:name.asc).each do |division|
+    # TODO: This will need to be changed ot teams in the current season
+    team_ids = division.teams_with_upcoming_games.map(&:id)
+    next unless team_ids.length > 0
+    rounds = build_games(team_ids, 8)
+    division_rounds << rounds.map { |round| round.map { |pairing| OpenStruct.new( team_ids: pairing, league_id: division.league_id ) } }
+  end
 
-single_gender_schedule = Schedule.new(
-  [
-    OpenStruct.new({ wday: 1, num_games: 5, first_game_time: '18:10'}),
-    OpenStruct.new({ wday: 2, num_games: 5, first_game_time: '18:10'}),
-    OpenStruct.new({ wday: 3, num_games: 5, first_game_time: '18:10'}),
-    OpenStruct.new({ wday: 4, num_games: 5, first_game_time: '18:10'}),
-  ],
-  Date.today - Date.today.wday
-)
+  first_round = division_rounds.shift
 
-rounds_for_league([MENS_LEAGUE_ID, WOMENS_LEAGUE_ID], coed_schedule)
+  first_round.zip(*division_rounds).each do |round|
+    round.flatten(1).shuffle.each do |pairing|
+      next unless pairing
+      schedule.add_game!(pairing)
+    end
+  end
+end
+
+def create_population(num_times=10)
+  population = []
+
+  num_times.times do
+    schedule = Schedule.new(
+      Date.today - Date.today.cwday + 1, #start date
+      [
+        {
+          league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 1, num_games: 5, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 2, num_games: 5, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 3, num_games: 5, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 4, num_games: 5, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ COED_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 5, num_games: 8, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ COED_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 6, num_games: 11, first_game_time: '13:10'}),
+        },
+        {
+          league_ids: [ MENS_LEAGUE_ID, COED_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 7, num_games: 12, first_game_time: '13:10'}), # sunday is flex day
+        },
+      ]
+      )
+
+    rounds_for_league([COED_LEAGUE_ID, MENS_LEAGUE_ID, WOMENS_LEAGUE_ID], schedule)
+    population << ScheduleBuilder.new(schedule)
+  end
+
+  population
+end
+
+def save_schedule(schedule)
+  puts "Writing schedule"
+  File.open('schedule.csv', 'w') do |file|
+    schedule.games.each do |game|
+      file.puts [game.date.strftime(PickleSpears::DATE_FORMAT), game.team_ids.map { |id| Team[id].name }.flatten(1) ].join "\t"
+    end
+  end
+end
+
+def score_schedule(builder)
+  builder.score_by_games.sort { |a, b| a[0] <=> b[0] }.each do |score_detail|
+    (date, score) = score_detail
+    case score
+    when ScheduleBuilder::SCORE_FOR_EMPTY_GAME_TIME
+      puts "#{date} has previous empty games"
+    when ScheduleBuilder::SCORE_FOR_CRAPPY_GAME_TIME
+      puts "#{date} is 2nd 'crappy' game time for team"
+    end
+  end
+end
+
+log = Logger.new(STDOUT)
+log.level = Logger::DEBUG
+
+require 'perftools'
+PerfTools::CpuProfiler.start("/tmp/population_create_perf.log") do
+  puts "Creating population"
+  ga = GeneticAlgorithm.new(create_population(10), max_population: 20)
+
+  best = ga.best_fit
+
+  score_schedule(best)
+  save_schedule(best.schedule)
+end
+
+raise
+
+puts "Evolving"
+100.times { |i| puts "Generation #{i}"; ga.evolve; puts "best: #{ga.best_fit.fitness} #{ga.best_fit.object_id}"; break if ga.best_fit.fitness == 1 }
+require 'pp'
+best = ga.best_fit
+# pp best.score_by_games.map { |gs| best.games[gs[0]] }
+p best.fitness
+
