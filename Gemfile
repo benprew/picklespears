@@ -22,6 +22,7 @@ group :development do
   gem "vagrant"
   gem "shotgun"
   gem 'pry'
+  gem 'perftools.rb', :git => 'git://github.com/tmm1/perftools.rb.git'
 end
 
 group :test do

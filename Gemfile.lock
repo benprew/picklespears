@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/tmm1/perftools.rb.git
+  revision: a632a4522682893f580a7f492320a7237000c8b7
+  specs:
+    perftools.rb (2.0.0)
+
+GIT
   remote: http://github.com/benprew/gga4r
   revision: a960e634b558ac603994b1cf5e5054cd58d654ca
   specs:
@@ -131,6 +137,7 @@ DEPENDENCIES
   i18n
   maruku
   newrelic_rpm
+  perftools.rb!
   pg
   pony
   prawn
