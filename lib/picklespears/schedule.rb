@@ -1,4 +1,5 @@
 require 'time'
+require 'set'
 
 class Schedule
 
@@ -12,6 +13,7 @@ class Schedule
     @game_times = build_for_week(@current_week)
     @max_games_for_day = Hash.new(0)
     @scheduled_times = {}
+    @team_weeks = Hash.new(Set.new)
   end
 
   def games
@@ -48,7 +50,9 @@ class Schedule
     game_time = self.next(game.team_ids, game.league_id)
     game_time.team_ids = game.team_ids
     game_time.league_id = game.league_id
-    @scheduled_times[game_time.delete_field(:date)] = game_time
+    date = game_time.delete_field(:date)
+    @team_weeks[date.strftime('%W')] += game.team_ids
+    @scheduled_times[date] = game_time
   end
 
   def empty_game_dates
@@ -139,8 +143,7 @@ class Schedule
   end
 
   def teams_have_game_this_week(week_no, teams)
-    return false unless teams
-    !@scheduled_times.select { |k, v| v.team_ids && k.strftime('%W') == week_no && !(v.team_ids & teams).empty? }.empty?
+    !(@team_weeks[week_no] & teams).empty?
   end
 
   def build_for_week(week)
@@ -163,10 +166,8 @@ class Schedule
     end
   end
 
-#### FROM SCHEDULE_BUILDER
-
   def swappable?(game1, game2)
-    in_scheduled_time?(game1, game2) && !other_games_in_week?(game1, game2.date.to_date - game2.date.wday)
+    in_scheduled_time?(game1, game2) && !teams_have_game_this_week(game2.strftime('%W'), game1.team_ids)
   end
 
   def in_scheduled_time?(game1, game2)
@@ -184,20 +185,6 @@ class Schedule
     dt = DateTime.strptime("#{first_game_time}", '%H:%M')
     time = dt.to_time
     time + (60 * game_length_in_minutes * games_to_add)
-  end
-
-  def other_games_in_week?(game, week)
-    # if we are looking at the same week as this game, we can swap them
-    return false if game.date.to_date - game.date.wday == week
-
-    game.team_ids.each do |team_id|
-      games().each do |g|
-        next unless g.date.to_date - g.date.wday == week
-        return true if g.team_ids.include?(team_id)
-      end
-    end
-
-    return false
   end
 
   def swap_games!(game1_date, game2_date)
