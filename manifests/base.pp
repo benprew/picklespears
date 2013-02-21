@@ -1,4 +1,7 @@
 import "postgres"
+import "teamvite-nginx"
+
+include teamvite-nginx
 
 Exec { path => "/usr/bin:/bin:/usr/sbin" }
 
@@ -17,7 +20,6 @@ package { "libsqlite3-dev"             : ensure => installed, require => Exec["a
 package { "libxml2-dev"                : ensure => installed, require => Exec["apt-update"] }
 package { "libxslt1-dev"               : ensure => installed, require => Exec["apt-update"] }
 package { "libyaml-dev"                : ensure => installed, require => Exec["apt-update"] }
-package { "nginx"                      : ensure => installed, require => Exec["apt-update"] }
 package { "postgresql-9.2"             : ensure => installed, require => Exec["apt-update"] }
 package { "rake"                       : ensure => installed, require => Exec["apt-update"] }
 package { "ruby1.9.3"                  : ensure => installed, require => Exec["apt-update"] }
