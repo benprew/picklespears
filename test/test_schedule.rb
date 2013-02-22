@@ -19,16 +19,16 @@ class TestSchedule < PickleSpears::Test::Unit
         },
         {
           league_ids: [ COED_LEAGUE_ID ],
-          slot_info: OpenStruct.new({ cwday: 6, num_games: 11, first_game_time: '13:10'}),
+          slot_info: OpenStruct.new({ cwday: 6, num_games: 4, first_game_time: '13:10'}),
         },
         {
           league_ids: [ MENS_LEAGUE_ID, COED_LEAGUE_ID, WOMENS_LEAGUE_ID ],
-          slot_info: OpenStruct.new({ cwday: 7, num_games: 12, first_game_time: '13:10'}), # sunday is flex day
+          slot_info: OpenStruct.new({ cwday: 7, num_games: 4, first_game_time: '13:10'}), # sunday is flex day
         },
       ])
 
     @games = []
-    (1..4).map { |i| g = OpenStruct.new( team_ids: [i, i + 3], league_id: COED_LEAGUE_ID ); @schedule.add_game!(g); @games << g }
+    (1..20).map { |i| g = OpenStruct.new( team_ids: [i, i + 3], league_id: COED_LEAGUE_ID ); @schedule.add_game!(g); @games << g }
   end
 
   def test_scheduled_games
@@ -53,12 +53,23 @@ class TestSchedule < PickleSpears::Test::Unit
     assert !@schedule.last_game_of_day?(Time.new(2013,3,16, 23,10,00, '+00:00'))
   end
 
-  def test_game_swap
-    games = @schedule.games
-    @schedule.send(:swap_games!, games[0].date, games[2].date)
+  def test_build_for_week
+    game_times = @schedule.send(:build_for_week, Date.new(2013,3,11))
 
-    assert_equal games.map(&:date), @schedule.games.map(&:date)
-    assert_equal [ @games[2], @games[1], @games[0], @games[3] ].map(&:id), @schedule.games.map(&:id)
+    assert_equal [[1,3]] * 5, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,11) }.map(&:league_ids)
+    assert_equal [[2]] * 4, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,16) }.map(&:league_ids)
+    assert_equal [[1,2,3]] * 4, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,17) }.map(&:league_ids)
+  end
+
+  def test_game_swap
+    @schedule.games.sort! { |a,b| a.date <=> b.date }
+    pre_swap_games = Marshal.load( Marshal.dump(@schedule.games))
+
+    @schedule.send(:swap_games!, 0, 7)
+    post_swap_games = @schedule.games.sort { |a,b| a.date <=> b.date }
+
+    assert_equal pre_swap_games.map(&:league_ids), post_swap_games.map(&:league_ids)
+    assert_equal [ pre_swap_games[7], pre_swap_games[1..6], pre_swap_games[0] ].flatten(1).map(&:team_ids), post_swap_games.map(&:team_ids)[0..7]
   end
 
   # def test_ideal_solution_fitness
