@@ -36,15 +36,6 @@ class ScheduleBuilder
     game_time_to_swap = @score_by_games.max_by { |g| g[1] }[0]
 
     game_to_mutate = @score_by_games.max_by { |g| g[1] }
-    if !@schedule.scheduled_times[game_to_mutate[0]].team_ids
-      require 'pp'
-      pp @score_by_games
-      p game_to_mutate
-      game2 = @schedule.scheduled_times[game_time_to_swap]
-      pp game2
-      pp @schedule.scheduled_times[game2.date]
-      raise "Invalid date"
-    end
 
     @schedule.swap_game_weeks(game_time_to_swap)
 
@@ -57,22 +48,12 @@ class ScheduleBuilder
   def calc_score_by_games
     team_crappy_games = Hash.new([])
     games_on_day = Hash.new([])
-#    game_times_score = {}
     games_score = []
 
-    empty_games = @schedule.empty_game_dates
-
     @schedule.games.each do |game|
-      num_empty_games_before_game = @schedule.empty_game_dates.select { |empty| empty < game.date }.length
-#      games_score += [[ game.date, (SCORE_FOR_EMPTY_GAME_TIME * num_empty_games_before_game) ]] if num_empty_games_before_game > 0
-      games_score += [ [game.date, SCORE_FOR_EMPTY_GAME_TIME] ] if num_empty_games_before_game > 0
 
-      # empty_games.each_index do |empty_game_index|
-      #   if game.date > empty_games[empty_game_index]
-      #     game_times_score[game.date] = SCORE_FOR_EMPTY_TIME
-      #     empty_games.delete_at(empty_game_index)
-      #   end
-      # end
+      num_empty_games_before_game = @schedule.game_times.select { |empty| empty.date < game.date }.length
+      games_score << [ game.date, (SCORE_FOR_EMPTY_GAME_TIME * num_empty_games_before_game) ] if num_empty_games_before_game > 0
 
       games_on_day[game.date.to_date] += [game]
 
@@ -81,14 +62,6 @@ class ScheduleBuilder
 
       game.team_ids.each do |t|
         if @schedule.first_game_of_day?(game.date) || @schedule.last_game_of_day?(game.date)
-
-          game2 = @schedule.scheduled_times[game.date]
-          if !game2.team_ids
-            p game
-            p game2
-            raise "Somethings wrong!"
-          end
-
           team_crappy_games[t] += [[game.date, SCORE_FOR_CRAPPY_GAME_TIME]]
         end
       end
