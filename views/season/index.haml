@@ -1,0 +1,40 @@
+%h3= "Season: #{@season.name}"
+%a.btn{ href: '/season/create' } Add New Season
+%a.btn{ href: url_for('/season/edit', season_id: @season.id) } Edit
+
+/ .btn Previous Season
+
+.row
+  .span4
+    %strong Season Starts on:
+    = @season.start_date
+
+.row
+  .span4
+    %strong Season Ends on:
+
+%strong Current Exceptions
+%ul
+  - @season.season_exceptions.each do |exception|
+    %li= "#{exception.date} #{exception.description}"
+.btn Add New Exception
+
+/ %strong Number of Teams in season
+/ %strong Number of Games in season
+
+.row
+%h3 Browse Schedule by Day
+%form.form-inline{ action: '/season/games' }
+  %input{ type: :hidden, value: @season.id }
+  %input{ type: :date }
+  %input.btn{ type: :submit, value: 'Browse' }
+
+%h3 Browse Schedule by Division
+- @season.leagues.each do |league|
+  %h4= league.name
+  %ul
+    - league.divisions_with_upcoming_games.sort{ |a, b| a.name <=> b.name }.each do |division|
+      %li
+        %a{ href: url_for('/season/games', { division_id: division.id, season_id: @season.id }) }= division.name
+
+

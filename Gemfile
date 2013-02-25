@@ -17,6 +17,7 @@ gem "fb_graph"
 gem "bcrypt-ruby"
 gem "prawn"
 gem 'gga4r', git: "http://github.com/benprew/gga4r"
+gem 'json'
 
 group :development do
   gem "vagrant"

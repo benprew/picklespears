@@ -56,15 +56,23 @@
                 %li
                   %a{ :href => "/league/manage" } Manage Leagues
               %li
-                %a{ href: '#' } Games by Day
-              %li
-                %a{ href: '/division/list' } Games by Division
-              %li
-                %a{ :href => "/browse?league_id=3" } Mens Teams
-              %li
-                %a{ :href => "/browse?league_id=1" } Womens Teams
-              %li
-                %a{ :href => "/browse?league_id=2" } Coed Teams
+                %a{ :href => '/season/list' } Seasons
+              %li.dropdown
+                %a.dropdown-toggle{ href: '#', 'data-toggle' => :dropdown }
+                  Browse Games
+                  %b.caret
+
+                %ul.dropdown-menu
+                  %li
+                    %a{ href: '#' } Games by Day
+                  %li
+                    %a{ href: '/division/list' } Games by Division
+                  %li
+                    %a{ :href => "/browse?league_id=3" } Mens Teams
+                  %li
+                    %a{ :href => "/browse?league_id=1" } Womens Teams
+                  %li
+                    %a{ :href => "/browse?league_id=2" } Coed Teams
               -if @player
                 %li.dropdown
                   %a.dropdown-toggle{ href: '#', 'data-toggle' => :dropdown }

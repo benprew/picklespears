@@ -11,6 +11,8 @@ require 'rack-flash'
 require 'bcrypt'
 require 'digest'
 require 'prawn'
+require 'json'
+require_relative 'lib/picklespears/core_extensions'
 
 config_file 'config/config.yml'
 

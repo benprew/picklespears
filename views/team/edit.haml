@@ -3,11 +3,19 @@
   .span6
     %h3 Team Info
     %form{ :method => 'post', :action => '/team/update' }
+      - if @redirect_to
+        %input{ type: :hidden, name: :redirect_to, value: @redirect_to }
       %input{ :type => :hidden, :name => :team_id, :value => @team.id }
-      %strong Name:
+      %label Name
       %input{ :type => :text, :name => :name, :value => @team.name }
-      %br
-      %strong Division:
+      %label Manager Name
+      %input{ type: :text, name: :manager_name, value: @team.manager_name }
+      %label Manager Email
+      %input{ type: :text, name: :manager_email, value: @team.manager_email }
+      %label Manager Phone number
+      %input{ type: :text, name: :manager_phone_no, value: @team.manager_phone_no }
+
+      %label Division:
       %select{ :name => 'division_id' }
         - @divisions.each do |division|
           - if division.id == @team.division_id

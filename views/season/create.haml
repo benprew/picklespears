@@ -1,0 +1,10 @@
+%h3 Create new Season/Schedule
+%form.form{ method: :post }
+  %label Season Name
+  %input{ type: :text, name: :season_name }
+
+  %label Start Date
+  %input{ type: :date, name: :start_date }
+
+  %br
+  %input.btn{ type: :submit, value: 'Next' }

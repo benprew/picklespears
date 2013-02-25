@@ -135,6 +135,7 @@ DEPENDENCIES
   gga4r!
   haml
   i18n
+  json
   maruku
   newrelic_rpm
   perftools.rb!
