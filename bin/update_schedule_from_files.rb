@@ -42,12 +42,10 @@ def add_game_for_team(division, team, is_home_team=false, game_date, game_descri
       :description => game_description
       )
 
-    TeamsGame.unrestrict_primary_key
     TeamsGame.find_or_create(
       game_id: game.id,
       team_id: t.id
       ) { |tg| tg.is_home_team = is_home_team }
-    TeamsGame.restrict_primary_key
   end
 
   deal_with_missing_team(team, division, game_date, game_description, is_home_team) unless found_team
