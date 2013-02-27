@@ -3,4 +3,7 @@
 %ul
   - @seasons.each do |season|
     %li
-      %a{ href: url_for('/season', season_id: season.id) }= season.name
+      - if !season.games.empty?
+        %a{ href: url_for('/season', season_id: season.id) }= season.name
+      - else
+        %a{ href: url_for('/season/edit', season_id: season.id) }= season.name
