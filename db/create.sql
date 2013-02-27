@@ -125,7 +125,7 @@ CREATE TABLE season_preferred_days(
       REFERENCES seasons DEFERRABLE,
     team_id integer NOT NULL
       REFERENCES teams (id) DEFERRABLE,
-    preferred_day_of_week varchar(8) NOT NULL,
+    preferred_day_of_week varchar(9) NOT NULL,
     PRIMARY KEY (season_id, team_id, preferred_day_of_week)
 );
 
