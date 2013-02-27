@@ -1,9 +1,11 @@
-%a.btn{ href: '/season/create' } New Season
-%h3 All Seasons
-%ul
-  - @seasons.each do |season|
-    %li
-      - if !season.games.empty?
-        %a{ href: url_for('/season', season_id: season.id) }= season.name
-      - else
-        %a{ href: url_for('/season/edit', season_id: season.id) }= season.name
+.row
+  .offset1
+    %a.btn{ href: '/season/create' } New Season
+    %h3 All Seasons
+    %ul
+      - @seasons.each do |season|
+        %li
+          - if !season.games.empty?
+            %a{ href: url_for('/season', season_id: season.id) }= season.name
+          - else
+            %a{ href: url_for('/season/edit', season_id: season.id) }= season.name

@@ -1,32 +1,46 @@
 - title "Edit #{@team.name}"
-.row
-  .span6
+.row-fluid
+  .offset1.span6
     %h3 Team Info
-    %form{ :method => 'post', :action => '/team/update' }
-      - if @redirect_to
-        %input{ type: :hidden, name: :redirect_to, value: @redirect_to }
+    %form.form-horizontal{ :method => 'post', :action => (@season ? '/season/update_team' : '/team/update') }
       %input{ :type => :hidden, :name => :team_id, :value => @team.id }
-      %label Name
-      %input{ :type => :text, :name => :name, :value => @team.name }
-      %label Manager Name
-      %input{ type: :text, name: :manager_name, value: @team.manager_name }
-      %label Manager Email
-      %input{ type: :text, name: :manager_email, value: @team.manager_email }
-      %label Manager Phone number
-      %input{ type: :text, name: :manager_phone_no, value: @team.manager_phone_no }
+      .control-group
+        %label.control-label Team Name
+        .controls
+          %input{ type: :text, name: :name, value: @team.name }
+      .control-group
+        %label.control-label Manager Name
+        .controls
+          %input{ type: :text, name: :manager_name, value: @team.manager_name }
+      .control-group
+        %label.control-label Manager Email
+        .controls
+          %input{ type: :email, name: :manager_email, value: @team.manager_email }
+      .control-group
+        %label.control-label Division
+        .controls
+          = partial :division_select, locals: { divisions: @divisions, initial: @team.division }
+      - if @season
+        %input{ :type => :hidden, :name => :season_id, :value => @season.id }
 
-      %label Division:
-      %select{ :name => 'division_id' }
-        - @divisions.each do |division|
-          - if division.id == @team.division_id
-            %option{ :value => division.id, :selected => :selected  }= division.name
-          - else
-            %option{ :value => division.id }= division.name
-      %br
+        .control-group
+          %label.control-label Preferred Days
+          .controls
+            - %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }.each do |day|
+              %label.checkbox
+                - if SeasonPreferredDay[@season.id,@team.id,day]
+                  %input{ type: :checkbox, name: 'preferred_day[]', value: day, checked: :checked }= day
+                - else
+                  %input{ type: :checkbox, name: 'preferred_day[]', value: day }= day
+
+        .control-group
+          %label.control-label Day to avoid
+          .controls
+            %input{ type: :date, name: 'day_to_avoid[]' }
       %button.btn Update
-      %br
-.row
-  .span5
+
+.row-fluid
+  .offset1.span5
     %h3 Upcoming Games
     %div
       %form.form-inline{ :action => '/team/add_game', :method => :post, :id => :new_game_form }
@@ -39,7 +53,7 @@
     %ul
       - @team.upcoming_games.each do |game|
         %li= "#{game.date.strftime(DATE_FORMAT)} #{game.description}"
-  .span7
+  .span6
     %h3 Players
     %form.form-inline{ action: "/team/#{@team.id}/add_player", method: 'post'}
       %table.table

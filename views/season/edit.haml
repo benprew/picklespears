@@ -1,138 +1,154 @@
-%label Season Name
-%input{ type: :text, name: :season_name, value: @season.name }
+.row-fluid
+  .offset1
+    %form{ method: :post, action: '/season/create_schedule' }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
+      %button.btn.btn-primary Create Schedule
 
-%label Start Date
-%input{ type: :date, name: :start_date, value: @season.start_date }
+.row-fluid
+  .offset1.span3
+    %h4 Season Details
+    %form{ action: '/season/edit', method: :post }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
 
-%form{ action: '/season/add_exception_day', method: :post }
-  %h4 Excluded Days
-  %input{ type: :hidden, name: :season_id, value: @season.id }
-  %table.table.form-inline
-    %thead
-      %th Date
-      %th Note
-      %th ...
-    %tbody
-      %tr
-        %td
-          %input{ type: :date, name: :date }
-        %td
-          %input{ type: :text, name: :description, placeholder: 'Reason for exclusion' }
-        %td
-          %button.btn.inline Add Exception
-      - @season.season_exceptions.each do |exception|
-        %tr
-          %td= exception.date
-          %td= exception.description
-          %td
-            %button.btn.inline{ name: :delete, value: exception.id } Delete
+      %label Season Name
+      %input{ type: :text, name: :name, value: @season.name }
 
--# %h4 Regularly Scheduled Times
--# %a.btn{ href: "#ScheduledTimeModal", role: :button, 'data-toggle' => :modal } Add Scheduled Time
--# #ScheduledTimeModal{ class: "modal hide fade", tabindex: -1, role: :dialog }
--#   .modal-header
--#     %button.close{ type: :button, 'data-dismiss' => :modal, 'aria-hidden' => true } &times;
--#     %h3 Add Scheduled Time
--#   .modal-body
--#     %form.form-horizontal
--#       .control-group
--#         %label.control-label Day of Week
--#         .controls
--#           %input{ type: :text, name: :day_of_week }
--#       .control-group
--#         %label.control-label Start time of 1st Game
--#         .controls
--#           %input{ type: :text, name: :start_time }
--#       .control-group
--#         %label.control-label Game Length (in minutes)
--#         .controls
--#           %input{ type: :text, name: :game_length }
--#       .control-group
--#         %label.control-label Number of Games to Play
--#         .controls
--#           %select{ name: :num_games }
--#             - (1..10).each do |i|
--#               %option= i
--#   .modal-footer
--#     %a.btn{ 'data-dismiss' => :modal } Cancel
--#     %a.btn Add Scheduled Time
+      %label Start Date
+      %input{ type: :date, name: :start_date, value: @season.start_date }
 
--# %table.table
--#   %thead
--#     %th Day of Week
--#     %th 1st Game Starts at
--#     %th # Games
+      %br
+      %button.btn Update
+  .span7
+    %h4 Facility Holidays
+    %form{ action: '/season/add_exception_day', method: :post }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
+      %table.table.table-striped.form-inline
+        %thead
+          %th Date
+          %th Note
+          %th &nbsp;
+        %tbody
+          %tr
+            %td
+              %input{ type: :date, name: :date }
+            %td
+              %input{ type: :text, name: :description, placeholder: 'Reason for exclusion' }
+            %td
+              %button.btn.inline Add
+          - @season.season_exceptions.each do |exception|
+            %tr
+              %td= exception.date
+              %td= exception.description
+              %td
+                %button.btn.inline{ name: :delete, value: exception.id } Delete
+.row-fluid
+  .offset1.span10
 
-%h4 Teams to Schedule
-%label League
-%form.form-inline{ method: :post, action: '/season/add_league' }
-  %input{ type: :hidden, name: :season_id, value: @season.id }
-  %select{ name: :league_id }
-    - @leagues.each do |league|
-      %option{ value: league.id }= league.name
-  %button.btn Add All Teams in League
-  %button.btn{ href: "#CreateTeamModal", role: :button, 'data-toggle' => :modal } Create Team
+    -# %h4 Regularly Scheduled Times
+    -# %a.btn{ href: "#ScheduledTimeModal", role: :button, 'data-toggle' => :modal } Add Scheduled Time
+    -# #ScheduledTimeModal{ class: "modal hide fade", tabindex: -1, role: :dialog }
+    -#   .modal-header
+    -#     %button.close{ type: :button, 'data-dismiss' => :modal, 'aria-hidden' => true } &times;
+    -#     %h3 Add Scheduled Time
+    -#   .modal-body
+    -#     %form.form-horizontal
+    -#       .control-group
+    -#         %label.control-label Day of Week
+    -#         .controls
+    -#           %input{ type: :text, name: :day_of_week }
+    -#       .control-group
+    -#         %label.control-label Start time of 1st Game
+    -#         .controls
+    -#           %input{ type: :text, name: :start_time }
+    -#       .control-group
+    -#         %label.control-label Game Length (in minutes)
+    -#         .controls
+    -#           %input{ type: :text, name: :game_length }
+    -#       .control-group
+    -#         %label.control-label Number of Games to Play
+    -#         .controls
+    -#           %select{ name: :num_games }
+    -#             - (1..10).each do |i|
+    -#               %option= i
+    -#   .modal-footer
+    -#     %a.btn{ 'data-dismiss' => :modal } Cancel
+    -#     %a.btn Add Scheduled Time
 
-%form{ method: :post, action: '/season/create_team' }
-  %input{ type: :hidden, name: :season_id, value: @season.id }
-  #CreateTeamModal{ class: "modal hide fade", tabindex: -1, role: :dialog }
-    .modal-header
-      %button.close{ type: :button, 'data-dismiss' => :modal, 'aria-hidden' => true } &times;
-      %h3 Create Team
-    .modal-body
-      %form.form-horizontal
-        .control-group
-          %label.control-label Name
-          .controls
-            %input{ type: :text, name: :name }
-        .control-group
-          %label.control-label Manager Name
-          .controls
-            %input{ type: :text, name: :manager_name }
-        .control-group
-          %label.control-label Manager Email
-          .controls
-            %input{ type: :text, name: :manager_email }
-        .control-group
-          %label.control-label Manager Phone number
-          .controls
-            %input{ type: :text, name: :manager_phone_no }
-        .control-group
-          %label.control-label Division
-          .controls
-            = partial :division_select, locals: { divisions: @divisions }
-        .control-group
-          %label.control-label Preferred Days
-          .controls
-            - %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }.each do |day|
-              %label.checkbox
-                %input{ type: :checkbox, name: 'preferred_day[]', value: day }= day
-        .control-group
-          %label.control-label Day to avoid
-          .controls
-            %input{ type: :date, name: 'day_to_avoid[]' }
-    .modal-footer
-      %a.btn{ 'data-dismiss' => :modal } Cancel
-      %button.btn Create Team
+    -# %table.table
+    -#   %thead
+    -#     %th Day of Week
+    -#     %th 1st Game Starts at
+    -#     %th # Games
 
-  %table.table.table-striped
-    %thead
-      %th Team Name
-      %th Division
-      %th ...
-    %tbody
-      - @season.teams.sort{ |a, b| a.division.name <=> b.division.name }.each do |team|
-        %tr
-          %td
-            %a.btn.btn-small{ href: url_for('/team/edit', { team_id: team.id }) } Edit
-            = team.name
-          %td= team.division.name
-          %td
-            %form{ method: :post, action: '/season/remove_team' }
-              %input{ type: :hidden, name: :season_id, value: @season.id }
-              %input{ type: :hidden, name: :team_id, value: team.id }
-              %button.btn Remove Team
+    %h4 Teams to Schedule
+    %label League
+    %form.form-inline{ method: :post, action: '/season/add_league' }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
+      %select{ name: :league_id }
+        - @leagues.each do |league|
+          %option{ value: league.id }= league.name
+      %button.btn Add All Teams in League
+      %button.btn{ href: "#CreateTeamModal", role: :button, 'data-toggle' => :modal } Create Team
 
-%form{ method: :post, action: '/season/create_schedule' }
-  %input{ type: :hidden, name: :season_id, value: @season.id }
-  %button.btn.btn-primary Create Schedule
+    %form.form-horizontal{ method: :post, action: '/season/create_team' }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
+      #CreateTeamModal{ class: "modal hide fade", tabindex: -1, role: :dialog }
+        .modal-header
+          %button.close{ type: :button, 'data-dismiss' => :modal, 'aria-hidden' => true } &times;
+          %h3 Create Team
+        .modal-body
+          .control-group
+            %label.control-label Team Name
+            .controls
+              %input{ type: :text, name: :name }
+          .control-group
+            %label.control-label Manager Name
+            .controls
+              %input{ type: :text, name: :manager_name }
+          .control-group
+            %label.control-label Manager Email
+            .controls
+              %input{ type: :email, name: :manager_email }
+          .control-group
+            %label.control-label Division
+            .controls
+              = partial :division_select, locals: { divisions: @divisions, initial: nil }
+          .control-group
+            %label.control-label Preferred Days
+            .controls
+              - %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }.each do |day|
+                %label.checkbox
+                  %input{ type: :checkbox, name: 'preferred_day[]', value: day }= day
+          .control-group
+            %label.control-label Day to avoid
+            .controls
+              %input{ type: :date, name: 'day_to_avoid[]' }
+        .modal-footer
+          %a.btn{ 'data-dismiss' => :modal } Cancel
+          %button.btn Create Team
+
+      %table.table.table-striped.form-inline
+        %thead
+          %th Team Name
+          %th Division
+          %th Preferred Days
+        %tbody
+          - @season.teams.sort{ |a, b| a.division.name <=> b.division.name }.each do |team|
+            %tr
+              %td
+                %a{ href: url_for('/team/edit', { team_id: team.id, season_id: @season.id }) }
+                  %i.icon-edit
+                  = team.name
+              %td= team.division.name
+              %td &nbsp;
+              %td
+                %form{ method: :post, action: '/season/remove_team' }
+                  %input{ type: :hidden, name: :season_id, value: @season.id }
+                  %input{ type: :hidden, name: :team_id, value: team.id }
+                  %button.btn.btn-mini{ title: 'Remove Team' }
+                    %i.icon-remove
+
+
+    %form{ method: :post, action: '/season/create_schedule' }
+      %input{ type: :hidden, name: :season_id, value: @season.id }
+      %button.btn.btn-primary Create Schedule

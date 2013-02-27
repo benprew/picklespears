@@ -4,6 +4,10 @@ class PickleSpears < Sinatra::Application
     haml 'season/list'.to_sym
   end
 
+  before '*' do
+    @season = Season[params[:season_id]] if params[:season_id]
+  end
+
   get '/season' do
     redirect '/season/list' unless params[:season_id]
 
@@ -14,15 +18,19 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/season/edit' do
-    @season = Season[params[:season_id]]
     @leagues = League.order{ :name }.all
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
 
     haml 'season/edit'.to_sym
   end
 
+  post '/season/edit' do
+    @season.update(params.slice(:name, :start_date)).save
+    flash[:success] = "Season updated"
+    redirect url_for '/season/edit', { season_id: @season.id }
+  end
+
   post '/season/add_exception_day' do
-    @season = Season[params[:season_id]]
     if !@season
       flash[:errors] = "Invalid season"
       redirect '/season'
@@ -40,14 +48,12 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/season/create_schedule' do
-    @season = Season[params[:season_id]]
     flash[:success] = "Schedule queued to build, you will receive an email when it is complete"
     send_email( to: 'benprew@gmail.com', subject: 'Schedule queued for season #{@season.name}' )
     redirect url_for '/season', { season_id: @season.id }
   end
 
   post '/season/add_league' do
-    @season = Season[params[:season_id]]
     @league = League[params[:league_id]]
     @teams = @league.divisions_with_upcoming_games.map(&:teams_with_upcoming_games).flatten(1)
 
@@ -59,24 +65,40 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/season/remove_team' do
-    @season = Season[params[:season_id]]
     @team = Team[params[:team_id]]
     @season.remove_team(@team)
     flash[:success] = "Removed team #{@team.name}"
     redirect url_for '/season/edit', { season_id: @season.id }
   end
 
+  post '/season/update_team' do
+    @team = Team[params[:team_id]]
+    @team.update(params.slice(:name, :manager_name, :manager_email, :manager_phone_no, :division_id))
+
+    params[:preferred_day].each do |day|
+      SeasonPreferredDay.find_or_create(team_id: @team.id, season_id: @season.id, preferred_day_of_week: day)
+    end if params[:preferred_day]
+
+    params[:day_to_avoid].each do |day|
+      next if day == ""
+      SeasonDayToAvoid.find_or_create(team_id: @team, season_id: @season.id, day_to_avoid: day)
+    end
+
+    flash[:success] = "Updated team #{@team.name}"
+    redirect url_for '/season/edit', { season_id: @season.id }
+  end
+
   post '/season/create_team' do
-    @season = Season[params[:season_id]]
 
     @team = Team.create(params.slice(:name, :manager_name, :manager_email, :manager_phone_no, :division_id))
     @season.add_team(@team)
 
     params[:preferred_day].each do |day|
       SeasonPreferredDay.create(team: @team, season: @season, preferred_day_of_week: day)
-    end
+    end if params[:preferred_day]
 
     params[:day_to_avoid].each do |day|
+      next if day == ""
       SeasonDayToAvoid.create(team: @team, season: @season, day_to_avoid: day)
     end
 
@@ -90,7 +112,6 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/season/games' do
-    @season = Season[params[:season_id]]
     @division = Division[params[:division_id]]
     @games = Game.where( id: DB[%q{ SELECT g.id FROM games g
       INNER JOIN teams_games tg ON (g.id = tg.game_id)

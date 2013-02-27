@@ -1,3 +1,6 @@
 %select{ name: :division_id }
   - divisions.each do |division|
-    %option{ value: division.id }= division.name
+    - if initial && initial == division
+      %option{ :value => division.id, :selected => :selected  }= division.name
+    - else
+      %option{ value: division.id }= division.name

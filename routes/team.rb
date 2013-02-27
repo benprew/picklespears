@@ -13,6 +13,7 @@ class PickleSpears < Sinatra::Application
   get '/team/edit' do
     @team = Team[params[:team_id]]
     @divisions = Division.all()
+    @redirect_to = params[:redirect_to]
 
     haml 'team/edit'.to_sym
   end
@@ -25,7 +26,7 @@ class PickleSpears < Sinatra::Application
 
     flash[:messages] = "Team updated!"
 
-    redirect url_for("/team", { :team_id => params[:team_id] })
+    redirect params[:redirect_to] || url_for("/team", { :team_id => params[:team_id] })
   end
 
   # Meant to be an ajax call
