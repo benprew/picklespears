@@ -7,7 +7,7 @@
 
 %form.form-inline
   Pick a Day:
-  %input{ type: :date, name: :date, value: date }
+  = partial :date_input, locals: { name: :date, value: date }
   %button.btn Go
 
 .row

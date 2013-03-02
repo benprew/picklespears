@@ -26,7 +26,7 @@
 %h3 Browse Schedule by Day
 %form.form-inline{ action: '/season/games' }
   %input{ type: :hidden, value: @season.id }
-  %input{ type: :date }
+  = partial :date_input, locals: { name: :date, value: '' }
   %input.btn{ type: :submit, value: 'Browse' }
 
 %h3 Browse Schedule by Division

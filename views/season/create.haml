@@ -4,7 +4,7 @@
   %input{ type: :text, name: :season_name }
 
   %label Start Date
-  %input{ type: :date, name: :start_date }
+  = partial :date_input, locals: { name: :season_name, value: '' }
 
   %br
   %input.btn{ type: :submit, value: 'Next' }
