@@ -14,14 +14,14 @@ class PickleSpears < Sinatra::Application
     @season = Season[params[:season_id]] if params[:season_id]
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
 
-    haml 'season/index'.to_sym
+    haml :'season/index'
   end
 
   get '/season/edit' do
     @leagues = League.order{ :name }.all
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
 
-    haml 'season/edit'.to_sym
+    haml :'season/edit'
   end
 
   post '/season/edit' do
@@ -38,11 +38,11 @@ class PickleSpears < Sinatra::Application
 
     if params[:delete]
       SeasonException[params[:delete]].delete
-      flash[:success] = "Removed exception on #{params[:date]}"
+      flash[:success] = "Removed holiday on #{params[:delete]}"
       redirect url_for '/season/edit', { season_id: @season.id }
     else
       SeasonException.new(params.slice(:date, :season_id, :description)).save
-      flash[:success] = "Added exception on #{params[:date]}"
+      flash[:success] = "Added holiday on #{params[:date]}"
       redirect url_for '/season/edit', { season_id: @season.id }
     end
   end
@@ -59,7 +59,9 @@ class PickleSpears < Sinatra::Application
 
     flash[:success] = "Added #{@teams.length} teams from league #{@league.name}"
 
-    @teams.each { |t| @season.add_team(t) }
+    current_teams = @season.teams
+
+    @teams.each { |t| @season.add_team(t) unless @season.teams.include?(t) }
 
     redirect url_for '/season/edit', { season_id: @season.id }
   end
@@ -81,11 +83,19 @@ class PickleSpears < Sinatra::Application
 
     params[:day_to_avoid].each do |day|
       next if day == ""
-      SeasonDayToAvoid.find_or_create(team_id: @team, season_id: @season.id, day_to_avoid: day)
+      day = Date.strptime(day, '%m/%d/%Y')
+      warn "day #{day}"
+      SeasonDayToAvoid.find_or_create(team_id: @team.id, season_id: @season.id, day_to_avoid: day)
     end
 
     flash[:success] = "Updated team #{@team.name}"
     redirect url_for '/season/edit', { season_id: @season.id }
+  end
+
+  get '/season/create_team' do
+    @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
+
+    haml 'team/create'.to_sym
   end
 
   post '/season/create_team' do

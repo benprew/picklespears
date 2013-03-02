@@ -33,10 +33,23 @@
                 - else
                   %input{ type: :checkbox, name: 'preferred_day[]', value: day }= day
 
-        .control-group
-          %label.control-label Day to avoid
-          .controls
-            %input{ type: :date, name: 'day_to_avoid[]' }
+        %h4 Days to Avoid
+        %table.table.table-striped.form-inline
+          %thead
+            %th Date
+            %th &nbsp;
+          %tbody
+            %tr
+              %td
+                = partial :date_input, locals: { name: 'day_to_avoid[]', value: '' }
+              %td
+                %button.btn.inline Add
+            - SeasonDayToAvoid.where( season_id: @season.id, team_id: @team.id).each do |sda|
+              %tr
+                %td= sda.day_to_avoid
+                %td
+                  %button.btn.inline{ name: :delete, value: sda.id, disabled: :disabled } Delete
+
       %button.btn Update
 
 .row-fluid
