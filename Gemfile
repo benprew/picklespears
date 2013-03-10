@@ -28,4 +28,5 @@ end
 
 group :test do
   gem "rack-test"
+  gem 'capybara'
 end

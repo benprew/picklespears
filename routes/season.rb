@@ -1,9 +1,4 @@
 class PickleSpears < Sinatra::Application
-  get '/season/list' do
-    @seasons = Season.all
-    haml 'season/list'.to_sym
-  end
-
   before '*' do
     @season = Season[params[:season_id]] if params[:season_id]
   end
@@ -15,6 +10,21 @@ class PickleSpears < Sinatra::Application
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
 
     haml :'season/index'
+  end
+
+  get '/season/list' do
+    @seasons = Season.all
+    haml 'season/list'.to_sym
+  end
+
+  get '/season/create' do
+    @leagues = League.order{ :name }.all
+    haml 'season/create'.to_sym
+  end
+
+  post '/season/create' do
+    season = Season.create(params.slice(:name, :start_date))
+    redirect url_for '/season/edit', { season_id: season.id }
   end
 
   get '/season/edit' do
@@ -37,20 +47,16 @@ class PickleSpears < Sinatra::Application
     end
 
     if params[:delete]
-      SeasonException[params[:delete]].delete
-      flash[:success] = "Removed holiday on #{params[:delete]}"
+      holiday = SeasonException[params[:delete]]
+      flash[:success] = "Removed holiday #{holiday.description} on #{holiday.date}"
+      holiday.delete
+
       redirect url_for '/season/edit', { season_id: @season.id }
     else
       SeasonException.new(params.slice(:date, :season_id, :description)).save
       flash[:success] = "Added holiday on #{params[:date]}"
       redirect url_for '/season/edit', { season_id: @season.id }
     end
-  end
-
-  post '/season/create_schedule' do
-    flash[:success] = "Schedule queued to build, you will receive an email when it is complete"
-    send_email( to: 'benprew@gmail.com', subject: 'Schedule queued for season #{@season.name}' )
-    redirect url_for '/season', { season_id: @season.id }
   end
 
   post '/season/add_league' do
@@ -83,7 +89,7 @@ class PickleSpears < Sinatra::Application
 
     params[:day_to_avoid].each do |day|
       next if day == ""
-      day = Date.strptime(day, '%m/%d/%Y')
+      day = Date.strptime(day, '%Y-%m-%d')
       warn "day #{day}"
       SeasonDayToAvoid.find_or_create(team_id: @team.id, season_id: @season.id, day_to_avoid: day)
     end
@@ -95,7 +101,7 @@ class PickleSpears < Sinatra::Application
   get '/season/create_team' do
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
 
-    haml 'team/create'.to_sym
+    haml :'team/create'
   end
 
   post '/season/create_team' do
@@ -116,11 +122,6 @@ class PickleSpears < Sinatra::Application
     redirect url_for '/season/edit', { season_id: @season.id }
   end
 
-  get '/season/create' do
-    @leagues = League.order{ :name }.all
-    haml 'season/create'.to_sym
-  end
-
   get '/season/games' do
     @division = Division[params[:division_id]]
     @games = Game.where( id: DB[%q{ SELECT g.id FROM games g
@@ -132,11 +133,9 @@ class PickleSpears < Sinatra::Application
     haml 'season/games'.to_sym
   end
 
-  post '/season/create' do
-    season = Season.new
-    season.name = params[:season_name]
-    season.start_date = params[:start_date]
-    season.save
-    redirect url_for '/season/edit', { season_id: season.id }
+  post '/season/create_schedule' do
+    flash[:success] = "Schedule queued to build, you will receive an email when it is complete"
+    send_email( to: 'benprew@gmail.com', subject: "Schedule queued for season #{@season.name}" )
+    redirect url_for '/season', { season_id: @season.id }
   end
 end
