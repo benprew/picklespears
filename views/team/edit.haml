@@ -17,6 +17,10 @@
         .controls
           %input{ type: :email, name: :manager_email, value: @team.manager_email }
       .control-group
+        %label.control-label Manager Phone
+        .controls
+          %input{ type: :tel, name: :manager_phone_no, value: @team.manager_phone_no }
+      .control-group
         %label.control-label Division
         .controls
           = partial :division_select, locals: { divisions: @divisions, initial: @team.division }
