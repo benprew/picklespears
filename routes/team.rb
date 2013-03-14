@@ -2,7 +2,12 @@ class PickleSpears < Sinatra::Application
   get '/team' do
     @team = Team[params[:team_id]]
 
-    haml 'team/index'.to_sym
+    if !@team
+      flash[:errors] = 'No team with that id was found'
+      redirect '/team/search'
+    end
+
+    haml :'team/index'
   end
 
   get '/team/calendar' do
