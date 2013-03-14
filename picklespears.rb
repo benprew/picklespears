@@ -31,6 +31,11 @@ class PickleSpears < Sinatra::Application
   configure :production do
     set :clean_trace, true
     require 'newrelic_rpm'
+
+    get error do
+      send_email to: 'ben.prew@gmail.com', subject: 'error on teamvite.com', body: request.env['sinatra.error'].message
+      "Application error."
+    end
   end
 
   before do
