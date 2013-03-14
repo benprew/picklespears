@@ -12,6 +12,6 @@ class PickleSpears < Sinatra::Application
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
     @games = Game.where(teams: Team.where(division: Division[params[:division_id]]) ).order(:date)
 
-    haml 'division/index'.to_sym
+    haml :'division/index'
   end
 end
