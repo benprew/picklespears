@@ -1,5 +1,5 @@
-- title "browsing league: #{@league}"
-%h2= "Teams for #{@league}"
+- title "browsing league: #{@league.name}"
+%h2= "Teams for #{@league.name}"
 - @divisions.each do |division|
 - next unless division.teams_with_upcoming_games.length > 0
   .row

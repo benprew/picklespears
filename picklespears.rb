@@ -52,7 +52,13 @@ class PickleSpears < Sinatra::Application
 
   get '/browse' do
     @divisions = Division.filter(:league_id => params[:league_id]).order(:name.asc).all
-    @league = League[params[:league_id]].name
+    @league = League[params[:league_id]]
+
+    if !@league
+      flash[:errors] = 'No league with that name was found'
+      redirect '/team/search'
+    end
+
     haml :browse
   end
 
