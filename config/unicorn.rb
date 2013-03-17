@@ -4,17 +4,13 @@
 
 @app_root = "/var/www/teamvite/current/"
 
-user "throwingbones"
+user 'teamvite'
 worker_processes 2
 working_directory @app_root
 
 preload_app true
 
 timeout 30
-
-# Specify path to socket unicorn listens to,
-# we will use this in our nginx.conf later
-listen "0.0.0.0:9000", :backlog => 2048
 
 # Set process id path
 pid "#{@app_root}tmp/pids/teamvite.pid"
