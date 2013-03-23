@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# To restore to heroku
+
+DB=ps_up.db
+pg_dump -U picklespears picklespears >$DB
+scp $DB throwingbones@throwingbones.com:src/websites/throwingbones/site/public
+# NOTE: I don't know why the database is called DATABASE_URL, but it is...
+heroku pgbackups:restore DATABASE_URL http://verastreet.com/$DB
+ssh throwingbones@throwingbones.com rm src/websites/throwingbones/site/public/$DB
