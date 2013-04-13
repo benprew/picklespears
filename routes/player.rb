@@ -90,6 +90,9 @@ class PickleSpears < Sinatra::Application
     game = Game[params[:game_id]]
     @status = params[:status]
     @player_from_request = Player[params[:player_id]]
+
+    halt 400 unless game && @player_from_request
+
     @player_from_request.set_attending_status_for_game(game, @status)
     flash[:messages] = haml 'player/attending_status_for_game'.to_sym, :layout => false
     redirect url_for("/team", :team_id => game.team_player_plays_on(@player_from_request).id)
