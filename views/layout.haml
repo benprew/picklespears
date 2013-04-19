@@ -55,8 +55,9 @@
               - if is_league_manager?
                 %li
                   %a{ :href => "/league/manage" } Manage Leagues
-              %li
-                %a{ :href => '/season/list' } Seasons
+              -if @player
+                %li
+                  %a{ :href => '/season/list' } Seasons
               %li.dropdown
                 %a.dropdown-toggle{ href: '#', 'data-toggle' => :dropdown }
                   Browse Games
