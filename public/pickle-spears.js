@@ -2,14 +2,15 @@ $(function() {
   $("a[href*='/game/attending_status']").click(function(e) {
     e.preventDefault();
     function updateDiv(data) {
-      $("#status_" + e.srcElement.id).html(data);
+      $("#status_" + e.target.id).html(data);
     }
-    $.get(e.srcElement.href, { game_id: e.srcElement.id }, updateDiv)
+    console.log(e)
+    $.get(e.target.href, { game_id: e.target.id }, updateDiv)
   });
 
   $( ".join_team" ).click(function(e) {
     e.preventDefault();
-    var team_id = e.srcElement.id
+    var team_id = e.target.id
     $.get('/team/join', { team_id: team_id }, function(data) { $("#" + team_id).html(data) });
   });
 });
