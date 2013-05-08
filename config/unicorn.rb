@@ -3,6 +3,7 @@
 # note the trailing slash in this example
 
 @app_root = "/var/www/teamvite/current/"
+@pid_path = "/var/run/teamvite"
 
 user 'teamvite'
 worker_processes 2
@@ -13,11 +14,11 @@ preload_app true
 timeout 30
 
 # Set process id path
-pid "#{@app_root}tmp/pids/teamvite.pid"
+pid "#{@pid_path}/teamvite.pid"
 
 # Set log file paths
-stderr_path "#{@app_root}log/teamvite.stderr.log"
-stdout_path "#{@app_root}log/teamvite.stdout.log"
+stderr_path "/var/log/teamvite/stderr.log"
+stdout_path "/var/log/teamvite/stdout.log"
 
 before_fork do |server, worker|
   ##
@@ -31,7 +32,7 @@ before_fork do |server, worker|
   #
   # Using this method we get 0 downtime deploys.
 
-  old_pid = @app_root + '/tmp/pids/teamvite.pid.oldbin'
+  old_pid = "#{@pid_path}/teamvite.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
