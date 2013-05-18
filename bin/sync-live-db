@@ -6,13 +6,13 @@ backup_url=`heroku pgbackups:url $latest_backup_id`
 /usr/bin/curl "$backup_url" > ps.db
 echo "This will overwrite data in picklespears. Sleeping for 5 seconds for possible abort"
 sleep 5;
-ssh teamvitedev 'sudo -u postgres dropdb picklespears'
-ssh teamvitedev 'sudo -u postgres createdb picklespears'
-ssh teamvitedev 'cd ~/src/picklespears && pg_restore -d picklespears -U picklespears -O ps.db -1 -n public'
+ssh teamvitedev 'sudo -u postgres dropdb teamvite'
+ssh teamvitedev 'sudo -u postgres createdb teamvite'
+ssh teamvitedev 'cd ~/src/picklespears && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
 
 # TO restore to heroku
 # DB=ps_up.db
-# pg_dump -U picklespears picklespears >$DB
+# pg_dump -U teamvite teamvite >$DB
 # scp $DB throwingbones.com:src/websites/throwingbones/site/public
 # # NOTE: I don't know why the database is called DATABASE_URL, but it is...
 # heroku pgbackups:restore DATABASE_URL http://verastreet.com/$DB
