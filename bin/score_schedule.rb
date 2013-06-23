@@ -41,15 +41,6 @@ def score_schedule(builder)
   puts "# of games that are on a team's requested day off: #{games_on_requested_days_off}"
 end
 
-def save_schedule(schedule)
-  puts "Writing schedule"
-  File.open('schedule.csv', 'w') do |file|
-    schedule.games.sort { |a, b| a.date <=> b.date }.each do |game|
-      file.puts [game.date.strftime(PickleSpears::DATE_FORMAT), game.team_ids.map { |id| Team[id].name }.flatten(1), Team[game.team_ids[0]].division.name ].join ","
-    end
-  end
-end
-
 season = Season.where(name: 'Spring 2013').first
 
 MENS_LEAGUE_ID = 1
@@ -104,4 +95,4 @@ CSV.read(ARGV[0]).each do |r|
 end
 
 score_schedule(ScheduleBuilder.new(schedule))
-save_schedule(schedule)
+schedule.export_to_file('schedule.csv')

@@ -108,12 +108,6 @@ def create_population(num_times=10)
 end
 
 def save_schedule(schedule)
-  puts "Writing schedule"
-  File.open('schedule.csv', 'w') do |file|
-    schedule.games.each do |game|
-      file.puts [game.date.strftime(PickleSpears::DATE_FORMAT), game.team_ids.map { |id| Team[id].name }.flatten(1), Team[game.team_ids[0]].division.name ].join "\t"
-    end
-  end
 end
 
 log = Logger.new(STDOUT)
@@ -132,4 +126,5 @@ require 'pp'
 best = ga.best_fit
 p best.fitness
 
-save_schedule(best.schedule)
+warn "Writing schedule"
+best.schedule.export_to_file('schedule.csv')
