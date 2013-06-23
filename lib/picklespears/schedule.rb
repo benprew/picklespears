@@ -5,15 +5,24 @@ class Schedule
 
   GAME_LENGTH_IN_MINUTES = 50
 
-  attr :time_slots, :current_week, :game_times, :games
+  attr :time_slots, :current_week, :game_times, :games, :season
 
-  def initialize(season_start_date, time_slots)
+  def initialize(season, time_slots)
     @time_slots = time_slots
-    @current_week = season_start_date
-    @game_times = build_for_week(@current_week)
+    @current_week = season.start_date
+    @game_times = []
     @max_games_for_day = Hash.new(0)
     @games = []
     @team_weeks = Hash.new(Set.new)
+    @season = season
+  end
+
+  def export_to_file(filename)
+    File.open(filename, 'w') do |file|
+      schedule.games.each do |game|
+        file.puts [game.date.strftime(PickleSpears::DATE_FORMAT), game.team_ids.map { |id| Team[id].name }.flatten(1), Team[game.team_ids[0]].division.name ].join ","
+      end
+    end
   end
 
   def first_game_of_day?(date)
@@ -100,13 +109,14 @@ class Schedule
   # instead of multiple mutations if we did a strict datetime swap
   def swap_game_weeks(game1_date)
     game1_index = index_for_date(game1_date)
-    other_game_index = nil
     game2_index = nil
 
     # this is bad, we should be looking for games that will swap into
     # another week and fill an empty slot, not just swapping for empty
     # slots
-    @games.shuffle.each_index do |index|
+    (0..@games.length - 1).to_a.shuffle.each do |index|
+      warn "game1 index is null" unless game1_index
+      warn "index is null" unless index
       if swappable?(@games[game1_index], @games[index])
         game2_index = index
         break
@@ -134,12 +144,16 @@ class Schedule
 
   private
 
+  def game_week_no(game)
+    game.date.strftime('%W')
+  end
+
   def slot_for_day(date)
     @time_slots.select{ |slot| slot[:slot_info].cwday == (date.wday + 1) }.first
   end
 
   def teams_have_game_this_week(date, teams)
-    !(@team_weeks[date.strftime('%W')] & teams).empty?
+    !(@games.select { |g| game_week_no(g) == date.strftime('%W') && g.date != date }.map { |g| g.team_ids }.flatten & teams).empty?
   end
 
   def build_for_week(week)
@@ -163,16 +177,22 @@ class Schedule
   end
 
   def swappable?(game1, game2)
-    in_scheduled_time?(game1, game2) && !teams_have_game_this_week(game2.date, game1.team_ids)
+    game1 != game2 &&
+      in_scheduled_time?(game1, game2) &&
+      !teams_have_game_this_week(game2.date, game1.team_ids) &&
+      !teams_have_game_this_week(game1.date, game2.team_ids)
   end
 
   def in_scheduled_time?(game1, game2)
     game2_time = game2.date.strftime("%H:%M")
     return @time_slots.select do |slot|
       sd = slot[:slot_info]
+      game2_cwday = game2.date.wday
+      game2_cwday = 7 if game2_cwday == 0
+
       slot[:league_ids].include?(game1.league_id) && slot[:league_ids].include?(game2.league_id) &&
       (0..sd.num_games).map { |i| add_num_games_to_start_time(sd.first_game_time, i).strftime("%H:%M") }.include?(game2_time) &&
-      sd.cwday == game2.date.cwday
+      sd.cwday == game2_cwday
     end
   end
 
