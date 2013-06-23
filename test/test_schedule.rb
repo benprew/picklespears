@@ -10,8 +10,11 @@ class TestSchedule < PickleSpears::Test::Unit
   WOMENS_LEAGUE_ID = 3
 
   def setup
+    season = Season.new
+    season.start_date = Date.new(2013,3,11)
+
     @schedule = Schedule.new(
-      Date.new(2013,3,11),
+      season,
       [
         {
           league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
@@ -70,6 +73,32 @@ class TestSchedule < PickleSpears::Test::Unit
 
     assert_equal pre_swap_games.map(&:league_ids), post_swap_games.map(&:league_ids)
     assert_equal [ pre_swap_games[7], pre_swap_games[1..6], pre_swap_games[0] ].flatten(1).map(&:team_ids), post_swap_games.map(&:team_ids)[0..7]
+  end
+
+  def test_swappable
+    season = Season.new
+    season.start_date = Date.new(2013,3,11)
+
+    schedule = Schedule.new(
+      season,
+      [
+        {
+          league_ids: [ MENS_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 1, num_games: 5, first_game_time: '18:10'}),
+        },
+        {
+          league_ids: [ COED_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 6, num_games: 4, first_game_time: '13:10'}),
+        },
+        {
+          league_ids: [ MENS_LEAGUE_ID, COED_LEAGUE_ID, WOMENS_LEAGUE_ID ],
+          slot_info: OpenStruct.new({ cwday: 7, num_games: 4, first_game_time: '13:10'}), # sunday is flex day
+        },
+      ])
+
+    (1..2).map { |i| g = OpenStruct.new( team_ids: [1, 2], league_id: COED_LEAGUE_ID ); schedule.add_game!(g);  }
+
+    assert schedule.send(:swappable?, *schedule.games), "games should be swappable"
   end
 
   # def test_ideal_solution_fitness
