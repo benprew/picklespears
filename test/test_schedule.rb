@@ -59,9 +59,9 @@ class TestSchedule < PickleSpears::Test::Unit
   def test_build_for_week
     game_times = @schedule.send(:build_for_week, Date.new(2013,3,11))
 
-    assert_equal [[1,3]] * 5, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,11) }.map(&:league_ids)
-    assert_equal [[2]] * 4, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,16) }.map(&:league_ids)
-    assert_equal [[1,2,3]] * 4, game_times.select { |gt| gt.date.to_date == Date.new(2013,03,17) }.map(&:league_ids)
+    assert_equal ['18:10', '19:00', '19:50', '20:40', '21:30'], game_times.select { |gt| gt.date.to_date == Date.new(2013,03,11) }.map { |g| g.date.strftime('%H:%M') }
+    assert_equal ['13:10', '14:00', '14:50', '15:40' ], game_times.select { |gt| gt.date.to_date == Date.new(2013,03,16) }.map { |g| g.date.strftime('%H:%M') }
+    assert_equal ['13:10', '14:00', '14:50', '15:40' ], game_times.select { |gt| gt.date.to_date == Date.new(2013,03,17) }.map { |g| g.date.strftime('%H:%M') }
   end
 
   def test_game_swap
