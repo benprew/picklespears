@@ -1,7 +1,9 @@
 require 'time'
 require 'set'
+require 'picklespears/schedule_builder'
 
 class Schedule
+  include ScheduleBuilder
 
   GAME_LENGTH_IN_MINUTES = 50
 
@@ -19,7 +21,7 @@ class Schedule
 
   def export_to_file(filename)
     File.open(filename, 'w') do |file|
-      schedule.games.each do |game|
+      @games.each do |game|
         file.puts [game.date.strftime(PickleSpears::DATE_FORMAT), game.team_ids.map { |id| Team[id].name }.flatten(1), Team[game.team_ids[0]].division.name ].join ","
       end
     end
@@ -43,8 +45,13 @@ class Schedule
 
   def next_for_week(date, game)
     raise "One or more teams are already playing in week: #{date}" if !same_week?(date, game.date) && teams_have_game_this_week(date, game.team_ids)
-    game_time = @game_times.index { |gt| same_week?(date, gt.date) && gt.league_ids.include?(game.league_id) }
+    game_time = @game_times.index { |gt| same_week?(date, gt.date) && league_can_play_on_date?(game.league_id, gt.date) }
     return @game_times.delete_at(game_time) if game_time
+  end
+
+  def league_can_play_on_date?(league_id, date)
+    slot = slot_for_day(date)
+    slot[:league_ids].include?(league_id)
   end
 
   def same_week?(week1, week2)
@@ -68,7 +75,7 @@ class Schedule
     game_time_index = nil
     while (!game_time_index) do
       @game_times.each_index do |i|
-        if @game_times[i].league_ids.include?(league_id) && !teams_have_game_this_week(@game_times[i].date, team_pairing)
+        if league_can_play_on_date?(league_id, @game_times[i].date) && !teams_have_game_this_week(@game_times[i].date, team_pairing)
           game_time_index = i
           break
         end
@@ -135,8 +142,8 @@ class Schedule
       # puts "other: #{@games[other_game_index]} new date: #{new_other_date}"
       # puts "game1: #{@games[game_index]}"
       game = @games[game1_index]
-      @games[game1_index] = OpenStruct.new( date: new_other_slot.date, league_ids: new_other_slot.league_ids, team_ids: game.team_ids )
-      @game_times << OpenStruct.new( date: game.date, league_ids: game.league_ids )
+      @games[game1_index] = OpenStruct.new( date: new_other_slot.date, team_ids: game.team_ids )
+      @game_times << OpenStruct.new( date: game.date )
     end
 
     swap_games!(game1_index, game2_index)
@@ -149,7 +156,10 @@ class Schedule
   end
 
   def slot_for_day(date)
-    @time_slots.select{ |slot| slot[:slot_info].cwday == (date.wday + 1) }.first
+    date_cwday = date.wday
+    date_cwday = 7 if date_cwday == 0
+
+    @time_slots.select{ |slot| slot[:slot_info].cwday == date_cwday }.first
   end
 
   def teams_have_game_this_week(date, teams)
@@ -159,19 +169,17 @@ class Schedule
   def build_for_week(week)
     @time_slots.map do |slot_hash|
       day = slot_hash[:slot_info]
-      league_ids = slot_hash[:league_ids]
-      build_game_times(week, day.cwday - 1, day.num_games, day.first_game_time, league_ids)
+      build_game_times(week, day.cwday - 1, day.num_games, day.first_game_time)
     end.flatten
   end
 
-  def build_game_times(week_start, weekday_offset, num_games_for_day, first_game_time, league_ids, game_length_in_minutes=50)
+  def build_game_times(week_start, weekday_offset, num_games_for_day, first_game_time, game_length_in_minutes=50)
     start_date = week_start + weekday_offset
     num_games_for_day -= 1
     return (0..num_games_for_day).map do |i|
       time = Time.strptime("#{start_date} #{first_game_time} GMT", '%Y-%m-%d %H:%M %Z').utc
       OpenStruct.new({
           date: time + (60 * game_length_in_minutes * i),
-          league_ids: league_ids,
       })
     end
   end
@@ -204,12 +212,6 @@ class Schedule
   end
 
   def swap_games!(game1_index, game2_index)
-    # league ids is property of the date slot, not of the teams playing
-    tmp_league_ids = @games[game1_index].league_ids
-    @games[game1_index].league_ids = @games[game2_index].league_ids
-    @games[game2_index].league_ids = tmp_league_ids
-
-    # league ids is property of the date slot, not of the teams playing
     tmp_date = @games[game1_index].date
     @games[game1_index].date = @games[game2_index].date
     @games[game2_index].date = tmp_date

@@ -3,7 +3,6 @@
 require 'date'
 require_relative '../picklespears'
 require 'gga4r'
-require 'picklespears/schedule_builder'
 require 'picklespears/round_robin_schedule'
 require 'picklespears/schedule'
 
@@ -101,7 +100,7 @@ def create_population(num_times=10)
 
     rounds_for_league([COED_LEAGUE_ID, MENS_LEAGUE_ID, WOMENS_LEAGUE_ID], schedule)
     puts "adding population"
-    population << ScheduleBuilder.new(schedule)
+    population << schedule
   end
 
   population
