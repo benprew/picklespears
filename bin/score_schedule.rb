@@ -6,10 +6,16 @@
 # Away Team
 
 require 'csv'
+require 'optparse'
 
 require_relative '../picklespears'
 require 'picklespears/schedule'
 require 'picklespears/schedule_builder'
+
+OptionParser.new do |op|
+  op.on("--season season", "season name") { |val| @season_name = val }
+  op.on('--schedule schedule')    { |val| @schedule_filename = val }
+end.parse!
 
 def score_schedule(builder)
   empty_game_times = 0
@@ -41,7 +47,7 @@ def score_schedule(builder)
   puts "# of games that are on a team's requested day off: #{games_on_requested_days_off}"
 end
 
-season = Season.where(name: 'Spring 2013').first
+season = Season.where(name: @season_name).first
 
 MENS_LEAGUE_ID = 1
 COED_LEAGUE_ID = 2
@@ -79,13 +85,16 @@ schedule = Schedule.new(season,
         },
       ])
 
-CSV.read(ARGV[0]).each do |r|
+CSV.read(@schedule_filename).each do |r|
   (date_str, home_team, away_team) = r
 
   date = DateTime.strptime(date_str, '%a %b %e %I:%M %p')
 
   home = season.teams.select { |t| t.name == home_team }.first
   away = season.teams.select { |t| t.name == away_team }.first
+
+  raise "no team for #{home_team}" unless home
+  raise "no team for #{away_team}" unless away
 
   schedule.games << OpenStruct.new(
     team_ids: [home.id, away.id],
@@ -94,5 +103,5 @@ CSV.read(ARGV[0]).each do |r|
     date: date.to_time)
 end
 
-score_schedule(ScheduleBuilder.new(schedule))
+score_schedule(schedule)
 schedule.export_to_file('schedule.csv')
