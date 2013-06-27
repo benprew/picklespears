@@ -1,0 +1,3 @@
+#!/bin/bash
+
+while read line; do DIV=`echo $line | cut -f4 -d,`; echo $line >> ${DIV}.csv; done < $1
