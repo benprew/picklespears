@@ -17,6 +17,8 @@ OptionParser.new do |op|
   op.on('--schedule schedule')    { |val| @schedule_filename = val }
 end.parse!
 
+@teams_games = Hash.new(0)
+
 def score_schedule(builder)
   empty_game_times = 0
   crappy_game_times = 0
@@ -41,10 +43,15 @@ def score_schedule(builder)
     end
   end
 
+  puts "teams without 8 games: " + teams_without_eight_games
   puts "# of games after empty slot: #{empty_game_times}"
   puts "# of games that are a 2nd first or last game for team: #{crappy_game_times}"
   puts "# of games that are on a nonpreferred day for a team: #{nonpreferred_game_time}"
   puts "# of games that are on a team's requested day off: #{games_on_requested_days_off}"
+end
+
+def teams_without_eight_games
+  @teams_games.select { |k, v| v != 8 }.keys.join " "
 end
 
 season = Season.where(name: @season_name).first
@@ -95,6 +102,9 @@ CSV.read(@schedule_filename).each do |r|
 
   raise "no team for #{home_team}" unless home
   raise "no team for #{away_team}" unless away
+
+  @teams_games[home] += 1
+  @teams_games[away] += 1
 
   schedule.games << OpenStruct.new(
     team_ids: [home.id, away.id],
