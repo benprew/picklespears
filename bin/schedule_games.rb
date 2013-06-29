@@ -126,4 +126,4 @@ best = ga.best_fit
 p best.fitness
 
 warn "Writing schedule"
-best.schedule.export_to_file('schedule.csv')
+best.export_to_file('schedule.csv')
