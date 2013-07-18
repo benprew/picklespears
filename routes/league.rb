@@ -38,8 +38,8 @@ class PickleSpears < Sinatra::Application
       text_box game.date.strftime(DATE_FORMAT), at: [152, 679]
       text_box game.division.name, at: [152, 650]
 
-      text_box home_team, at: [22, 525], size: 16
-      text_box away_team, at: [292, 525], size: 16
+      text_box home_team, at: [22, 535], size: 16
+      text_box away_team, at: [292, 535], size: 16
     end
 
     send_file pdffile
