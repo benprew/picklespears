@@ -8,7 +8,7 @@
     %meta{:content => "", :name => "author"}
 
     / Google Analytics
-    - configure :production do
+    - if settings.environment == :production
       :javascript
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-12117986-1']);

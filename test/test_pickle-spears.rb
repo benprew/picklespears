@@ -23,7 +23,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_team_home
     team = Team.create_test( :name => 'test team' )
     get '/team', :team_id => team.id
-    assert_match /Upcoming Games/, last_response.body, 'upcoming games'
+    assert_match(/Upcoming Games/, last_response.body, 'upcoming games')
   end
 
   def test_search
@@ -31,12 +31,11 @@ class TestPickleSpears < PickleSpears::Test::Unit
     div = Division.create_test(league_id: league.id)
     found_team = Team.create_test(:name => 'THE HARPOON', :division_id => div.id)
     found_team2 = Team.create_test(:name => 'THE AHAS', :division_id => div.id)
-    skipped_team = Team.create_test(:name => 'THE HBRPO', :division_id => div.id)
+    Team.create_test(:name => 'THE HBRPO', :division_id => div.id)
 
-    teams = Team.filter(:name.like '%HA%').order(:name.asc).all
-    get '/team/search', :team => 'Ha'
+    get'/team/search', :team => 'Ha'
     [ found_team, found_team2 ].each do |team|
-      assert_match /team_id=#{team.id}/, last_response.body, "team #{team.id} is found"
+      assert_match(/team_id=#{team.id}/, last_response.body, "team #{team.id} is found")
     end
 
     get '/team/search', :team => 'Harpoon'
@@ -45,11 +44,11 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
   def test_stylesheet
     get '/stylesheet.css'
-    assert_match /division/, last_response.body 
+    assert_match(/division/, last_response.body)
   end
 
   def test_not_signed_in_by_default
     get '/'
-    assert_match /login/, last_response.body
+    assert_match(/login/, last_response.body)
   end
 end

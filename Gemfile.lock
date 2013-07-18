@@ -1,12 +1,12 @@
 GIT
   remote: git://github.com/tmm1/perftools.rb.git
-  revision: a632a4522682893f580a7f492320a7237000c8b7
+  revision: deb2947468a800908c3660faf683862e77f6e38b
   specs:
-    perftools.rb (2.0.0)
+    perftools.rb (2.0.1)
 
 GIT
   remote: http://github.com/benprew/gga4r
-  revision: a960e634b558ac603994b1cf5e5054cd58d654ca
+  revision: 8cc61d561400e590e5ab0e8395154908dd39cfdb
   specs:
     gga4r (0.9.3)
       psych
@@ -15,137 +15,93 @@ GEM
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.2)
-    activesupport (3.2.12)
-      i18n (~> 0.6)
-      multi_json (~> 1.0)
-    archive-tar-minitar (0.5.2)
-    attr_required (0.0.5)
-    backports (2.6.4)
-    bcrypt-ruby (3.0.1)
-    capybara (2.0.2)
+    afm (0.2.0)
+    backports (3.3.3)
+    bcrypt-ruby (3.1.1)
+    capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
-      selenium-webdriver (~> 2.0)
-      xpath (~> 1.0.0)
-    childprocess (0.3.5)
-      ffi (~> 1.0, >= 1.0.6)
-    coderay (1.0.8)
+      xpath (~> 2.0)
+    coderay (1.0.9)
     daemons (1.1.9)
-    erubis (2.7.0)
-    eventmachine (1.0.0)
-    fb_graph (2.6.7)
-      httpclient (>= 2.2.0.2)
-      multi_json (>= 1.3)
-      rack-oauth2 (>= 0.14.4)
-      tzinfo
-    ffi (1.1.5)
-    haml (3.1.7)
+    eventmachine (1.0.3)
+    haml (4.0.3)
+      tilt
     hashery (2.1.0)
-    httpclient (2.3.3)
     i18n (0.6.4)
-    json (1.5.5)
+    json (1.8.0)
     kgio (2.8.0)
-    log4r (1.1.10)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     maruku (0.6.1)
       syntax (>= 1.0.0)
     method_source (0.8.1)
-    mime-types (1.19)
-    multi_json (1.7.2)
-    net-scp (1.0.4)
-      net-ssh (>= 1.99.1)
-    net-ssh (2.2.2)
-    newrelic_rpm (3.5.3.25)
-    nokogiri (1.5.6)
-    pdf-reader (1.2.0)
+    mime-types (1.23)
+    mini_portile (0.5.1)
+    newrelic_rpm (3.6.5.130)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    pdf-reader (1.3.3)
       Ascii85 (~> 1.0.0)
+      afm (~> 0.2.0)
       hashery (~> 2.0)
       ruby-rc4
-    pg (0.14.1)
+      ttfunk
+    pg (0.15.1)
     polyglot (0.3.3)
-    pony (1.4)
+    pony (1.5)
       mail (> 2.0)
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
-    pry (0.9.11.4)
+    pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    psych (1.3.4)
+    psych (2.0.0)
     rack (1.5.2)
-    rack-flash3 (1.0.1)
+    rack-flash3 (1.0.3)
       rack
-      rack
-    rack-oauth2 (1.0.4)
-      activesupport (>= 2.3)
-      attr_required (>= 0.0.5)
-      httpclient (>= 2.2.0.2)
-      multi_json (>= 1.3.6)
-      rack (>= 1.1)
-    rack-openid (1.3.1)
-      rack (>= 1.1.0)
-      ruby-openid (>= 2.1.8)
-    rack-protection (1.2.0)
+    rack-protection (1.5.0)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
     raindrops (0.11.0)
-    ruby-openid (2.2.1)
     ruby-rc4 (0.1.5)
-    rubyzip (0.9.9)
-    sass (3.2.1)
-    selenium-webdriver (2.31.0)
-      childprocess (>= 0.2.5)
-      multi_json (~> 1.0)
-      rubyzip
-      websocket (~> 1.0.4)
-    sequel (3.40.0)
+    sass (3.2.9)
+    sequel (4.0.0)
     shotgun (0.9)
       rack (>= 1.0)
-    sinatra (1.3.3)
-      rack (~> 1.3, >= 1.3.6)
-      rack-protection (~> 1.2)
-      tilt (~> 1.3, >= 1.3.3)
-    sinatra-contrib (1.3.1)
+    sinatra (1.4.3)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    sinatra-contrib (1.4.0)
       backports (>= 2.0)
       eventmachine
       rack-protection
       rack-test
-      sinatra (~> 1.3.0)
+      sinatra (~> 1.4.2)
       tilt (~> 1.3)
-    slop (3.4.3)
+    slop (3.4.5)
     syntax (1.0.0)
-    thin (1.5.0)
+    thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
-    tilt (1.3.3)
-    treetop (1.4.10)
+    tilt (1.4.1)
+    treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.0.3)
-    tzinfo (0.3.37)
     unicorn (4.6.3)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    vagrant (1.0.5)
-      archive-tar-minitar (= 0.5.2)
-      childprocess (~> 0.3.1)
-      erubis (~> 2.7.0)
-      i18n (~> 0.6.0)
-      json (~> 1.5.1)
-      log4r (~> 1.1.9)
-      net-scp (~> 1.0.4)
-      net-ssh (~> 2.2.2)
-    websocket (1.0.7)
-    xpath (1.0.0)
+    xpath (2.0.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
@@ -154,7 +110,6 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   capybara
-  fb_graph
   gga4r!
   haml
   i18n
@@ -167,9 +122,7 @@ DEPENDENCIES
   prawn
   pry
   rack-flash3
-  rack-openid
   rack-test
-  ruby-openid
   sass
   sequel
   shotgun
@@ -177,4 +130,3 @@ DEPENDENCIES
   sinatra-contrib
   thin
   unicorn
-  vagrant

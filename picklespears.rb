@@ -21,9 +21,6 @@ class PickleSpears < Sinatra::Application
 
 
   enable :sessions
-  # Must be done after sessions
-  require 'rack/openid'
-  use Rack::OpenID
   use Rack::Flash, :accessorize => [:errors, :messages]
 
   DATE_FORMAT='%a %b %e %I:%M %p'
@@ -55,7 +52,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/browse' do
-    @divisions = Division.filter(:league_id => params[:league_id]).order(:name.asc).all
+    @divisions = Division.filter(:league_id => params[:league_id]).order(Sequel.asc(:name)).all
     @league = League[params[:league_id]]
 
     if !@league

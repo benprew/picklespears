@@ -43,7 +43,7 @@ class PickleSpears < Sinatra::Application
   get '/team/search' do
     if params[:team]
       @query = params[:team]
-      @teams = Team.filter(:name.like '%' + params[:team].upcase + '%').order(:name.asc).all
+      @teams = Team.filter(Sequel.like(:name, '%' + params[:team].upcase + '%')).order(Sequel.asc(:name)).all
     else
       @teams = []
     end
