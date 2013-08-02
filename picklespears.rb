@@ -140,7 +140,7 @@ helpers do
       }
     }.merge(options)
 
-    if production?
+    if settings.environment == :production
       Pony.mail(message)
     else
       p message
