@@ -110,10 +110,7 @@ class PickleSpears < Sinatra::Application
 
       end
     end
-    template :output do
-      output
-    end
-    haml :output
+    haml output
   end
 end
 
