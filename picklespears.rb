@@ -140,7 +140,13 @@ helpers do
       }
     }.merge(options)
 
+    puts "======== environment"
+    p settings.environment
+
     if settings.environment == :production
+      puts "======== message"
+      p settings.environment
+      p message
       Pony.mail(message)
     else
       p message
