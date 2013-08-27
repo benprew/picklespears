@@ -1,7 +1,4 @@
 require 'date'
-require_relative 'division'
-require_relative 'player'
-require_relative 'game'
 
 class Team < Sequel::Model
   many_to_one :division

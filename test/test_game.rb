@@ -6,11 +6,29 @@ class TestGame < PickleSpears::Test::Unit
   def setup
     super
     @game = Game.create_test(:date => Time.now(), :description => 'test game')
-    @game.add_team(Team.create_test)
+    @game.away_team = Team.create_test
   end
 
   def test_num_guys_returns_the_number_of_guys_confirmed_for_game
     assert_equal(0, @game.num_guys_confirmed)
+  end
+
+  def test_home_and_away_team
+    game = Game.create_test
+    home_team = Team.create_test(name: 'test home team')
+    away_team = Team.create_test(name: 'test away team')
+    game.home_team = home_team
+    game.away_team = away_team
+
+    assert_equal away_team.name, game.away_team.name
+    assert_equal home_team.name, game.home_team.name
+  end
+
+  def test_cannot_add_multiple_away_teams
+#    assert_equal ['test team'], @game.teams.map(&:name)
+    new_away_team = Team.create_test(name: 'new away team')
+    @game.away_team = new_away_team
+    assert_equal ['new away team'], @game.teams.map(&:name)
   end
 
   def test_guys_confirmed_for_a_game

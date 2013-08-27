@@ -1,14 +1,12 @@
 require 'date'
 require_relative 'team'
-require_relative 'player'
-require_relative 'players_game'
+require_relative 'teams_game'
 
 class Game < Sequel::Model
   one_to_many :players_games
   many_to_many :players, join_table: :players_games
-  many_to_many :teams, join_table: :teams_games
   many_to_one :seasons
-#  many_to_many :teams, join_table: :teams_games, select: [ :is_home_team, :has_coed_bonus_point, :goals_scored ]
+  many_to_many :teams, join_table: :teams_games, select: Team.columns + [ :name, :is_home_team, :has_coed_bonus_point, :goals_scored ]
 
   def division
     teams.first.division if teams
@@ -35,11 +33,27 @@ class Game < Sequel::Model
   def self.create_test(attrs={})
     game = Game.new(
       :date => Date.today(),
-      :description => 'test game',
-    )
+      :description => 'test game')
+    game.save
     game.update(attrs) if attrs
     game.save
     return game
+  end
+
+  def home_team=(team_to_add)
+    add_new_team(team_to_add, true)
+  end
+
+  def home_team
+    return teams.select { |t| t[:is_home_team] }.first
+  end
+
+  def away_team=(team_to_add)
+    add_new_team(team_to_add, false)
+  end
+
+  def away_team
+    return teams.select { |t| !t[:is_home_team] }.first
   end
 
   # Since a game has N teams, we want the team the player cares
@@ -47,5 +61,13 @@ class Game < Sequel::Model
   # game
   def team_player_plays_on(player)
     teams.select { |t| player.teams.include?(t) }.first
+  end
+
+  private
+
+  def add_new_team(team_to_add, is_home)
+    tg = TeamsGame.find(game_id: id, is_home_team: is_home)
+    tg && tg.delete
+    TeamsGame.create(game_id: id, team_id: team_to_add.id, is_home_team: is_home).save
   end
 end

@@ -24,7 +24,7 @@ class TestTeam < PickleSpears::Test::Unit
     historical_game = Game.create_test(:date => Date.today() - 1)
     historical_game.add_team(team)
 
-    assert_equal([ upcoming_game, upcoming_game2 ], team.upcoming_games)
+    assert_equal([ upcoming_game.id, upcoming_game2.id ], team.upcoming_games.map(&:id))
   end
 
   def test_add_player_to_team
