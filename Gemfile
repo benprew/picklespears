@@ -18,11 +18,11 @@ gem "prawn"
 gem 'gga4r', git: "http://github.com/benprew/gga4r"
 gem 'json'
 gem 'unicorn'
+gem 'rake'
 
 group :development do
   gem "shotgun"
   gem 'pry'
-  gem 'perftools.rb', :git => 'git://github.com/tmm1/perftools.rb.git'
 end
 
 group :test do
