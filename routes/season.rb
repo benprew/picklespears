@@ -65,8 +65,6 @@ class PickleSpears < Sinatra::Application
 
     flash[:success] = "Added #{@teams.length} teams from league #{@league.name}"
 
-    current_teams = @season.teams
-
     @teams.each { |t| @season.add_team(t) unless @season.teams.include?(t) }
 
     redirect url_for '/season/edit', { season_id: @season.id }
