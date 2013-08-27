@@ -53,7 +53,6 @@ CREATE TABLE games (
     id SERIAL PRIMARY KEY,
     date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     description CHARACTER VARYING(256) NOT NULL,
-    reminder_sent BOOLEAN DEFAULT false NOT NULL,
     season_id INTEGER
       REFERENCES seasons DEFERRABLE
 );
@@ -79,7 +78,8 @@ CREATE TABLE players_games (
       REFERENCES games DEFERRABLE,
     player_id integer NOT NULL
       REFERENCES players DEFERRABLE,
-    status character varying(16) NOT NULL,
+    status character varying(16),
+    reminder_sent BOOLEAN DEFAULT false NOT NULL,
     PRIMARY KEY (game_id, player_id)
 );
 
