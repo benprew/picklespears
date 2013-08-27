@@ -51,4 +51,17 @@ class TestPickleSpears < PickleSpears::Test::Unit
     get '/'
     assert_match(/login/, last_response.body)
   end
+
+  def test_send_game_reminders
+    home_team = Team.create_test
+    away_team = Team.create_test
+    player = Player.create_test
+    player.add_team(away_team)
+
+    game = Game.create_test(date: Date.today + 1, home_team: home_team)
+    game.away_team = away_team
+
+    get '/send_game_reminders'
+    assert PlayersGame[game.id, player.id].reminder_sent
+  end
 end

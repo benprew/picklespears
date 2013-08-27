@@ -88,18 +88,19 @@ class PickleSpears < Sinatra::Application
       output += "\n<br/> working on team #{team.name} ..."
 
       # skip if more then 4 days away
-      if !next_game || next_game.date > (Date.today + 4).to_time || next_game.reminder_sent
+      if !next_game || next_game.date > (Date.today + 4).to_time
         output += "no upcoming unreminded games"
         next
       end
 
       output += "sending email about #{next_game.description}"
 
-      next_game.reminder_sent = true
-      next_game.save
-
       team.players.each do |player|
         next unless (player.email_address and player.email_address.match(/@/))
+
+        pg = PlayersGame.find_or_create(player_id: player.id, game_id: next_game.id)
+
+        next if pg.reminder_sent
 
         send_email(
           :to      => player.email_address,
@@ -108,6 +109,8 @@ class PickleSpears < Sinatra::Application
           :content_type => 'text/html',
         )
 
+        pg.reminder_sent = true
+        pg.save
       end
     end
     haml output
@@ -140,15 +143,9 @@ helpers do
       }
     }.merge(options)
 
-    puts "======== environment"
-    p settings.environment
-
     if settings.environment == :production
-      puts "======== message"
-      p settings.environment
-      p message
       Pony.mail(message)
-    else
+    elsif settings.environment != :test
       p message
     end
   end
