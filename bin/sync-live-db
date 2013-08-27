@@ -6,9 +6,9 @@ backup_url=`heroku pgbackups:url $latest_backup_id`
 /usr/bin/curl "$backup_url" > ps.db
 echo "This will overwrite data in picklespears. Sleeping for 5 seconds for possible abort"
 sleep 5;
-ssh teamvitedev 'sudo -u postgres dropdb teamvite'
-ssh teamvitedev 'sudo -u postgres createdb teamvite'
-ssh teamvitedev 'cd ~/src/picklespears && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
+ssh vagrant@teamvitedev 'sudo -u postgres dropdb teamvite'
+ssh vagrant@teamvitedev 'sudo -u postgres createdb teamvite'
+ssh vagrant@teamvitedev 'cd ~/src/picklespears && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
 
 # TO restore to heroku
 # DB=ps_up.db
