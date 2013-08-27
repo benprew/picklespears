@@ -114,6 +114,11 @@ log.level = Logger::DEBUG
 
 require 'perftools'
 
+# use Linux perf for profiling:
+# http://blog.tddium.com/2012/11/20/profiling-ruby/
+# or you can use DTrace:
+# http://crypt.codemancers.com/posts/2013-04-16-profile-ruby-apps-dtrace-part1/
+
 # /var/www/teamvite/bundle/ruby/1.9.1/bundler/gems/perftools.rb-a632a4522682/bin/pprof --text /bin/ls /tmp/population_create_perf.log
 #PerfTools::CpuProfiler.start("/tmp/population_create_perf.log") do
   puts "Creating population"
