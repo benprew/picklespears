@@ -88,12 +88,13 @@ class PickleSpears < Sinatra::Application
     calendar = Calendar.new
     @team.games.each do |game|
       calendar.event do
-        dtstart game.date
-        dtend   game.date + 2.hours
+        dtstart game.date.to_datetime
+        dtend   (game.date + 1.hours).to_datetime
         summary game.description
         description game.description
       end
     end
+
     content_type :'text/calendar'
     calendar.to_ical
   end
