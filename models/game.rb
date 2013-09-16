@@ -65,6 +65,9 @@ class Game < Sequel::Model
 
   private
 
+  # TODO: make add_team private, since you should always call
+  # home_team= or away_team=
+
   def add_new_team(team_to_add, is_home)
     tg = TeamsGame.find(game_id: id, is_home_team: is_home)
     tg && tg.delete
