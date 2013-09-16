@@ -89,10 +89,30 @@ class PickleSpears < Sinatra::Application
   get '/team/:team_id/calendar.ics' do
     calendar = Calendar.new
     calendar.x_wr_calname = @team.name
+    calendar.timezone do
+      timezone_id 'America/Los_Angeles'
+
+      daylight do
+        dtstart '20130310T020000'
+        add_recurrence_rule   "FREQ=YEARLY;BYMONTH=4;BYDAY=1SU"
+        timezone_offset_from '-0800'
+        timezone_offset_to '-0700'
+        timezone_name 'PDT'
+      end
+
+      standard do
+        dtstart '20131103T020000'
+        add_recurrence_rule   "FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU"
+        timezone_offset_from '-0700'
+        timezone_offset_to '-0800'
+        timezone_name 'PST'
+      end
+    end
+
     @team.games.each do |game|
       calendar.event do
-        dtstart game.date.to_datetime
-        dtend   (game.date + 1.hours).to_datetime
+        dtstart game.date.to_datetime, { TZID: 'America/Los_Angeles' }
+        dtend   (game.date + 1.hours).to_datetime, { TZID: 'America/Los_Angeles' }
         summary game.description
         description game.description
         uid "http://teamvite.com/game/#{game.id}/"
