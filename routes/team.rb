@@ -1,6 +1,15 @@
 class PickleSpears < Sinatra::Application
   include Icalendar
 
+  before '/team/:team_id/*' do
+    begin
+      @team = Team[params[:team_id]]
+    rescue
+      halt 404
+    end
+    halt 404 unless @team
+  end
+
   get '/team' do
     @team = Team[params[:team_id]]
 
@@ -13,7 +22,6 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/team/:team_id/calendar' do
-    @team = Team[params[:team_id]]
     haml 'team/calendar'.to_sym
   end
 
@@ -61,11 +69,9 @@ class PickleSpears < Sinatra::Application
 
   post '/team/:team_id/add_player' do
     @player = Player.find_or_create(:email_address => params[:email]) { |p| p.name = params[:name] }
-    @team = Team[params[:team_id]]
     @divisions = Division.all()
 
     @errors = "Unable to find/create player." unless @player
-    @errors << "Unable to find team." unless @team
 
     if (@player && @team)
       if @team.players.include?(@player)
@@ -81,17 +87,15 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/team/:team_id/calendar.ics' do
-    @team = Team[params[:team_id]]
-
-    halt '404' unless @team
-
     calendar = Calendar.new
+    calendar.x_wr_calname = @team.name
     @team.games.each do |game|
       calendar.event do
         dtstart game.date.to_datetime
         dtend   (game.date + 1.hours).to_datetime
         summary game.description
         description game.description
+        uid "http://teamvite.com/game/#{game.id}/"
       end
     end
 
