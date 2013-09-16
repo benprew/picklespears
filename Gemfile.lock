@@ -9,6 +9,9 @@ GEM
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.2)
+    activesupport (3.2.12)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
     afm (0.2.0)
     backports (3.3.3)
     bcrypt-ruby (3.1.1)
@@ -25,7 +28,7 @@ GEM
       tilt
     hashery (2.1.0)
     i18n (0.6.4)
-    json (1.8.0)
+    icalendar (1.4.2)
     kgio (2.8.0)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -35,6 +38,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.1)
+    multi_json (1.7.2)
     newrelic_rpm (3.6.5.130)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -103,12 +107,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   bcrypt-ruby
   capybara
   gga4r!
   haml
   i18n
-  json
+  icalendar
   maruku
   newrelic_rpm
   pg

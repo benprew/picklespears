@@ -16,9 +16,10 @@ gem "newrelic_rpm"
 gem "bcrypt-ruby"
 gem "prawn"
 gem 'gga4r', git: "http://github.com/benprew/gga4r"
-gem 'json'
 gem 'unicorn'
 gem 'rake'
+gem 'icalendar'
+gem 'activesupport'
 
 group :development do
   gem "shotgun"

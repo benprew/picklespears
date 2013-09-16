@@ -1,4 +1,6 @@
 class PickleSpears < Sinatra::Application
+  include Icalendar
+
   get '/team' do
     @team = Team[params[:team_id]]
 
@@ -10,7 +12,7 @@ class PickleSpears < Sinatra::Application
     haml :'team/index'
   end
 
-  get '/team/calendar' do
+  get '/team/:team_id/calendar' do
     @team = Team[params[:team_id]]
     haml 'team/calendar'.to_sym
   end
@@ -76,5 +78,23 @@ class PickleSpears < Sinatra::Application
 
     # TODO: send email to user to register
     haml 'team/edit'.to_sym
+  end
+
+  get '/team/:team_id/calendar.ics' do
+    @team = Team[params[:team_id]]
+
+    halt '404' unless @team
+
+    calendar = Calendar.new
+    @team.games.each do |game|
+      calendar.event do
+        dtstart game.date
+        dtend   game.date + 2.hours
+        summary game.description
+        description game.description
+      end
+    end
+    content_type :'text/calendar'
+    calendar.to_ical
   end
 end
