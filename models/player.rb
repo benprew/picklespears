@@ -47,7 +47,7 @@ class Player < Sequel::Model
 
   def attending_status(game)
     pg = PlayersGame.first(:player_id => self.id, :game_id => game.id)
-    pg ? pg.status : "No Reply"
+    pg && pg.status
   end
 
   def is_on_team?(team)

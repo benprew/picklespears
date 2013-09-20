@@ -78,7 +78,7 @@ CREATE TABLE players_games (
       REFERENCES games DEFERRABLE,
     player_id integer NOT NULL
       REFERENCES players DEFERRABLE,
-    status character varying(16),
+    status character varying(16) DEFAULT 'No Reply',
     reminder_sent BOOLEAN DEFAULT false NOT NULL,
     PRIMARY KEY (game_id, player_id)
 );

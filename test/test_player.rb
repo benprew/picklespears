@@ -64,7 +64,14 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_equal(team2.id, pts[0].team_id)
   end
 
-  def upcoming_teams_games
+  def test_default_status
+    player = Player.create_test
+    game = Game.create_test
+    PlayersGame.create_test(player_id: player.id, game_id: game.id)
+    assert_equal 'No Reply', player.attending_status(game)
+  end
+
+  def test_upcoming_teams_games
     player = Player.create_test
     team = Team.create_test
     team2 = Team.create_test
@@ -72,10 +79,12 @@ class TestPlayer < PickleSpears::Test::Unit
     player.add_team(team)
     player.add_team(team2)
 
-    team.add_game(Game.create_test id: 1, date: Date.today + 2)
-    team2.add_game(Game.create_test id: 2, date: Date.today)
-    not_on_team.add_game(Game.create_test id: 3, date: Date.today + 1)
+    team.add_game(Game.create_test date: Date.today + 2)
+    team2.add_game(Game.create_test date: Date.today)
+    not_on_team.add_game(Game.create_test date: Date.today + 1)
 
-    assert_equal([[team2, Game[2]],[team, Game[1]]], player.upcoming_teams_games)
+    assert_equal(
+      [[team2, team2.games.first],[team, team.games.first]],
+      player.upcoming_teams_games)
   end
 end
