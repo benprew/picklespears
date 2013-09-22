@@ -40,6 +40,14 @@ class PickleSpears < Sinatra::Application
     end
   end
 
+  not_found do
+    'This page was not found'
+  end
+
+  error 403 do
+    'Access forbidden'
+  end
+
   before do
     if session[:player_id]
       @player = Player[session[:player_id]]

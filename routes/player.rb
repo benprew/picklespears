@@ -1,4 +1,13 @@
 class PickleSpears < Sinatra::Application
+  before '/player/:player_id/*' do
+    begin
+      @player_from_request = Player[params[:player_id]]
+    rescue
+      halt 404
+    end
+    halt 404 unless @player_from_request
+  end
+
   get '/player' do
     @player_from_request = Player[params[:id] || session[:player_id]]
     haml 'player/index'.to_sym
@@ -36,7 +45,7 @@ class PickleSpears < Sinatra::Application
       @player.save
       session[:player_id] = @player.id
       flash[:success] = "Account created."
-      redirect '/player/edit'
+      redirect "/player/#{@player.id}/edit"
     else
       flash[:errors] = "There were some problems creating your account: #{@player.errors}."
       redirect url_for('/player/signup?', params['player'])
@@ -49,8 +58,11 @@ class PickleSpears < Sinatra::Application
     haml 'player/join_team'.to_sym
   end
 
-  get '/player/edit' do
-    haml 'player/edit'.to_sym
+  get '/player/:player_id/edit' do
+    halt 403 unless @player == @player_from_request
+    @editable = true
+    @p = @player_from_request
+    haml 'player/index'.to_sym
   end
 
   post '/player/update' do
