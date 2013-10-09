@@ -35,7 +35,7 @@ class PickleSpears < Sinatra::Application
     end
 
     error do
-      send_email to: 'ben.prew@gmail.com', subject: 'error on teamvite.com', body: request.env['sinatra.error'].message
+      send_email to: 'ben.prew@gmail.com', subject: 'error on teamvite.com', body: "#{request.env['sinatra.error'].message} #{request.inspect}"
       "Application error."
     end
   end
