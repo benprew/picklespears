@@ -15,7 +15,7 @@ class TestTeam < PickleSpears::Test::Unit
     games = teams.map { |t| t.add_game(Game.create_test) }
 
     teams.each do |t|
-      assert( t.next_game == games.shift )
+      assert_equal t.next_game, games.shift
     end
   end
 
@@ -48,5 +48,10 @@ class TestTeam < PickleSpears::Test::Unit
     assert_match @team.games.first.description, last_response.body
     assert_match 'DTSTART;TZID=America/Los_Angeles:' + @team.games.first.date.strftime('%Y%m%d'), last_response.body
     assert_match 'DTEND;TZID=America/Los_Angeles:' + (@team.games.first.date + 1.hours).strftime('%Y%m%d'), last_response.body
+  end
+
+  def test_invalid_team_page
+    get '/team?team_id=invalid'
+    assert_equal 404, last_response.status
   end
 end

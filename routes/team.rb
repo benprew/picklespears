@@ -4,16 +4,20 @@ class PickleSpears < Sinatra::Application
   before '/team/:team_id/*' do
     begin
       @team = Team[params[:team_id]]
-    rescue
+    rescue Sequel::DatabaseError
       halt 404
     end
     halt 404 unless @team
   end
 
   get '/team' do
-    @team = Team[params[:team_id]]
+    begin
+      @team = Team[params[:team_id]]
+    rescue Sequel::DatabaseError
+      halt 404
+    end
 
-    if !@team
+    unless @team
       flash[:errors] = 'No team with that id was found'
       redirect '/team/search'
     end
