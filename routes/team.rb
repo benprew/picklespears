@@ -31,7 +31,7 @@ class PickleSpears < Sinatra::Application
 
   get '/team/edit' do
     @team = Team[params[:team_id]]
-    @divisions = Division.all()
+    @divisions = Division.all
     @redirect_to = params[:redirect_to]
 
     haml 'team/edit'.to_sym
@@ -43,15 +43,16 @@ class PickleSpears < Sinatra::Application
     @team.division_id = params[:division_id]
     @team.save
 
-    flash[:messages] = "Team updated!"
+    flash[:messages] = 'Team updated!'
 
-    redirect params[:redirect_to] || url_for("/team", { :team_id => params[:team_id] })
+    redirect params[:redirect_to] ||
+      url_for('/team', { team_id: params[:team_id] })
   end
 
   # Meant to be an ajax call
   get '/team/join' do
     @player.add_team(Team[params[:team_id]])
-    "Joined!"
+    'Joined!'
   end
 
   get '/team/search' do
@@ -62,10 +63,10 @@ class PickleSpears < Sinatra::Application
       @teams = []
     end
 
-    @errors = "No teams found" if params[:team] && @teams.length == 0
+    @errors = 'No teams found' if params[:team] && @teams.length == 0
 
     if @teams.length == 1
-      redirect url_for("/team", { team_id: @teams[0].id })
+      redirect url_for('/team', { team_id: @teams[0].id })
     else
       haml 'team/search'.to_sym
     end
