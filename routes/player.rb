@@ -2,7 +2,7 @@ class PickleSpears < Sinatra::Application
   before '/player/:player_id/*' do
     begin
       @player_from_request = Player[params[:player_id]]
-    rescue
+    rescue Sequel::DatabaseError
       halt 404
     end
     halt 404 unless @player_from_request
@@ -30,7 +30,7 @@ class PickleSpears < Sinatra::Application
 
   get '/player/logout' do
     session.delete(:player_id)
-    flash[:messages] = "You have been logged out"
+    flash[:messages] = 'You have been logged out'
     redirect '/'
   end
 
@@ -44,17 +44,21 @@ class PickleSpears < Sinatra::Application
     if @player.valid?
       @player.save
       session[:player_id] = @player.id
-      flash[:success] = "Account created."
+      flash[:success] = 'Account created'
       redirect "/player/#{@player.id}/edit"
     else
-      flash[:errors] = "There were some problems creating your account: #{@player.errors}."
+      flash[:errors] = "Unable to create your account: #{@player.errors}"
       redirect url_for('/player/signup?', params['player'])
     end
   end
 
   get '/player/join_team' do
     @teams = []
-    @teams = Team.filter(Sequel.like(:name,'%' + params[:team].upcase + '%')).order(Sequel.asc(:name)).all if params[:team]
+    if params[:team]
+      @teams = Team.filter(Sequel.ilike(:name, "%#{params[:team]}%"))
+        .order(Sequel.asc(:name))
+        .all
+    end
     haml 'player/join_team'.to_sym
   end
 
@@ -89,10 +93,11 @@ class PickleSpears < Sinatra::Application
     team_id = params[:team_id]
     player_id = params[:player_id]
 
-    if !PlayersTeam.filter(:player_id => player_id, :team_id => team_id).delete
-      flash[:errors] = "Could not remove player from team (p:#{player_id} t:#{team_id})"
+    if !PlayersTeam.filter(player_id: player_id, team_id: team_id).delete
+      flash[:errors] =
+        "Couldn't remove player from team (p:#{player_id} t:#{team_id})"
     else
-      flash[:messages] = "You removed #{Player.first(:id => player_id).name} from the team"
+      flash[:messages] = "You removed #{Player[player_id].name} from the team"
     end
 
     redirect url_for '/team/edit', team_id: team_id
@@ -106,8 +111,8 @@ class PickleSpears < Sinatra::Application
     halt 400 unless game && @player_from_request
 
     @player_from_request.set_attending_status_for_game(game, @status)
-    flash[:messages] = haml 'player/attending_status_for_game'.to_sym, :layout => false
-    redirect url_for("/team", :team_id => game.team_player_plays_on(@player_from_request).id)
+    flash[:messages] = partial 'attending_status_for_game'
+    redirect url_for('/team', team_id: game.team_player_plays_on(@player_from_request).id)
   end
 
   get '/player/forgot_password' do
@@ -123,7 +128,7 @@ class PickleSpears < Sinatra::Application
 
     send_email(
       to: @email_address,
-      subject: "Reset your password for Teamvite.com",
+      subject: 'Reset your password for Teamvite.com',
       html_body: partial(:password_reset_email),
     )
     haml 'player/password_reset_sent'.to_sym
@@ -133,25 +138,25 @@ class PickleSpears < Sinatra::Application
     @sha = params[:reset_sha]
     player = Player.first(password_reset_hash: @sha)
 
-    if (player && Date.today <= player.password_reset_expires_on)
+    if player && Date.today <= player.password_reset_expires_on
       session[:player_id] = player.id
       haml 'player/reset'.to_sym
     else
-      flash[:errors] = "Password reset link expired or invalid."
+      flash[:errors] = 'Password reset link expired or invalid'
       redirect '/player/login'
     end
   end
 
   post '/player/reset/:reset_sha' do
-    @player.set(params['player'].select { |k,v|
+    @player.set(params['player'].select do |k, v|
       [:password, :password_confirmation].include?(k.to_sym)
-    })
+    end)
 
     if @player.valid?
       @player.password_reset_expires_on = nil
       @player.password_reset_hash = nil
       @player.save
-      flash[:success] = "Password reset successfully"
+      flash[:success] = 'Password reset successfully'
       redirect '/player/login'
     else
       flash[:errors] = "Passwords don't match"

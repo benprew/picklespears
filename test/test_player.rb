@@ -32,11 +32,10 @@ class TestPlayer < PickleSpears::Test::Unit
   end
 
   def test_join_team_as_part_of_sign_up_process_works
-    Player.create_test
-
-    div = Division.create_test
-    Team.create_test( :name => 'team to find', :division_id => div.id )
-    Team.create_test( :name => 'should not be found', :division_id => div.id )
+    league = League.create_test
+    div = Division.create_test(league_id: league.id)
+    Team.create_test(name: 'team to find', division_id: div.id)
+    Team.create_test(name: 'should not be found', division_id: div.id)
 
     get '/player/join_team'
     assert_match(/Done!/, last_response.body)

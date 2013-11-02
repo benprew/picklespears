@@ -7,11 +7,10 @@ class League < Sequel::Model
     divisions.select { |d| d.teams_with_upcoming_games.length > 0 }
   end
 
-  def self.create_test(attrs={})
-    league = League.new( :name => 'test league' )
+  def self.create_test(attrs = {})
+    league = League.new(name: 'test league')
     league.save
     league.update(attrs) if attrs
     league.save
-    return league
   end
 end
