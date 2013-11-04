@@ -19,6 +19,7 @@
         %a{ :href=> url_for('/player', { :id => @player_from_request.id }) }= @player_from_request.name
         - if @player == @player_from_request
           %a.btn{ href: "/player/#{@player_from_request.id}/edit" } Edit
+      // TODO: Add edit image capability
       %img{ :src => "http://www.gravatar.com/avatar/#{@player_from_request.md5_email}?s=200" }
       %br
       %h3 Teams
@@ -28,6 +29,7 @@
             %a{ :href => url_for("/team", { 'team_id' => team.id.to_s }) }= team.name
   .span9
     - if @editable
+      // TODO: Add search/join/leave team as async requests
       %button.btn{ disabled: :disabled } Find/Join a team!
       %h3 Teams
       %ul
