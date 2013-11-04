@@ -15,12 +15,29 @@
     %table.table.table-striped
       %thead
         %th Date
+        %th Home Team
+        %th Away Team
+        %th &nbsp;
+      %tbody
+        - @games.each do |game|
+          %tr
+            %td= game.date.strftime(DATE_FORMAT)
+            %td= partial 'league/_score_team', locals: { team: game.home_team }
+            %td= partial 'league/_score_team', locals: { team: game.away_team }
+            %td
+              %input.btn{ type: :submit, value: 'Sumbit' }
+
+.row
+  .span10
+    %table.table.table-striped
+      %thead
+        %th Date
         %th Game
         %th Print
       %tbody
         - @games.each do |game|
           %tr
-            %td= "#{game.date.strftime(DATE_FORMAT)}"
-            %td= "#{game.description}"
+            %td= game.date.strftime(DATE_FORMAT)
+            %td= game.description
             %td
               %a.btn.btn-mini{ href: "/league/game_report/#{game.id}.pdf" } Print

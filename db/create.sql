@@ -29,7 +29,8 @@ CREATE TABLE season_exceptions(
 
 CREATE TABLE leagues (
     id SERIAL PRIMARY KEY,
-    name CHARACTER VARYING(128) NOT NULL
+    name CHARACTER VARYING(128) NOT NULL,
+    has_coed_bonus_points BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE divisions (

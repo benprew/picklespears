@@ -51,7 +51,6 @@ class PickleSpears < Sinatra::Application
   before do
     if session[:player_id]
       @player = Player[session[:player_id]]
-      @name = @player.name
     end
   end
 
@@ -159,8 +158,12 @@ helpers do
     end
   end
 
-  def partial(page, variables={})
-    haml :"partials/#{page}", { layout: false }.merge(variables)
+  def partial(page, variables = {})
+    if File.exists?("#{settings.views}/#{page.to_s}.haml")
+      haml page.to_sym, { layout: false }.merge(variables)
+    else
+      haml :"partials/#{page}", { layout: false }.merge(variables)
+    end
   end
 end
 

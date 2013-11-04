@@ -13,31 +13,30 @@ class Game < Sequel::Model
   end
 
   def num_players_going
-    players_games.inject(0) do |sum, pg|
-      pg.status == "yes" ? sum + 1 : sum
+    players_games.reduce(0) do |sum, pg|
+      pg.status == 'yes' ? sum + 1 : sum
     end
   end
 
   def num_guys_confirmed
-    players_games.inject(0) do |sum, pg|
-      pg.status == "yes" && pg.player.gender == "guy" ? sum + 1 : sum
+    players_games.reduce(0) do |sum, pg|
+      pg.status == 'yes' && pg.player.gender == 'guy' ? sum + 1 : sum
     end
   end
 
   def num_gals_confirmed
-    players_games.inject(0) do |sum, pg|
+    players_games.reduce(0) do |sum, pg|
       pg.status == 'yes' && pg.player.gender == 'gal' ? sum + 1 : sum
     end
   end
 
-  def self.create_test(attrs={})
+  def self.create_test(attrs = {})
     game = Game.new(
-      :date => Date.today(),
-      :description => 'test game')
+      date: Date.today,
+      description: 'test game')
     game.save
     game.update(attrs) if attrs
     game.save
-    return game
   end
 
   def home_team=(team_to_add)
@@ -45,7 +44,7 @@ class Game < Sequel::Model
   end
 
   def home_team
-    return teams.select { |t| t[:is_home_team] }.first
+    teams.select { |t| t[:is_home_team] }.first
   end
 
   def away_team=(team_to_add)
@@ -53,7 +52,7 @@ class Game < Sequel::Model
   end
 
   def away_team
-    return teams.select { |t| !t[:is_home_team] }.first
+    teams.select { |t| !t[:is_home_team] }.first
   end
 
   # Since a game has N teams, we want the team the player cares

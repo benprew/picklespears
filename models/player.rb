@@ -54,16 +54,16 @@ class Player < Sequel::Model
     return PlayersTeam.first(:player_id => self.id, :team_id => team.id)
   end
 
-  def self.create_test(attrs={})
+  def self.create_test(attrs = {})
     player = Player.new(
       name: 'test user',
       email_address: 'test_user@test.com',
       openid: 'test_user_id',
       password_hash: BCrypt::Password.create('secret'),
     )
+    player.save
     player.update(attrs) if attrs
     player.save
-    return player
   end
 
   def md5_email
