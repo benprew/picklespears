@@ -15,15 +15,15 @@ gem 'newrelic_rpm'
 gem 'bcrypt-ruby'
 gem 'prawn'
 gem 'gga4r', git: 'http://github.com/benprew/gga4r'
-gem 'unicorn'
+gem 'thin' # for heroku
 gem 'rake'
 gem 'icalendar'
 gem 'activesupport'
 
 group :development do
+  gem 'unicorn'
   gem 'shotgun'
   gem 'pry'
-  gem 'thin'
 end
 
 group :test do
