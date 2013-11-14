@@ -16,4 +16,10 @@ class PickleSpears < Sinatra::Application
     @team_games = [@game.teams.first, @game]
     haml :'game/index'
   end
+
+  # Meant to be called via ajax
+  get '/game/:game_id/attending_status' do
+    @player.set_attending_status_for_game(@game, params[:status])
+    "<p>Status #{params[:status]} recorded</p>"
+  end
 end

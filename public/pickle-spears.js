@@ -1,11 +1,11 @@
 $(function() {
-  $("a[href*='/game/attending_status']").click(function(e) {
+  $("a[href*='/attending_status']").click(function(e) {
     e.preventDefault();
+    button = $(this);
     function updateDiv(data) {
-      $("#status_" + e.target.id).html(data);
+      button.parent().parent().html(data)
     }
-    console.log(e)
-    $.get(e.target.href, { game_id: e.target.id }, updateDiv)
+    $.get(button.attr('href'), updateDiv);
   });
 
   $( ".join_team" ).click(function(e) {
@@ -23,4 +23,3 @@ $(document).ready(function() {
 });
 
 $('.datepicker').datepicker();
-

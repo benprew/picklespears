@@ -83,12 +83,6 @@ class PickleSpears < Sinatra::Application
     redirect '/player'
   end
 
-  # Meant to be called via ajax
-  get '/game/attending_status' do
-    @player.set_attending_status_for_game(Game[params[:game_id]], params[:status])
-    "<p>Status #{params[:status]} recorded</p>"
-  end
-
   get '/send_game_reminders' do
     output = ''
     Team.all.each do |team|
