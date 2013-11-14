@@ -81,6 +81,7 @@ class TestPlayer < PickleSpears::Test::Unit
   def test_default_status
     player = Player.create_test
     game = Game.create_test
+    assert_equal 'No Reply', player.attending_status(game)
     PlayersGame.create_test(player_id: player.id, game_id: game.id)
     assert_equal 'No Reply', player.attending_status(game)
   end
