@@ -9,8 +9,8 @@ class Player < Sequel::Model
   attr_writer :password_confirmation
   one_to_many :players_teams
   one_to_many :players_games
-  many_to_many :teams, :join_table => :players_teams
-  many_to_many :games, :join_table => :players_games
+  many_to_many :teams, join_table: :players_teams
+  many_to_many :games, join_table: :players_games
   many_to_many :leagues, join_table: :league_managers
 
   plugin :validation_helpers
@@ -21,7 +21,7 @@ class Player < Sequel::Model
     validates_unique :name
     validates_unique :email_address
 #    validates_presence :password if new?
-    errors.add :passwords, ' don\'t match' unless @password == @password_confirmation
+    errors.add :passwords, ' don\'t match' if @password != @password_confirmation
   end
 
   def send_welcome_email
@@ -35,10 +35,14 @@ class Player < Sequel::Model
   end
 
   def self.authenticate(email, password)
-    current_user = self.first(email_address: email)
-    return nil if current_user.nil?
-    return current_user if current_user.password_hash && BCrypt::Password.new(current_user.password_hash) == password
-    nil
+    current_user = first(email_address: email)
+    if current_user.nil?
+      nil
+    elsif current_user.password_hash && BCrypt::Password.new(current_user.password_hash) == password
+      current_user
+    else
+      nil
+    end
   end
 
   def set_attending_status_for_game(game, status)
@@ -46,12 +50,12 @@ class Player < Sequel::Model
   end
 
   def attending_status(game)
-    pg = PlayersGame.first(:player_id => self.id, :game_id => game.id)
+    pg = PlayersGame.first(player_id: id, game_id: game.id)
     pg && pg.status || 'No Reply'
   end
 
   def is_on_team?(team)
-    return PlayersTeam.first(:player_id => self.id, :team_id => team.id)
+    PlayersTeam.first(player_id: id, team_id: team.id)
   end
 
   def self.create_test(attrs = {})
@@ -67,11 +71,11 @@ class Player < Sequel::Model
   end
 
   def md5_email
-    return Digest::MD5.hexdigest(email_address)
+    Digest::MD5.hexdigest(email_address)
   end
 
   def password_reset_link
-    return "http://teamvite.com/player/reset/#{password_reset_hash}"
+    "http://teamvite.com/player/reset/#{password_reset_hash}"
   end
 
   def is_league_manager?
@@ -81,8 +85,8 @@ class Player < Sequel::Model
   def upcoming_teams_games
     teams_games = []
     teams.each do |t|
-      teams_games += t.upcoming_games.map{ |g| [t, g] }
+      teams_games += t.upcoming_games.map { |g| [t, g] }
     end
-    teams_games.sort{ |a, b| a[1].date <=> b[1].date }
+    teams_games.sort { |a, b| a[1].date <=> b[1].date }
   end
 end
