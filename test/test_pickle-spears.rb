@@ -39,7 +39,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
     end
 
     get '/team/search', :team => 'Harpoon'
-    assert_equal "http://example.org/team?team_id=#{found_team.id}", last_response.location
+    assert_equal "http://#{DOMAIN}/team?team_id=#{found_team.id}", last_response.location
   end
 
   def test_stylesheet

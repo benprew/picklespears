@@ -17,7 +17,7 @@ class TestSeason < PickleSpears::Test::Unit
     get '/season'
     follow_redirect!
 
-    assert_equal "http://example.org/season/list", last_request.url
+    assert_equal "http://#{DOMAIN}/season/list", last_request.url
     assert last_response.ok?
     assert_match /#{@season.name}/, last_response.body
   end

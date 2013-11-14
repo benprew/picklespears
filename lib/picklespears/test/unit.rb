@@ -7,6 +7,7 @@ require 'picklespears'
 require 'ostruct'
 
 DB << open(File.dirname(__FILE__) + '/../../../db/create.sql', 'r').read
+DOMAIN = 'example.org'
 
 Capybara.app = PickleSpears
 

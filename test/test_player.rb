@@ -27,7 +27,7 @@ class TestPlayer < PickleSpears::Test::Unit
     player = Player.create_test
     login(player, 'secret')
     post '/player/update', { :name => 'new_name' }
-    assert_equal 'http://example.org/player', last_response.location
+    assert_equal "http://#{DOMAIN}/player", last_response.location
     assert_equal 'new_name', player.reload.name
   end
 
