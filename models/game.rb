@@ -6,7 +6,10 @@ class Game < Sequel::Model
   one_to_many :players_games
   many_to_many :players, join_table: :players_games
   many_to_one :seasons
-  many_to_many :teams, join_table: :teams_games, select: Team.columns + [ :name, :is_home_team, :has_coed_bonus_point, :goals_scored ]
+  many_to_many(
+    :teams,
+    join_table: :teams_games,
+    select: Team.columns + [:name, :is_home_team, :has_coed_bonus_point, :goals_scored])
 
   def division
     teams.first.division if teams
@@ -59,7 +62,7 @@ class Game < Sequel::Model
   # about. This assumes that a player is only on one team in a
   # game
   def team_player_plays_on(player)
-    teams.select { |t| player.teams.include?(t) }.first
+    teams.select { |t| t.players.include?(player) }.first
   end
 
   private

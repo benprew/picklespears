@@ -13,6 +13,21 @@ class TestPlayer < PickleSpears::Test::Unit
     assert_equal(pt.player_id, player.id)
   end
 
+  def test_can_use_attending_status_link_from_email
+    player = Player.create_test(:name => 'test user')
+    team = Team.create_test
+    team.add_player(player)
+    game = Game.create_test(home_team: team)
+
+    get(
+      '/player/attending_status_for_game',
+      status: 'no', game_id: game.id, player_id: player.id)
+
+    assert_equal "http://#{DOMAIN}/team?team_id=#{team.id}", last_response.location
+    follow_redirect!
+    assert last_response.ok?
+  end
+
   def test_can_attend_a_game
     player = Player.create_test(:name => 'test user')
     game = Game.create_test
