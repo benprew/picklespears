@@ -46,7 +46,9 @@ class Player < Sequel::Model
   end
 
   def set_attending_status_for_game(game, status)
-    PlayersGame.find_or_create(:player_id => self.id, :game_id => game.id){ |pg| pg.status = status }.save
+    pg = PlayersGame.find_or_create(player_id: id, game_id: game.id)
+    pg.status = status
+    pg.save
   end
 
   def attending_status(game)
