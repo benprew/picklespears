@@ -16,7 +16,7 @@ class BuildDb
 
     Division.find_all().each do |division|
       league_name = division.league.name.downcase.gsub(/portland indoor /, '')
-      file = "#{league_name}/DIV%20#{division.name.upcase.slice(1,2)}.TXT"
+      file = "#{league_name}/#{division.name.upcase}.TXT"
       warn "working on #{file}"
       begin
         url = @@season_url + "/" + file
