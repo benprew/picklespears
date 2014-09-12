@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'open-uri'
+require 'uri'
 require 'set'
 
 require_relative '../picklespears'
@@ -16,10 +17,19 @@ class BuildDb
 
     Division.find_all().each do |division|
       league_name = division.league.name.downcase.gsub(/portland indoor /, '')
-      file = "#{league_name}/#{division.name.upcase}.TXT"
+
+      case league_name
+      when 'coed'
+        league_name_possesive = league_name.upcase
+      else
+        league_name_possesive = "#{league_name.upcase}'S"
+      end
+
+      league_num = division.name[1..-1].upcase
+      file = "#{league_name}/DIV #{league_num}.TXT"
       warn "working on #{file}"
       begin
-        url = @@season_url + "/" + file
+        url = URI.escape(@@season_url + file)
         warn url
         open(url) do |f|
           f.each do |line|
