@@ -3,7 +3,7 @@
 # To restore to heroku
 
 DB=ps_up.db
-pg_dump -U teamvite teamvite >$DB
+ssh teamvitedev 'pg_dump -U teamvite teamvite' >$DB
 scp $DB throwingbones@throwingbones.com:src/websites/throwingbones/site
 # NOTE: I don't know why the database is called DATABASE_URL, but it is...
 heroku pgbackups:restore DATABASE_URL http://throwingbones.com/$DB --app cedar-picklespears

@@ -9,7 +9,7 @@ sleep 5;
 cd ~/src/operations/teamvite
 vagrant ssh -c 'sudo -u postgres dropdb teamvite'
 vagrant ssh -c 'sudo -u postgres createdb teamvite'
-vagrant ssh -c 'cd ~/src/picklespears && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
+vagrant ssh -c 'cd /var/www/teamvite/current && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
 
 # TO restore to heroku
 # DB=ps_up.db
