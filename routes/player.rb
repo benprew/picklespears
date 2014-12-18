@@ -1,7 +1,7 @@
 class PickleSpears < Sinatra::Application
-  before '/player/:player_id/*' do
+  before %r{/player/(\d+)/*} do |player_id|
     begin
-      @player_from_request = Player[params[:player_id]]
+      @player_from_request = Player[player_id]
     rescue Sequel::DatabaseError
       halt 404
     end
@@ -127,6 +127,11 @@ class PickleSpears < Sinatra::Application
   post '/player/forgot_password' do
     @email_address = params[:email_address]
     @player = Player.first(email_address: @email_address)
+    unless @player
+      flash[:errors] = "Email address #{@email_address} not found"
+      redirect '/player/forgot_password'
+      return
+    end
     @player.password_reset_hash = Digest::SHA2.new.update(@player.to_s + Time.now.to_s).to_s
     @player.password_reset_expires_on = Date.today + 2
     @player.save
@@ -139,7 +144,7 @@ class PickleSpears < Sinatra::Application
     haml 'player/password_reset_sent'.to_sym
   end
 
-  get '/player/reset/:reset_sha' do
+  get "/player/reset/:reset_sha" do
     @sha = params[:reset_sha]
     player = Player.first(password_reset_hash: @sha)
 
