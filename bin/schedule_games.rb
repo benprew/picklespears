@@ -112,6 +112,10 @@ end
 log = Logger.new(STDOUT)
 log.level = Logger::DEBUG
 
+# TODO: Look at using StackProf
+# or Benchmark/ips for benchmarking
+# allocation_tracer tells you the num and type of allocations
+# Tracepoint
 require 'perftools'
 
 # use Linux perf for profiling:
