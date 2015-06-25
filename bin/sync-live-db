@@ -1,8 +1,7 @@
 #!/bin/bash
 
 cd ~/src/picklespears
-latest_backup_id=`heroku pgbackups | tail -n1 | awk '{print $1}'`
-backup_url=`heroku pgbackups:url $latest_backup_id`
+backup_url=`heroku pg:backups public-url`
 /usr/bin/curl "$backup_url" > ps.db
 echo "This will overwrite data in picklespears. Sleeping for 5 seconds for possible abort"
 sleep 5;
