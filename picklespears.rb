@@ -13,19 +13,11 @@ require 'digest'
 require 'prawn'
 require 'icalendar'
 require 'active_support/all'
-require 'opbeat'
 require_relative 'lib/picklespears/core_extensions'
 
 config_file 'config/config.yml'
 
-Opbeat.configure do |config|
-    config.organization_id = "948339b853bb4f86bdde74bbb233caf2"
-    config.app_id = "f53da65152"
-    config.secret_token = "7a326c0ef9dfa3857dd7f2fb293df7939b56ac14"
-end 
-
 class PickleSpears < Sinatra::Application
-  use Opbeat::Rack
   set :haml, :ugly => true, :format => :html5
   enable :sessions
   use Rack::Flash, :accessorize => [:errors, :messages]

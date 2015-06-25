@@ -54,10 +54,7 @@ class TestPlayer < PickleSpears::Test::Unit
 
     get '/player/join_team'
     assert_match(/Done!/, last_response.body)
-    assert_no_match(/team to find/, last_response.body)
-
-    get '/player/join_team?team=find'
-    assert_match(/find a team/, last_response.body)
+    assert(last_response.body !~ /team to find/, 'team to find')
   end
 
   def test_can_leave_a_team

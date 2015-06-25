@@ -1,7 +1,9 @@
 ENV['RACK_ENV'] = 'test'
 
-require 'test/unit'
+require 'minitest/autorun'
 require 'rack/test'
+require 'tilt/haml'
+require 'tilt/sass'
 require 'capybara'
 require 'picklespears'
 require 'ostruct'
@@ -11,28 +13,29 @@ DOMAIN = 'example.org'
 
 Capybara.app = PickleSpears
 
-# needed so I can call my class PS::Test::Unit -- below
-class PickleSpears::Test
-end
+class PickleSpears
+  class Test
+    class Unit < Minitest::Test
 
-class PickleSpears::Test::Unit < Test::Unit::TestCase
+      include Rack::Test::Methods
+      include Capybara::DSL
 
-  include Rack::Test::Methods
-  include Capybara::DSL
+      def run(*args, &block)
+        Sequel::Model.db.transaction(:rollback => :always) do
+          Sequel::Model.db << "SET CONSTRAINTS ALL DEFERRED"
+          super
+        end
+        return self
+      end
 
-  def run(*args, &block)
-    Sequel::Model.db.transaction(:rollback => :always) do
-      Sequel::Model.db << "SET CONSTRAINTS ALL DEFERRED"
-      super
+      def app
+        PickleSpears
+      end
+
+      def login(player, password)
+        post '/player/login', email_address: player.email_address, password: password
+      end
+
     end
   end
-
-  def app
-    PickleSpears
-  end
-
-  def login(player, password)
-    post '/player/login', email_address: player.email_address, password: password
-  end
-
 end
