@@ -17,12 +17,10 @@ gem 'thin' # for heroku
 gem 'rake'
 gem 'icalendar'
 gem 'activesupport'
-gem 'opbeat'
 
 group :development do
   gem 'gga4r', git: 'http://github.com/benprew/gga4r'
 
-  gem 'unicorn'
   gem 'shotgun'
   gem 'pry'
 end
