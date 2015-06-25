@@ -118,14 +118,14 @@ class PickleSpears < Sinatra::Application
 end
 
 helpers do
-  def title(title=nil)
+  def title(title = nil)
     @title ||= ''
     @title = title unless title.nil?
     @title
   end
 
   def url_for(url, args)
-    return "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
+    "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
   end
 
   def send_email(options)
@@ -133,12 +133,11 @@ helpers do
       from: 'team@teamvite.com',
       via: :smtp,
       via_options: {
-        address: 'smtp.sendgrid.net',
-        port: '587',
-        domain: 'heroku.com',
-        user_name: ENV['SENDGRID_USERNAME'],
-        password: ENV['SENDGRID_PASSWORD'],
-        authentication: :plain,
+        address: ENV['MAILGUN_SMTP_SERVER'],
+        port: ENV['MAILGUN_SMTP_PORT'],
+        user_name: ENV['MAILGUN_SMTP_LOGIN'],
+        password: ENV['MAILGUN_SMTP_PASSWORD'],
+        domain: 'teamvite.heroku.com',
         enable_starttls_auto: true
       }
     }.merge(options)
@@ -151,7 +150,7 @@ helpers do
   end
 
   def partial(page, variables = {})
-    if File.exists?("#{settings.views}/#{page.to_s}.haml")
+    if File.exist?("#{settings.views}/#{page}.haml")
       haml page.to_sym, { layout: false }.merge(variables)
     else
       haml :"partials/#{page}", { layout: false }.merge(variables)
