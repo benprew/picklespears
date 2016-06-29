@@ -19,10 +19,10 @@
               %button.close{ type: :button, :'data-dismiss' => :modal, :'aria-hidden' => true } x
               %h3 Players attending
             .modal-body
-              - team.players.group_by { |e| e.attending_status(game) }.each do |group, players|
+              - team.players.group_by { |e| e.attending_status(game) }.sort.each do |group, players|
                 %h4= "#{group}: #{players.count}"
                 %ul
-                  - players.sort!{ |a, b| a.name <=> b.name }.each do |player|
+                  - players.sort_by(&:name).each do |player|
                     %li{ :style => 'margin-left: 3em'}= player.name
             .modal-footer
               %button.btn{ :'data-dismiss' => :modal, :'aria-hidden' => true } Close

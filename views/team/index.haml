@@ -5,12 +5,12 @@
     - if @player && !@player.is_on_team?(@team)
       %a.join_team.btn.btn-mini{ id: @team.id, href: '#'} Join this team!
     - if @player && @player.is_on_team?(@team)
-      %a{ :href => url_for('/team/edit', {:team_id => @team.id.to_s }) } [Manage]
+      %a.btn.btn-mini{ href: url_for('/team/edit', {:team_id => @team.id.to_s }) } Manage
 .row
   .span3
     %h2{ :style => 'margin-top: 0px;' } Players
     %ul
-      - @team.players.each do |player|
+      - @team.players.sort_by(&:name).each do |player|
         %li
           %a{ :href => url_for('/player', { 'id' => player.id.to_s }) }= player.name
   .span9

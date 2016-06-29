@@ -93,7 +93,7 @@
         %th Email
         %th Action
       %tbody
-        - @team.players.each do |p|
+        - @team.players.sort_by(&:name).each do |p|
           %tr
             %td= p.name
             %td
