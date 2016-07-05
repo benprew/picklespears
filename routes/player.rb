@@ -10,6 +10,7 @@ class PickleSpears < Sinatra::Application
 
   get '/player' do
     @player_from_request = Player[params[:id] || session[:player_id]]
+    halt 404 unless @player_from_request
     haml 'player/index'.to_sym
   end
 
@@ -18,9 +19,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/player/login' do
-    if player = Player.authenticate(params[:email_address], params[:password])
-      session[:player_id] = player.id
-      @player = player
+    if @player = Player.authenticate(params[:email_address], params[:password])
+      session[:player_id] = @player.id
       @player.update(last_login: Date.today)
       if is_league_manager?
         redirect '/league/manage'
