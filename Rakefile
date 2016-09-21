@@ -10,6 +10,13 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+namespace :test do
+  desc 'Drops and creates the test database'
+  task :setup_db do
+    `psql teamvitetest -f db/create.sql`
+  end
+end
+
 task :cron do
   # daily
   `bin/reminder.sh`
