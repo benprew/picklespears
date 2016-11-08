@@ -29,6 +29,7 @@ GEM
     coderay (1.1.0)
     daemons (1.2.2)
     eventmachine (1.0.7)
+    excon (0.54.0)
     haml (4.0.6)
       tilt
     hashery (2.1.1)
@@ -107,6 +108,7 @@ DEPENDENCIES
   activesupport
   bcrypt-ruby
   capybara
+  excon
   gga4r!
   haml
   i18n

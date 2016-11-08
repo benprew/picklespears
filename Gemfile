@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.3.1'
 
+gem 'excon'
 gem 'i18n'
 gem 'sinatra'
 gem 'sinatra-contrib'
