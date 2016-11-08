@@ -31,16 +31,6 @@ class TestGame < PickleSpears::Test::Unit
     assert_equal ['new away team'], @game.teams.map(&:name)
   end
 
-  def test_can_show_a_game
-    get "/game/#{@game.id}/"
-
-    assert last_response.ok?, 'Can see an individual game'
-    assert_match @game.description, last_response.body
-
-    get "/game/bogus_game_id/"
-    assert_equal 404, last_response.status
-  end
-
   def test_guys_confirmed_for_a_game
     player = Player.create_test(:gender => 'guy', :name => 'test player', :email_address => 'none@none.com')
     PlayersGame.create_test(
