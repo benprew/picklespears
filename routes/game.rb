@@ -3,9 +3,9 @@ class PickleSpears < Sinatra::Application
     begin
       @game = Game[params[:game_id]]
     rescue
-      halt 404
+      halt 404, 'game not found'
     end
-    halt 404 unless @game
+    halt(404, 'game not found') unless @game
   end
 
   get '/game/:game_id' do
@@ -30,13 +30,23 @@ class PickleSpears < Sinatra::Application
     away = params[:away_team]
     division = Division.first(name: params[:division])
 
-    halt(404, "No division named #{params[:division]}") unless division
+    unless division
+      warn "No division named #{params[:division]}"
+      halt(404, "No division named #{params[:division]}")
+    end
 
     home_team = Team.find(division: division, name: home)
     away_team = Team.find(division: division, name: away)
 
-    halt(404, "No team named #{home}") unless home_team
-    halt(404, "No team named #{away}") unless away_team
+    unless home_team
+      warn "No team named #{home}"
+      halt(404, "No team named #{home}")
+    end
+
+    unless away_team
+      warn "No team named #{away}"
+      halt(404, "No team named #{away}")
+    end
 
     game = Game.find_or_create(
       date: game_date,
