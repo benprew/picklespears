@@ -136,7 +136,7 @@ helpers do
         port: ENV['MAILGUN_SMTP_PORT'],
         user_name: ENV['MAILGUN_SMTP_LOGIN'],
         password: ENV['MAILGUN_SMTP_PASSWORD'],
-        domain: 'teamvite.heroku.com',
+        domain: 'teamvite.com',
         enable_starttls_auto: true
       }
     }.merge(options)
