@@ -35,8 +35,8 @@ class PickleSpears < Sinatra::Application
       halt(404, "No division named #{params[:division]}")
     end
 
-    home_team = Team.find(division: division, name: home)
-    away_team = Team.find(division: division, name: away)
+    home_team = Team.fuzzy_find(division, home, true)
+    away_team = Team.fuzzy_find(division, away, true)
 
     unless home_team
       warn "No team named #{home}"

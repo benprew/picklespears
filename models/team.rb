@@ -35,4 +35,30 @@ class Team < Sequel::Model
       message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://teamvite.com)",
     }
   end
+
+  def self.fuzzy_find(division, team_name, force_create=false)
+    teams = Team.where(name: team_name).all.reject do |t|
+      t.division.league != division.league
+    end
+
+    fail "ERR: too many teams name: #{team_name} teams: #{teams.map(&:name)}" if
+      teams.length > 1
+
+    if teams.length == 0
+      if force_create
+        warn "Creating Team: #{name}"
+        Team.create(name: name, division_id: division.id)
+      else
+        fail "ERR: no team for #{name} #{division.name}" unless @force_team_create
+      end
+    else
+      team = teams.first
+      if team.division != division
+        warn "MOV: team: #{team.name} from: #{team.division.name} to: #{division.name}"
+        team.division = division
+        team.save
+      end
+      teams.first
+    end
+  end
 end
