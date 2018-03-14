@@ -77,7 +77,7 @@ class Player < Sequel::Model
   end
 
   def password_reset_link
-    "http://teamvite.com/player/reset/#{password_reset_hash}"
+    "http://#{APP_DOMAIN}/player/reset/#{password_reset_hash}"
   end
 
   def is_league_manager?

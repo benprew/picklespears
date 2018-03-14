@@ -120,7 +120,7 @@ class PickleSpears < Sinatra::Application
         dtend   (game.date + 1.hours).to_datetime, { TZID: 'America/Los_Angeles' }
         summary game.description
         description game.description
-        uid "http://teamvite.com/game/#{game.id}/"
+        uid "http://#{APP_DOMAIN}/game/#{game.id}/"
       end
     end
 

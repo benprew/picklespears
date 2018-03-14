@@ -4,14 +4,14 @@
 
 %blockquote= "\t#{game.date.strftime(DATE_FORMAT)} #{game.description}"
 
-- if player.attending_status(game) == 'No Reply' 
+- if player.attending_status(game) == 'No Reply'
   Can you make the game?
   %br
-  %a{ :href => url_for('http://teamvite.com/player/attending_status_for_game', :game_id => game.id, :player_id => player.id, :status => 'yes') } Yes
+  %a{ :href => url_for("http://#{APP_DOMAIN}/player/attending_status_for_game", :game_id => game.id, :player_id => player.id, :status => 'yes') } Yes
   %br
-  %a{ :href => url_for('http://teamvite.com/player/attending_status_for_game', :game_id => game.id, :player_id => player.id, :status => 'no') } No
+  %a{ :href => url_for("http://#{APP_DOMAIN}/player/attending_status_for_game", :game_id => game.id, :player_id => player.id, :status => 'no') } No
   %br
-  %a{ :href => url_for('http://teamvite.com/player/attending_status_for_game', :game_id => game.id, :player_id => player.id, :status => 'maybe') } Maybe
+  %a{ :href => url_for("http://#{APP_DOMAIN}/player/attending_status_for_game", :game_id => game.id, :player_id => player.id, :status => 'maybe') } Maybe
 - else
   ="You are currently marked as '#{player.attending_status(game)}' for this game.  To change your status sign in and update it in your homepage"
 

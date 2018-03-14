@@ -32,7 +32,7 @@ class Team < Sequel::Model
     info = {
       to: player.email_address,
       subject: "Teamvite: You've been added to #{name}",
-      message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://teamvite.com)",
+      message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://#{APP_DOMAIN})",
     }
   end
 

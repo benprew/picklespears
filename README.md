@@ -1,6 +1,6 @@
 # Teamvite - Sports Team Management
 
-http://teamvite.com
+http://www.teamvite.com
 
 ## DESCRIPTION:
 

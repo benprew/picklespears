@@ -17,6 +17,8 @@ require_relative 'lib/picklespears/core_extensions'
 
 config_file 'config/config.yml'
 
+APP_DOMAIN='www.teamvite.com'
+
 class PickleSpears < Sinatra::Application
   set :haml, :ugly => true, :format => :html5
   enable :sessions
