@@ -22,11 +22,7 @@ class PickleSpears < Sinatra::Application
     if @player = Player.authenticate(params[:email_address], params[:password])
       session[:player_id] = @player.id
       @player.update(last_login: Date.today)
-      if is_league_manager?
-        redirect '/league/manage'
-      else
-        redirect '/player'
-      end
+      redirect '/player'
     else
       flash[:errors] = 'Incorrect username or password'
       redirect '/player/login'
