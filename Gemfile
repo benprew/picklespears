@@ -21,8 +21,6 @@ gem 'icalendar'
 gem 'activesupport'
 
 group :development do
-  gem 'gga4r', git: 'http://github.com/benprew/gga4r'
-
   gem 'shotgun'
   gem 'pry'
 end
