@@ -10,6 +10,15 @@ Teamvite is a web app designed to allow a recreational sports team manager to tr
 
 Built with Ruby and Sinatra, see the Gemfile for app-specific requirements.
 
+### Common tasks
+* Update PDX Indoor games
+
+``` shell
+bin/pdx-indoor-games <season>
+env APP_URL=http://www.teamvite.com bin/update_schedule_from_files.rb pi_games.txt
+```
+
+
 ## LICENSE:
 
 (The MIT License)
