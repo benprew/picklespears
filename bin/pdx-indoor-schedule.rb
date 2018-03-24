@@ -4,56 +4,60 @@ require 'open-uri'
 require 'uri'
 require 'set'
 
-require_relative '../picklespears'
+URL='http://pdxindoorsoccer.com/wp-content/schedules'
+
+SEASONS = %w[
+  spring
+  summer
+  1fall
+  2fall
+  winter
+]
+
+LEAGUES = %w[men women coed]
+DIVISIONS = 1..6
+SUBDIVISIONS = ['', 'A', 'B', 'C']
 
 class BuildDb
-
-  def initialize(url='http://pdxindoorsoccer.com/wp-content/schedules/2fall/')
-    @@season_url = url
+  def initialize(season)
+    raise "invalid season #{season}" unless SEASONS.include?(season)
+    @@season_url = "#{URL}/#{season}"
   end
 
   def run
-    games = []
+    fh = File.open('pi_games.txt', 'w')
+    header = %i[league division home away time description]
 
-    Division.find_all().each do |division|
-      league_name = division.league.name.downcase.gsub(/portland indoor /, '')
-
-      case league_name
-      when 'coed'
-        league_name_possesive = league_name.upcase
-      else
-        league_name_possesive = "#{league_name.upcase}'S"
-      end
-
-      league_num = division.name[1..-1].upcase
-      file = "#{league_name}/DIV #{league_num}.TXT"
-      warn "working on #{file}"
-      begin
-        url = URI.escape(@@season_url + file)
-        warn url
-        open(url) do |f|
-          f.each do |line|
-            line = _clean_line(line)
-            data = _parse_schedule_line(line)
-            next unless data
-            data[:league] = division.league.name
-            data[:division] = division.name
-            data[:description] = "#{data[:home]} vs #{data[:away]}"
-            games << data
+    LEAGUES.each do |league|
+      DIVISIONS.each do |division|
+        SUBDIVISIONS.each do |sub_div|
+          begin
+            file = "/#{league}/DIV #{division}#{sub_div}.TXT"
+            warn @@season_url + file
+            url = URI.escape(@@season_url + file)
+            open(url, read_timeout: 2) do |f|
+              f.each do |line|
+                line = _clean_line(line)
+                data = _parse_schedule_line(line)
+                next unless data
+                data[:league] = league
+                data[:division] = "#{league[0]}#{division}#{sub_div.downcase}"
+                data[:description] = "#{data[:home]} vs #{data[:away]}"
+                fh.puts header.map { |i| data[i] }.join("|")
+              end
+            end
+          rescue OpenURI::HTTPError, Net::ReadTimeout
+            warn "Error opening file #{file} : #{$!}"
           end
         end
-      rescue OpenURI::HTTPError
-        warn "Error opening file #{file} : #{$!}"
       end
     end
 
-    File.open('pi_games.txt', 'w') do |f|
-      f.puts *games.map { |g| [:league, :division, :home, :away, :time, :description].map { |i| g[i] }.join("|") }
-    end
+    fh.close
   end
 
   def _parse_schedule_line(line)
-    return unless line.match /\w/
+    return unless line.match(/\w/)
     m = /\w{3}\s+(\w{3})\s+(\d{1,2})\s+([0-9:]+|MIDNITE:?\d*|NOON:?\d*)\s*(AM|PM)?\s+(.*)VS(.*)/.match(line)
     if m && m[6]
       hour = m[3]
@@ -75,13 +79,13 @@ class BuildDb
         :time => time
       }
     else
-      warn "Unable to parse line" + line
+      # warn "Unable to parse line" + line
       return nil
     end
   end
 
   def _clean_line(line)
-  	line.strip.gsub(/\s+/, ' ').upcase.gsub(/[^A-Z0-9:&!.\/ ]/, '')
+    line.strip.gsub(/\s+/, ' ').upcase.gsub(/[^A-Z0-9:&!.\/ ]/, '')
   end
 
 end
