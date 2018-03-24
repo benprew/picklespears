@@ -16,7 +16,7 @@ def add_game_for_team(game_date, game_description, division, home:, away:)
                       division: division),
                     headers: { 'Content-Type' => 'application/x-www-form-urlencoded' }
                    )
-  raise(resp.body) unless resp.status == 200
+  warn resp.body unless resp.status == 200
 end
 
 ARGV.each do |filename|
@@ -25,6 +25,8 @@ ARGV.each do |filename|
   f.each do |line|
     line.chop!
     (_league_name, division, home, away, date, description) = line.split '|'
+
+    warn "adding #{division} #{description}"
 
     add_game_for_team(
       date,
