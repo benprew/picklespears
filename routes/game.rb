@@ -32,7 +32,7 @@ class PickleSpears < Sinatra::Application
 
     unless division
       warn "No division named #{params[:division]}"
-      halt(404, "No division named #{params[:division]}")
+      halt(422, "No division named #{params[:division]}")
     end
 
     home_team = Team.fuzzy_find(division, home, true)
@@ -40,12 +40,12 @@ class PickleSpears < Sinatra::Application
 
     unless home_team
       warn "No team named #{home}"
-      halt(404, "No team named #{home}")
+      halt(422, "No team named #{home}")
     end
 
     unless away_team
       warn "No team named #{away}"
-      halt(404, "No team named #{away}")
+      halt(422, "No team named #{away}")
     end
 
     game = Game.find_or_create(
