@@ -4,7 +4,7 @@ require 'open-uri'
 require 'uri'
 require 'set'
 
-URL='http://pdxindoorsoccer.com/wp-content/schedules'
+URL='https://pdxindoorsoccer.com/wp-content/schedules'
 
 SEASONS = %w[
   spring
@@ -25,35 +25,45 @@ class BuildDb
   end
 
   def run
-    fh = File.open('pi_games.txt', 'w')
-    header = %i[league division home away time description]
+    threads = []
+    games = Queue.new
 
     LEAGUES.each do |league|
       DIVISIONS.each do |division|
         SUBDIVISIONS.each do |sub_div|
-          begin
-            file = "/#{league}/DIV #{division}#{sub_div}.TXT"
-            warn @@season_url + file
-            url = URI.escape(@@season_url + file)
-            open(url, read_timeout: 2) do |f|
-              f.each do |line|
-                line = _clean_line(line)
-                data = _parse_schedule_line(line)
-                next unless data
-                data[:league] = league
-                data[:division] = "#{league[0]}#{division}#{sub_div.downcase}"
-                data[:description] = "#{data[:home]} vs #{data[:away]}"
-                fh.puts header.map { |i| data[i] }.join("|")
+          threads << Thread.new do
+            begin
+              file = "/#{league}/DIV #{division}#{sub_div}.TXT"
+              warn @@season_url + file
+              url = URI.escape(@@season_url + file)
+              open(url, read_timeout: 2) do |f|
+                f.each do |line|
+                  line = _clean_line(line)
+                  data = _parse_schedule_line(line)
+                  next unless data
+                  data[:league] = league
+                  data[:division] = "#{league[0]}#{division}#{sub_div.downcase}"
+                  data[:description] = "#{data[:home]} vs #{data[:away]}"
+                  games << data
+                end
               end
+            rescue OpenURI::HTTPError, Net::ReadTimeout, Net::OpenTimeout
+              warn "Error opening file #{file} : #{$!}"
             end
-          rescue OpenURI::HTTPError, Net::ReadTimeout
-            warn "Error opening file #{file} : #{$!}"
           end
         end
       end
     end
 
-    fh.close
+    threads.map(&:join)
+
+    open('pi_games.txt', 'w') do |fh|
+      header = %i[league division home away time description]
+      until games.empty? do
+        data = games.pop
+        fh.puts header.map { |i| data[i] }.join("|")
+      end
+    end
   end
 
   def _parse_schedule_line(line)
