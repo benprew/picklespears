@@ -12,12 +12,32 @@ Built with Ruby and Sinatra, see the Gemfile for app-specific requirements.
 
 ### Common tasks
 * Update PDX Indoor games
-
 ``` shell
 bin/pdx-indoor-games <season>
 env APP_URL=http://www.teamvite.com bin/update_schedule_from_files.rb pi_games.txt
 ```
 
+* Cleanup old games in db
+``` sql
+delete from teams_games where game_id in (select id from games where date < current_date - 90);
+delete from games where date < current_date - 90;
+delete from players_games where game_id in (select id from games where date < current_date - 90);
+delete from teams where id not in (select team_id from teams_games);
+```
+
+* Rows in tables
+
+``` sql
+select table_schema,
+       table_name,
+       (xpath('/row/cnt/text()', xml_count))[1]::text::int as row_count
+from (
+  select table_name, table_schema,
+         query_to_xml(format('select count(*) as cnt from %I.%I', table_schema, table_name), false, true, '') as xml_count
+  from information_schema.tables
+  where table_schema = 'public' --<< change here for the schema you want
+) t order by 3 desc;
+```
 
 ## LICENSE:
 
