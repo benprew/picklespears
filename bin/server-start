@@ -1,3 +1,4 @@
 #!/bin/bash
 
-bundle exec rackup config.ru --port 4567
+sleep 5
+bundle exec rackup config.ru --port 3000 --host 0.0.0.0
