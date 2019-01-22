@@ -13,7 +13,8 @@ Built with Ruby and Sinatra, see the Gemfile for app-specific requirements.
 ### Common tasks
 * Update PDX Indoor games
 ``` shell
-bin/pdx-indoor-games <season>
+bin/pdx-indoor-schedule.rb <season>
+docker-compose run web bash
 env APP_URL=http://www.teamvite.com bin/update_schedule_from_files.rb pi_games.txt
 ```
 
