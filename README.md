@@ -20,6 +20,7 @@ env APP_URL=http://www.teamvite.com bin/update_schedule_from_files.rb pi_games.t
 
 * Cleanup old games in db
 ``` sql
+heroku pg:psql -a teamvite
 delete from teams_games where game_id in (select id from games where date < current_date - 90);
 delete from games where date < current_date - 90;
 delete from players_games where game_id in (select id from games where date < current_date - 90);
