@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 
 class TestPickleSpears < PickleSpears::Test::Unit
@@ -16,6 +14,18 @@ class TestPickleSpears < PickleSpears::Test::Unit
     team.add_game(Game.create_test date: Date.today + 1)
 
     get '/browse', league_id: league.id
+    assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
+    assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
+  end
+
+  def test_browse_with_league_id_strips_non_numbers
+    league = League.create_test(name: 'Women')
+    div = Division.create_test(league_id: league.id)
+
+    team = Team.create_test( :division => div, :name => 'Barcelona' )
+    team.add_game(Game.create_test date: Date.today + 1)
+
+    get '/browse', league_id: "#{league.id}/"
     assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
     assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
   end

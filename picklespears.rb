@@ -60,8 +60,9 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/browse' do
-    @divisions = Division.filter(:league_id => params[:league_id]).order(Sequel.asc(:name)).all
-    @league = League[params[:league_id]]
+    league_id = params[:league_id].tr('^0-9', '')
+    @divisions = Division.filter(:league_id => league_id).order(Sequel.asc(:name)).all
+    @league = League[league_id]
 
     if !@league
       flash[:errors] = 'No league with that name was found'
