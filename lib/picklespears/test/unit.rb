@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require 'rack/test'
 require 'tilt/haml'
 require 'tilt/sass'
-require 'capybara'
+require 'capybara/dsl'
 require 'picklespears'
 require 'ostruct'
 
@@ -19,7 +19,7 @@ class PickleSpears
     class Unit < Minitest::Test
 
       include Rack::Test::Methods
-      # include Capybara::DSL
+      include Capybara::DSL
 
       def run(*args, &block)
         result = nil

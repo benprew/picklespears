@@ -91,36 +91,38 @@ class PickleSpears < Sinatra::Application
     haml 'team/edit'.to_sym
   end
 
+  tzid = 'America/Los_Angeles'
+
   get '/team/:team_id/calendar.ics' do
     calendar = Calendar.new
     calendar.x_wr_calname = @team.name
-    calendar.timezone do
-      timezone_id 'America/Los_Angeles'
+    calendar.timezone do |t|
+      t.tzid = tzid
 
-      daylight do
-        dtstart '20130310T020000'
-        add_recurrence_rule   "FREQ=YEARLY;BYMONTH=4;BYDAY=1SU"
-        timezone_offset_from '-0800'
-        timezone_offset_to '-0700'
-        timezone_name 'PDT'
+      t.daylight do |d|
+        d.dtstart      = '20130310T020000'
+        d.rrule        = "FREQ=YEARLY;BYMONTH=4;BYDAY=1SU"
+        d.tzoffsetfrom = '-0800'
+        d.tzoffsetto   = '-0700'
+        d.tzname       = 'PDT'
       end
 
-      standard do
-        dtstart '20131103T020000'
-        add_recurrence_rule   "FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU"
-        timezone_offset_from '-0700'
-        timezone_offset_to '-0800'
-        timezone_name 'PST'
+      t.standard do |s|
+        s.dtstart      = '20131103T020000'
+        s.rrule        = "FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU"
+        s.tzoffsetfrom = '-0700'
+        s.tzoffsetto   = '-0800'
+        s.tzname       = 'PST'
       end
     end
 
     @team.games.each do |game|
-      calendar.event do
-        dtstart game.date.to_datetime, { TZID: 'America/Los_Angeles' }
-        dtend   (game.date + 1.hours).to_datetime, { TZID: 'America/Los_Angeles' }
-        summary game.description
-        description game.description
-        uid "http://#{APP_DOMAIN}/game/#{game.id}/"
+      calendar.event do |e|
+        e.dtstart = Icalendar::Values::DateTime.new game.date.to_datetime, { TZID: tzid }
+        e.dtend = Icalendar::Values::DateTime.new (game.date + 1.hours).to_datetime, { TZID: tzid }
+        e.summary = game.description
+        e.description = game.description
+        e.uid = "http://#{APP_DOMAIN}/game/#{game.id}/"
       end
     end
 
