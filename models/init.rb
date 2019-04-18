@@ -11,13 +11,18 @@ def make_connect_string(db_info)
   end
 end
 
-unless settings.respond_to?(:db)
-  # running on Heroku
+times = 0
+begin
   DB = Sequel.connect(ENV['DATABASE_URL'])
-else
-  DB = Sequel.connect(
-    make_connect_string(settings.db),
-    :logger => Logger.new(settings.db[:logfile]))
+rescue Sequel::DatabaseConnectionError
+  times += 1
+  if times < 3
+    puts "failed to connect to database, retrying..."
+    sleep(1*times)
+    retry
+  else
+    raise
+  end
 end
 
 require_relative 'division'
