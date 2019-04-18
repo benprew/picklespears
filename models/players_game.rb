@@ -1,5 +1,4 @@
 require_relative 'team'
-require_relative 'player'
 
 class PlayersGame < Sequel::Model
   unrestrict_primary_key
@@ -14,4 +13,3 @@ class PlayersGame < Sequel::Model
     return pg
   end
 end
-

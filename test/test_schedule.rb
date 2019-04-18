@@ -1,10 +1,7 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 require 'picklespears/schedule'
 
 class TestSchedule < PickleSpears::Test::Unit
-
   MENS_LEAGUE_ID = 1
   COED_LEAGUE_ID = 2
   WOMENS_LEAGUE_ID = 3

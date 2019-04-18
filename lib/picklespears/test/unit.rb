@@ -10,6 +10,7 @@ require 'ostruct'
 
 DB << open(File.dirname(__FILE__) + '/../../../db/create.sql', 'r').read
 DOMAIN = 'example.org'
+$VERBOSE=nil
 
 Capybara.app = PickleSpears
 
@@ -18,14 +19,16 @@ class PickleSpears
     class Unit < Minitest::Test
 
       include Rack::Test::Methods
-      include Capybara::DSL
+      # include Capybara::DSL
 
       def run(*args, &block)
+        result = nil
         Sequel::Model.db.transaction(:rollback => :always) do
           Sequel::Model.db << "SET CONSTRAINTS ALL DEFERRED"
-          super
+          result = super
         end
-        return self
+        # minitest 5.11+ #run needs to return a Result object
+        return result
       end
 
       def app

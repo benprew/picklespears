@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 
 class TestDivision < PickleSpears::Test::Unit

@@ -1,6 +1,5 @@
 require 'date'
 require_relative 'team'
-require_relative 'teams_game'
 
 class Game < Sequel::Model
   one_to_many :players_games

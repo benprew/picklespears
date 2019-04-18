@@ -1,6 +1,3 @@
-require_relative 'player'
-require_relative 'team'
-
 class PlayersTeam < Sequel::Model
   many_to_one :player
   many_to_one :team

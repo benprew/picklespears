@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears'
 require 'picklespears/test/unit'
 

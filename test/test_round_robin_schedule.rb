@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 require 'picklespears/round_robin_schedule'
 
@@ -72,7 +70,6 @@ class TestScheduler < PickleSpears::Test::Unit
 
   def test_rounds_needed_for_eight_games
     rounds_needed_for_odd_numbers = Hash[ 3 => 12, 5 => 10, 7 => 10 ]
-    games = 8
     (2..55).each do |i|
       teams = (1..i).map { |j| "t #{j}" }
       if i % 2 == 0
@@ -116,4 +113,3 @@ class TestScheduler < PickleSpears::Test::Unit
 
 
 end
-

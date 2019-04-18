@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 
 class TestSeason < PickleSpears::Test::Unit
@@ -19,7 +17,7 @@ class TestSeason < PickleSpears::Test::Unit
 
     assert_equal "http://#{DOMAIN}/season/list", last_request.url
     assert last_response.ok?
-    assert_match /#{@season.name}/, last_response.body
+    assert_match(/#{@season.name}/, last_response.body)
   end
 
   def test_season_create

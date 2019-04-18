@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 
 class TestGame < PickleSpears::Test::Unit

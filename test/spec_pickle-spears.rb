@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'picklespears/test/unit'
 require 'rack/test'
 
@@ -58,7 +56,7 @@ context 'spec_picklespears', PickleSpears::Test::Unit do
     last_response.headers['Location'].should match(/player\/join_team$/)
 
     player = Player.first(:name => 'bennie')
-    player.email_address.should == 'test_com' 
+    player.email_address.should == 'test_com'
   end
 
   specify 'attending status' do
