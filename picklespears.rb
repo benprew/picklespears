@@ -60,7 +60,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/browse' do
-    league_id = params[:league_id].tr('^0-9', '')
+    league_id = params[:league_id].to_i
     @divisions = Division.filter(:league_id => league_id).order(Sequel.asc(:name)).all
     @league = League[league_id]
 

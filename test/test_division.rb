@@ -14,4 +14,12 @@ class TestDivision < PickleSpears::Test::Unit
     assert_match @division.name, last_response.body
     assert last_response.ok?
   end
+
+  def test_division_index_redirect_to_list_with_invalid_division_id
+    get '/division'
+
+    assert_equal "http://#{DOMAIN}/division/list", last_response.location
+    follow_redirect!
+    assert last_response.ok?
+  end
 end

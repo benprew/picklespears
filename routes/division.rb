@@ -9,9 +9,12 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/division' do
-    @division = Division[params[:division_id]]
+    division_id = params[:division_id].to_i
+
+    redirect '/division/list' if division_id < 1
+    @division = Division[division_id]
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
-    @games = Game.where(teams: Team.where(division: Division[params[:division_id]])).where{ date >= Date.today }.order(:date)
+    @games = Game.where(teams: Team.where(division: @division)).where{ date >= Date.today }.order(:date)
 
     haml :'division/index'
   end
