@@ -14,10 +14,10 @@ end
 times = 0
 begin
   DB = Sequel.connect(ENV['DATABASE_URL'])
-rescue Sequel::DatabaseConnectionError
-  times += 1
+rescue Sequel::DatabaseConnectionError, PG::ConnectionBad
   if times < 3
     puts "failed to connect to database, retrying..."
+    times += 1
     sleep(1*times)
     retry
   else
