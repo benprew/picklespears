@@ -9,7 +9,8 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/player' do
-    @player_from_request = Player[params[:id] || session[:player_id]]
+    player_id = (params[:id] || session[:player_id]).to_i
+    @player_from_request = Player[player_id]
     halt 404 unless @player_from_request
     haml 'player/index'.to_sym
   end

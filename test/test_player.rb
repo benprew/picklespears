@@ -97,4 +97,13 @@ class TestPlayer < PickleSpears::Test::Unit
       [[team2, team2.games.first],[team, team.games.first]],
       player.upcoming_teams_games)
   end
+
+  def test_coerces_player_id_from_request
+    player = Player.create_test
+    get "/player?id=#{player.id}/"
+
+    assert_match(
+      /<title>Teamvite - #{player.name}'s homepage<\/title>/,
+      last_response.body)
+  end
 end
