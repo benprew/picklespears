@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
   web:
     build: .
     command: bin/server-start
@@ -15,3 +15,5 @@ services:
       - db
     environment:
        DATABASE_URL: postgres://postgres@db:5432/teamvite?encoding=unicode
+volumes:
+  db-data:
