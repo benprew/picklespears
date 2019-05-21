@@ -20,6 +20,7 @@ class TestDivision < PickleSpears::Test::Unit
 
     follow_redirect!
     assert last_response.ok?
+    assert_match 'No division found', last_response.body
   end
 
   def test_division_index_redirect_to_list_with_invalid_division_id
@@ -28,5 +29,6 @@ class TestDivision < PickleSpears::Test::Unit
     assert_equal "http://#{DOMAIN}/division/list", last_response.location
     follow_redirect!
     assert last_response.ok?
+    assert_match 'No division found', last_response.body
   end
 end

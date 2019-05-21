@@ -12,7 +12,10 @@ class PickleSpears < Sinatra::Application
     division_id = params[:division_id].to_i
     @division = Division[division_id]
 
-    redirect '/division/list' unless @division
+    unless @division
+      flash[:errors] = 'No division found with that id'
+      redirect '/division/list'
+    end
 
     @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
     @games = Game.where(teams: Team.where(division: @division)).where{ date >= Date.today }.order(:date)
