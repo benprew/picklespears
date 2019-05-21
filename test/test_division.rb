@@ -15,6 +15,13 @@ class TestDivision < PickleSpears::Test::Unit
     assert last_response.ok?
   end
 
+  def test_unknown_division
+    get '/division', division_id: 133
+
+    follow_redirect!
+    assert last_response.ok?
+  end
+
   def test_division_index_redirect_to_list_with_invalid_division_id
     get '/division'
 
