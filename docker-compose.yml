@@ -4,9 +4,11 @@ services:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: Haeg1iez
   web:
     build: .
-    command: bin/server-start
+    command: ['./wait-for-postgres.sh', "db", "bin/server-start"]
     volumes:
       - .:/teamvite
     ports:
@@ -14,6 +16,7 @@ services:
     depends_on:
       - db
     environment:
-       DATABASE_URL: postgres://postgres@db:5432/teamvite?encoding=unicode
+       DATABASE_URL: postgres://postgres:Haeg1iez@db:5432/teamvite
+    restart: always
 volumes:
   db-data:
