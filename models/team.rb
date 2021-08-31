@@ -46,10 +46,10 @@ class Team < Sequel::Model
 
     if teams.length == 0
       if force_create
-        warn "Creating Team: #{name}"
-        Team.create(name: name, division_id: division.id)
+        warn "Creating Team: #{team_name}"
+        Team.create(name: team_name, division_id: division.id)
       else
-        fail "ERR: no team for #{name} #{division.name}" unless @force_team_create
+        fail "ERR: no team for #{team_name} #{division.name}" unless @force_team_create
       end
     else
       team = teams.first
