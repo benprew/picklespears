@@ -20,7 +20,7 @@ SUBDIVISIONS = ['', 'A', 'B', 'C']
 
 class BuildDb
   def initialize(season)
-    raise "invalid season #{season}" unless SEASONS.include?(season)
+    raise "invalid season '#{season}'. Seasons: #{SEASONS}" unless SEASONS.include?(season)
     @@season_url = "#{URL}/#{season}"
   end
 
