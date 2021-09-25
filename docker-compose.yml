@@ -6,13 +6,16 @@ services:
       - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: Haeg1iez
+    ports:
+      - "127.0.0.1:5432:5432"
   web:
     build: .
     command: ['./wait-for-postgres.sh', "db", "bin/server-start"]
+    domainname: teamvite.home.arpa
     volumes:
       - .:/teamvite
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - db
     environment:
