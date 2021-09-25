@@ -72,6 +72,7 @@
         %li= "#{game.date.strftime(DATE_FORMAT)} #{game.description}"
   .span6
     %h3 Players
+    %a.btn{ href: "mailto:#{@team.players.map(&:email_address).join(',')}" } Email the Team
     %form.form-inline{ action: "/team/#{@team.id}/add_player", method: 'post'}
       %table.table
         %thead
