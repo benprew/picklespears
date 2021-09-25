@@ -1,14 +1,17 @@
 #!/bin/bash
 
+set -e
+
 cd ~/src/picklespears
-backup_url=`heroku pg:backups public-url --app teamvite`
-/usr/bin/curl "$backup_url" > ps.db
+backup_url=$(heroku pg:backups public-url --app teamvite)
+/usr/bin/curl --silent "$backup_url" > ps.db
 echo "This will overwrite data in picklespears. Sleeping for 5 seconds for possible abort"
 sleep 5;
-cd ~/src/operations/teamvite
-vagrant ssh -c 'sudo -u postgres dropdb teamvite'
-vagrant ssh -c 'sudo -u postgres createdb teamvite'
-vagrant ssh -c 'cd /var/www/teamvite/current && sudo -u teamvite pg_restore -d teamvite -U teamvite -O ps.db -1 -n public'
+echo "SELECT pid, (SELECT pg_terminate_backend(pid)) as killed from pg_stat_activity
+   WHERE datname = 'teamvite';" | psql --host localhost --user postgres
+dropdb --host localhost --user postgres teamvite
+createdb --host localhost --user postgres teamvite
+pg_restore --host localhost -d teamvite -U postgres -O ps.db -1 -n public
 
 # TO restore to heroku
 # DB=ps_up.db
