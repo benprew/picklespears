@@ -18,13 +18,13 @@ require 'active_support/all'
 
 config_file 'config/config.yml'
 
-APP_DOMAIN='www.teamvite.com'
+APP_DOMAIN = 'www.teamvite.com'
 
 class PickleSpears < Sinatra::Application
   enable :sessions
-  use Rack::Flash, :accessorize => [:errors, :messages]
+  use Rack::Flash, accessorize: %i[errors messages]
 
-  DATE_FORMAT='%a %b %e %I:%M %p'
+  DATE_FORMAT = '%a %b %e %I:%M %p'
 
   # this should be enabled by default in Sinatra::Application subclasses
   # http://sinatrarb.com/intro.html - see Logging
@@ -34,15 +34,15 @@ class PickleSpears < Sinatra::Application
 
   configure :production do
     set :clean_trace, true
-    require 'newrelic_rpm'
 
     error 400 do
       'Invalid Request'
     end
 
     error do
-      send_email to: 'ben.prew@gmail.com', subject: 'error on teamvite.com', body: "#{request.env['sinatra.error'].message} #{request.inspect}"
-      "Application error."
+      send_email to: 'ben.prew@gmail.com', subject: 'error on teamvite.com',
+                 body: "#{request.env['sinatra.error'].message} #{request.inspect}"
+      'Application error.'
     end
   end
 
@@ -61,10 +61,10 @@ class PickleSpears < Sinatra::Application
 
   get '/browse' do
     league_id = params[:league_id].to_i
-    @divisions = Division.filter(:league_id => league_id).order(Sequel.asc(:name)).all
+    @divisions = Division.filter(league_id: league_id).order(Sequel.asc(:name)).all
     @league = League[league_id]
 
-    if !@league
+    unless @league
       flash[:errors] = 'No league with that name was found'
       redirect '/team/search'
     end
@@ -91,24 +91,24 @@ class PickleSpears < Sinatra::Application
       output += "\n<br/> working on team #{team.name} ..."
 
       if !next_game || next_game.date > (Date.today + 5).to_time
-        output += "no upcoming unreminded games"
+        output += 'no upcoming unreminded games'
         next
       end
 
       output += "sending email about #{next_game.description}"
 
       team.players.each do |player|
-        next unless (player.email_address and player.email_address.match(/@/))
+        next unless player.email_address and player.email_address.match(/@/)
 
         pg = PlayersGame.find_or_create(player_id: player.id, game_id: next_game.id)
 
         next if pg.reminder_sent
 
         send_email(
-          :to      => player.email_address,
-          :subject => "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
-          :body    => partial(:reminder, :locals => { :player => player, :game => next_game }),
-          :content_type => 'text/html',
+          to: player.email_address,
+          subject: "Next Game: #{next_game.date.strftime(DATE_FORMAT)} #{next_game.description} ",
+          body: partial(:reminder, locals: { player: player, game: next_game }),
+          content_type: 'text/html'
         )
 
         pg.reminder_sent = true
@@ -126,20 +126,20 @@ helpers do
     @title
   end
 
-  def uri_for(item, method='index', args: {})
+  def uri_for(item, method = 'index', args: {})
     id = item.id
     args[:id] = id
     route = item.class.name.downcase
     # id or method could be null, so we compact then join
-    uri = "/" + [route, method].compact.join("/")
-    [uri, mk_params(args)].compact.join("?")
+    uri = '/' + [route, method].compact.join('/')
+    [uri, mk_params(args)].compact.join('?')
   end
 
   def mk_params(args)
-    (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
+    (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}" }).join('&')
   end
 
-  def url_for(url, args={})
+  def url_for(url, args = {})
     "#{url}?" + mk_params(args)
   end
 
