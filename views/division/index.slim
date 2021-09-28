@@ -1,0 +1,4 @@
+form.form.form-inline
+  == partial :division_select, locals: { divisions: divisions, initial: division, name: 'id' }
+  input.btn  type="submit"
+== partial :upcoming_games, locals: { player: @user, teams_games: division_games}

@@ -1,0 +1,118 @@
+.row-fluid
+  .offset1
+    form method="post" action="/season/create_schedule"
+      input type="hidden" name="id" value=season.id
+      button.btn.btn-primary Create Schedule
+
+.row-fluid
+  .offset1.span3
+    h4 Season Details
+    form  action="/season/edit" method="post"
+      input  type="hidden" name="id" value=season.id
+
+      label Season Name
+      input  type="text" name="name" value=season.name
+
+      label Start Date
+      / Should be able to update this to type: "date" eventually
+      / %input{ type: :text, name: :start_date, value: season.start_date.strftime("%m/%d/%Y"), "data-date-format" => "mm/dd/yyyy", min: "2013-01-01", max: "2014-01-01"  }
+      == partial :date_input, locals: { name: :start_date, value: season.start_date }
+
+      br
+      button.btn Update
+  .span7
+    h4 Facility Holidays
+    form  action="/season/add_exception_day" method="post"
+      input  type="hidden" name="id" value=season.id
+      table.table.table-striped.form-inline
+        thead
+          th Date
+          th Note
+          th &nbsp;
+        tbody
+          tr
+            td
+              == partial :date_input, locals: { name: :date, value: "" }
+            td
+              input type="text" name="description" placeholder="Reason for exclusion"
+            td
+              button.btn.inline Add
+          - season.season_exceptions.each do |exception|
+            tr
+              td= exception.date
+              td= exception.description
+              td
+                button.btn.inline  name="delete" value=exception.id   Delete
+.row-fluid
+  .offset1.span10
+
+    / %h4 Regularly Scheduled Times
+    / %a.btn{ href: "#ScheduledTimeModal", role: :button, "data-toggle" => :modal } Add Scheduled Time
+    / #ScheduledTimeModal{ class: "modal hide fade", tabindex: -1, role: :dialog }
+    /   .modal-header
+    /     %button.close{ type: :button, "data-dismiss" => :modal, "aria-hidden" => true } &times;
+    /     %h3 Add Scheduled Time
+    /   .modal-body
+    /     %form.form-horizontal
+    /       .control-group
+    /         %label.control-label Day of Week
+    /         .controls
+    /           %input{ type: :text, name: :day_of_week }
+    /       .control-group
+    /         %label.control-label Start time of 1st Game
+    /         .controls
+    /           %input{ type: :text, name: :start_time }
+    /       .control-group
+    /         %label.control-label Game Length (in minutes)
+    /         .controls
+    /           %input{ type: :text, name: :game_length }
+    /       .control-group
+    /         %label.control-label Number of Games to Play
+    /         .controls
+    /           %select{ name: :num_games }
+    /             - (1..10).each do |i|
+    /               %option= i
+    /   .modal-footer
+    /     %a.btn{ "data-dismiss" => :modal } Cancel
+    /     %a.btn Add Scheduled Time
+
+    / %table.table
+    /   %thead
+    /     %th Day of Week
+    /     %th 1st Game Starts at
+    /     %th # Games
+
+    h4 Teams to Schedule
+    label League
+    form.form-inline  method="post" action="/season/add_league"
+      input  type="hidden" name="id" value=season.id
+      select  name="league_id"
+        - League.order(:name).all do |league|
+          option  value=league.id  = league.name
+      button.btn Add All Teams in League
+      a.btn  href=uri_for(season, 'create_team') Create Team
+
+    table.table.table-striped.form-inline
+      thead
+        th Team Name
+        th Division
+        th Preferred Days
+      tbody
+        - season.teams.sort{ |a, b| [a.division.name, a.name] <=> [b.division.name, b.name] }.each do |team|
+          tr
+            td
+              a  href=uri_for(team, 'edit', args: { season_id: season.id })
+                i.icon-edit
+                = team.name
+            td= team.division.name
+            - spd = SeasonPreferredDay[season.id,team.id]
+            td= spd && spd.preferred_days
+            td
+              form  method="post" action="/season/remove_team"
+                input  type="hidden" name="id" value=season.id
+                input  type="hidden" name="team_id" value=team.id
+                button.btn.btn-mini Remove Team
+
+    form  method="post" action="/season/create_schedule"
+      input  type="hidden" name="season_id" value=season.id
+      button.btn.btn-primary Create Schedule

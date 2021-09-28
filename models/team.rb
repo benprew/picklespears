@@ -61,4 +61,19 @@ class Team < Sequel::Model
       teams.first
     end
   end
+
+  def self.search_args(params)
+    teams = []
+    if params[:team]
+      query = params[:team]
+      teams = Team.filter(Sequel.like(:name, '%' + params[:team].upcase + '%')).order(Sequel.asc(:name)).all
+    end
+
+    return { teams: teams, query: query }
+  end
+
+  def self.create_args(params)
+    season = Season[params[:season_id]]
+    return { season: season }
+  end
 end

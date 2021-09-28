@@ -1,0 +1,16 @@
+- title "Calendar for #{@team.name}"
+h2= "Calendar for #{@team.name}"
+div  class="fullcalendar"
+- if @team.name
+  javascript:
+    $(document).ready(function() {
+      /! jQuery Full Calendar
+      $('.fullcalendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        events: "/team/#{@team.id}/calendar.ics"
+      });
+    });

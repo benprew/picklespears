@@ -1,49 +1,23 @@
 class PickleSpears < Sinatra::Application
   before '*' do
-    @season = Season[params[:season_id]] if params[:season_id]
-  end
-
-  get '/season' do
-    redirect '/season/list' unless params[:season_id]
-
-    @season = Season[params[:season_id]] if params[:season_id]
-    @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
-
-    haml :'season/index'
-  end
-
-  get '/season/list' do
-    @seasons = Season.all
-    haml 'season/list'.to_sym
-  end
-
-  get '/season/create' do
-    @leagues = League.order{ :name }.all
-    haml 'season/create'.to_sym
+    @season = Season[params[:id]] if params[:id]
   end
 
   post '/season/create' do
     season = Season.create(params.slice(:name, :start_date))
-    redirect url_for '/season/edit', { season_id: season.id }
-  end
-
-  get '/season/edit' do
-    @leagues = League.order{ :name }.all
-    @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
-
-    haml :'season/edit'
+    redirect uri_for(season, 'edit')
   end
 
   post '/season/edit' do
     @season.update(params.slice(:name, :start_date)).save
     flash[:success] = "Season updated"
-    redirect url_for '/season/edit', { season_id: @season.id }
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/add_exception_day' do
     if !@season
       flash[:errors] = "Invalid season"
-      redirect '/season'
+      redirect '/season/list'
     end
 
     if params[:delete]
@@ -51,11 +25,17 @@ class PickleSpears < Sinatra::Application
       flash[:success] = "Removed holiday #{holiday.description} on #{holiday.date}"
       holiday.delete
 
-      redirect url_for '/season/edit', { season_id: @season.id }
+      redirect uri_for(@season, 'edit')
     else
-      SeasonException.new(params.slice(:date, :season_id, :description)).save
+      SeasonException.new(
+        {
+          date: params[:date],
+          season_id: params[:id],
+          description: params[:description]
+        }
+      ).save
       flash[:success] = "Added holiday on #{params[:date]}"
-      redirect url_for '/season/edit', { season_id: @season.id }
+      redirect uri_for(@season, 'edit')
     end
   end
 
@@ -67,14 +47,14 @@ class PickleSpears < Sinatra::Application
 
     @teams.each { |t| @season.add_team(t) unless @season.teams.include?(t) }
 
-    redirect url_for '/season/edit', { season_id: @season.id }
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/remove_team' do
     @team = Team[params[:team_id]]
     @season.remove_team(@team)
     flash[:success] = "Removed team #{@team.name}"
-    redirect url_for '/season/edit', { season_id: @season.id }
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/update_team' do
@@ -93,18 +73,14 @@ class PickleSpears < Sinatra::Application
     end
 
     flash[:success] = "Updated team #{@team.name}"
-    redirect url_for '/season/edit', { season_id: @season.id }
-  end
-
-  get '/season/create_team' do
-    @divisions = Division.order(:name).all.select { |d| d.teams_with_upcoming_games.length > 0 }
-
-    haml :'team/create'
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/create_team' do
-
     @team = Team.create(params.slice(:name, :manager_name, :manager_email, :manager_phone_no, :division_id))
+    # build season explicitly because we're posting from a team view, so we
+    # specify season_id to refer to the id instead of the usual id
+    @season = Season[params[:season_id]]
     @season.add_team(@team)
 
     params[:preferred_day].each do |day|
@@ -117,23 +93,12 @@ class PickleSpears < Sinatra::Application
     end
 
     flash[:success] = "Created team #{@team.name}"
-    redirect url_for '/season/edit', { season_id: @season.id }
-  end
-
-  get '/season/games' do
-    @division = Division[params[:division_id]]
-    @games = Game.where( id: DB[%q{ SELECT g.id FROM games g
-      INNER JOIN teams_games tg ON (g.id = tg.game_id)
-      INNER JOIN teams t on (tg.team_id = t.id)
-      WHERE g.season_id = ? AND t.division_id = ?
-      GROUP BY g.id }, @season.id, @division.id]).sort{ |a, b| a.date <=> b.date }
-
-    haml 'season/games'.to_sym
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/create_schedule' do
     flash[:success] = "Schedule queued to build, you will receive an email when it is complete"
     send_email( to: 'benprew@gmail.com', subject: "Schedule queued for season #{@season.name}" )
-    redirect url_for '/season', { season_id: @season.id }
+    redirect uri_for(@season)
   end
 end

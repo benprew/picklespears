@@ -1,0 +1,23 @@
+- title "search results"
+form.form-inline  method="get" action="/team/search"
+  input  name="team" type="text" value=query
+  button.btn Search
+table.table.table-striped
+  thead
+    th Name
+    th Division
+    th Player Status
+  tbody
+  - teams.each do |team|
+    tr
+      td
+        a  href="/team?team_id=#{team.id}" = team.name
+      td
+        = "#{team.division.league.name} #{team.division.name}"
+      td
+        - if @user
+          - if !@user.teams.include?(team)
+            span id=team.id
+              a.join_team.btn.btn-mini team_id=team.id href="#" Join this team!
+          - else
+            | You play on this team

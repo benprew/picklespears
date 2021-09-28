@@ -1,0 +1,11 @@
+.row
+  .offset1
+    a.btn  href="/season/create"   New Season
+    h3 All Seasons
+    ul
+      - Season.each do |season|
+        li
+          - if !season.games.empty?
+            a  href: uri_for(season) = season.name
+          - else
+            a  href: uri_for(season, 'edit') = season.name

@@ -1,0 +1,17 @@
+- title "profile for #{player.name}"
+.row
+  .span3
+    h3
+      a href=uri_for(player) = player.name
+      - if @user == player
+        a.btn href=uri_for(player, 'edit') Edit
+    /! TODO: Add edit image capability
+    img src="http://www.gravatar.com/avatar/#{player.md5_email}?s=200"
+    br
+    h3 Teams
+    ul
+      - player.teams.each do |team|
+        li
+          a href=uri_for(team) = team.name
+  .span5
+    == partial :upcoming_games, locals: { teams_games: player.upcoming_teams_games, player: player }

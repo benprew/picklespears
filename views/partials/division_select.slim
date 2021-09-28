@@ -1,5 +1,5 @@
-select  name="division_id"
-  - divisions.each do |division|
+select name=(name || "division_id")
+  - Division.all.each do |division|
     - if initial && initial == division
       option value=division.id selected="selected" = division.name
     - else

@@ -1,0 +1,5 @@
+- title "All Divisions"
+ul
+  - Division.each do |division|
+    li
+      a  href=uri_for(division) = division.name

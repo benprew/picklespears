@@ -91,4 +91,26 @@ class Player < Sequel::Model
     end
     teams_games.sort { |a, b| a[1].date <=> b[1].date }
   end
+
+  def self.join_team_args(params)
+    teams = []
+    if params[:team]
+      teams = Team.filter(Sequel.ilike(:name, "%#{params[:team]}%"))
+                 .order(Sequel.asc(:name))
+                 .all
+    end
+    return {teams: teams}
+  end
+
+  def self.join_attending_status_args(params)
+    game = Game[params[:game_id]]
+    status = params[:status]
+    player = Player[params[:player_id]]
+
+    halt 400 unless game && player
+
+    player.set_attending_status_for_game(game, status)
+    flash[:messages] = partial 'attending_status_for_game', locals: {status: status}
+    redirect uri_for(game.team_player_plays_on(player))
+  end
 end

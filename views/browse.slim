@@ -1,0 +1,25 @@
+- title "browsing league: #{@league.name}"
+h2 "Teams for #{@league.name}"
+- @divisions.each do |division|
+  - next unless division.teams_with_upcoming_games.length > 0
+  .row
+    .span10
+      h3= division.name
+      table.table.table-striped
+        thead
+          th Team
+          th Wins
+          th Losses
+          th Ties
+          th Bonus Points
+          th Points
+        tbody
+          - division.teams_with_upcoming_games.sort { |a, b| a.name <=> b.name }.each do |team|
+            tr
+              td
+                a href=uri_for(team) = team.name
+              td 0
+              td 0
+              td 0
+              td 0
+              td 0

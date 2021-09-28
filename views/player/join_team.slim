@@ -1,0 +1,20 @@
+- title 'join a team'
+.directions
+  h3 Join a Team!
+  | Great!  Now that you have created your profile, you probably
+  | want to join some teams.  Don't worry if you can't find the team
+  | you're looking for, you can always join more teams later.
+  br
+  br
+  | To find a team, type in part of the team name in the search box and
+  | click "Team Search".  Once you're all done adding teams, click "Done!"
+.create_form
+  h3 Search
+  form  method="get" action="/player/join_team"
+    input  name="team" type="input"
+    input  name="tn_search" value="Team Search" type="submit"
+  form  method="get" action=("/player" )
+    input  name="done" value="Done!" type=("submit" )
+  - teams.each do |team|
+    = "#{team.name} (division #{team.division.league.name} #{team.division.name})"
+    a.join_team.btn.btn-mini  id: team.id, href: "#"  Join this team!

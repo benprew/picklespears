@@ -4,7 +4,7 @@ require 'bundler/setup'
 require 'pony'
 require 'sinatra'
 require 'sinatra/config_file'
-require 'haml'
+require 'slim'
 require 'sass'
 require 'time'
 require 'rack-flash'
@@ -13,18 +13,24 @@ require 'digest'
 require 'prawn'
 require 'icalendar'
 require 'active_support/all'
-require_relative 'lib/picklespears/core_extensions'
+
+# Slim::Engine.options[:pretty] = true
 
 config_file 'config/config.yml'
 
 APP_DOMAIN='www.teamvite.com'
 
 class PickleSpears < Sinatra::Application
-  set :haml, :format => :html5
   enable :sessions
   use Rack::Flash, :accessorize => [:errors, :messages]
 
   DATE_FORMAT='%a %b %e %I:%M %p'
+
+  # this should be enabled by default in Sinatra::Application subclasses
+  # http://sinatrarb.com/intro.html - see Logging
+  configure :production, :development do
+    enable :logging
+  end
 
   configure :production do
     set :clean_trace, true
@@ -48,15 +54,9 @@ class PickleSpears < Sinatra::Application
     'Access forbidden'
   end
 
-  before do
-    if session[:player_id]
-      @player = Player[session[:player_id]]
-    end
-  end
-
   get '/' do
     @teams = []
-    haml :index, layout: false
+    slim :index, layout: false
   end
 
   get '/browse' do
@@ -69,7 +69,7 @@ class PickleSpears < Sinatra::Application
       redirect '/team/search'
     end
 
-    haml :browse
+    slim :browse
   end
 
   get '/stylesheet.css' do
@@ -79,9 +79,9 @@ class PickleSpears < Sinatra::Application
 
   post '/players_team/delete' do
     team = Team[params[:team_id]]
-    team.remove_player(@player)
+    team.remove_player(@user)
     flash[:messages] = "You have successfully left #{team.name}"
-    redirect '/player'
+    redirect uri_for(@user)
   end
 
   get '/send_game_reminders' do
@@ -115,7 +115,7 @@ class PickleSpears < Sinatra::Application
         pg.save
       end
     end
-    haml output
+    slim output
   end
 end
 
@@ -126,8 +126,21 @@ helpers do
     @title
   end
 
-  def url_for(url, args)
-    "#{url}?" + (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
+  def uri_for(item, method='index', args: {})
+    id = item.id
+    args[:id] = id
+    route = item.class.name.downcase
+    # id or method could be null, so we compact then join
+    uri = "/" + [route, method].compact.join("/")
+    [uri, mk_params(args)].compact.join("?")
+  end
+
+  def mk_params(args)
+    (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}"}).join("&")
+  end
+
+  def url_for(url, args={})
+    "#{url}?" + mk_params(args)
   end
 
   def send_email(options)
@@ -152,10 +165,10 @@ helpers do
   end
 
   def partial(page, variables = {})
-    if File.exist?("#{settings.views}/#{page}.haml")
-      haml page.to_sym, { layout: false }.merge(variables)
+    if File.exist?("#{settings.views}/#{page}.slim")
+      slim page.to_sym, { layout: false }.merge(variables)
     else
-      haml :"partials/#{page}", { layout: false }.merge(variables)
+      slim :"partials/#{page}", { layout: false }.merge(variables)
     end
   end
 end

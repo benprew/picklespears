@@ -1,0 +1,43 @@
+/ %form.form-inline
+/   Specific Game:
+/   %input{ type: :text, name: :team }
+/   %button.btn{ disabled: true} Search
+
+/ Or
+
+form.form-inline
+  | Pick a Day:
+  == partial :date_input, locals: { name: :date, value: date }
+  button.btn Go
+
+.row
+  .span10
+    table.table.table-striped
+      thead
+        th Date
+        th Home Team
+        th Away Team
+        th &nbsp;
+      tbody
+        - @games.each do |game|
+          tr
+            td = game.date.strftime(DATE_FORMAT)
+            td == partial 'league/_score_team', locals: {  team: game.home_team  }
+            td == partial 'league/_score_team', locals: {  team: game.away_team  }
+            td
+              input.btn  type="submit" value="Submit"
+
+.row
+  .span10
+    table.table.table-striped
+      thead
+        th Date
+        th Game
+        th Print
+      tbody
+        - @games.each do |game|
+          tr
+            td= game.date.strftime(DATE_FORMAT)
+            td= game.description
+            td
+              a.btn.btn-mini  href="/league/game_report/#{game.id}.pdf"   Print

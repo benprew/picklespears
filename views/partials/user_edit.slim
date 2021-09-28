@@ -1,0 +1,50 @@
+header
+  h2 Edit your profile
+  form  action='/player/update' method=('post' ) 
+    dl
+      dt
+        label Name*:
+      dd
+        input  type='text' name='name' value=(@player && @player.name ) 
+      dt
+        label Email Address*:
+      dd
+        input  type='text' name='email_address' value=(@player && @player.email_address ) 
+      dt
+        label Phone:
+      dd
+        input  type="text" name='phone_number' value=(@player && @player.phone_number) 
+      dt
+        label I am a:
+      dd
+        select  name=('gender' ) 
+          option  value='guy' selected=(@player && @player.gender == 'guy' ) guy
+          option  value='gal' selected=(@player && @player.gender == 'gal' ) gal
+      dt
+        label Zip Code:
+      dd
+        input  type="text" name='zipcode' value=(@player && @player.zipcode ) 
+      dt
+        label Birthday:
+      dd
+        input  type="text" name='birthdate' value=(@player && @player.birthdate ) 
+      dt
+        label
+          | Image:
+          | Add one at
+          a  href=('http://en.gravatar.com/' )  gravatar.com
+      dd
+        img  src=("http://www.gravatar.com/avatar/#{@player.md5_email}" ) 
+    button Update Info
+    input  type='hidden' name='openid' value=(@player.openid ) 
+header
+  h2 Current Teams
+  dl
+    - @player.teams.each do |team|
+      form  method='post' action=('/players_team/delete' ) 
+        dt
+          a  href=url_for("/team", { 'team_id' => team.id.to_s })  = team.name
+        dd
+          button Leave Team
+          input  type='hidden' name=:player_id value=(@player.id ) 
+          input  type='hidden' name=:team_id value=(team.id ) 

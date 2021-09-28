@@ -1,0 +1,10 @@
+.row-fluid
+  .span4
+    h2 Login
+    form  action='/player/login' method='post'
+      input.input-xlarge  type='email' name='email_address' placeholder="Email"
+      br
+      input.input-xlarge  type="password" name='password' placeholder="Password"
+      br
+      button  class="btn btn-primary"   Login
+      a.pull-right  href='/player/forgot_password'   Forgot your password?

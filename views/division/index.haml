@@ -1,5 +1,0 @@
-
-%form.form.form-inline
-  = partial :division_select, locals: { divisions: @divisions, initial: @division }
-  %input.btn{ type: :submit }
-= partial :upcoming_games, locals: { player: @player, teams_games: @games.map { |g| [ g.teams.first, g ] } }

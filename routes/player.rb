@@ -1,29 +1,9 @@
 class PickleSpears < Sinatra::Application
-  before %r{/player/(\d+)/*} do |player_id|
-    begin
-      @player_from_request = Player[player_id]
-    rescue Sequel::DatabaseError
-      halt 404
-    end
-    halt 404 unless @player_from_request
-  end
-
-  get '/player' do
-    player_id = (params[:id] || session[:player_id]).to_i
-    @player_from_request = Player[player_id]
-    halt 404 unless @player_from_request
-    haml 'player/index'.to_sym
-  end
-
-  get '/player/login' do
-    haml 'player/login'.to_sym
-  end
-
   post '/player/login' do
-    if @player = Player.authenticate(params[:email_address], params[:password])
-      session[:player_id] = @player.id
-      @player.update(last_login: Date.today)
-      redirect '/player'
+    if user = Player.authenticate(params[:email_address], params[:password])
+      session[:player_id] = user.id
+      user.update(last_login: Date.today)
+      redirect uri_for(user)
     else
       flash[:errors] = 'Incorrect username or password'
       redirect '/player/login'
@@ -36,10 +16,6 @@ class PickleSpears < Sinatra::Application
     redirect '/'
   end
 
-  get '/player/signup' do
-    haml 'player/signup'.to_sym
-  end
-
   post '/player/signup' do
     params['player'][:name] = params['player'][:email_address]
     @player = Player.new(params['player'])
@@ -47,35 +23,28 @@ class PickleSpears < Sinatra::Application
       @player.save
       session[:player_id] = @player.id
       flash[:success] = 'Account created'
-      redirect "/player/#{@player.id}/edit"
+      redirect uri_for(@player, 'edit')
     else
       flash[:errors] = "Unable to create your account: #{@player.errors}"
-      redirect url_for('/player/signup?', params['player'])
+      redirect uri_for(@player, 'signup', args: params['player'])
     end
-  end
-
-  get '/player/join_team' do
-    @teams = []
-    if params[:team]
-      @teams = Team.filter(Sequel.ilike(:name, "%#{params[:team]}%"))
-        .order(Sequel.asc(:name))
-        .all
-    end
-    haml 'player/join_team'.to_sym
-  end
-
-  get '/player/:player_id/edit' do
-    halt 403 unless @player == @player_from_request
-    @editable = true
-    @p = @player_from_request
-    haml 'player/index'.to_sym
   end
 
   post '/player/update' do
-    @player ||= Player.new
+    @player = Player[params[:id]]
+    if !@user
+      flash[:errors] = 'Must be logged in to edit your profile'
+      redirect '/player/login'
+    end
+
+    if @user != @player
+      flash[:errors] = 'You are not allowed to edit this profile'
+      redirect uri_for(@player)
+    end
     attrs = params
     attrs.delete(:update)
     attrs.delete('update')
+    attrs.delete('id')
 
     attrs.delete('openid') if @player.openid
 
@@ -84,10 +53,10 @@ class PickleSpears < Sinatra::Application
     if @player.valid?
       @player.save
       session[:player_id] = @player.id
-      redirect to '/player'
+      redirect uri_for(@player)
     else
-      @errors = @player.errors.map { |k, v| "#{k} #{v.join ''}" }.join "\n"
-      partial :user_edit
+      flash[:errors] = @player.errors.map { |k, v| "#{k} #{v.join ''}" }.join "\n"
+      redirect uri_for(@player, 'edit')
     end
   end
 
@@ -102,23 +71,19 @@ class PickleSpears < Sinatra::Application
       flash[:messages] = "You removed #{Player[player_id].name} from the team"
     end
 
-    redirect url_for '/team/edit', team_id: team_id
+    redirect uri_for(Team[team_id], 'edit')
   end
 
   get '/player/attending_status_for_game' do
     game = Game[params[:game_id]]
-    @status = params[:status]
-    @player_from_request = Player[params[:player_id]]
+    status = params[:status]
+    player = Player[params[:player_id]]
 
-    halt 400 unless game && @player_from_request
+    halt 400 unless game && player
 
-    @player_from_request.set_attending_status_for_game(game, @status)
-    flash[:messages] = partial 'attending_status_for_game'
-    redirect url_for('/team', team_id: game.team_player_plays_on(@player_from_request).id)
-  end
-
-  get '/player/forgot_password' do
-    haml 'player/forgot_password'.to_sym
+    player.set_attending_status_for_game(game, status)
+    flash[:messages] = partial 'attending_status_for_game', locals: {status: status}
+    redirect uri_for(game.team_player_plays_on(player))
   end
 
   post '/player/forgot_password' do
@@ -138,7 +103,7 @@ class PickleSpears < Sinatra::Application
       subject: 'Reset your password for Teamvite.com',
       html_body: partial(:password_reset_email),
     )
-    haml 'player/password_reset_sent'.to_sym
+    slim 'player/password_reset_sent'.to_sym
   end
 
   get "/player/reset/:reset_sha" do
@@ -147,7 +112,7 @@ class PickleSpears < Sinatra::Application
 
     if player && Date.today <= player.password_reset_expires_on
       session[:player_id] = player.id
-      haml 'player/reset'.to_sym
+      slim 'player/reset'.to_sym
     else
       flash[:errors] = 'Password reset link expired or invalid'
       redirect '/player/login'
@@ -155,14 +120,14 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/player/reset/:reset_sha' do
-    @player.set(params['player'].select do |k, v|
+    @user.set(params['player'].select do |k, v|
       [:password, :password_confirmation].include?(k.to_sym)
     end)
 
-    if @player.valid?
-      @player.password_reset_expires_on = nil
-      @player.password_reset_hash = nil
-      @player.save
+    if @user.valid?
+      @user.password_reset_expires_on = nil
+      @user.password_reset_hash = nil
+      @user.save
       flash[:success] = 'Password reset successfully'
       redirect '/player/login'
     else

@@ -20,7 +20,7 @@ class PickleSpears < Sinatra::Application
       flash[:errors] = "Did not understand date: #{params[:date]}"
     end
 
-    haml 'league/manage'.to_sym, locals: { date: date }
+    slim 'league/manage'.to_sym, locals: { date: date }
   end
 
   get '/league/game_report/:game_id.pdf' do
@@ -47,7 +47,7 @@ class PickleSpears < Sinatra::Application
 
   helpers do
     def is_league_manager?
-      @player && @player.is_league_manager?
+      @user && @user.is_league_manager?
     end
   end
 end

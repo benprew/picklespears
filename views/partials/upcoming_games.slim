@@ -1,0 +1,31 @@
+h3 Upcoming Games
+table.table.table-striped
+  thead
+    tr
+      th Date
+      th Description
+      th Players Attending
+      - if player
+        th Your Response
+  tbody
+    - teams_games.each do |team, game|
+      tr
+        td= game.date.strftime(DATE_FORMAT)
+        td= game.description
+        td
+          a data-toggle="modal" href="#dialogPlayersGames#{game.id}" #{game.num_players_going}  Players
+          div  id="dialogPlayersGames#{game.id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            .modal-header
+              button.close  type="button" data-dismiss="modal" aria-hidden="true" x
+              h3 Players attending
+            .modal-body
+              - team.players.group_by { |e| e.attending_status(game) }.sort.each do |group, players|
+                h4 #{group}: #{players.count}
+                ul
+                  - players.sort_by(&:name).each do |player|
+                    li style="margin-left: 3em" = player.name
+            .modal-footer
+              button.btn data-dismiss="modal" aria-hidden="true" Close
+        - if player && @user == player
+          td
+            == partial :game_status, locals: { player: player, game: game }

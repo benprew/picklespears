@@ -10,7 +10,7 @@ services:
       - "127.0.0.1:5432:5432"
   web:
     build: .
-    command: ['./wait-for-postgres.sh', "db", "bin/server-start"]
+    command: ['bin/wait-for-postgres.sh', "db", "bin/server-start"]
     domainname: teamvite.home.arpa
     volumes:
       - .:/teamvite
@@ -20,6 +20,7 @@ services:
       - db
     environment:
        DATABASE_URL: postgres://postgres:Haeg1iez@db:5432/teamvite
+       RACK_ENV: development
     restart: always
 volumes:
   db-data:

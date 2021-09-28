@@ -1,4 +1,7 @@
 #!/bin/bash
 
-sleep 5
-bundle exec rackup config.ru --port 3000 --host 0.0.0.0
+if [[ $RACK_ENV = "production" ]]; then
+    bundle exec rackup config.ru --port 3000 --host 0.0.0.0
+else
+    bundle exec rerun --background -- rackup config.ru --port 3000 --host 0.0.0.0
+fi

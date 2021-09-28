@@ -16,4 +16,16 @@ class Season < Sequel::Model
   def dates_to_avoid_for_team(team)
     SeasonDayToAvoid.where(season_id: id, team_id: team.id)
   end
+
+  def self.games_args(params)
+    season = Season[params[:id]]
+    division = Division[params[:division_id]]
+    games = Game.where( id: DB[%q{ SELECT g.id FROM games g
+      INNER JOIN teams_games tg ON (g.id = tg.game_id)
+      INNER JOIN teams t on (tg.team_id = t.id)
+      WHERE g.season_id = ? AND t.division_id = ?
+      GROUP BY g.id }, season.id, division.id]).sort{ |a, b| a.date <=> b.date }
+
+    return { games: games }
+  end
 end

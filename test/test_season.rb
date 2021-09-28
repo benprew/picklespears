@@ -6,18 +6,13 @@ class TestSeason < PickleSpears::Test::Unit
   end
 
   def test_season_index
-    get '/season', season_id: @season.id
-
+    get '/season/index', id: @season.id
     assert last_response.ok?
   end
 
   def test_season_list
-    get '/season'
-    follow_redirect!
-
-    assert_equal "http://#{DOMAIN}/season/list", last_request.url
+    get '/season/list'
     assert last_response.ok?
-    assert_match(/#{@season.name}/, last_response.body)
   end
 
   def test_season_create
@@ -30,12 +25,12 @@ class TestSeason < PickleSpears::Test::Unit
   end
 
   def test_get_season_edit
-    get '/season/edit', season_id: @season.id
+    get '/season/edit', id: @season.id
     assert last_response.ok?
   end
 
   def test_season_edit
-    visit "/season/edit?season_id=#{@season.id}"
+    visit "/season/edit?id=#{@season.id}"
     fill_in :name, with: 'Winter Cup 2013'
     click_button 'Update'
 
@@ -44,7 +39,7 @@ class TestSeason < PickleSpears::Test::Unit
   end
 
   def test_season_exception_day
-    visit "/season/edit?season_id=#{@season.id}"
+    visit "/season/edit?id=#{@season.id}"
 
     within(:xpath, "//form[@action='/season/add_exception_day']") do
       fill_in :date, with: '2013-05-25'
@@ -61,7 +56,7 @@ class TestSeason < PickleSpears::Test::Unit
     game = Game.create_test
     game.add_team(team)
 
-    visit "/season/edit?season_id=#{@season.id}"
+    visit "/season/edit?id=#{@season.id}"
     select league.name, from: :league_id
     click_button 'Add All Teams in League'
 
@@ -74,7 +69,7 @@ class TestSeason < PickleSpears::Test::Unit
     game = Game.create_test
     game.add_team(team)
 
-    visit "/season/create_team?season_id=#{@season.id}"
+    visit "/team/create?season_id=#{@season.id}"
     fill_in :name, with: 'A new Team'
     select 'Test Division', from: :division_id
     click_button 'Create Team'

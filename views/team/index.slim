@@ -1,0 +1,21 @@
+- title team.name
+.row
+  .span9.offset3
+    h1 style="display: inline" = team.name
+    - if @user && !@user.is_on_team?(team)
+      a.join_team.btn.btn-mini  id=team.id href"#"  Join this team!
+    - if @user && @user.is_on_team?(team)
+      a.btn.btn-mini href=uri_for(team, "edit") Manage
+.row
+  .span3
+    h2  style=('margin-top: 0px;' )  Players
+    ul
+      - team.players.sort_by(&:name).each do |player|
+        li
+          a  href=uri_for(player) = player.name
+  .span9
+    div  style="float: right; margin: 10px 0;"
+      a.btn href=uri_for(team, 'calendar.ics', args: {layout: false})
+        | Calendar
+        i.icon-calendar
+    == partial :upcoming_games, locals: { teams_games: team.upcoming_games.map { |g| [team, g] }, player: @user }

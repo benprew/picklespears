@@ -1,2 +1,2 @@
-require ::File.join( ::File.dirname(__FILE__), 'picklespears' )
+require_relative("picklespears")
 run PickleSpears.new

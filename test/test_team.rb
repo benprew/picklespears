@@ -28,19 +28,20 @@ class TestTeam < PickleSpears::Test::Unit
   end
 
   def test_add_player_to_team
-    post "/team/#{@team.id}/add_player", email: 'foo@bar.com', name: 'Billy'
+    post "/team/add_player", email: 'foo@bar.com', name: 'Billy', id: @team.id
+    follow_redirect!
+    assert last_response.ok?, "response not ok: #{last_response.status}"
+    assert_match /Player.*Billy.*added/, last_response.body
 
+    post "/team/add_player", email: 'foo@bar.com', name: 'Billy', id: @team.id
+    follow_redirect!
     assert last_response.ok?
-    assert_match 'Player "Billy" added', last_response.body
-
-    post "/team/#{@team.id}/add_player", email: 'foo@bar.com', name: 'Billy'
-    assert last_response.ok?
-    assert_match 'Player "Billy" already on roster', last_response.body
+    assert_match /Player.*Billy.*already on roster/, last_response.body
   end
 
   def test_team_calendar
     @team.add_game(Game.create_test)
-    get "/team/#{@team.id}/calendar.ics"
+    get "/team/calendar.ics?id=#{@team.id}"
 
     assert last_response.ok?, "Can show calendar"
     assert_match @team.games.first.description, last_response.body

@@ -1,5 +1,5 @@
-require 'picklespears'
 require 'picklespears/test/unit'
+require 'picklespears'
 
 class TestPlayer < PickleSpears::Test::Unit
 
@@ -21,7 +21,7 @@ class TestPlayer < PickleSpears::Test::Unit
       '/player/attending_status_for_game',
       status: 'no', game_id: game.id, player_id: player.id)
 
-    assert_equal "http://#{DOMAIN}/team?team_id=#{team.id}", last_response.location
+    assert_equal "http://#{DOMAIN}/team/index?id=#{team.id}", last_response.location
     follow_redirect!
     assert last_response.ok?
   end
@@ -39,8 +39,8 @@ class TestPlayer < PickleSpears::Test::Unit
   def test_can_update_info_via_post
     player = Player.create_test
     login(player, 'secret')
-    post '/player/update', { :name => 'new_name' }
-    assert_equal "http://#{DOMAIN}/player", last_response.location
+    post '/player/update', { :name => 'new_name', id: player.id }
+    assert_equal "http://#{DOMAIN}/player/index?id=#{player.id}", last_response.location
     assert_equal 'new_name', player.reload.name
   end
 
@@ -100,10 +100,10 @@ class TestPlayer < PickleSpears::Test::Unit
 
   def test_coerces_player_id_from_request
     player = Player.create_test
-    get "/player?id=#{player.id}/"
+    get "/player/index?id=#{player.id}"
 
     assert_match(
-      /<title>Teamvite - #{player.name}'s homepage<\/title>/,
+      /<title>Teamvite - profile for #{player.name}<\/title>/,
       last_response.body)
   end
 end

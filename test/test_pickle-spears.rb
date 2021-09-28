@@ -32,7 +32,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
   def test_team_home
     team = Team.create_test( :name => 'test team' )
-    get '/team', :team_id => team.id
+    get '/team/index', id: team.id
     assert_match(/Upcoming Games/, last_response.body, 'upcoming games')
   end
 
@@ -47,9 +47,6 @@ class TestPickleSpears < PickleSpears::Test::Unit
     [ found_team, found_team2 ].each do |team|
       assert_match(/team_id=#{team.id}/, last_response.body, "team #{team.id} is found")
     end
-
-    get '/team/search', :team => 'Harpoon'
-    assert_equal "http://#{DOMAIN}/team?team_id=#{found_team.id}", last_response.location
   end
 
   def test_stylesheet

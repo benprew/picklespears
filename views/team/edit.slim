@@ -1,41 +1,41 @@
-- title "Edit #{@team.name}"
+- title "Edit #{team.name}"
 .row-fluid
   .offset1.span5
     h3 Team Info
-    form.form-horizontal method='post' action=(@season ? '/season/update_team' : '/team/update')
-      input type=:hidden name=:team_id value=@team.id
+    form.form-horizontal method="post" action=(@season ? "/season/update_team" : "/team/update")
+      input  type=:hidden name=:team_id value=(team.id )
       .control-group
         label.control-label Team Name
         .controls
-          input type=:text name=:name value=@team.name
+          input  type=:text name=:name value=team.name
       .control-group
         label.control-label Manager Name
         .controls
-          input type=:text name=:manager_name value=@team.manager_name
+          input  type=:text name=:manager_name value=team.manager_name
       .control-group
         label.control-label Manager Email
         .controls
-          input type=:email name=:manager_email value=@team.manager_email
+          input  type=:email name=:manager_email value=team.manager_email
       .control-group
         label.control-label Manager Phone
         .controls
-          input{ type=:tel name=:manager_phone_no value=@team.manager_phone_no }
+          input  type=:tel name=:manager_phone_no value=team.manager_phone_no
       .control-group
         label.control-label Division
         .controls
-          == partial :division_select, locals: { divisions: @divisions, initial: @team.division }
+          == partial :division_select, locals: { divisions: @divisions, initial: team.division, name: "division_id" }
       - if @season
-        input type=:hidden name=:season_id value=@season.id
+        input  type=:hidden name=:season_id value=(@season.id )
 
         .control-group
           label.control-label Preferred Days
           .controls
             - %w{ Sunday Monday Tuesday Wednesday Thursday Friday Saturday }.each do |day|
               label.checkbox
-                - if SeasonPreferredDay[@season.id,@team.id,day]
-                  input type=:checkbox name='preferred_day[]' value=day checked=:checked = day
+                - if SeasonPreferredDay[@season.id,team.id,day]
+                  input  type=:checkbox name="preferred_day[]" value=day checked=:checked  = day
                 - else
-                  input type=checkbox name='preferred_day[]' value=day = day
+                  input  type=:checkbox name="preferred_day[]" value=day  = day
 
         h4 Days to Avoid
         table.table.table-striped.form-inline
@@ -45,60 +45,57 @@
           tbody
             tr
               td
-                = partial :date_input, locals: { name: 'day_to_avoid[]', value: '' }
+                == partial :date_input, locals: { name: "day_to_avoid[]", value: "" }
               td
                 button.btn.inline Add
-            - SeasonDayToAvoid.where( season_id: @season.id, team_id: @team.id).each do |sda|
+            - SeasonDayToAvoid.where( season_id: @season.id, team_id: team.id).each do |sda|
               tr
                 td= sda.day_to_avoid
                 td
-                  button.btn.inline{ name: :delete, value: sda.id, disabled: :disabled } Delete
+                  button.btn.inline  name=:delete value=sda.id disabled=:disabled   Delete
 
       button.btn Update
 
     h3 Upcoming Games
     div
-      form.form-inline action='/team/add_game' method=:post id=:new_game_form
-        strong Add Game:
+      form.form-inline  action="/team/add_game" method="post" id="new_game_form"
+        strong Add Game
         br
-        input type='text' name='date' size=20 id=:game_date_string
-        input type=:hidden name=:massaged_date id=:massaged_date
-        button.btn disabled=:disabled  Add Game
-        p "Example: Thursday 6pm or 5/17/2009 14:40"
+        input  type="text" name="date" size=20 id="game_date_string"
+        input  type="hidden" name="massaged_date" id="massaged_date"
+        button.btn disabled="disabled" Add Game
+        p
+        | Example: Thursday 6pm or 5/17/2009 14:40
     ul
-      - @team.upcoming_games.each do |game|
+      - team.upcoming_games.each do |game|
         li= "#{game.date.strftime(DATE_FORMAT)} #{game.description}"
   .span6
     h3 Players
-    a.btn href="mailto:#{@team.players.map(&:email_address).join(',')}"  Email the Team
-    form.form-inline action="/team/#{@team.id}/add_player" method='post'
-      table.table
-        thead
-          th Name
-          th Email
-          th Action
-        tbody
-          tr
-            td
-              input type='text' name='name' placeholder='Player Name'
-            td
-              input type='text' name='email' placeholder='Email Address'
-            td
-              button.btn Add
-
+    a.btn href="mailto:#{team.players.map(&:email_address).join(',')}" Email the Team
     table.table
       thead
         th Name
         th Email
         th Action
       tbody
-        - @team.players.sort_by(&:name).each do |p|
+        - team.players.sort_by(&:name).each do |p|
           tr
-            td= p.name
+            td
+              a href=uri_for(p) = p.name
             td
               a href="mailto:#{p.email_address}" = p.email_address
             td
               form.form-inline action="/player/remove_from_team" method="post"
-                button.btn Remove Player
+                button.btn Remove
                 input type="hidden" name="player_id" value=p.id
-                input type="hidden" name="team_id" value=@team.id
+                input type="hidden" name="team_id" value=team.id
+        tr
+          td
+            input type="text" name="name" placeholder="Name" form="add-player"
+          td
+            input type="text" name="email" placeholder="Email" form="add-player"
+          td
+            input.btn type="submit" name="submit" value="Add" form="add-player"
+
+    form.form-inline id="add-player" action="/team/add_player" method="post"
+      input type="hidden" name="id" value=team.id

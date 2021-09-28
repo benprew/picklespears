@@ -2,14 +2,7 @@
 require 'sequel'
 require 'yaml'
 require 'logger'
-
-def make_connect_string(db_info)
-  if db_info[:adapter] == 'sqlite3'
-    return sprintf "%s:%s", db_info[:adapter], db_info[:database]
-  else
-    return sprintf "%s://%s:%s@localhost/%s", db_info[:adapter], db_info[:username], db_info[:password], db_info[:database]
-  end
-end
+require 'pg'
 
 times = 0
 begin

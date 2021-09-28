@@ -1,0 +1,10 @@
+div
+  - if player.attending_status(game) != "No Reply"
+    | Going:
+    strong #{player.attending_status(game)}
+    a  href="#" onclick="document.getElementById('status_#{game.id}').style.display = 'block'" [change]
+    div  style="display:none" id="status_#{game.id}"
+      == partial :attending_status, locals: { game: game }
+  - else
+    div  id="status_#{game.id}"
+      == partial :attending_status, locals: { game: game }

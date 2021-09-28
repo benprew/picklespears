@@ -1,0 +1,28 @@
+- title "edit your info"
+.row
+  .span3
+    form.form  action="/player/update" method="post"
+      button.btn  style="margin-bottom: 10px;"   Update Info
+      input type="hidden" name="id" value=player.id
+      input  type="text" name="name" value=player.name placeholder="Name"
+      img  style="margin-bottom: 10px;" src="http://www.gravatar.com/avatar/#{player.md5_email}?s=200"
+      input  type="email" name="email_address" value=player.email_address placeholder="Email"
+      input  type="tel" name="phone_number" value=player.phone_number placeholder="Phone"
+      select  name="gender"
+        option  value="guy" selected=(player.gender == "guy")  guy
+        option  value="gal" selected=(player.gender == "gal")  gal
+      input  type="text" name="zipcode" value=player.zipcode placeholder="Zipcode"
+      input  type="text" name="birthdate" value=player.birthdate placeholder="Birthday"
+  .span5
+      /! TODO: Add search/join/leave team as async requests
+      button.btn  disabled="disabled" Find/Join a team!
+      h3 Teams
+      ul
+        - player.teams.each do |team|
+          form  method="post" action=("/players_team/delete" )
+            dt
+              a href=uri_for(team) = team.name
+            dd
+              button Leave Team
+              input type="hidden" name="player_id" value=player.id
+              input type="hidden" name="team_id" value=team.id

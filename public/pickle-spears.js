@@ -5,13 +5,14 @@ $(function() {
     function updateDiv(data) {
       button.parent().parent().html(data)
     }
-    $.get(button.attr('href'), updateDiv);
+    $.post(button.attr('href'), updateDiv);
   });
 
   $( ".join_team" ).click(function(e) {
-    e.preventDefault();
-    var team_id = e.target.id
-    $.get('/team/join', { team_id: team_id }, function(data) { $("#" + team_id).html(data) });
+      e.preventDefault();
+      console.log(e.target);
+      var team_id = e.target.attributes.team_id.nodeValue;
+      $.post('/team/join', { id: team_id }, function(data) { $("#" + team_id).html(data) });
   });
 });
 
