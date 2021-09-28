@@ -1,7 +1,7 @@
 class PickleSpears < Sinatra::Application
   # Meant to be called via ajax
   post '/game/:game_id/attending_status' do
-    @player.set_attending_status_for_game(@game, params[:status])
+    @user.set_attending_status_for_game(@game, params[:status])
     "<p>Status #{params[:status]} recorded</p>"
   end
 
@@ -32,7 +32,8 @@ class PickleSpears < Sinatra::Application
 
     game = Game.find_or_create(
       date: game_date,
-      description: game_description)
+      description: game_description
+    )
 
     game.home_team = home_team
     game.away_team = away_team
