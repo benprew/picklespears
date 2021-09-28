@@ -10,6 +10,13 @@ Teamvite is a web app designed to allow a recreational sports team manager to tr
 
 Built with Ruby and Sinatra, see the Gemfile for app-specific requirements.
 
+## TESTING
+
+Test your changes in docker
+
+    docker-compose run web bash
+    bundle exec rake test # TEST=test/test_season.rb #TESTOPTS="--name=test_season_exception_day -v"
+
 ### Common tasks
 * Update PDX Indoor games
 ``` shell

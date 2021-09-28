@@ -3,7 +3,7 @@ require 'picklespears/test/unit'
 class TestGame < PickleSpears::Test::Unit
   def setup
     super
-    @game = Game.create_test(:date => Time.now(), :description => 'test game')
+    @game = Game.create_test(date: Time.now, description: 'test game')
     @game.away_team = Team.create_test
   end
 
@@ -23,26 +23,35 @@ class TestGame < PickleSpears::Test::Unit
   end
 
   def test_cannot_add_multiple_away_teams
-#    assert_equal ['test team'], @game.teams.map(&:name)
+    #    assert_equal ['test team'], @game.teams.map(&:name)
     new_away_team = Team.create_test(name: 'new away team')
     @game.away_team = new_away_team
     assert_equal ['new away team'], @game.teams.map(&:name)
   end
 
   def test_guys_confirmed_for_a_game
-    player = Player.create_test(:gender => 'guy', :name => 'test player', :email_address => 'none@none.com')
+    player = Player.create_test(gender: 'guy', name: 'test player', email_address: 'none@none.com')
     PlayersGame.create_test(
-      :game_id => @game.id,
-      :player_id => Player.create_test.id,
-      :status => 'no'
+      game_id: @game.id,
+      player_id: Player.create_test.id,
+      status: 'no'
     )
     pg = PlayersGame.create_test(
-      :game_id => @game.id,
-      :player_id => player.id,
-      :status => 'yes'
+      game_id: @game.id,
+      player_id: player.id,
+      status: 'yes'
     )
     game = Game[pg.game_id]
     assert_equal(1, game.num_guys_confirmed)
     assert_equal(0, game.num_gals_confirmed)
+  end
+
+  def test_attending_status
+    game = Game.create_test
+    player = Player.create_test
+    login(player, 'secret')
+    post "/game/#{game.id}/attending_status", status: 'yes'
+
+    assert last_response.ok?
   end
 end
