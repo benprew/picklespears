@@ -11,7 +11,7 @@ table.table.table-striped
   - teams.each do |team|
     tr
       td
-        a  href="/team?team_id=#{team.id}" = team.name
+        a  href=uri_for(team) = team.name
       td
         = "#{team.division.league.name} #{team.division.name}"
       td
