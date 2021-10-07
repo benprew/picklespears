@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tzinfo'
+require 'icalendar'
 require 'icalendar/tzinfo'
 
 before do
@@ -42,9 +43,7 @@ require_relative 'team'
 
 helpers do
   def ical_calendar(team)
-    include Icalendar
-
-    calendar = Calendar.new
+    calendar = Icalendar::Calendar.new
     calendar.x_wr_calname = team.name
 
     timezones = {}

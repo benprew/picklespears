@@ -41,12 +41,13 @@ class TestTeam < PickleSpears::Test::Unit
 
   def test_team_calendar
     @team.add_game(Game.create_test)
-    get "/team/calendar.ics?id=#{@team.id}"
+    get "/team/calendar.ics?layout=false&id=#{@team.id}"
 
-    assert last_response.ok?, "Can show calendar"
+    assert last_response.ok?, 'Can show calendar'
     assert_match @team.games.first.description, last_response.body
     assert_match 'DTSTART;TZID=America/Los_Angeles:' + @team.games.first.date.strftime('%Y%m%d'), last_response.body
-    assert_match 'DTEND;TZID=America/Los_Angeles:' + (@team.games.first.date + 1.hours).strftime('%Y%m%d'), last_response.body
+    assert_match 'DTEND;TZID=America/Los_Angeles:' + (@team.games.first.date + 1.hours).strftime('%Y%m%d'),
+                 last_response.body
   end
 
   def test_invalid_team_page
