@@ -1,7 +1,8 @@
-class PickleSpears < Sinatra::Application
+# frozen_string_literal: true
 
+class PickleSpears < Sinatra::Application
   before '/league/*' do
-    redirect '/' unless is_league_manager?
+    redirect '/' unless @user&.league_manager?
   end
 
   get '/league/manage' do
@@ -43,11 +44,5 @@ class PickleSpears < Sinatra::Application
     end
 
     send_file pdffile
-  end
-
-  helpers do
-    def is_league_manager?
-      @user && @user.is_league_manager?
-    end
   end
 end

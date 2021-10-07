@@ -46,7 +46,7 @@ html lang="en"
                 form class="navbar-search" action="/team/search"
                   .input-append
                     input type="text" class="input-medium search-query" name="team" placeholder="Search"
-              - if is_league_manager?
+              - if @user&.league_manager?
                 li
                   a href="/league/manage" Daily Game Sheets
               -if @user

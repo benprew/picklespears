@@ -81,7 +81,7 @@ class Player < Sequel::Model
     "http://#{APP_DOMAIN}/player/reset/#{password_reset_hash}"
   end
 
-  def is_league_manager?
+  def league_manager?
     !leagues.empty?
   end
 

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'tzinfo'
+require 'icalendar/tzinfo'
+
 before do
   logger.info "user_id: #{session[:player_id]}"
   @user = Player[session[:player_id]] if session[:player_id]
@@ -36,16 +39,11 @@ require_relative 'league'
 require_relative 'player'
 require_relative 'season'
 require_relative 'team'
-include Icalendar
-require 'tzinfo'
-require 'icalendar/tzinfo'
 
 helpers do
-  def is_league_manager?
-    @user && @user.is_league_manager?
-  end
-
   def ical_calendar(team)
+    include Icalendar
+
     calendar = Calendar.new
     calendar.x_wr_calname = team.name
 
