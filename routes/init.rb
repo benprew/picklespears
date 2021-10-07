@@ -36,6 +36,8 @@ require_relative 'player'
 require_relative 'season'
 require_relative 'team'
 include Icalendar
+require 'tzinfo'
+require 'icalendar/tzinfo'
 
 helpers do
   def is_league_manager?
@@ -43,39 +45,28 @@ helpers do
   end
 
   def ical_calendar(team)
-
-    tzid = 'America/Los_Angeles'
     calendar = Calendar.new
     calendar.x_wr_calname = team.name
-    calendar.timezone do |t|
-      t.tzid = tzid
 
-      t.daylight do |d|
-        d.dtstart      = '20130310T020000'
-        d.rrule        = "FREQ=YEARLY;BYMONTH=4;BYDAY=1SU"
-        d.tzoffsetfrom = '-0800'
-        d.tzoffsetto   = '-0700'
-        d.tzname       = 'PDT'
-      end
+    timezones = {}
 
-      t.standard do |s|
-        s.dtstart      = '20131103T020000'
-        s.rrule        = "FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU"
-        s.tzoffsetfrom = '-0700'
-        s.tzoffsetto   = '-0800'
-        s.tzname       = 'PST'
-      end
-    end
-
-    team.games.each do |game|
+    team.games.sort_by(&:date).each do |game|
       calendar.event do |e|
-        e.dtstart = Icalendar::Values::DateTime.new game.date.to_datetime, { TZID: tzid }
-        e.dtend = Icalendar::Values::DateTime.new (game.date + 1.hours).to_datetime, { TZID: tzid }
+        event_start = game.date.to_datetime
+        tzid = 'America/Los_Angeles'
+        tz = TZInfo::Timezone.get tzid
+        timezone = tz.ical_timezone event_start
+        timezones[timezone.to_ical] = timezone
+
+        e.dtstart = Icalendar::Values::DateTime.new event_start, 'tzid' => tzid
+        e.dtend = Icalendar::Values::DateTime.new (game.date + 1.hours).to_datetime, 'tzid' => tzid
         e.summary = game.description
         e.description = game.description
         e.uid = "http://#{APP_DOMAIN}/game/#{game.id}/"
       end
     end
+
+    timezones.values { |t| calendar.add_timezone t }
 
     content_type :'text/calendar'
     calendar.to_ical
