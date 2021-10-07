@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'picklespears'
 require 'picklespears/test/unit'
 
@@ -18,25 +20,25 @@ class TestTeam < PickleSpears::Test::Unit
   end
 
   def test_upcoming_games
-    upcoming_game = Game.create_test(:date => Time.now())
+    upcoming_game = Game.create_test(date: Time.now)
     upcoming_game.home_team = @team
-    upcoming_game2 = Game.create_test(:date => Time.now() + 1)
+    upcoming_game2 = Game.create_test(date: Time.now + 1)
     upcoming_game2.home_team = @team
-    @team.add_game(Game.create_test(:date => Date.today() - 1))
+    @team.add_game(Game.create_test(date: Date.today - 1))
 
-    assert_equal([ upcoming_game.id, upcoming_game2.id ], @team.upcoming_games.map(&:id))
+    assert_equal([upcoming_game.id, upcoming_game2.id], @team.upcoming_games.map(&:id))
   end
 
   def test_add_player_to_team
-    post "/team/add_player", email: 'foo@bar.com', name: 'Billy', id: @team.id
+    post '/team/add_player', email: 'foo@bar.com', name: 'Billy', id: @team.id
     follow_redirect!
     assert last_response.ok?, "response not ok: #{last_response.status}"
-    assert_match /Player.*Billy.*added/, last_response.body
+    assert_match(/Player.*Billy.*added/, last_response.body)
 
-    post "/team/add_player", email: 'foo@bar.com', name: 'Billy', id: @team.id
+    post '/team/add_player', email: 'foo@bar.com', name: 'Billy', id: @team.id
     follow_redirect!
     assert last_response.ok?
-    assert_match /Player.*Billy.*already on roster/, last_response.body
+    assert_match(/Player.*Billy.*already on roster/, last_response.body)
   end
 
   def test_team_calendar
@@ -45,9 +47,9 @@ class TestTeam < PickleSpears::Test::Unit
 
     assert last_response.ok?, 'Can show calendar'
     assert_match @team.games.first.description, last_response.body
-    assert_match 'DTSTART;TZID=America/Los_Angeles:' + @team.games.first.date.strftime('%Y%m%d'), last_response.body
-    assert_match 'DTEND;TZID=America/Los_Angeles:' + (@team.games.first.date + 1.hours).strftime('%Y%m%d'),
-                 last_response.body
+    assert_match("DTSTART;TZID=America/Los_Angeles:#{@team.games.first.date.strftime('%Y%m%d')}", last_response.body)
+    assert_match("DTEND;TZID=America/Los_Angeles:#{(@team.games.first.date + 1.hours).strftime('%Y%m%d')}",
+                 last_response.body)
   end
 
   def test_invalid_team_page
