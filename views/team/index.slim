@@ -3,7 +3,7 @@
   .span9.offset3
     h1 style="display: inline" = team.name
     - if @user && !@user.is_on_team?(team)
-      a.join_team.btn.btn-mini id=team.id href="#" Join this team!
+      a.join_team.btn.btn-mini team_id=team.id href="#" Join this team!
     - if @user && @user.is_on_team?(team)
       a.btn.btn-mini href=uri_for(team, "edit") Manage
 .row
