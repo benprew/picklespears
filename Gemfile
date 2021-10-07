@@ -1,33 +1,36 @@
-source 'http://rubygems.org'
-ruby '2.6.8'
+# frozen_string_literal: true
 
+source 'http://rubygems.org'
+ruby '3.0.2'
+
+gem 'activesupport'
+gem 'bcrypt-ruby'
 gem 'excon'
 gem 'i18n'
+gem 'icalendar'
+gem 'maruku'
+gem 'pg'
+gem 'pony'
+gem 'prawn'
+gem 'rack-flash3'
+gem 'rake'
+gem 'sass'
+gem 'sequel'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'slim'
-gem 'sass'
-gem 'pony'
-gem 'rack-flash3'
-gem 'maruku'
-gem 'sequel'
-gem 'pg'
-gem 'bcrypt-ruby'
-gem 'prawn'
 gem 'thin' # for heroku
-gem 'rake'
-gem 'icalendar'
-gem 'activesupport'
+gem 'tzinfo'
 
 group :development do
   gem 'pry'
   gem 'rerun'
+  gem 'rubocop', '1.21.0'
   gem 'solargraph'
-  gem 'rubocop'
 end
 
 group :test do
-  gem 'rack-test'
   gem 'capybara'
   gem 'minitest-hooks'
+  gem 'rack-test'
 end

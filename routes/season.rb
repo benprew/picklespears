@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PickleSpears < Sinatra::Application
   before '*' do
     @season = Season[params[:id]] if params[:id]
@@ -10,13 +12,13 @@ class PickleSpears < Sinatra::Application
 
   post '/season/edit' do
     @season.update(params.slice(:name, :start_date)).save
-    flash[:success] = "Season updated"
+    flash[:success] = 'Season updated'
     redirect uri_for(@season, 'edit')
   end
 
   post '/season/add_exception_day' do
-    if !@season
-      flash[:errors] = "Invalid season"
+    unless @season
+      flash[:errors] = 'Invalid season'
       redirect '/season/list'
     end
 
@@ -24,8 +26,6 @@ class PickleSpears < Sinatra::Application
       holiday = SeasonException[params[:delete]]
       flash[:success] = "Removed holiday #{holiday.description} on #{holiday.date}"
       holiday.delete
-
-      redirect uri_for(@season, 'edit')
     else
       SeasonException.new(
         {
@@ -35,8 +35,8 @@ class PickleSpears < Sinatra::Application
         }
       ).save
       flash[:success] = "Added holiday on #{params[:date]}"
-      redirect uri_for(@season, 'edit')
     end
+    redirect uri_for(@season, 'edit')
   end
 
   post '/season/add_league' do
@@ -61,12 +61,13 @@ class PickleSpears < Sinatra::Application
     @team = Team[params[:team_id]]
     @team.update(params.slice(:name, :manager_name, :manager_email, :manager_phone_no, :division_id))
 
-    params[:preferred_day].each do |day|
+    params.fetch(:preferred_day, []).each do |day|
       SeasonPreferredDay.find_or_create(team_id: @team.id, season_id: @season.id, preferred_day_of_week: day)
-    end if params[:preferred_day]
+    end
 
     params[:day_to_avoid].each do |day|
-      next if day == ""
+      next if day == ''
+
       day = Date.strptime(day, '%Y-%m-%d')
       warn "day #{day}"
       SeasonDayToAvoid.find_or_create(team_id: @team.id, season_id: @season.id, day_to_avoid: day)
@@ -83,12 +84,13 @@ class PickleSpears < Sinatra::Application
     @season = Season[params[:season_id]]
     @season.add_team(@team)
 
-    params[:preferred_day].each do |day|
+    params.fetch(:preferred_day, []).each do |day|
       SeasonPreferredDay.create(team: @team, season: @season, preferred_day_of_week: day)
-    end if params[:preferred_day]
+    end
 
     params[:day_to_avoid].each do |day|
-      next if day == ""
+      next if day == ''
+
       SeasonDayToAvoid.create(team: @team, season: @season, day_to_avoid: day)
     end
 
@@ -97,8 +99,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/season/create_schedule' do
-    flash[:success] = "Schedule queued to build, you will receive an email when it is complete"
-    send_email( to: 'benprew@gmail.com', subject: "Schedule queued for season #{@season.name}" )
+    flash[:success] = 'Schedule queued to build, you will receive an email when it is complete'
+    send_email(to: 'benprew@gmail.com', subject: "Schedule queued for season #{@season.name}")
     redirect uri_for(@season)
   end
 end

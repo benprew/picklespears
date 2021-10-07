@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest/md5'
 require_relative 'team'
 require_relative 'game'
@@ -7,6 +9,7 @@ require_relative 'league'
 
 class Player < Sequel::Model
   attr_writer :password_confirmation
+
   one_to_many :players_teams
   one_to_many :players_games
   many_to_many :teams, join_table: :players_teams
@@ -17,10 +20,10 @@ class Player < Sequel::Model
 
   def validate
     super
-    validates_presence [:name, :email_address]
+    validates_presence %i[name email_address]
     validates_unique :name
     validates_unique :email_address
-#    validates_presence :password if new?
+    #    validates_presence :password if new?
     errors.add :passwords, ' don\'t match' if @password != @password_confirmation
   end
 
@@ -40,8 +43,6 @@ class Player < Sequel::Model
       nil
     elsif current_user.password_hash && BCrypt::Password.new(current_user.password_hash) == password
       current_user
-    else
-      nil
     end
   end
 
@@ -53,7 +54,7 @@ class Player < Sequel::Model
 
   def attending_status(game)
     pg = PlayersGame.first(player_id: id, game_id: game.id)
-    pg && pg.status || 'No Reply'
+    pg&.status || 'No Reply'
   end
 
   def is_on_team?(team)
@@ -65,7 +66,7 @@ class Player < Sequel::Model
       name: 'test user',
       email_address: 'test_user@test.com',
       openid: 'test_user_id',
-      password_hash: BCrypt::Password.create('secret'),
+      password_hash: BCrypt::Password.create('secret')
     )
     player.save
     player.update(attrs) if attrs
@@ -96,21 +97,9 @@ class Player < Sequel::Model
     teams = []
     if params[:team]
       teams = Team.filter(Sequel.ilike(:name, "%#{params[:team]}%"))
-                 .order(Sequel.asc(:name))
-                 .all
+                  .order(Sequel.asc(:name))
+                  .all
     end
-    return {teams: teams}
-  end
-
-  def self.join_attending_status_args(params)
-    game = Game[params[:game_id]]
-    status = params[:status]
-    player = Player[params[:player_id]]
-
-    halt 400 unless game && player
-
-    player.set_attending_status_for_game(game, status)
-    flash[:messages] = partial 'attending_status_for_game', locals: {status: status}
-    redirect uri_for(game.team_player_plays_on(player))
+    { teams: teams }
   end
 end

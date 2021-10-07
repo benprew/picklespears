@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 require 'picklespears/test/unit'
 
 class TestPickleSpears < PickleSpears::Test::Unit
   def test_homepage
     get '/'
-    assert_match( /<title>Teamvite/, last_response.body )
+    assert_match(/<title>Teamvite/, last_response.body)
   end
 
   def test_browse
     league = League.create_test(name: 'Women')
     div = Division.create_test(league_id: league.id)
 
-    team = Team.create_test( :division => div, :name => 'Barcelona' )
-    team.add_game(Game.create_test date: Date.today + 1)
+    team = Team.create_test(division: div, name: 'Barcelona')
+    team.add_game(Game.create_test(date: Date.today + 1))
 
     get '/browse', league_id: league.id
-    assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
+    assert_match(%r{<title>Teamvite - browsing league: Women</title>}, last_response.body)
     assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
   end
 
@@ -22,16 +24,16 @@ class TestPickleSpears < PickleSpears::Test::Unit
     league = League.create_test(name: 'Women')
     div = Division.create_test(league_id: league.id)
 
-    team = Team.create_test( :division => div, :name => 'Barcelona' )
-    team.add_game(Game.create_test date: Date.today + 1)
+    team = Team.create_test(division: div, name: 'Barcelona')
+    team.add_game(Game.create_test(date: Date.today + 1))
 
     get '/browse', league_id: "#{league.id}/"
-    assert_match(/<title>Teamvite - browsing league: Women<\/title>/, last_response.body)
+    assert_match(%r{<title>Teamvite - browsing league: Women</title>}, last_response.body)
     assert_match(/Barcelona/, last_response.body, 'do we have at least one team')
   end
 
   def test_team_home
-    team = Team.create_test( :name => 'test team' )
+    team = Team.create_test(name: 'test team')
     get '/team/index', id: team.id
     assert_match(/Upcoming Games/, last_response.body, 'upcoming games')
   end
@@ -39,13 +41,13 @@ class TestPickleSpears < PickleSpears::Test::Unit
   def test_search
     league = League.create_test(name: 'manly men')
     div = Division.create_test(league_id: league.id)
-    found_team = Team.create_test(:name => 'THE HARPOON', :division_id => div.id)
-    found_team2 = Team.create_test(:name => 'THE AHAS', :division_id => div.id)
-    Team.create_test(:name => 'THE HBRPO', :division_id => div.id)
+    found_team = Team.create_test(name: 'THE HARPOON', division_id: div.id)
+    found_team2 = Team.create_test(name: 'THE AHAS', division_id: div.id)
+    Team.create_test(name: 'THE HBRPO', division_id: div.id)
 
-    get'/team/search', :team => 'Ha'
-    [ found_team, found_team2 ].each do |team|
-      assert_match(/team_id=#{team.id}/, last_response.body, "team #{team.id} is found")
+    get '/team/search', team: 'Ha'
+    [found_team, found_team2].each do |team|
+      assert_match(%r{team/index\?id=#{team.id}}, last_response.body, "team #{team.id} is found")
     end
   end
 

@@ -1,18 +1,20 @@
 #!/usr/local/ruby/bin/ruby
+# frozen_string_literal: true
 
+require 'active_support/all'
+require 'bcrypt'
 require 'bundler/setup'
+require 'cgi'
+require 'digest'
+require 'icalendar'
 require 'pony'
+require 'prawn'
+require 'rack-flash'
+require 'sass'
 require 'sinatra'
 require 'sinatra/config_file'
 require 'slim'
-require 'sass'
 require 'time'
-require 'rack-flash'
-require 'bcrypt'
-require 'digest'
-require 'prawn'
-require 'icalendar'
-require 'active_support/all'
 
 # Slim::Engine.options[:pretty] = true
 
@@ -98,7 +100,7 @@ class PickleSpears < Sinatra::Application
       output += "sending email about #{next_game.description}"
 
       team.players.each do |player|
-        next unless player.email_address and player.email_address.match(/@/)
+        next unless player&.email_address&.match(/@/)
 
         pg = PlayersGame.find_or_create(player_id: player.id, game_id: next_game.id)
 
@@ -131,12 +133,12 @@ helpers do
     args[:id] = id
     route = item.class.name.downcase
     # id or method could be null, so we compact then join
-    uri = '/' + [route, method].compact.join('/')
+    uri = "/#{[route, method].compact.join('/')}"
     [uri, mk_params(args)].compact.join('?')
   end
 
   def mk_params(args)
-    (args.map { |key, val| "#{key}=#{URI.escape(val.to_s)}" }).join('&')
+    (args.map { |key, val| "#{key}=#{CGI.escape(val.to_s)}" }).join('&')
   end
 
   def url_for(url, args = {})

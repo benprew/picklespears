@@ -1,45 +1,49 @@
+# frozen_string_literal: true
+
 require 'picklespears/test/unit'
 require 'picklespears'
 
 class TestPlayer < PickleSpears::Test::Unit
-
   def test_can_join_a_team
-    player = Player.create_test(:name => 'test user')
+    player = Player.create_test(name: 'test user')
     team = Team.create_test
     player.add_team(team)
-    pt = PlayersTeam.first(:player_id => player.id, :team_id => team.id)
+    pt = PlayersTeam.first(player_id: player.id, team_id: team.id)
     assert_equal(pt.player_id, player.id)
   end
 
   def test_can_use_attending_status_link_from_email
-    player = Player.create_test(:name => 'test user')
+    player = Player.create_test(name: 'test user')
     team = Team.create_test
     team.add_player(player)
     game = Game.create_test(home_team: team)
 
     get(
       '/player/attending_status_for_game',
-      status: 'no', game_id: game.id, player_id: player.id)
+      status: 'no', game_id: game.id, player_id: player.id
+    )
 
     assert_equal "http://#{DOMAIN}/team/index?id=#{team.id}", last_response.location
     follow_redirect!
     assert last_response.ok?
+    pg = PlayersGame.first(player_id: player.id, game_id: game.id)
+    assert_equal('no', pg.status)
   end
 
   def test_can_attend_a_game
-    player = Player.create_test(:name => 'test user')
+    player = Player.create_test(name: 'test user')
     game = Game.create_test
 
     player.set_attending_status_for_game(game, 'yes')
 
-    pg = PlayersGame.first(:player_id => player.id, :game_id => game.id)
+    pg = PlayersGame.first(player_id: player.id, game_id: game.id)
     assert_equal('yes', pg.status)
   end
 
   def test_can_update_info_via_post
     player = Player.create_test
     login(player, 'secret')
-    post '/player/update', { :name => 'new_name', id: player.id }
+    post '/player/update', { name: 'new_name', id: player.id }
     assert_equal "http://#{DOMAIN}/player/index?id=#{player.id}", last_response.location
     assert_equal 'new_name', player.reload.name
   end
@@ -89,13 +93,14 @@ class TestPlayer < PickleSpears::Test::Unit
     player.add_team(team)
     player.add_team(team2)
 
-    team.add_game(Game.create_test date: Date.today + 2)
-    team2.add_game(Game.create_test date: Date.today)
-    not_on_team.add_game(Game.create_test date: Date.today + 1)
+    team.add_game(Game.create_test(date: Date.today + 2))
+    team2.add_game(Game.create_test(date: Date.today))
+    not_on_team.add_game(Game.create_test(date: Date.today + 1))
 
     assert_equal(
-      [[team2, team2.games.first],[team, team.games.first]],
-      player.upcoming_teams_games)
+      [[team2, team2.games.first], [team, team.games.first]],
+      player.upcoming_teams_games
+    )
   end
 
   def test_coerces_player_id_from_request
@@ -103,7 +108,8 @@ class TestPlayer < PickleSpears::Test::Unit
     get "/player/index?id=#{player.id}"
 
     assert_match(
-      /<title>Teamvite - profile for #{player.name}<\/title>/,
-      last_response.body)
+      %r{<title>Teamvite - profile for #{player.name}</title>},
+      last_response.body
+    )
   end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PickleSpears < Sinatra::Application
   post '/player/login' do
-    if user = Player.authenticate(params[:email_address], params[:password])
+    if (user = Player.authenticate(params[:email_address], params[:password]))
       session[:player_id] = user.id
       user.update(last_login: Date.today)
       redirect uri_for(user)
@@ -32,7 +34,7 @@ class PickleSpears < Sinatra::Application
 
   post '/player/update' do
     @player = Player[params[:id]]
-    if !@user
+    unless @user
       flash[:errors] = 'Must be logged in to edit your profile'
       redirect '/player/login'
     end
@@ -82,7 +84,7 @@ class PickleSpears < Sinatra::Application
     halt 400 unless game && player
 
     player.set_attending_status_for_game(game, status)
-    flash[:messages] = partial 'attending_status_for_game', locals: {status: status}
+    flash[:messages] = partial 'attending_status_for_game', locals: { status: status }
     redirect uri_for(game.team_player_plays_on(player))
   end
 
@@ -101,12 +103,12 @@ class PickleSpears < Sinatra::Application
     send_email(
       to: @email_address,
       subject: 'Reset your password for Teamvite.com',
-      html_body: partial(:password_reset_email),
+      html_body: partial(:password_reset_email)
     )
     slim 'player/password_reset_sent'.to_sym
   end
 
-  get "/player/reset/:reset_sha" do
+  get '/player/reset/:reset_sha' do
     @sha = params[:reset_sha]
     player = Player.first(password_reset_hash: @sha)
 
@@ -120,8 +122,8 @@ class PickleSpears < Sinatra::Application
   end
 
   post '/player/reset/:reset_sha' do
-    @user.set(params['player'].select do |k, v|
-      [:password, :password_confirmation].include?(k.to_sym)
+    @user.set(params['player'].select do |k, _v|
+      %i[password password_confirmation].include?(k.to_sym)
     end)
 
     if @user.valid?

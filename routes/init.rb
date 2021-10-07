@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 before do
   logger.info "user_id: #{session[:player_id]}"
   @user = Player[session[:player_id]] if session[:player_id]
@@ -17,9 +19,8 @@ get '/:model/:method' do
   args = {}
   args[params[:model]] = obj if obj
   args_method = "#{params[:method]}_args"
-  if model.respond_to?(args_method)
-    args = model.send(args_method, params)
-  end
+
+  args = model.send(args_method, params) if model.respond_to?(args_method)
 
   slim view.to_sym, locals: args, **render_args
 end
@@ -27,7 +28,7 @@ end
 def load_obj(model, params)
   return model[params[:id]] if params[:id]
 
-  return nil
+  nil
 end
 
 require_relative 'game'
