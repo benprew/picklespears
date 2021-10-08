@@ -8,6 +8,21 @@ class TestTeam < PickleSpears::Test::Unit
     @team = Team.create_test
   end
 
+  def test_team_update
+    d = Division.create_test
+
+    assert !@team.manager_name
+
+    visit "/team/#{@team.id}/edit"
+    select d.name, from: 'division_id'
+    fill_in 'manager_name', with: 'Bennie'
+    click_button 'Update'
+
+    assert_equal "/team/#{@team.id}/index", current_path
+
+    assert_equal 'Bennie', @team.reload.manager_name
+  end
+
   def test_next_game
     teams = []
     teams << Team.create_test
