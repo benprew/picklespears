@@ -2,28 +2,28 @@ class PickleSpears < Sinatra::Application
   include Icalendar
 
   before '/team/*' do
-    @team = Team[params[:id]]
+    @team = @item
   end
 
   # Meant to be an ajax call
   post '/team/join' do
-    @user.add_team(Team[params[:id]])
+    @user.add_team(@team)
     'Joined!'
   end
 
   post '/team/update' do
-    team = Team[params[:id]]
-    team.name = params[:name]
-    team.division_id = params[:division_id]
-    team.save
+    @team.name = params[:name]
+    @team.manager_name = params[:manager_name]
+    @team.division_id = params[:division_id]
+    @team.save
 
     flash[:messages] = 'Team updated!'
 
-    redirect uri_for(team)
+    redirect uri_for(@team)
   end
 
   post '/team/add_player' do
-    player = Player.find_or_create(:email_address => params[:email]) { |p| p.name = params[:name] }
+    player = Player.find_or_create(email_address: params[:email]) { |p| p.name = params[:name] }
 
     if player && @team
       if @team.players.include?(player)

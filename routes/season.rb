@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class PickleSpears < Sinatra::Application
-  before '*' do
-    @season = Season[params[:id]] if params[:id]
+  # for post requests
+  before '/season/*' do
+    @season = @item
   end
 
   post '/season/create' do
