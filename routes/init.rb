@@ -9,7 +9,20 @@ before do
   @user = Player[session[:player_id]] if session[:player_id]
 end
 
+before '/:model/*' do
+  model = mk_class(params)
+  @item = load_obj(model, params) if model
+end
+
 get '/:model/:method' do
+  exec_route params
+end
+
+get '/:model/:id/:method' do
+  exec_route params
+end
+
+def exec_route(params)
   logger.info("routing #{params[:model]} #{params[:method]} with #{params[:id]}")
 
   view = "#{params[:model]}/#{params[:method]}"
@@ -18,11 +31,10 @@ get '/:model/:method' do
   halt 404 unless model
 
   obj = load_obj(model, params)
+  halt 404, "#{params[:model]} not found" if params[:id] && !obj
 
   render_args = {}
   render_args[:layout] = false if params[:layout] == 'false'
-
-  halt 404, "#{params[:model]} not found" if params[:id] && !obj
 
   args = {}
   args[params[:model]] = obj if obj
@@ -40,7 +52,7 @@ rescue NameError
 end
 
 def load_obj(model, params)
-  return model[params[:id]] if params[:id]
+  return model[params[:id]] if params[:id] && params[:id] =~ /^[0-9]+$/
 
   nil
 end

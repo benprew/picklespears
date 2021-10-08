@@ -52,7 +52,7 @@ class TestPickleSpears < PickleSpears::Test::Unit
 
     get '/team/search', team: 'Ha'
     [found_team, found_team2].each do |team|
-      assert_match(%r{team/index\?id=#{team.id}}, last_response.body, "team #{team.id} is found")
+      assert_match(%r{team/#{team.id}/index}, last_response.body, "team #{team.id} is found")
     end
   end
 

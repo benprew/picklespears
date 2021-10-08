@@ -130,15 +130,15 @@ helpers do
 
   def uri_for(item, method = 'index', args: {})
     id = item.id
-    args[:id] = id
     route = item.class.name.downcase
     # id or method could be null, so we compact then join
-    uri = "/#{[route, method].compact.join('/')}"
-    [uri, mk_params(args)].compact.join('?')
+    "/#{[route, id, method].compact.join('/')}#{mk_params(args)}"
   end
 
   def mk_params(args)
-    (args.map { |key, val| "#{key}=#{CGI.escape(val.to_s)}" }).join('&')
+    return '' if args.empty?
+
+    "?#{(args.map { |key, val| "#{key}=#{CGI.escape(val.to_s)}" }).join('&')}"
   end
 
   def url_for(url, args = {})

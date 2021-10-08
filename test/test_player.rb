@@ -23,7 +23,7 @@ class TestPlayer < PickleSpears::Test::Unit
       status: 'no', game_id: game.id, player_id: player.id
     )
 
-    assert_equal "http://#{DOMAIN}/team/index?id=#{team.id}", last_response.location
+    assert_equal "http://#{DOMAIN}/team/#{team.id}/index", last_response.location, 'redirect url'
     follow_redirect!
     assert last_response.ok?
     pg = PlayersGame.first(player_id: player.id, game_id: game.id)
@@ -44,7 +44,7 @@ class TestPlayer < PickleSpears::Test::Unit
     player = Player.create_test
     login(player, 'secret')
     post '/player/update', { name: 'new_name', id: player.id }
-    assert_equal "http://#{DOMAIN}/player/index?id=#{player.id}", last_response.location
+    assert_equal "http://#{DOMAIN}/player/#{player.id}/index", last_response.location
     assert_equal 'new_name', player.reload.name
   end
 
