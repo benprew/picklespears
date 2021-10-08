@@ -3,29 +3,29 @@
   .offset1.span5
     h3 Team Info
     form.form-horizontal method="post" action=(@season ? "/season/update_team" : "/team/update")
-      input  type=:hidden name=:team_id value=(team.id )
+      input  type="hidden" name="id" value=team.id
       .control-group
         label.control-label Team Name
         .controls
-          input  type=:text name=:name value=team.name
+          input  type="text" name="name" value=team.name
       .control-group
         label.control-label Manager Name
         .controls
-          input  type=:text name=:manager_name value=team.manager_name
+          input  type="text" name="manager_name" value=team.manager_name
       .control-group
         label.control-label Manager Email
         .controls
-          input  type=:email name=:manager_email value=team.manager_email
+          input  type="email" name="manager_email" value=team.manager_email
       .control-group
         label.control-label Manager Phone
         .controls
-          input  type=:tel name=:manager_phone_no value=team.manager_phone_no
+          input  type="tel" name="manager_phone_no" value=team.manager_phone_no
       .control-group
         label.control-label Division
         .controls
           == partial :division_select, locals: { divisions: @divisions, initial: team.division, name: "division_id" }
       - if @season
-        input  type=:hidden name=:season_id value=(@season.id )
+        input  type="hidden" name="season_id" value=@season.id
 
         .control-group
           label.control-label Preferred Days
