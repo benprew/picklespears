@@ -10,13 +10,17 @@ before do
 end
 
 get '/:model/:method' do
+  logger.info("routing #{params[:model]} #{params[:method]} with #{params[:id]}")
+
   view = "#{params[:model]}/#{params[:method]}"
-  model = params[:model].classify.constantize
+
+  model = mk_class(params)
+  halt 404 unless model
+
   obj = load_obj(model, params)
+
   render_args = {}
   render_args[:layout] = false if params[:layout] == 'false'
-
-  logger.info("routing #{params[:model]} #{params[:method]} to #{view} with #{obj}")
 
   halt 404, "#{params[:model]} not found" if params[:id] && !obj
 
@@ -27,6 +31,12 @@ get '/:model/:method' do
   args = model.send(args_method, params) if model.respond_to?(args_method)
 
   slim view.to_sym, locals: args, **render_args
+end
+
+def mk_class(params)
+  params[:model].classify.constantize
+rescue NameError
+  nil
 end
 
 def load_obj(model, params)

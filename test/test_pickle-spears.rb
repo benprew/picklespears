@@ -8,6 +8,11 @@ class TestPickleSpears < PickleSpears::Test::Unit
     assert_match(/<title>Teamvite/, last_response.body)
   end
 
+  def test_unknown_route_is_not_found
+    get '/.git/config'
+    assert last_response.status == 404
+  end
+
   def test_browse
     league = League.create_test(name: 'Women')
     div = Division.create_test(league_id: league.id)
