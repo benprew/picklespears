@@ -77,7 +77,7 @@ class PickleSpears < Sinatra::Application
   end
 
   get '/player/attending_status_for_game' do
-    game = Game[params[:game_id]]
+    game = Game[params[:game_id] || params['?game_id']]
     status = params[:status]
     player = Player[params[:player_id]]
 
