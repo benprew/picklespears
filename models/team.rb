@@ -8,19 +8,19 @@ class Team < Sequel::Model
   many_to_many :games, join_table: :teams_games
 
   def upcoming_games
-    games.select{ |g| g.date.to_date >= Date.today() }.sort { |a, b| a.date <=> b.date }
+    games.select { |g| g.date.to_date >= Date.today }.sort { |a, b| a.date <=> b.date }
   end
 
   def next_game
     upcoming_games.first
   end
 
-  def self.create_test(attrs={})
-    team = Team.new(:division_id => 1, :name => 'test team')
+  def self.create_test(attrs = {})
+    team = Team.new(division_id: 1, name: 'test team')
     team.save
     team.update(attrs) if attrs
     team.save
-    return team
+    team
   end
 
   def add_player(player)
@@ -32,16 +32,16 @@ class Team < Sequel::Model
     {
       to: player.email_address,
       subject: "Teamvite: You've been added to #{name}",
-      message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://#{APP_DOMAIN})",
+      message: "Teamvite here, just letting you know that you have been added to a new rec. sports team.  You can see the team here (http://#{APP_DOMAIN})"
     }
   end
 
-  def self.fuzzy_find(division, team_name, force_create=false)
+  def self.fuzzy_find(division, team_name, force_create = false)
     teams = Team.where(name: team_name).all.reject do |t|
       t.division.league != division.league
     end
 
-    fail "ERR: too many teams name: #{team_name} teams: #{teams.map(&:name)}" if
+    raise "ERR: too many teams name: #{team_name} teams: #{teams.map(&:name)}" if
       teams.length > 1
 
     if teams.length == 0
@@ -49,7 +49,7 @@ class Team < Sequel::Model
         warn "Creating Team: #{team_name}"
         Team.create(name: team_name, division_id: division.id)
       else
-        fail "ERR: no team for #{team_name} #{division.name}" unless @force_team_create
+        raise "ERR: no team for #{team_name} #{division.name}" unless @force_team_create
       end
     else
       team = teams.first
@@ -69,11 +69,11 @@ class Team < Sequel::Model
       teams = Team.filter(Sequel.like(:name, '%' + params[:team].upcase + '%')).order(Sequel.asc(:name)).all
     end
 
-    return { teams: teams, query: query }
+    { teams: teams, query: query }
   end
 
   def self.create_args(params)
     season = Season[params[:season_id]]
-    return { season: season }
+    { season: season }
   end
 end
