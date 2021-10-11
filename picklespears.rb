@@ -119,6 +119,12 @@ class PickleSpears < Sinatra::Application
     end
     slim output
   end
+
+  get '/game_reminder_email' do
+    pg = PlayersGame.find_or_create player_id: params[:player_id], game_id: params[:game_id]
+
+    partial(:reminder, locals: { player: pg.player, game: pg.game })
+  end
 end
 
 helpers do
@@ -138,11 +144,11 @@ helpers do
   def mk_params(args)
     return '' if args.empty?
 
-    "?#{(args.map { |key, val| "#{key}=#{CGI.escape(val.to_s)}" }).join('&')}"
+    %(?#{(args.map { |key, val| "#{key}=#{CGI.escape(val.to_s)}" }).join('&')})
   end
 
   def url_for(url, args = {})
-    "#{url}?" + mk_params(args)
+    "#{url}#{mk_params(args)}"
   end
 
   def send_email(options)

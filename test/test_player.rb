@@ -112,4 +112,17 @@ class TestPlayer < PickleSpears::Test::Unit
       last_response.body
     )
   end
+
+  def test_reminder_email
+    player = Player.create_test
+    team = Team.create_test
+    player.add_team(team)
+    game = Game.create_test date: Date.today + 1
+    TeamsGame.create_test game_id: game.id, team_id: team.id
+    get "/game_reminder_email?game_id=#{game.id}&player_id=#{player.id}"
+
+    expected = %(<p>Dear test user,</p><p>This is your game reminder. The next game is:</p><blockquote>\t#{game.date.strftime(PickleSpears::DATE_FORMAT)} #{game.description}</blockquote>Can you make the game?<br /><a href="http://www.teamvite.com/player/attending_status_for_game?game_id=#{game.id}&amp;player_id=#{player.id}&amp;status=yes"> Yes</a><br /><a href="http://www.teamvite.com/player/attending_status_for_game?game_id=#{game.id}&amp;player_id=#{player.id}&amp;status=no"> No</a><br /><a href="http://www.teamvite.com/player/attending_status_for_game?game_id=#{game.id}&amp;player_id=#{player.id}&amp;status=maybe"> Maybe</a><p>Thank you for using Teamvite.com!</p>)
+
+    assert_equal expected, last_response.body
+  end
 end
