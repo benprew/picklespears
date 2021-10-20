@@ -62,6 +62,7 @@ class TestTeam < PickleSpears::Test::Unit
 
     assert last_response.ok?, 'Can show calendar'
     assert_match @team.games.first.description, last_response.body
+    assert_match 'VTIMEZONE', last_response.body, 'includes timezone'
     assert_match("DTSTART;TZID=America/Los_Angeles:#{@team.games.first.date.strftime('%Y%m%d')}", last_response.body)
     assert_match("DTEND;TZID=America/Los_Angeles:#{(@team.games.first.date + 1.hours).strftime('%Y%m%d')}",
                  last_response.body)

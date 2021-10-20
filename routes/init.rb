@@ -69,12 +69,12 @@ helpers do
     calendar.x_wr_calname = team.name
 
     timezones = {}
+    tzid = 'America/Los_Angeles'
+    tz = TZInfo::Timezone.get tzid
 
     team.games.sort_by(&:date).each do |game|
       calendar.event do |e|
         event_start = game.date.to_datetime
-        tzid = 'America/Los_Angeles'
-        tz = TZInfo::Timezone.get tzid
         timezone = tz.ical_timezone event_start
         timezones[timezone.to_ical] = timezone
 
@@ -86,7 +86,7 @@ helpers do
       end
     end
 
-    timezones.values { |t| calendar.add_timezone t }
+    timezones.each_value { |t| calendar.add_timezone t }
 
     content_type :'text/calendar'
     calendar.to_ical
