@@ -20,9 +20,8 @@ Test your changes in docker
 ### Common tasks
 * Update PDX Indoor games
 ``` shell
-bin/pdx-indoor-schedule.rb <season>
-docker-compose run web bash
-env APP_URL=http://www.teamvite.com bin/update_schedule_from_files.rb pi_games.txt
+bundle exec bin/pdx-indoor-schedule.rb <season>
+env APP_URL=http://www.teamvite.com bundle exec bin/update_schedule_from_files.rb $GAMES_FILE
 ```
 
 * Cleanup old games in db
