@@ -34,7 +34,7 @@ def exec_route(params)
   halt 404, "#{params[:model]} not found" if params[:id] && !obj
 
   render_args = {}
-  render_args[:layout] = false if params[:layout] == 'false'
+  render_args[:layout] = false if params[:method] == 'calendar.ics' || params[:layout] == 'false'
 
   args = {}
   args[params[:model]] = obj if obj

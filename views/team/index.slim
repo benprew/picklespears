@@ -15,7 +15,7 @@
           a  href=uri_for(player) = player.name
   .span9
     div  style="float: right; margin: 10px 0;"
-      a.btn href=uri_for(team, 'calendar.ics', args: {layout: false})
+      a.btn href=uri_for(team, 'calendar.ics')
         | Calendar
         i.icon-calendar
     == partial :upcoming_games, locals: { teams_games: team.upcoming_games.map { |g| [team, g] }, player: @user }
