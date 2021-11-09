@@ -42,6 +42,8 @@ def exec_route(params)
 
   args = model.send(args_method, params) if model.respond_to?(args_method)
 
+  halt 404, 'View not found' unless File.exist? "views/#{view}.slim"
+
   slim view.to_sym, locals: args, **render_args
 end
 
